@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && tsc -p ./",
+    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && npx tsc -p ./",
     "start": "node dist/main.js"
   },
   "repository": {
