@@ -1,0 +1,80 @@
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #181818;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ffffff;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ebebeb;
+  }
+
+body{
+    font-family: 'Ubuntu', sans-serif;
+    background: linear-gradient(-45deg, rgba(94,110,255,1) 0%, rgba(170,106,252,1) 100%);
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.navbar{
+    font-size: 20px;
+    color: white;
+    position:fixed;
+    width: 100%;
+    bottom: 0;
+    display: inline-flex;
+    justify-content: space-between;
+    background-color: #181818;
+    border-top: solid white 3px;
+}
+.navbar div ul{
+    list-style: none;
+    width: 100%;
+}
+.navbar div ul li{
+    display: inline;
+    margin: 20px;
+    position: relative;
+}
+
+.navbar div ul li::before{
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+  bottom: -5;
+  background-color: white;
+  visibility: hidden;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transition: all .5s cubic-bezier(1,.25,0,.75);
+  transition: all .5s cubic-bezier(1,.25,0,.75) ;
+}
+.navbar div ul li:hover:before {
+    visibility: visible;
+    -webkit-transform: scaleX(1);
+    transform: scaleX(1);
+}
+.navbar div ul li:hover {
+    cursor:pointer;
+    }
+footer{
+    position:absolute;
+    bottom:0px;
+}
+.logo {
+    object-fit: contain;
+    max-width: 20%;
+    max-height: 20%;
+    width: auto;
+    height: auto;
+ }
