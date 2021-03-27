@@ -1,2 +1,1 @@
-# amethyst.host-website
-Amethyst.host website.
+# balls :D
