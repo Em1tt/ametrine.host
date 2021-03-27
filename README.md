@@ -2,13 +2,9 @@
 **amethyst.host** is a hosting service.
 
 ## Website deploying
-To start **amethyst.host** website, install all dependencies (including developer dependencies too) with 
-```bash
-npm i```
+To start **amethyst.host** website, do the following: 
+  1. ``npm i`` to install dependencies
+  2. ``npm run build`` to build website source
+  3. ``npm run start`` to start the website up
 
-After you've done that, you need to compile the website source:
-```bash
-npm run build```
-
-And now, run ```bash
-npm run start``` to start the website up.
+**Default port: ``3000``**
