@@ -1,0 +1,27 @@
+{
+  "name": "amethyst-host",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Em1tt/amethyst.host-website.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Em1tt/amethyst.host-website/issues"
+  },
+  "homepage": "https://github.com/Em1tt/amethyst.host-website#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.11",
+    "@types/node": "^14.14.37",
+    "typescript": "^4.2.3"
+  }
+}
