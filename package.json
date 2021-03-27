@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "lint": "",
+    "lint": "npx eslint ./src --ext .ts",
     "build": "rm -rf dist && mkdir dist && cp -r src/* dist && tsc -p ./",
     "start": "node dist/main.js"
   },
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/Em1tt/amethyst.host-website#readme",
   "dependencies": {
+    "compression": "^1.7.4",
     "express": "^4.17.1"
   },
   "devDependencies": {
