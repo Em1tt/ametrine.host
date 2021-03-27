@@ -5,7 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && tsc -p ./"
+    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && tsc -p ./",
+    "start": "node dist/main.js"
   },
   "repository": {
     "type": "git",
