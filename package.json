@@ -4,14 +4,15 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && tsc -p ./"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Em1tt/amethyst.host-website.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Em1tt/amethyst.host-website/issues"
   },

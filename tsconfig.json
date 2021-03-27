@@ -1,9 +1,23 @@
 {
   "compilerOptions": {
+    "target": "ES6",
     "module": "commonjs",
-    "noImplicitAny": true,
     "removeComments": true,
+    "esModuleInterop": true,
+    "noEmitOnError": true,
+    "experimentalDecorators": true,
     "preserveConstEnums": true,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "sourceRoot": "src",
+    "outDir": "dist"
+  },
+
+  "include": [
+    "src/**/*"
+  ],
+
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
