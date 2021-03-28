@@ -1,7 +1,10 @@
 // imports
+import "dotenv/config";
+import sqlite      from "better-sqlite3";
 import http        from "http";
 import express     from "express";
 import compression from "compression";
+import vhost       from "vhost";
 import path        from "path";
 import config      from "./config.json";
 
@@ -21,6 +24,4 @@ app.get("/", (r: express.Request, s: express.Response) => {
 });
 
 // start up the website
-app.listen(config.website.port, () => {
-  console.log(`website started @${config.website.port}`);
-});
+app.listen(config.website.port);
