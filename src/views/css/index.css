@@ -283,6 +283,10 @@ body {
     text-decoration: none;
     color: white;
     font-size: 30px;
+    filter: brightness(0.9);
+}
+.orderButton:hover{
+    filter: brightness(1);
 }
 
 @media only screen and (max-width: 1500px) {
