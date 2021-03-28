@@ -1,4 +1,4 @@
-import Server from "server.d.ts";
+import Server from "server";
 // user account type
 
 export type User = {
