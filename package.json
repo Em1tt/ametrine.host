@@ -2,7 +2,7 @@
   "name": "amethyst-host",
   "version": "1.0.0",
   "description": "",
-  "main": "src/main.js",
+  "main": "./src/main.ts",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
     "build": "rm -rf dist && mkdir dist && cp -r src/* dist && npx tsc -p ./",

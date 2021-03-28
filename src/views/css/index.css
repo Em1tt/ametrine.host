@@ -22,13 +22,38 @@
     background: #ebebeb;
 }
 
+@keyframes gradient{
+    0%{
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100%{
+        background-position: 0% 50%;
+    }
+}
+
 body {
+    background: linear-gradient(-45deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1), rgba(94, 110, 255, 1));
+    background-position: 200% 200%;
+    background-size: 400% 400%;
     font-family: 'Ubuntu', sans-serif;
-    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
     padding: 0;
     margin: 0;
     width: 100%;
     min-height: 200px;
+	animation: gradient 30s ease infinite;
+}
+
+.panel{
+    background: linear-gradient(-45deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1));
+    padding: 50px;
+    border-radius: 20px;
+    filter: brightness(0.9);
+}
+.panel:hover{
+    filter: brightness(1);
 }
 
 .navbar {
@@ -82,10 +107,6 @@ body {
     cursor: pointer;
 }
 
-.panel::before{
-margin-right: 40px;
-}
-
 .navbar2 {
     font-size: 20px;
     color: white;
@@ -111,9 +132,9 @@ margin-right: 40px;
     width: 100%;
 }
 .navbar2 div ul li i{
-    padding-inline: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-inline: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 .navbar2 div ul li:hover {
     cursor: pointer;
@@ -127,39 +148,53 @@ margin-right: 40px;
     width: auto;
     height: auto;
     position: absolute;
-    right: 15%;
+    right: 20%;
     top: 15%;
     z-index: -1;
 }
 
 .logo-background {
     position: absolute;
-    width: 45%;
+    width: 50%;
     height: 35%;
     min-height: 100px;
     top: 26%;
     right: 0px;
     background-color: #181818;
     z-index: -2;
-    -webkit-clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
-    clip-path: polygon(11% 0%, 100% 0%, 100% 100%, 0% 100%);
+    -webkit-clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
 }
 
 .heading {
     font-weight: bold;
     position: absolute;
     color: white;
-    left: 15%;
-    top: 23%;
-    font-size: 3rem;
+    left: 16%;
+    top: 24%;
+    font-size: 4rem;
 }
 
 .heading2 {
     position: absolute;
     color: white;
-    left: 15%;
-    top: 44%;
+    left: 16%;
+    top: 45%;
     font-size: 1.5rem;
+}
+
+.dash{
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+    background-clip:text;
+    -webkit-text-fill-color: transparent;
+}
+
+@media only screen and (max-width: 825px) {
+    .navbar div ul li {
+        margin: 20px;
+    }
 }
 
 @media only screen and (max-width: 725px) {
@@ -170,10 +205,11 @@ margin-right: 40px;
         visibility: hidden;
     }
 }
-.dash{
-    position: absolute;
-    border-radius: 50%;
-    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
-    background-clip:text;
-    -webkit-text-fill-color: transparent;
+
+@media only screen and (max-width: 500px) {
+    .navbar2 div ul li i{
+        padding-inline: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
 }
