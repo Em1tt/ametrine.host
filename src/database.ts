@@ -6,9 +6,9 @@ import Sqlite = require("better-sqlite3");
 const db: Sqlite.Database = new Sqlite("../db/all.db", {
   verbose: util.sqlLog
 });
-let initCode: string = "";
+let initCode: string;
 
-export let sql = {
+export const sql = {
   init: function (): void {
     // get sql code to execute on start
     fs.readFile("./sql/init.sql", (e, data) => {
