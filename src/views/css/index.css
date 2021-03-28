@@ -39,7 +39,7 @@ p{
 }
 
 body {
-    background: linear-gradient(-45deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1), rgba(94, 110, 255, 1));
+    background: linear-gradient(90deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1));
     background-position: 200% 200%;
     background-size: 400% 400%;
     font-family: 'Ubuntu', sans-serif;
@@ -47,7 +47,7 @@ body {
     margin: 0;
     width: 100%;
     min-height: 200px;
-	animation: gradient 30s ease infinite;
+	animation: gradient 15s ease infinite;
     height: 10000px;
 }
 
@@ -118,6 +118,16 @@ body {
     color: white;
 }
 
+.dash{
+    border-radius: 50%;
+    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+    -webkit-text-fill-color: white;
+    color: white;
+}
+.dash:hover{
+    filter: brightness(1);
+}
+
 .navbar2 {
     font-size: 20px;
     color: white;
@@ -175,7 +185,7 @@ body {
     right: 20%;
     top: 13%;
     z-index: -1;
-    animation: ease wind 5s infinite;
+    animation: ease wind 7s infinite;
 }
 
 @keyframes wind2{
@@ -201,7 +211,7 @@ body {
     z-index: -2;
     -webkit-clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
     clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
-    animation: ease wind2 7s infinite;
+    animation: ease wind2 8s infinite;
 }
 
 .heading {
@@ -212,14 +222,6 @@ body {
     top: 25%;
     font-size: 4rem;
     padding: 0;
-}
-
-.dash{
-    position: absolute;
-    border-radius: 50%;
-    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
-    background-clip:text;
-    -webkit-text-fill-color: transparent;
 }
 
 #about{
@@ -265,6 +267,10 @@ body {
 .purpleH::selection{
     background: rgb(137, 94, 255);
     color: white;
+}
+
+.link{
+    color:rgb(137, 94, 255);
 }
 
 .icons{
