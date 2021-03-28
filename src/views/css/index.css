@@ -48,7 +48,7 @@ body {
     width: 100%;
     min-height: 200px;
 	animation: gradient 30s ease infinite;
-    height: 4000px;
+    height: 10000px;
 }
 
 .panel{
@@ -151,6 +151,19 @@ body {
 .navbar2 div ul li:hover {
     cursor: pointer;
 }
+
+@keyframes wind{
+    0%{
+        top: 13%;
+    }
+    50%{
+        top: 17%;
+    }
+    100%{
+        top: 13%;
+    }
+}
+
 .logo {
     object-fit: contain;
     max-width: 60%;
@@ -160,8 +173,21 @@ body {
     height: auto;
     position: absolute;
     right: 20%;
-    top: 15%;
+    top: 13%;
     z-index: -1;
+    animation: ease wind 5s infinite;
+}
+
+@keyframes wind2{
+    0%{
+        top: 24%;
+    }
+    50%{
+        top: 27%;
+    }
+    100%{
+        top: 24%;
+    }
 }
 
 .logo-background {
@@ -175,6 +201,7 @@ body {
     z-index: -2;
     -webkit-clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
     clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
+    animation: ease wind2 7s infinite;
 }
 
 .heading {
@@ -193,10 +220,6 @@ body {
     background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
     background-clip:text;
     -webkit-text-fill-color: transparent;
-    filter: brightness(0.9)
-}
-.dash:hover{
-    filter: brightness(10);
 }
 
 #about{
@@ -206,6 +229,7 @@ body {
     background: white;
     text-align: center;
     color: #181818;
+    box-shadow: 10px 10px 1000px rgba(0,0,0,0.5);
 }
 
 #about > * {
@@ -236,6 +260,7 @@ body {
 .item:hover{
     box-shadow: 15px 15px 15px rgba(0,0,0,0.3);
     transition: ease 1s;
+    background-color: rgb(248, 248, 248);
 }
 .purpleH::selection{
     background: rgb(137, 94, 255);
@@ -246,12 +271,31 @@ body {
     font-size: 30px;
 }
 
+.orderButton{
+    position: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    display:block;
+    border-radius: 100px;
+    padding: 30px;
+    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    filter: brightness(0.9);
+}
+.orderButton:hover{
+    filter: brightness(1);
+}
+
 @media only screen and (max-width: 1500px) {
     .logo{
         max-width: 50px;
         left: 10;
         top: 0;
         position: fixed;
+        animation: none;
     }
 }
 
