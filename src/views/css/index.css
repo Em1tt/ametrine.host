@@ -1,22 +1,15 @@
-/* width */
 
 ::-webkit-scrollbar {
     width: 10px;
 }
 
-/* Track */
-
 ::-webkit-scrollbar-track {
     background: #181818;
 }
 
-/* Handle */
-
 ::-webkit-scrollbar-thumb {
     background: #ffffff;
 }
-
-/* Handle on hover */
 
 ::-webkit-scrollbar-thumb:hover {
     background: #ebebeb;
@@ -34,6 +27,17 @@
     }
 }
 
+*{
+    scroll-behavior: smooth;
+}
+
+h1{
+    font-size: 50px;
+}
+p{
+    font-size: 26px;
+}
+
 body {
     background: linear-gradient(-45deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1), rgba(94, 110, 255, 1));
     background-position: 200% 200%;
@@ -44,6 +48,7 @@ body {
     width: 100%;
     min-height: 200px;
 	animation: gradient 30s ease infinite;
+    height: 4000px;
 }
 
 .panel{
@@ -67,6 +72,7 @@ body {
     background-color: #181818;
     border-top: solid white 3px;
     padding: 0;
+    z-index: 20;
 }
 
 .navbar div ul {
@@ -107,6 +113,11 @@ body {
     cursor: pointer;
 }
 
+.navbar a{
+    text-decoration: none;
+    color: white;
+}
+
 .navbar2 {
     font-size: 20px;
     color: white;
@@ -118,6 +129,7 @@ body {
     background-color: #181818;
     border-top: solid white 3px;
     visibility: hidden;
+    z-index: 20;
 }
 
 .navbar2 div ul {
@@ -139,7 +151,6 @@ body {
 .navbar2 div ul li:hover {
     cursor: pointer;
 }
-
 .logo {
     object-fit: contain;
     max-width: 60%;
@@ -170,17 +181,10 @@ body {
     font-weight: bold;
     position: absolute;
     color: white;
-    left: 16%;
-    top: 24%;
+    margin-inline: 16%;
+    top: 25%;
     font-size: 4rem;
-}
-
-.heading2 {
-    position: absolute;
-    color: white;
-    left: 16%;
-    top: 45%;
-    font-size: 1.5rem;
+    padding: 0;
 }
 
 .dash{
@@ -189,11 +193,75 @@ body {
     background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
     background-clip:text;
     -webkit-text-fill-color: transparent;
+    filter: brightness(0.9)
+}
+.dash:hover{
+    filter: brightness(10);
+}
+
+#about{
+    position: absolute;
+    top: 95%;
+    width: 100%;
+    background: white;
+    text-align: center;
+    color: #181818;
+}
+
+#about > * {
+    margin: 20px;
+}
+
+.specs{
+    font-size: 24px;
+    list-style: none;
+}
+
+.items{
+    display: inline-flex;
+    flex-flow:row wrap;
+    justify-content: center;
+}
+.item{
+    min-width: 200px;
+    max-width: 200px;
+    min-height: 200px;
+    max-height: 200px;
+    padding: 50px;
+    margin: 40px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 10px rgba(0,0,0,0.2);
+    transition: ease 1s;
+}
+.item:hover{
+    box-shadow: 15px 15px 15px rgba(0,0,0,0.3);
+    transition: ease 1s;
+}
+.purpleH::selection{
+    background: rgb(137, 94, 255);
+    color: white;
+}
+
+.icons{
+    font-size: 30px;
+}
+
+@media only screen and (max-width: 1500px) {
+    .logo{
+        max-width: 50px;
+        left: 10;
+        top: 0;
+        position: fixed;
+    }
 }
 
 @media only screen and (max-width: 825px) {
     .navbar div ul li {
         margin: 20px;
+    }
+    .logo-background {
+        -webkit-clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
     }
 }
 
@@ -203,6 +271,17 @@ body {
     }
     .navbar {
         visibility: hidden;
+    }
+    .logo-background {
+        width: 70%;
+        -webkit-clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+    }
+    .heading h1{
+        font-size: 40px;
+    }
+    .heading p{
+        font-size: 20px;
     }
 }
 
