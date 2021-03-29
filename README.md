@@ -1,5 +1,5 @@
-# amethyst.host
-**amethyst.host** is a hosting service.
+# Amethyst.host
+**amethyst** is a hosting service, providing premium servers for 50% of our competitors price.
 
 ## Website deploying
 To start **amethyst.host** website, do the following: 
