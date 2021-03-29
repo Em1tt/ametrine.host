@@ -120,7 +120,7 @@ body {
 
 .dash{
     border-radius: 50%;
-    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+    background: linear-gradient(-45deg, #5e6eff 0%, #aa6afc 100%);
     -webkit-text-fill-color: white;
     color: white;
 }
@@ -341,6 +341,21 @@ body {
     .heading p{
         font-size: 20px;
     }
+    .item{
+        max-width: 25px;
+        max-height: 25px;
+        padding: 20px;
+        margin: 20px;
+    }
+    .icons{
+        font-size: 25px;
+    }
+    h2{
+       font-size: 25px; 
+    }
+    .specs{
+        font-size: 20px;
+    }
 }
 
 @media only screen and (max-width: 500px) {
@@ -349,8 +364,49 @@ body {
         padding-top: 20px;
         padding-bottom: 20px;
     }
+    .item{
+        min-width: 150px;
+        min-height: 150px;
+        padding: 15px;
+        margin: 15px;
+    }
+    .icons{
+        font-size: 25px;
+    }
+    h2{
+       font-size: 17px; 
+    }
+    .specs{
+        font-size: 14px;
+    }
+    .small{
+        display: block;
+    }
+    #about > *{
+        margin: 5%;
+    }
+    .titleInfo{
+        font-size: 30px;
+    }
+    .info{
+        font-size: 15px;
+    }
+    .orderButton{
+        position: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 150px;
+        display:block;
+        border-radius: 100px;
+        padding: 20px;
+        background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+        text-decoration: none;
+        color: white;
+        font-size: 25px;
+        filter: brightness(0.9);
+    }
 }
-@media only screen and (max-width: 440px) {
+@media only screen and (max-width: 424px) {
     .navbar2 div ul li i{
         padding-inline: 10px;
         padding-top: 10px;
@@ -369,13 +425,19 @@ body {
        font-size: 10px; 
     }
     .specs{
-        font-size: 8px;
+        font-size: 10px;
     }
     .small{
         display: block;
     }
     #about > *{
         margin: 5%;
+    }
+    .titleInfo{
+        font-size: 30px;
+    }
+    .info{
+        font-size: 15px;
     }
     .orderButton{
         position: block;
