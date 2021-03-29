@@ -1,38 +1,36 @@
-@keyframes gradient{
-    0%{
+@keyframes gradient {
+    0% {
         background-position: 0% 50%;
     }
     50% {
         background-position: 100% 50%;
     }
-    100%{
+    100% {
         background-position: 0% 50%;
     }
-}
-
-*{
-    font-family: 'Ubuntu', sans-serif;
 }
 
 body {
     background: linear-gradient(90deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1));
     background-position: 200% 200%;
     background-size: 400% 400%;
+    font-family: 'Ubuntu', sans-serif;
     padding: 0;
     margin: 0;
     width: 100%;
     min-height: 200px;
-	animation: gradient 10s ease infinite;
+    animation: gradient 15s ease infinite;
     overflow: hidden;
 }
 
-.panel{
+.panel {
     background: linear-gradient(-45deg, rgba(94, 110, 255, 1), rgba(170, 106, 252, 1));
     padding: 50px;
     border-radius: 20px;
     filter: brightness(0.9);
 }
-.panel:hover{
+
+.panel:hover {
     filter: brightness(1);
 }
 
@@ -60,7 +58,7 @@ body {
     display: inline;
     margin: 40px;
     position: relative;
-    padding-top:10px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
@@ -88,19 +86,20 @@ body {
     cursor: pointer;
 }
 
-.navbar a{
+.navbar a {
     text-decoration: none;
     color: white;
 }
 
-.dash{
+.dash {
     border-radius: 50%;
     background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
     -webkit-text-fill-color: white;
     color: white;
     filter: brightness(0.9);
 }
-.dash:hover{
+
+.dash:hover {
     filter: brightness(1);
 }
 
@@ -129,20 +128,21 @@ body {
     position: relative;
     width: 100%;
 }
-.navbar2 div ul li i{
+
+.navbar2 div ul li i {
     padding-inline: 30px;
     padding-top: 30px;
     padding-bottom: 30px;
 }
+
 .navbar2 div ul li:hover {
     cursor: pointer;
 }
 
 .logo {
     object-fit: contain;
-    max-width: 60%;
+    max-width: 100px;
     max-height: 100px;
-    min-height: 100px;
     width: auto;
     height: auto;
     position: absolute;
@@ -151,61 +151,55 @@ body {
     z-index: -1;
 }
 
-@keyframes wind{
-    0%{
-        top: -300px;
-    }
-    50%{
-        top: -0px;
-    }
-    100%{
-        top: -300px;
-    }
-}
-
 .logo-background {
     position: absolute;
-    width: 90%;
-    height: 10000px;
+    width: 50%;
+    height: 100%;
     min-height: 100px;
-    top: -500px;
     right: 0px;
     background-color: #181818;
     z-index: -2;
-    -webkit-clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
-    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 0% 100%);
-    animation: ease wind 7s infinite;
-    overflow: hidden;
+    -webkit-clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+    clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+h1 {
+    font-size: 100px;
+    padding: 0px;
+    margin: 0px;
+}
+
+p {
+    font-size: 50px;
+    padding: 0px;
+    margin: 15px;
 }
 
 .heading {
     font-weight: bold;
     position: fixed;
-    top: 30%;
-    left: 50%;
+    color: white;
+    position: fixed;
+    top: 45%;
+    left: 45%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-    text-align: left;
+    font-size: 4rem;
     padding: 0px;
     margin: 0px;
+}
+
+h1::selection {
+    background: #181818;
+    color: white;
+}
+p::selection {
+    background: #181818;
     color: white;
 }
 
-h1{
-    font-size: 200px;
-    margin-bottom: 15px;
-    padding: 0px;
-}
-p{
-    font-weight: normal;
-    font-size: 50px;
-    padding: 0px;
-    margin-bottom: 10px;
-}
-
-.hl::selection{
-    background: white;
-    color: black;
+.icons {
+    font-size: 30px;
 }
 
 @media only screen and (max-width: 950px) {
@@ -226,22 +220,48 @@ p{
         visibility: hidden;
     }
     .logo-background {
-        width: 200%;
-        -webkit-clip-path: polygon(90% 0%, 100% 0%, 100% 100%, 0% 100%);
-        clip-path: polygon(90% 0%, 100% 0%, 100% 100%, 0% 100%);
+        width:40%;
+        -webkit-clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
+        clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%);
     }
-    .heading h1{
+    .heading{
+        top: 40%;
+        left: 50%;
+    }
+    .heading h1 {
         font-size: 100px;
+        padding: 0px;
+        margin: 15px;
     }
-    .heading p{
-        font-size: 25px;
+    
+    .heading p {
+        font-size: 30px;
+        padding: 0px;
+        margin-top: 15px;
     }
 }
 
 @media only screen and (max-width: 500px) {
-    .navbar2 div ul li i{
+    .navbar2 div ul li i {
         padding-inline: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
+    }
+}
+
+@media only screen and (max-width: 440px) {
+    .navbar2 div ul li i {
+        padding-inline: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    h2 {
+        font-size: 10px;
+    }
+    .heading h1 {
+        font-size: 30px;
+    }
+    .heading p {
+        font-size: 10px;
     }
 }

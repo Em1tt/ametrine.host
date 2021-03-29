@@ -49,6 +49,7 @@ body {
     min-height: 200px;
 	animation: gradient 15s ease infinite;
     height: 10000px;
+    overflow-x: hidden;
 }
 
 .panel{
@@ -70,7 +71,6 @@ body {
     display: inline-flex;
     justify-content: space-between;
     background-color: #181818;
-    border-top: solid white 3px;
     padding: 0;
     z-index: 20;
 }
@@ -94,7 +94,7 @@ body {
     position: absolute;
     width: 100%;
     height: 2px;
-    bottom: -5;
+    bottom: -5px;
     background-color: white;
     visibility: hidden;
     -webkit-transform: scaleX(0);
@@ -137,7 +137,6 @@ body {
     display: flex;
     justify-content: center;
     background-color: #181818;
-    border-top: solid white 3px;
     visibility: hidden;
     z-index: 20;
 }
@@ -232,6 +231,7 @@ body {
     text-align: center;
     color: #181818;
     box-shadow: 10px 10px 1000px rgba(0,0,0,0.5);
+    padding: 0px;
 }
 
 #about > * {
@@ -250,9 +250,9 @@ body {
 }
 .item{
     min-width: 200px;
-    max-width: 200px;
+    max-width: 220px;
     min-height: 200px;
-    max-height: 200px;
+    max-height: 220px;
     padding: 50px;
     margin: 40px;
     border-radius: 20px;
@@ -263,6 +263,10 @@ body {
     box-shadow: 15px 15px 15px rgba(0,0,0,0.3);
     transition: ease 1s;
     background-color: rgb(248, 248, 248);
+}
+.item:hover > *{
+    color:rgb(58, 78, 255);
+    transition: ease 1s;
 }
 .purpleH::selection{
     background: rgb(137, 94, 255);
@@ -293,6 +297,10 @@ body {
 }
 .orderButton:hover{
     filter: brightness(1);
+}
+
+.small{
+    display: none;
 }
 
 @media only screen and (max-width: 1500px) {
@@ -340,5 +348,53 @@ body {
         padding-inline: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
+    }
+}
+@media only screen and (max-width: 440px) {
+    .navbar2 div ul li i{
+        padding-inline: 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .item{
+        min-width: 100px;
+        min-height: 100px;
+        padding: 10px;
+        margin: 10px;
+    }
+    .icons{
+        font-size: 15px;
+    }
+    h2{
+       font-size: 10px; 
+    }
+    .specs{
+        font-size: 8px;
+    }
+    .small{
+        display: block;
+    }
+    #about > *{
+        margin: 5%;
+    }
+    .orderButton{
+        position: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 150px;
+        display:block;
+        border-radius: 100px;
+        padding: 10px;
+        background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+        text-decoration: none;
+        color: white;
+        font-size: 15px;
+        filter: brightness(0.9);
+    }
+    .heading h1{
+        font-size: 30px;
+    }
+    .heading p{
+        font-size: 10px;
     }
 }
