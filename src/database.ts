@@ -1,22 +1,26 @@
-// database code for all sql stuff
-import { util } from "./util";
-import fs       from "fs";
-import Sqlite = require("better-sqlite3");
+// database code for all redis stuff
+import { util }    from "./util";
+import config      from "./config.json";
+import fs          from "fs";
+import redis       from "redis";
+import RedisServer from "redis-server";
 
-const db: Sqlite.Database = new Sqlite("../db/all.db", {
-  verbose: util.sqlLog
-});
-let initCode: string;
+let c: redis.RedisClient = redis.createClient({port: config.db.port})
+let s: any = new RedisServer(config.db.port);
 
-export const sql = {
-  init: function (): void {
-    // get sql code to execute on start
-    fs.readFile("./sql/init.sql", (e, data) => {
+export let db = {
+  init: () => {
+    // start the server
+    s.open((e) => {
       if (e) throw e;
-      initCode = data.toString();
+      util.redisLog(`server ready @${config.db.port}`);
     });
-    db.exec(initCode);
+
+    c.on("ready", () => util.redisLog(`client ready @${config.db.port}`));
+    c.on("error", (e) => {throw e});
+
   },
 
-  database: db
+  client: c,
+  server: s
 }
