@@ -17,11 +17,11 @@ const app   : express.Application = express();
 const server: http.Server         = http.createServer(app);
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
-  max: 30
+  max: 1
 });
 
 // initialize database
-db.init();
+//db.init();
 
 app.use(morgan("[express] :method :url :status :res[content-length] - :response-time ms")); // logging
 

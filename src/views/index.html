@@ -1,105 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <link rel="stylesheet" href="css/index.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
-    </style>
-    <script defer async src="https://kit.fontawesome.com/792578796c.js" crossorigin="anonymous"></script>
-    <title>Amethyst.host</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Amethyst.host is a Minecraft server host provider. We provide cheap solutions for even the biggest projects you may have!">
-    <meta name="author" content="Richard Marcinčák">
-    <meta name="keywords" content="Minecraft, hosting, server, cheap, amethyst, host, game">
+    <title>Amethyst Host - Minecraft server hosting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Description"
+        content="We provide affordable, high quality hosting solutions for even the biggest Minecraft servers. Starting at €0.80/GB of RAM.">
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/index.css" media=>
+    <link rel="stylesheet" href="css/navbar.css">
 </head>
 
-<body>
-    <div class=navbar>
-        <div>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li>Pricing</li>
-                <li>Legal</li>
-                <li>Support</li>
-            </ul>
+<body class=col-12>
+    <!--CONTENT-->
+    <div class="heading m-4">
+        <h1 class="h1 header1 text-center text-md-start my-5 mx-5"><b>Amethyst.Host</b></h1>
+        <p class="h5 header2 text-center text-md-start mx-5">Affordable and reliable Minecraft servers with great
+            hardware.</p>
+    </div>
+    <img src="images/logo.png" alt="Amethyst.Host Logo" title="Amethyst.host logo floating"
+        class="position-absolute logo">
+    <div class="logoBG d-none d-md-block"></div>
+    
+    <!--NAVBAR-->
+
+    <div class="col-12 navbar d-inline-flex justify-content-start">
+        <a href="./index.html" class="d-none d-sm-inline-flex col-7 col-sm-4 col-md-3 col-lg-2 mx-1 mx-md-5 logoWrap">
+            <img src="images/ALogo.png" class="col-2" title="Logo of Amethyst Hosting">
+            <p class="col-10 d-inline-block logoText">Amethyst.host</p>
+        </a>
+        <div class="dropup col-2 col-lg-2 d-none d-sm-block">
+            <button class="dropbtn col-12 mx-0 px-0">Game Servers <i class="fas fa-caret-up mx-1"></i></button>
+            <div class="dropup-content col-12">
+                <a href="#">Minecraft: Java Edition</a>
+            </div>
         </div>
-        <div>
-            <ul>
-                <li class=panel>Panel</li>
-            </ul>
+        <div class="dropup col-2 col-lg-1 d-none d-sm-block">
+            <button class="dropbtn col-12 mx-0 px-0">Support <i class="fas fa-caret-up mx-1"></i></button>
+            <div class="dropup-content col-12">
+                <a href="#">Join our Discord</a>
+                <a href="#">Make a Ticket</a>
+                <a href="#">Send an E-Mail</a>
+            </div>
+        </div>
+        <div class="dropup col-2 col-lg-1 d-none d-sm-block">
+            <button class="dropbtn col-12 mx-0 px-0 more">More <i class="fas fa-caret-up mx-1"></i></button>
+            <div class="dropup-content col-12">
+                <a href="#">Subdomain Creator</a>
+                <a href="#">About us</a>
+                <a href="#">Legal</a>
+                <a href="#" class="d-flex d-lg-none">Clients</a>
+                <a href="#" class="d-flex d-lg-none">Manage Servers</a>
+            </div>
+        </div>
+        <div class="col-1 d-none d-lg-flex pullRight">
+            <button class="buttonLink col-12 mx-0 px-0 "><i class="fas fa-users"></i> Clients</button>
+        </div>
+        <div class="col-2 d-none d-lg-block justify-content-end end">
+            <button class="buttonLink col-12 mx-0 px-0 more"><i class="fas fa-cogs"></i> Manage Servers</button>
+        </div>
+        <div class="col-6 d-block d-sm-none">
+            <button class="col-12 mx-0 px-0 "><i class="fas fa-home"></i></button>
+        </div>
+        <div class="col-6 d-block d-sm-none">
+            <button onclick="navbarToggle()" class="col-12 mx-0 px-0 "><i class="fas fa-bars"></i></button>
         </div>
     </div>
-    <div class=navbar2>
-        <div>
-            <ul>
-                <li><i class="fas fa-home"></i></li>
-                <li><i class="fas fa-shopping-cart"></i></li>
-                <!--<li><i class="fas fa-columns dash"></i></li>-->
-                <li><i class="fas fa-columns dash"></i></li>
-                <li><i class="fas fa-balance-scale-right"></i></li>
-                <li><i class="fas fa-question-circle"></i></li>
-            </ul>
-        </div>
-    </div>
-    <section id="welcome">
-        <img src="./static/Amethyst.host-logo.png" alt="Amethyst.host logo" title="Amethyst.host logo" class="logo" />
-        <div class="logo-background"></div>
-        <div class=heading>
-            <h1>Affordable, quality<br>Minecraft server hosting</h1>
-            <p>with fast support and high uptime</p>
-        </div>
-    </section>
-    <section id=about>
-        <h1 class="purpleH titleInfo">Why choose us?</h1>
-        <p class="purpleH info">We provide the <b class=purpleH>best</b> hardware for <b class=purpleH>50% cheaper</b> than our
-            competitors. <i class=purpleH>Now that's a good price!</i>
-        </p>
-        <div class="items">
-            <div class=item>
-                <i class="fas fa-microchip icons"></i>
-                <h2 class=purpleH>AMD Ryzen 5 3600</h2>
-                <p class="specs purpleH"># of CPU cores: 6</p>
-                <p class="specs purpleH"># of threads: 12</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-memory icons"></i>
-                <h2 class=purpleH>DDR4 Memory</h2>
-                <p class="specs purpleH">70% faster than DDR3</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-wifi icons"></i>
-                <h2 class=purpleH>100% Uptime</h2>
-                <p class="specs purpleH">All network outages are<br class="small"> covered by our SLA</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-shield-alt icons"></i>
-                <h2 class=purpleH>DDOS protection</h2>
-                <p class="specs purpleH">All our servers have an <br class="small">advanced DDOS protection</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-ticket-alt icons"></i>
-                <h2 class=purpleH>Fast support</h2>
-                <p class="specs purpleH">No more waiting for replies!</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-columns icons"></i>
-                <h2 class=purpleH>Pterodactyl panel</h2>
-                <p class="specs purpleH">Fast and easy to use panel<br class="small"> to manage your servers</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-wallet icons"></i>
-                <h2 class=purpleH>14 day refund policy</h2>
-                <p class="specs purpleH">We provide refunds within 14<br class="small"> days of the initial purchase</p>
-            </div>
-            <div class=item>
-                <i class="fas fa-smile icons"></i>
-                <h2 class=purpleH>Free trial</h2>
-                <p class="specs purpleH"><a rel="noopener" href="https://discord.gg/d4DQKXd7qX" target="_blank" class="purpleH link">Join our Discord</a><br class="small"> and ask for a free trial</p>
-            </div>
-        </div>
-        <p class=purpleH>Interested?</p>
-        <p><a href="#" class="purpleH orderButton">View pricing</a></p>
-    </section>
+    <!--BOOTSTRAP-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
