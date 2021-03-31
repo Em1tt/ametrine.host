@@ -10,6 +10,7 @@ let s: any = new RedisServer(config.db.port);
 
 export let db = {
   init: () => {
+    if (process.argv.includes("--no-redis")) return;
     // start the server
     s.open((e) => {
       if (e) throw e;
@@ -18,7 +19,6 @@ export let db = {
 
     c.on("ready", () => util.redisLog(`client ready @${config.db.port}`));
     c.on("error", (e) => {throw e});
-
   },
 
   client: c,

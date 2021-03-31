@@ -1,3 +1,5 @@
+// entry point file that gets started with the start script
+// NOTE: to run with args, use `npm run start -- --arg`
 // imports
 import "dotenv/config";
 import http        from "http";
@@ -19,20 +21,23 @@ const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 30
 });
+console.log(process.argv);
 
 // initialize database
+// note for self: ["npm", "run", "start", "--no-redis"]
+// npm run start --no-redis
 db.init();
 
-app.use(morgan("[express] :method :url :status :res[content-length] - :response-time ms")); // logging
+if (!process.argv.includes("--no-log"))
+  app.use(morgan("[express] :method :url :status :res[content-length] - :response-time ms")); // logging
 
 // do express stuff
 app.use(express.static(path.join(__dirname, "views")));
-app.use("/", limiter);  // ratelimit the main webpage
+app.use("/*", limiter);  // ratelimit the main webpage
 app.use(compression()); // use gzip
 
 // use ejs engine
-app.engine("html", require("ejs").renderFile);
-app.set("view engine", "html");
+app.set("view engine", "ejs");
 
 // use all files from the views folder
 app.set("views", path.join(__dirname, "views"));
@@ -55,13 +60,20 @@ app.listen(config.website.port, () => {
 // close safely
 process.on("SIGINT", () => {
   // stop http server
-  server.close(() => util.expressLog(`http server stopped`));
+  server.close(() => {
+    util.expressLog(`http server stopped`)
+  });
 
-  // disconnect redis client
-  db.client.quit();
-  util.redisLog(`client disconnected`);
-  // stop redis server
-  db.server.close((e) => util.redisLog(`server closed`));
+  // have to do this because nodejs hangs otherwise (could have done it with if (...) return)
+  if (!process.argv.includes("--no-redis")) {
+    // disconnect redis client
+    db.client.quit();
+    util.redisLog(`client disconnected`);
+    // stop redis server
+    db.server.close((e) => {
+      util.redisLog(`server closed`)
+    });
+  }
 
   // close nodejs
   process.exit(0);
