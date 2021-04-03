@@ -12,27 +12,32 @@
 
 @keyframes wind{
 	0% {
-		top: 18%;
+		top: 30%;
 	}
 	50% {
-		top: 22%;
+		top: 35%;
 	}
 	100% {
-		top: 18%;
+		top: 30%;
 	}
 }
 
 @keyframes wind2{
 	0% {
-		top: 10%;
+		top: 25%;
 	}
 	50% {
-		top: 14%;
+		top: 30%;
 	}
 	100% {
-		top: 10%;
+		top: 25%;
 	}
 }
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
 
 body{
     font-family: 'Ubuntu', sans-serif;
@@ -40,18 +45,39 @@ body{
 	background-size: 10000px 10000px;
     animation: fade 15s ease infinite;
 }
+
+
+footer{
+    position: absolute;
+    align-items: center;
+    background-color: #181818;
+    height: 100px;
+    bottom: 0px;
+    color: white;
+}
+
+.url{
+    color: white;
+    text-decoration: none;
+}
+
+.url:hover{
+    color: #aa6afc;
+    text-decoration: none;
+}
+
 .heading{
     color: white;
     position: absolute;
-    top: 25%;
+    top: 30%;
 }
 .logoBG{
     background-color: #252525;
     position: absolute;
     right: 0px;
     width: 50%;
-    top: 20%;
-    height: 40%;
+    top: 25%;
+    height: 50%;
     clip-path: polygon(10% 0%, 100% 0%, 100% 100%, 0% 100%);
     animation: wind 6s infinite ease;
     z-index: -2;
@@ -65,6 +91,76 @@ body{
     animation: wind2 7s ease infinite;
     z-index: -1;
     max-width: 250px;
+}
+.white_bg{
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    height: 1100px;
+    background-color: white;
+    box-shadow: 80px 80px 100px 100px rgba(0, 0, 0, 0.2);
+}
+
+.gallery {
+  background: #EEE;
+  margin: auto;
+}
+
+.gallery-cell {
+  width: 100%;
+  height: 500px;
+  margin-right: 10px;
+  color: white;
+  counter-increment: gallery-cell;
+  align-items: center;
+  filter: brightness(0.95);
+}
+.gallery-cell:hover{
+    filter: brightness(1);
+}
+
+.bg1{
+    background-image: url("../images/bg1.png");
+}
+.bg2{
+    background-image: url("../images/bg2.png");
+}
+.bg3{
+    background-image: url("../images/bg3.png");
+}
+.bg4{
+    background-image: url("../images/bg4.png");
+}
+.bg5{
+    background-image: url("../images/bg5.png");
+}
+.bg6{
+    background-image: url("../images/bg6.png");
+}
+.bg7{
+    background-image: url("../images/bg7.png");
+}
+.bg8{
+    background-image: url("../images/bg8.png");
+}
+.orderButton{
+    position: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    display:block;
+    border-radius: 100px;
+    padding: 30px;
+    background: linear-gradient(-45deg, rgba(94, 110, 255, 1) 0%, rgba(170, 106, 252, 1) 100%);
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    filter: brightness(0.9);
+}
+.orderButton:hover{
+    color: white;
+    text-decoration: none;
+    filter: brightness(1);
 }
 
 @media screen and (prefers-reduced-motion){

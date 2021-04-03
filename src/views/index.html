@@ -3,17 +3,22 @@
 
 <head>
     <title>Amethyst Host - Minecraft server hosting</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="Description"
-        content="We provide affordable, high quality hosting solutions for even the biggest Minecraft servers. Starting at €0.80/GB of RAM.">
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
         integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/index.css" media=>
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css" media="screen">
+    <!--META-->
+    <meta charset="UTF-8">
+    <meta name="description"
+        content="We provide affordable, high quality hosting solutions for even the biggest Minecraft servers. Starting at €0.80/GB of RAM.">
+    <meta name="keywords" content="Amethyst, Hosting, Minecraft, Cheap, Quality, Server">
+    <meta name="author" content="Richard 'Em1t' Marcinčák">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body class=col-12>
@@ -26,7 +31,58 @@
     <img src="images/logo.png" alt="Amethyst.Host Logo" title="Amethyst.host logo floating"
         class="position-absolute logo">
     <div class="logoBG d-none d-md-block"></div>
-    
+    <div class="white_bg col-12">
+        <h2 class="h2 text-center mt-5 col-12">Start your own Minecraft server with us <b>today</b>.</h2>
+        <h3 class="h3 text-center col-12"></h3>
+        <!--Gallery1-->
+        <div class="gallery col-12 col-md-10 my-5" data-flickity='{ "wrapAround": true, "autoPlay": 5000 }'>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg1">
+                <h2 class="h2 text-center"><b>Extremely Affordable</b></h2>
+                <p class="h4 text-center mx-5">Minecraft servers starting at <b>€0.80/GB</b></p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg2">
+                <h2 class="h2 text-center"><b>Great Hardware</b></h2>
+                <p class="h4 text-center mx-5"><b>AMD Ryzen 5 3600</b> and <b>DDR4 RAM</b></p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg3">
+                <h2 class="h2 text-center"><b>100% Uptime</b></h2>
+                <p class="h4 text-center mx-5"><b>All</b> outages are covered by our SLA</p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg4">
+                <h2 class="h2 text-center"><b>Fast Support</b></h2>
+                <p class="h4 text-center mx-5">We provide <b>Discord</b> & <b>Ticket</b> support for all our plans</p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg6">
+                <h2 class="h2 text-center"><b>Pterodactyl panel</b></h2>
+                <p class="h4 text-center mx-5">Easy to use Pterodactyl panel</p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg7">
+                <h2 class="h2 text-center"><b>DDOS protection</b></h2>
+                <p class="h4 text-center mx-5">Our servers are protected against DDOS attacks.</p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg8">
+                <h2 class="h2 text-center"><b>Instant Deployment</b></h2>
+                <p class="h4 text-center mx-5">Your server gets <b>instantly</b> deployed upon ordering</p>
+            </div>
+            <div class="gallery-cell d-flex justify-content-center flex-column bg5">
+                <h2 class="h2 text-center"><b>Free Trial</b></h2>
+                <p class="h4 text-center mx-5">Join our Discord server and ask for a <b>free trial</b>.</p>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <hr class="col-8" style="color:#b6b6b6;">
+        </div>
+        <div class="col-12 d-flex justify-content-center">
+            <p><a href="#" class="my-3 purpleH orderButton text-center">View plans</a></p>
+        </div>
+        <footer class="col-12 d-flex my-5 justify-content-center">
+            <p class="mx-auto">© Amethyst.host, all rights reserved</p>
+            <div class="d-flex flex-row mx-auto">
+                <p class="mx-5"><a href="#" class="url">Terms & Conditions</a></p>
+                <p class=""><a href="#" class="url">Privacy Policy</a></p>
+            </div>
+        </footer>
+    </div>
     <!--NAVBAR-->
 
     <div class="col-12 navbar d-inline-flex justify-content-start">
@@ -34,21 +90,21 @@
             <img src="images/ALogo.png" class="col-2" title="Logo of Amethyst Hosting">
             <p class="col-10 d-inline-block logoText">Amethyst.host</p>
         </a>
-        <div class="dropup col-2 col-lg-2 d-none d-sm-block">
+        <div class="dropup col-12 col-sm-2 col-lg-2 d-none d-sm-block navbarToggle">
             <button class="dropbtn col-12 mx-0 px-0">Game Servers <i class="fas fa-caret-up mx-1"></i></button>
             <div class="dropup-content col-12">
                 <a href="#">Minecraft: Java Edition</a>
             </div>
         </div>
-        <div class="dropup col-2 col-lg-1 d-none d-sm-block">
+        <div class="dropup col-12 col-sm-2 col-lg-1 d-none d-sm-block navbarToggle">
             <button class="dropbtn col-12 mx-0 px-0">Support <i class="fas fa-caret-up mx-1"></i></button>
             <div class="dropup-content col-12">
-                <a href="#">Join our Discord</a>
+                <a href="https://discord.gg/d4DQKXd7qX" target="_blank" rel="noreferrer">Join our Discord</a>
                 <a href="#">Make a Ticket</a>
                 <a href="#">Send an E-Mail</a>
             </div>
         </div>
-        <div class="dropup col-2 col-lg-1 d-none d-sm-block">
+        <div class="dropup col-12 col-sm-2 col-lg-1 d-none d-sm-block navbarToggle">
             <button class="dropbtn col-12 mx-0 px-0 more">More <i class="fas fa-caret-up mx-1"></i></button>
             <div class="dropup-content col-12">
                 <a href="#">Subdomain Creator</a>
@@ -65,12 +121,23 @@
             <button class="buttonLink col-12 mx-0 px-0 more"><i class="fas fa-cogs"></i> Manage Servers</button>
         </div>
         <div class="col-6 d-block d-sm-none">
-            <button class="col-12 mx-0 px-0 "><i class="fas fa-home"></i></button>
+            <button class="col-12 smallButtons"><i class="fas fa-home"></i> Home</button>
         </div>
         <div class="col-6 d-block d-sm-none">
-            <button onclick="navbarToggle()" class="col-12 mx-0 px-0 "><i class="fas fa-bars"></i></button>
+            <button onclick="navbarToggle()" class="col-12 smallButtons rightBorder"><i class="fas fa-bars"></i>
+                Menu</button>
         </div>
     </div>
+    <!--SCRIPTS-->
+    <script defer>
+        function navbarToggle() {
+            Array.from(document.getElementsByClassName("navbarToggle")).forEach(element => {
+                element.classList.toggle("d-none");
+            });
+        }
+    </script>
+    <!--FLICKITY-->
+    <script defer src="https://unpkg.com/flickity@2.2.2/dist/flickity.pkgd.min.js"></script>
     <!--BOOTSTRAP-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
