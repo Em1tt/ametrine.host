@@ -5,7 +5,6 @@ import "dotenv/config";
 import path          from "path";
 import fs            from "fs";
 import child_process from "child_process";
-import Mod           from "./types/module";
 
 // files
 import config   from "./config.json";
@@ -21,7 +20,7 @@ fs.readdirSync(MODULE_PATH).forEach((file) => {
   if (!file.endsWith(".js")) return;
   moduleNames.push(file.replace(".js", ""));
 });
-console.log(`[main] ${moduleNames.length} module(s) loaded`);
+util.log(`${moduleNames.length} module(s) loaded`);
 
 // start all modules in separate processes
 for (let m of moduleNames) {
@@ -30,9 +29,6 @@ for (let m of moduleNames) {
 };
 
 process.on("SIGINT", () => {
-  // stop every module
-  for (let m of modules) { m.disconnect() }
-
-  // close nodejs
-  process.exit(0);
+  for (let m of modules) { m.disconnect() } // stop modules
+  process.exit(0); // close nodejs
 });
