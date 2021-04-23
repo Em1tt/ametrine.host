@@ -1,6 +1,5 @@
 // module type for safety
-
-export type Module = {
+export type Mod = {
   name : string;
   start: (util: JSON) => void;
   stop : () => void;
