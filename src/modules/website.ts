@@ -1,17 +1,11 @@
 // imports
-import "dotenv/config";
-import http        from "http";
 import express     from "express";
 import compression from "compression";
-import vhost       from "vhost";
 import morgan      from "morgan";
-import rateLimit   from "express-rate-limit";
 import path        from "path";
 import config      from "../config.json";
 import { util }    from "../util";
-
-const app   : express.Application = express();
-const server: http.Server         = http.createServer(app);
+const app: express.Application = express();
 
 app.use(morgan("[express] :method :url :status :res[content-length] - :response-time ms"));
 
