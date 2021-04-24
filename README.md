@@ -8,3 +8,5 @@ To start **amethyst.host** website, do the following:
   3. ``npm run start`` to start the website up
 
 **Default port: ``3000``**
+
+© Amethyst.host. Distribution / Modification of our software is prohibited.
