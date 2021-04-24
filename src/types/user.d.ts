@@ -1,5 +1,5 @@
 // user account type
-import Server from "./server";
+import { Server } from "./server";
 export type User = {
   name    : string;
   id      : number;
