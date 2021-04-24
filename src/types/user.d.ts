@@ -1,7 +1,7 @@
 // user account type
-
+import { Server } from "./server";
 export type User = {
-  name   : string;          // user name
-  id     : number;          // user id
-  servers: import("./server").Server[] | null; // servers that the user owns
+  name    : string;
+  id      : number;
+  servers?: Array<Server>;
 }
