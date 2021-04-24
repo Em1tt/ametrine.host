@@ -7,8 +7,9 @@ We pay **€32.39EUR** for each of our nodes, and at a full node we get back **�
 **Input: 32.39EUR + 8.27EUR = 40.66EUR**  
 **Output: ~48EUR**  
 **Difference: +~7.34EUR / node**  
+**THERE'S NO REQUIREMENTS TO REGISTER AS A TAX/VAT PAYER IN SLOVAK REPUBLIC UNLESS WE HAVE AN ANNUAL INCOME OF ~2200€**  
 
-We strive to be transparent about our income, technicalities, and team - That's why this Repository is public
+We strive to be transparent about our income, technicalities, and team - That's why this Repository is public.
 
 ## Website deploying
 To start **amethyst.host** website, do the following: 
