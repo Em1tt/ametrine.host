@@ -7,6 +7,5 @@ export const prop = {
   usage: "ping",
 
   run: (bot : Client, 
-        msg : Message,
-        args: Array<string>) => msg.reply("Pong!")
+        msg : Message): void => msg.reply("Pong!")
 }
