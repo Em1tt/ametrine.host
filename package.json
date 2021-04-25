@@ -2,18 +2,17 @@
   "name": "amethyst-host",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/main.ts",
+  "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && npx tsc -p ./",
-    "wBuild": "rmdir dist && mkdir dist && copy src/* dist && npx tsc -p ./",
+    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && npx tsc -p ./ && cd dist && find . -name '*.ts' -type f -delete",
     "start": "node dist/main.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Em1tt/amethyst.host-website.git"
   },
-  "author": "",
+  "author": "Amethyst",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Em1tt/amethyst.host-website/issues"
