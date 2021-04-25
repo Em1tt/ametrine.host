@@ -6,8 +6,9 @@ import config      from "../config.json";
 import { Command } from "../types/discord/command";
 import { util }    from "../util";
 
-const bot : Discord.Client     = new Discord.Client();
-const cmds: Discord.Collection = new Discord.Collection();
+const bot : Discord.Client = new Discord.Client();
+const cmds: Discord.Collection<string, Command> 
+                           = new Discord.Collection();
 
 bot.once("ready", () => {
   util.discordLog("logged in");
