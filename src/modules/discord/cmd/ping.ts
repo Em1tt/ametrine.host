@@ -6,7 +6,7 @@ export const prop = {
   desc : "Check if the bot is alive.",
   usage: "ping",
 
-  run: (bot: Client, 
-        msg: Message, 
+  run: (bot : Client, 
+        msg : Message,
         args: Array<string>) => msg.reply("Pong!")
 }

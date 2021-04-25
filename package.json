@@ -10,27 +10,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Em1tt/amethyst.host-website.git"
+    "url": "git+https://github.com/Em1tt/amethyst.host.git"
   },
   "author": "Amethyst",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Em1tt/amethyst.host-website/issues"
+    "url": "https://github.com/Em1tt/amethyst.host/issues"
   },
-  "homepage": "https://github.com/Em1tt/amethyst.host-website#readme",
+  "homepage": "https://github.com/Em1tt/amethyst.host#readme",
   "dependencies": {
     "compression": "^1.7.4",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
-    "express-rate-limit": "^5.2.6",
     "mailparser": "^3.2.0",
     "morgan": "^1.10.0",
-    "redis": "^3.0.2",
-    "redis-server": "^1.2.2",
-    "smtp-server": "^3.8.0",
-    "vhost": "^3.0.2"
+    "smtp-server": "^3.8.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
