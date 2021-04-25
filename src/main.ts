@@ -52,6 +52,10 @@ stdin.addListener("data", (d) => {
       util.log(`loaded module "${args[0]}"`)
       break;
 
+    case "usage":
+      util.log(`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB`);
+      break;
+
     default: util.log("unknown command!");
   }
 });
