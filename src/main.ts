@@ -11,22 +11,49 @@ import { util } from "./util";
 
 // variables
 const MODULE_PATH: string = path.join(__dirname, "modules");
-const moduleNames: Array<string>                     = [];
-const modules    : Array<child_process.ChildProcess> = [];
+const stdin      : any    = process.openStdin();
+const modules    : Map<string, child_process.ChildProcess> = new Map();
 
-// preload all modules
+// preload & start all modules
 fs.readdirSync(MODULE_PATH).forEach((file) => {
   if (!file.endsWith(".js")) return;
-  moduleNames.push(file.replace(".js", ""));
+  modules.set(file.replace(".js", ""),
+              child_process.fork(`dist/modules/${file}`));
 });
+util.log(`${modules.size} module(s) started`);
 
-util.log(`${moduleNames.length} module(s) loaded`);
+// "CLI"
+stdin.addListener("data", (d) => {
+  const args: Array<string> = d.toString().trim().split(" ");
+  const cmd : string        = args[0];
+  args.shift();
 
-// start all modules in separate processes
-moduleNames.forEach((m) => {
-  modules.push(
-    child_process.fork(`dist/modules/${m}.js`)
-  );
+  // ..yeah, thats stupid
+  switch (cmd) {
+    case "disable":
+      if (args[0] == "*") {
+        modules.forEach((m) => m.kill());
+        return util.log("disabled all modules");
+      }
+      if (!modules.has(args[0]))
+        return util.log(`unknown module "${args[0]}"`);
+
+      modules.get   (args[0]).kill();
+      modules.delete(args[0]);
+      util.log(`disabled module "${args[0]}"`);
+      break;
+
+    case "enable":
+      if (modules.has(args[0]))
+        return util.log(`module "${args[0]}" already enabled`);
+
+      modules.set(args[0],
+                  child_process.fork(`dist/modules/${args[0]}.js`));
+      util.log(`loaded module "${args[0]}"`)
+      break;
+
+    default: util.log("unknown command!");
+  }
 });
 
 process.on("SIGINT", () => {
