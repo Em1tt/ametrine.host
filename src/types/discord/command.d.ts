@@ -1,5 +1,5 @@
 // bot command, like !ping
-import { Client, Message } from "discord.js";
+import { Client, Message, Collection } from "discord.js";
 
 export interface Command {
   prop: {
@@ -8,7 +8,8 @@ export interface Command {
     readonly usage?: string;
     run            : (bot : Client,
                       msg : Message,
-                      args: Array<string>)
+                      args: Array<string>,
+                      cmds: Collection<string, Command>)
                          => void;
   };
 }

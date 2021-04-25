@@ -13,7 +13,6 @@ import { util } from "./util";
 const MODULE_PATH: string = path.join(__dirname, "modules");
 const stdin      : any    = process.openStdin();
 const modules    : Map<string, child_process.ChildProcess> = new Map();
-console.log(typeof stdin);
 
 // preload & start all modules
 fs.readdirSync(MODULE_PATH).forEach((file) => {

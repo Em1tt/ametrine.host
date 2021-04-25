@@ -33,11 +33,10 @@ bot.on("message", async (msg: Discord.Message) => {
 
   // remove the command argument
   args.shift();
-  util.discordLog(`command: ${cmd} [${args.join(", ")}]`);
 
   try {
-    cmds.get(cmd).prop.run(bot, msg, args);
-    util.discordLog("executed")
+    cmds.get(cmd).prop.run(bot, msg, args, cmds);
+    util.discordLog(`executed ${cmd} [${args}]`);
   } catch (e) {
     util.discordLog(`not executed (${e})`);
   }
