@@ -5,7 +5,6 @@
     "removeComments"        : true,
     "esModuleInterop"       : true,
     "noEmitOnError"         : true,
-    "noExplicitAny"         : true,
     "experimentalDecorators": true,
     "preserveConstEnums"    : true,
     "sourceMap"             : true,
