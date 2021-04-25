@@ -1,4 +1,4 @@
-// discord bot!!
+// discord bot
 import "dotenv/config";
 import Discord     from "discord.js";
 import fs          from "fs";
@@ -19,8 +19,9 @@ bot.once("ready", () => {
       const cmd = require(`./discord/cmd/${f.replace(".js", "")}`);
       cmds.set(cmd.prop.name, cmd);
   });
-
   util.discordLog(`${cmds.array().length} command(s) loaded`);
+
+  bot.user.setActivity("on amethyst.host", {type: "PLAYING"});
 });
 
 bot.on("message", async (msg: Discord.Message) => {
