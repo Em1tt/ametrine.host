@@ -5,5 +5,9 @@
 
   "db": {
     "port": 6379
+  },
+
+  "discord": {
+    "prefix": "!"
   }
 }
