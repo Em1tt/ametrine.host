@@ -7,7 +7,7 @@ import config           from "../config.json";
 const server: SMTPServer = new SMTPServer({
   onData(stream, session, callback) {
     simpleParser(stream, {}, (e, p) => {
-      if (err) return util.mailLog(`err: ${e}`);
+      if (e) return util.mailLog(`err: ${e}`);
 
       util.mailLog(`"${p.subject}" from ${p.from.text}`);
       util.mailLog(`${p.text}`);
@@ -17,4 +17,4 @@ const server: SMTPServer = new SMTPServer({
   disabledCommands: ["AUTH"]
 });
 
-server.listen(config.mail.port);
+server.listen(config.mail.port, "0.0.0.0", () => util.mailLog("server started"));
