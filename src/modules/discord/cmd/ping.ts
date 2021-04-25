@@ -6,5 +6,5 @@ export const ping: Command = {
   desc : "Check if the bot is alive.",
   usage: "ping",
 
-  run: (bot, msg, args) => msg.reply("Pong!");
+  run: (bot, msg, args) => msg.reply("Pong!")
 }
