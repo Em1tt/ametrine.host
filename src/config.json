@@ -7,6 +7,10 @@
     "port": 6379
   },
 
+  "mail": {
+    "port": 25
+  },
+
   "discord": {
     "prefix": "!"
   }
