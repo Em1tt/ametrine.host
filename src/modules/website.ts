@@ -7,7 +7,7 @@ import config      from "../config.json";
 import { util }    from "../util";
 const app: express.Application = express();
 
-app.use(morgan("[express] :method :url :status :res[content-length] - :response-time ms"));
+app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
 
 // do express stuff
 app.use(express.static(path.join(__dirname, "views")));

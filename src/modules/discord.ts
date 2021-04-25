@@ -13,25 +13,32 @@ const cmds: Discord.Collection<string, Command>
 bot.once("ready", () => {
   util.discordLog("logged in");
 
-  fs.readdirSync("./cmds")
+  fs.readdirSync(`./dist/modules/discord/cmd`)
     .filter( (f) => f.endsWith(".js"))
     .forEach((f) => {
-      const cmd = require(`./cmds/${f}`);
-      cmds.set(cmd.name, cmd);
-    });
+      const cmd = require(`./discord/cmd/${f.replace(".js", "")}`);
+      cmds.set(cmd.prop.name, cmd);
+  });
+
+  util.discordLog(`${cmds.array().length} command(s) loaded`);
 });
 
-bot.on("message", (msg: Discord.Message) => {
+bot.on("message", async (msg: Discord.Message) => {
+  if (!msg.content.startsWith(config.discord.prefix)
+    || msg.author.bot) return;
+
   const args: Array<string> = msg.content.split(" ");
-  const cmd : string        = args[0].substring(config.discord.prefix.length);
+  const cmd : string        = args[0].substring(config.discord.prefix.length).toLowerCase();
 
   // remove the command argument
   args.shift();
+  util.discordLog(`command: ${cmd} [${args.join(", ")}]`);
 
   try {
-    cmds.get(cmd).run(bot, msg, args);
+    cmds.get(cmd).prop.run(bot, msg, args);
+    util.discordLog("executed")
   } catch (e) {
-    util.discordLog(e);
+    util.discordLog(`not executed (${e})`);
   }
 });
 
