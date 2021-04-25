@@ -11,8 +11,8 @@ import { util } from "./util";
 
 // variables
 const MODULE_PATH: string = path.join(__dirname, "modules");
-const moduleNames: Array<string> = [];
-const modules    : Array<object> = [];
+const moduleNames: Array<string>                  = [];
+const modules    : Array<Record<string, unknown>> = [];
 
 // preload all modules
 fs.readdirSync(MODULE_PATH).forEach((file) => {
