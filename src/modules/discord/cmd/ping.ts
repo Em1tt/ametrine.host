@@ -1,6 +1,5 @@
 // ping command
 // should just write "pong"
-import { Command } from "../../../types/discord/command";
 import { Client, Message } from "discord.js";
 export const prop = {
   name : "ping",
