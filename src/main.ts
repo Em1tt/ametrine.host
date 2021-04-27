@@ -12,7 +12,7 @@ import { util } from "./util";
 // variables
 const MODULE_PATH: string = path.join(__dirname, "modules");
 const stdin      : any    = process.openStdin();
-const modules    : Map<string, child_process.ChildProcess> = new Map();
+const modules    : Map<string, any> = new Map();
 
 // preload & start all modules
 const mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
