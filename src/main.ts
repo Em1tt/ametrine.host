@@ -15,9 +15,9 @@ const stdin      : any    = process.openStdin();
 const modules    : Map<string, child_process.ChildProcess> = new Map();
 
 // preload & start all modules
-const mfiles: Array<string> = fs.readdirSync(MODULE_PATH);
-for (const file of mfiles {
-  if (!file.endsWith(".js")) return;
+const mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
+                                .filter((f) => f.endsWith(".js"));
+for (const file of mfiles) {
   modules.set(file.replace(".js", ""),
               child_process.fork(`dist/modules/${file}`));
 };

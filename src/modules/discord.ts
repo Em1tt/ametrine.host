@@ -14,7 +14,7 @@ bot.once("ready", () => {
   util.discordLog("logged in");
 
   const files = fs.readdirSync(`./dist/modules/discord/cmd`)
-                  .filter( (f) => f.endsWith(".js"));
+                  .filter((f) => f.endsWith(".js"));
   for (const f of files) {
       const cmd = require(`./discord/cmd/${f.replace(".js", "")}`);
       cmds.set(cmd.prop.name, cmd);
