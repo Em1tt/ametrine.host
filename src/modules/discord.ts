@@ -16,9 +16,9 @@ bot.once("ready", () => {
   const files = fs.readdirSync(`./dist/modules/discord/cmd`)
                   .filter((f) => f.endsWith(".js"));
   for (const f of files) {
-      const cmd = require(`./discord/cmd/${f.replace(".js", "")}`);
+      const cmd: Command = require(`./discord/cmd/${f.replace(".js", "")}`);
       cmds.set(cmd.prop.name, cmd);
-  };
+  }
   util.discordLog(`${cmds.array().length} command(s) loaded`);
 
   bot.user.setActivity("on amethyst.host", {type: "PLAYING"});

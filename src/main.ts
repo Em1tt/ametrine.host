@@ -20,7 +20,7 @@ const mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
 for (const file of mfiles) {
   modules.set(file.replace(".js", ""),
               child_process.fork(`dist/modules/${file}`));
-};
+}
 util.log(`${modules.size} module(s) started`);
 
 // "CLI"
