@@ -15,11 +15,12 @@ const stdin      : any    = process.openStdin();
 const modules    : Map<string, child_process.ChildProcess> = new Map();
 
 // preload & start all modules
-fs.readdirSync(MODULE_PATH).forEach((file) => {
+const mfiles: Array<string> = fs.readdirSync(MODULE_PATH);
+for (const file of mfiles {
   if (!file.endsWith(".js")) return;
   modules.set(file.replace(".js", ""),
               child_process.fork(`dist/modules/${file}`));
-});
+};
 util.log(`${modules.size} module(s) started`);
 
 // "CLI"
@@ -32,7 +33,7 @@ stdin.addListener("data", (d) => {
   switch (cmd) {
     case "disable":
       if (args[0] == "*") {
-        modules.forEach((m) => m.kill());
+        for (const m of modules) { m.kill() }
         return util.log("disabled all modules");
       }
       if (!modules.has(args[0]))
@@ -61,6 +62,6 @@ stdin.addListener("data", (d) => {
 });
 
 process.on("SIGINT", () => {
-  modules.forEach((m) => m.disconnect()); // stop modules
+  for (const m of modules) { m.disconnect() } // stop modules
   process.exit(0); // close nodejs
 });
