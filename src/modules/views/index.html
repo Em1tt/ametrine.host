@@ -8,8 +8,8 @@
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css" media="screen">
-    <link rel="stylesheet" href="../css/navbar.css">
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/navbar.css">
     <meta charset="UTF-8">
     <meta name="title" content="Amethyst Host">
     <meta name="description"
@@ -21,7 +21,7 @@
 
 <body>
     <nav id="navbar">
-        <a href="#"><img src="../images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host" alt="Amethyst Host Logo" id="logo">
+        <a href="#"><img src="./images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host" alt="Amethyst Host Logo" id="logo">
             <p>Amethyst.host</p>
         </a>
         <div class="text">
@@ -47,15 +47,57 @@
     <header>
         <div>
             <h1>Amethyst.host</h1>
-            <h2><i>Minecraft servers starting at <b>€0.75EUR/GB</b></i></h2>
+            <h2><i>Minecraft servers starting at €0.75EUR/GB</i></h2>
         </div>
     </header>
-    <>
+    <main>
+        <h3><b>Why choose us?</b></h3>
+        <h4>We provide benefits our competitors simply can't - all that at an affordable price.</h4>
+        <div class="cardparent">
+            <div class="card">
+                <div>
+                    <i class="fa fa-bolt" style="color:#e4ac3c;"></i><h5>100% Uptime</h5>
+                </div>
+                <p>We know first-hand how important uptime is, that's why all outages are covered by our <a href="#">SLA</a>.</p>
+            </div>
+            <div class="card">
+                <div>
+                    <i class="fa fa-signal" style="color:#58e43c;"></i><h5>Fast connectivity</h5>
+                </div>
+                <p>Our servers run at <b>1Gbit/s</b> connection to provide smooth gameplay for all your players.</p>
+            </div>
+            <div class="card">
+                <div>
+                    <i class="fa fa-microchip" style="color:#3cd9e4;"></i><h5>Fast hardware</h5>
+                </div>
+                <p>Our servers use AMD Epyc CPU's, with high speed DDR4 memory and 100% fast SSD.</p>
+            </div>
+            <div class="card">
+                <div>
+                    <i class="fa fa-clipboard-check" style="color:#553ce4;"></i><h5>No overselling</h5>
+                </div>
+                <p>We don't, never have and never will oversell our nodes, that's a promise.</p>
+            </div>
+            <div class="card">
+                <div>
+                    <i class="fa fa-comments" style="color:#de3ce4;"></i><h5>Fast & Reliable support</h5>
+                </div>
+                <p>Our support team will help you with any request. Join our <a href="#">Discord server</a> to ask questions or create a ticket through our <a href="#">client area</a>. We constantly update our knowledgebase, to help people learn.</p>
+            </div>
+            <div class="card">
+                <div>
+                    <i class="fa fa-stopwatch" style="color:#e43c3c;"></i><h5>Instant provisioning</h5>
+                </div>
+                <p>Start playing on your server instantly. Our automatic system will make sure your server is provisioned before you can blink.</p>
+            </div>
+        </div>
+        <h4><a href="#">And much more!</a></h4>
+    </main>
     <!--FLICKITY-->
     <script>
         document.addEventListener("scroll", () => {
             if (document.body.scrollTop > 0) {
-                document.getElementById("navbar").style = "background-color:rgba(30, 30, 36, 0.9);"
+                document.getElementById("navbar").style = "background-color:rgba(30, 30, 36, 0.98);"
             } else if(document.body.scrollTop == 0){
                 document.getElementById("navbar").style = "background-color:rgba(36, 36, 44, 0);";
             }

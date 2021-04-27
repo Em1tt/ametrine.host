@@ -11,7 +11,7 @@ body{
 }
 header{
     position:static;
-    height: 100vh;
+    height: 75vh;
     width: 100%;
     display: grid;
     place-items: center;
@@ -25,9 +25,6 @@ header div h1{
 header div h2{
     font-size: 2rem;
 }
-header div h3{
-    font-size: 1.5rem;
-}
 header div hr{
     color: white;
 }
@@ -40,10 +37,85 @@ header::before{
     -o-background-size: cover;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    height: 75vh;
     position: absolute;
     display: block;
     z-index: -1;
     left: 0px;
     top: 0px;
+    margin: 0px;
+}
+
+main{
+    display: flex;
+    position: static;
+    color: black; 
+    text-align: center;
+     grid-template-rows: 1vf 3vf 3vf 3vf 1vf;
+     flex-direction: column;
+}
+
+main h3{
+    font-size: 1.75rem;
+}
+main h4{
+    font-size: 1.5rem;
+}
+
+.cardParent{
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+    align-items: baseline;
+    align-content: space-around;
+}
+
+.card{
+    border-radius: 50px;
+    padding: 50px;
+    border: solid 1px rgb(216, 216, 216);
+    width: auto;
+    height: auto;
+    width: 400px;
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    flex-wrap: wrap;
+    flex-flow: wrap;
+    transition: 1s;
+}
+
+.card:hover{
+    box-shadow: 6px 6px 8px rgba(136, 136, 136, 0.1);
+    background-color: rgb(226, 226, 226);
+    transition: 1s;
+}
+
+.card div{
+    display: flex;
+    margin: 0px;
+    justify-content: start;
+    font-size: 1.35rem;
+}
+.card div h5 {
+    margin: 0px;
+    margin-inline: 10px;
+    align-self: center;
+}
+.card p {
+    text-align: left;
+}
+
+main::before{
+    top: 70%;
+    display: block;
+    background-color: rgb(223, 223, 223);
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0px;
+    height: 100vh;
+    z-index: -1;
+    margin: 0px;
+    transform: skewY(-1deg);
 }
