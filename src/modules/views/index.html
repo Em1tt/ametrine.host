@@ -1,13 +1,16 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
-        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <title>Affordable Minecraft hosting | Amethyst.host</title>
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous" media="">
+        <noscript><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"></noscript>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css" media="screen">
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css" media="screen">
+    <noscript><link rel="stylesheet" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css"></noscript>
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/navbar.css">
     <meta charset="UTF-8">
@@ -21,19 +24,25 @@
 
 <body>
     <nav id="navbar">
-        <a href="#"><img src="./images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host" alt="Amethyst Host Logo" id="logo">
+        <a href="#" aria-label="Home"><img src="./images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
+                alt="Amethyst Host Logo" id="logo">
             <p>Amethyst.host</p>
         </a>
         <div class="text">
-            <a href="#" id="about"><span class="textContent">About</span><span class="iconContent"><i class="fa fa-info-circle" aria-label="About Amethyst.host"></i></span></a>
+            <a href="#" id="about"><span class="">About</span><span class="iconContent"><i
+                        class="fa fa-info-circle" aria-label="About Amethyst.host"></i></span></a>
             <div class="dropdown">
-                <button class="dropbtn"><span class="textContent">Pricing</span><span class="iconContent"><i class="fa fa-tags" aria-label="Dropdown menu of our pricing for our products"></i></span></button>
+                <button class="dropbtn"><span class="">Pricing</span><span class="iconContent"><i
+                            class="fa fa-tags"
+                            aria-label="Dropdown menu of our pricing for our products"></i></span></button>
                 <div class="dropdown-content">
                     <a href="#">Minecraft</a>
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><span class="textContent">Support</span><span class="iconContent"><i class="fa fa-question-circle" aria-label="Dropdown menu of our support options"></i></span></button>
+                <button class="dropbtn"><span class="">Support</span><span class="iconContent"><i
+                            class="fa fa-question-circle"
+                            aria-label="Dropdown menu of our support options"></i></span></button>
                 <div class="dropdown-content" id="support">
                     <a href="#">Create a ticket</a>
                     <a href="#">Join our Discord</a>
@@ -42,12 +51,18 @@
                 </div>
             </div>
         </div>
-        <a href="#" id="client-area"><span class="textContent">Client Area</span><span class="iconContent"><i class="fa fa-user" aria-label="Client Area button"></i></span></a>
+        <a href="#" id="client-area"><span class="textContent"><b>Client Area</b></span><span class="iconContent"><i
+                    class="fa fa-user" aria-label="Client Area button"></i></span></a>
     </nav>
     <header>
-        <div>
-            <h1>Amethyst.host</h1>
-            <h2><i>Minecraft servers starting at €0.75EUR/GB</i></h2>
+        <div class="gallery"
+            data-flickity='{ "wrapAround": true, "autoPlay": 3000, "lazyLoad": 1, "prevNextButtons": false }'>
+            <div class="gallery-cell">
+                <div>
+                    <h2 class="heading">Amethyst.host</h2>
+                    <h3 class="subheading"><i>Minecraft servers starting at €0.75EUR/GB</i></h3>
+                </div>
+            </div>
         </div>
     </header>
     <main>
@@ -56,49 +71,127 @@
         <div class="cardparent">
             <div class="card">
                 <div>
-                    <i class="fa fa-bolt" style="color:#e4ac3c;"></i><h5>100% Uptime</h5>
+                    <i class="fa fa-bolt" style="color:#e4ac3c;"></i>
+                    <h5>100% Uptime</h5>
                 </div>
-                <p>We know first-hand how important uptime is, that's why all outages are covered by our <a href="#">SLA</a>.</p>
+                <p>We know first-hand how important uptime is, that's why all outages are covered by our <a
+                        href="#">SLA</a>.</p>
             </div>
             <div class="card">
                 <div>
-                    <i class="fa fa-signal" style="color:#58e43c;"></i><h5>Fast connectivity</h5>
+                    <i class="fa fa-signal" style="color:#58e43c;"></i>
+                    <h5>Fast connectivity</h5>
                 </div>
                 <p>Our servers run at <b>1Gbit/s</b> connection to provide smooth gameplay for all your players.</p>
             </div>
             <div class="card">
                 <div>
-                    <i class="fa fa-microchip" style="color:#3cd9e4;"></i><h5>Fast hardware</h5>
+                    <i class="fa fa-microchip" style="color:#3cd9e4;"></i>
+                    <h5>Fast hardware</h5>
                 </div>
                 <p>Our servers use AMD Epyc CPU's, with high speed DDR4 memory and 100% fast SSD.</p>
             </div>
             <div class="card">
                 <div>
-                    <i class="fa fa-clipboard-check" style="color:#553ce4;"></i><h5>No overselling</h5>
+                    <i class="fa fa-clipboard-check" style="color:#553ce4;"></i>
+                    <h5>No overselling</h5>
                 </div>
                 <p>We don't, never have and never will oversell our nodes, that's a promise.</p>
             </div>
             <div class="card">
                 <div>
-                    <i class="fa fa-comments" style="color:#de3ce4;"></i><h5>Fast & Reliable support</h5>
+                    <i class="fa fa-comments" style="color:#de3ce4;"></i>
+                    <h5>Fast & Reliable support</h5>
                 </div>
-                <p>Our support team will help you with any request. Join our <a href="#">Discord server</a> to ask questions or create a ticket through our <a href="#">client area</a>. We constantly update our knowledgebase, to help people learn.</p>
+                <p>Our support team will help you with any request. Join our <a href="#">Discord server</a> to ask
+                    questions or create a ticket through our <a href="#">client area</a>. We constantly update our
+                    knowledgebase, to help people learn.</p>
             </div>
             <div class="card">
                 <div>
-                    <i class="fa fa-stopwatch" style="color:#e43c3c;"></i><h5>Instant provisioning</h5>
+                    <i class="fa fa-stopwatch" style="color:#e43c3c;"></i>
+                    <h5>Instant provisioning</h5>
                 </div>
-                <p>Start playing on your server instantly. Our automatic system will make sure your server is provisioned before you can blink.</p>
+                <p>Start playing on your server instantly. Our automatic system will make sure your server is
+                    provisioned before you can blink.</p>
             </div>
         </div>
         <h4><a href="#">And much more!</a></h4>
     </main>
+    <div class="plans">
+        <div class="headers">
+            <h2>
+                See what we have to offer
+            </h2>
+            <h3>
+                We're so confident in our service we provide a 14 day money back guarantee
+            </h3>
+        </div>
+        <div class="proxy plan">
+            <h2 class="plan-name">Budget</h2>
+            <p class="price">Starting at €0.75EUR/Month</p>
+            <p class="included"><b>What's included?</b></p>
+            <hr>
+            <ul class="stats">
+                <li><i class="fa fa-check check"></i>AMD Ryzen™ 5 3600 Hexa-Core</li>
+                <li><i class="fa fa-check check"></i>DDR4 RAM</li>
+                <li><i class="fa fa-check check"></i>NVMe SSD</li>
+                <li><i class="fa fa-check check"></i>Wisp panel</li>
+                <li><i class="fa fa-check check"></i><b>Instant Setup</b></li>
+                <li><i class="fa fa-times cross"></i>Unlimited disk space for all plans</li>
+                <li><i class="fa fa-times cross"></i>Enterprise Hardware</li>
+            </ul>
+            <a href="#" class="button-order">Order</a>
+        </div>
+        <div class="basic plan">
+            <h2 class="plan-name">Default</h2>
+            <p class="price">Starting at €1.15EUR/Month</p>
+            <p class="included"><b>What's included?</b></p>
+            <hr>
+            <ul class="stats">
+                <li><i class="fa fa-check check"></i>AMD Ryzen™ 7 3700X Octa-Core</li>
+                <li><i class="fa fa-check check"></i>DDR4 RAM</li>
+                <li><i class="fa fa-check check"></i>NVMe SSD</li>
+                <li><i class="fa fa-check check"></i>Wisp panel</li>
+                <li><i class="fa fa-check check"></i><b>Instant Setup</b></li>
+                <li><i class="fa fa-check check"></i>Unlimited disk space for all plans</li>
+                <li><i class="fa fa-times cross"></i>Enterprise Hardware</li>
+            </ul>
+            <a href="#" class="button-order">Planned...</a>
+        </div>
+        <div class="custom plan">
+            <h2 class="plan-name">Premium</h2>
+            <p class="price">Starting at €3.00EUR/Month</p>
+            <p class="included"><b>What's included?</b></p>
+            <hr>
+            <ul class="stats">
+                <li><i class="fa fa-check check"></i>AMD EPYC™ 7502P 32-Core "Rome"</li>
+                <li><i class="fa fa-check check"></i>DDR4 RAM</li>
+                <li><i class="fa fa-check check"></i>NVMe SSD</li>
+                <li><i class="fa fa-check check"></i>Wisp panel</li>
+                <li><i class="fa fa-check check"></i><b>Instant Setup</b></li>
+                <li><i class="fa fa-check check"></i>Unlimited disk space for all plans</li>
+                <li><i class="fa fa-check check"></i>Enterprise Hardware</li>
+            </ul>
+            <a href="#" class="button-order">Planned...</a>
+        </div>
+    </div>
+    <footer>
+        <div class="copyrightParent">
+            <p class="copyright">© Amethyst.host, All rights reserved</p>´
+        </div>
+        <div class="legalParent">
+            <a href="#" class="legal">Privacy Policy</a>
+            <a href="#" class="legal">Terms & Conditions</a>
+            <a href="#" class="legal">SLA</a>
+        </div>
+    </footer>
     <!--FLICKITY-->
     <script>
         document.addEventListener("scroll", () => {
             if (document.body.scrollTop > 0) {
                 document.getElementById("navbar").style = "background-color:rgba(30, 30, 36, 0.98);"
-            } else if(document.body.scrollTop == 0){
+            } else if (document.body.scrollTop == 0 && document.body.clientWidth > 460) {
                 document.getElementById("navbar").style = "background-color:rgba(36, 36, 44, 0);";
             }
         });
