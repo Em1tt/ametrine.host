@@ -5,7 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && echo '[amethyst-build] compiling' && npx tsc -p ./ && echo '[amethyst-build] cleaning' && cd dist && find . -name '*.ts' -type f -delete && find . -name '*.js.map' -type f -delete",
+    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && echo '[amethyst-build] compiling' && npx tsc -p ./ && echo '[amethyst-build] cleaning' && cd dist && find . -name '*.js.map' -type f -delete",
     "start": "node dist/main.js"
   },
   "repository": {
