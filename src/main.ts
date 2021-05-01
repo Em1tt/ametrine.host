@@ -5,14 +5,14 @@ import "dotenv/config";
 import path          from "path";
 import fs            from "fs";
 import child_process from "child_process";
-import stream        from "stream";
+import net           from "net";
 
 // files
 import { util } from "./util";
 
 // variables
-const MODULE_PATH: string          = path.join(__dirname, "modules");
-const stdin      : stream.Readable = process.openStdin();
+const MODULE_PATH: string     = path.join(__dirname, "modules");
+const stdin      : net.Socket = process.openStdin();
 const modules    : Map<string, child_process.ChildProcess> = new Map();
 
 // preload & start all modules
