@@ -33,7 +33,7 @@ stdin.addListener("data", (d) => {
   switch (cmd) {
     case "disable":
       if (args[0] == "*") {
-        for (const m of modules) { m.kill() }
+        modules.forEach((m) => m.kill());
         return util.log("disabled all modules");
       }
       if (!modules.has(args[0]))
@@ -62,6 +62,6 @@ stdin.addListener("data", (d) => {
 });
 
 process.on("SIGINT", () => {
-  for (const m of modules) { m.disconnect() } // stop modules
+  modules.forEach((m) => m.disconnect());
   process.exit(0); // close nodejs
 });
