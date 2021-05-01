@@ -5,7 +5,6 @@ import "dotenv/config";
 import path          from "path";
 import fs            from "fs";
 import child_process from "child_process";
-import stream        from "stream";
 
 // files
 import { util } from "./util";
