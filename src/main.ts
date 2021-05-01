@@ -5,14 +5,15 @@ import "dotenv/config";
 import path          from "path";
 import fs            from "fs";
 import child_process from "child_process";
+import stream        from "stream";
 
 // files
 import { util } from "./util";
 
 // variables
-const MODULE_PATH: string = path.join(__dirname, "modules");
-const stdin      : any    = process.openStdin();
-const modules    : Map<string, any> = new Map();
+const MODULE_PATH: string          = path.join(__dirname, "modules");
+const stdin      : stream.Readable = process.openStdin();
+const modules    : Map<string, child_process.ChildProcess> = new Map();
 
 // preload & start all modules
 const mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
