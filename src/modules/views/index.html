@@ -24,15 +24,13 @@
 
 <body>
     <nav id="navbar">
-        <a href="#" aria-label="Home"><img src="./images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
-                alt="Amethyst Host Logo" id="logo">
+        <a href="#" aria-label="Home"><img src="../images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
+                alt="" id="logo">
             <p>Amethyst.host</p>
         </a>
         <div class="text">
-            <a href="#" id="about"><span class="">About</span><span class="iconContent"><i
-                        class="fa fa-info-circle" aria-label="About Amethyst.host"></i></span></a>
             <div class="dropdown">
-                <button class="dropbtn"><span class="">Pricing</span><span class="iconContent"><i
+                <button class="dropbtn"><span class="textContent">Pricing</span><span class="iconContent"><i
                             class="fa fa-tags"
                             aria-label="Dropdown menu of our pricing for our products"></i></span></button>
                 <div class="dropdown-content">
@@ -40,14 +38,24 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><span class="">Support</span><span class="iconContent"><i
+                <button class="dropbtn"><span class="textContent">Support</span><span class="iconContent"><i
                             class="fa fa-question-circle"
                             aria-label="Dropdown menu of our support options"></i></span></button>
-                <div class="dropdown-content" id="support">
+                <div class="dropdown-content">
                     <a href="#">Create a ticket</a>
                     <a href="#">Join our Discord</a>
                     <a href="#">Write an E-Mail</a>
-                    <a href="#">View our knowledgebase</a>
+                    <a href="#">Knowledgebase</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="textContent">More</span><span class="iconContent"><i
+                            class="fa fa-plus-circle"
+                            aria-label="Navigation, more dropdown menu"></i></span></button>
+                <div class="dropdown-content" id="support">
+                    <a href="../html/about.html">About</a>
+                    <a href="../html/partners.html">Partners</a>
+                    <a href="#">Forum</a>
                 </div>
             </div>
         </div>
@@ -56,11 +64,23 @@
     </nav>
     <header>
         <div class="gallery"
-            data-flickity='{ "wrapAround": true, "autoPlay": 3000, "lazyLoad": 1, "prevNextButtons": false }'>
+            data-flickity='{ "wrapAround": true, "autoPlay": 5000, "lazyLoad": 1, "prevNextButtons": false }'>
             <div class="gallery-cell">
                 <div>
                     <h2 class="heading">Amethyst.host</h2>
                     <h3 class="subheading"><i>Minecraft servers starting at €0.75EUR/GB</i></h3>
+                </div>
+            </div>
+            <div class="gallery-cell">
+                <div>
+                    <h2 class="heading">Join our <a href="#" style="color:#ed5087;text-decoration: none;">Discord Server</a></h2>
+                    <h3 class="subheading"><i style="text-shadow:2px 2px 10px black">Community, support, suggestions, trial requests and much more!</i></h3>
+                </div>
+            </div>
+            <div class="gallery-cell">
+                <div>
+                    <h2 class="heading">Wisp panel</h2>
+                    <h3 class="subheading"><i style="text-shadow:2px 2px 10px black">Grow your server with us. We offer the best panel with every plan.</i></h3>
                 </div>
             </div>
         </div>
@@ -124,7 +144,7 @@
                 See what we have to offer
             </h2>
             <h3>
-                We're so confident in our service we provide a 14 day money back guarantee
+                Even our budget line is extremely reliable and performs good. Why not try it yourself?
             </h3>
         </div>
         <div class="proxy plan">
@@ -138,10 +158,12 @@
                 <li><i class="fa fa-check check"></i>NVMe SSD</li>
                 <li><i class="fa fa-check check"></i>Wisp panel</li>
                 <li><i class="fa fa-check check"></i><b>Instant Setup</b></li>
+                <li><i class="fa fa-check check"></i>14 days money back guarantee</li>
+                <li><i class="fa fa-check check"></i><b>Free 24h trial</b></li>
                 <li><i class="fa fa-times cross"></i>Unlimited disk space for all plans</li>
                 <li><i class="fa fa-times cross"></i>Enterprise Hardware</li>
             </ul>
-            <a href="#" class="button-order">Order</a>
+            <a href="#" class="orderbutton">View Plans</a>
         </div>
         <div class="basic plan">
             <h2 class="plan-name">Default</h2>
@@ -154,6 +176,8 @@
                 <li><i class="fa fa-check check"></i>NVMe SSD</li>
                 <li><i class="fa fa-check check"></i>Wisp panel</li>
                 <li><i class="fa fa-check check"></i><b>Instant Setup</b></li>
+                <li><i class="fa fa-check check"></i>14 days money back guarantee</li>
+                <li><i class="fa fa-check check"></i><b>Free 24h trial</b></li>
                 <li><i class="fa fa-check check"></i>Unlimited disk space for all plans</li>
                 <li><i class="fa fa-times cross"></i>Enterprise Hardware</li>
             </ul>
@@ -170,6 +194,8 @@
                 <li><i class="fa fa-check check"></i>NVMe SSD</li>
                 <li><i class="fa fa-check check"></i>Wisp panel</li>
                 <li><i class="fa fa-check check"></i><b>Instant Setup</b></li>
+                <li><i class="fa fa-check check"></i>21 days money back guarantee</li>
+                <li><i class="fa fa-check check"></i><b>Free 24h trial</b></li>
                 <li><i class="fa fa-check check"></i>Unlimited disk space for all plans</li>
                 <li><i class="fa fa-check check"></i>Enterprise Hardware</li>
             </ul>
