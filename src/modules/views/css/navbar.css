@@ -1,139 +1,233 @@
-.navbar {
-  background-color: #181818;
-  position: fixed;
-  bottom: 0px;
-  border-top: 2px solid white;
+:root{
+    --highlightsBG: #1e1e24;
+    --highlighted: #282831;
+    --background: #24242c;
+    --pink: #ed5087;
+    --purple: #9250ed;
+    background-color: var(--background);
 }
 
-.navbar>a {
-  text-decoration: none;
-  padding: 0px;
-  margin: 0px;
-  display: inline-flex;
-  align-items: center;
+nav{
+    position: fixed;
+    left: 0px;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    color: white;
+    padding: 20px;
+    transition: 0.5s ease;
+    z-index: 50;
 }
 
-.logoText {
-  font-size: 20px;
-  color: white;
-  margin: 0px;
+nav a {
+    display: flex;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 12.5%;
+    vertical-align: center;
+    width: 50px;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+    justify-self: left;
+}
+nav a p {
+    margin: 25%;
+}
+nav div {
+    display: flex;
+    margin-left: 25%;
+    justify-self: center;
+    justify-content: center;
+    flex-direction: row;
+    width: auto;
 }
 
-.logoWrap {
-  filter: grayscale(1) brightness(1.2);
+#client-area {
+    font-weight:initial;
+    border-radius: 50px;
+    background-color: var(--pink);
+    color: rgb(212, 212, 212);
+    padding: 16px;
+    font-size: 18px;
+    border: none;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 12.5%;
 }
 
-.logoWrap:hover {
-  filter: grayscale(0) brightness(1);
-  transition: 1s ease;
-}
-
-.buttonLink {
-  background-color: transparent;
-  color: white;
-  padding: 16px;
-  font-size: 14px;
-  border: none;
-  max-height: 53px;
-  border-left: solid 2px #aa6afc;
-}
-
-.pullRight {
-  margin-left: auto;
-}
-
-.end {
-  margin-right: 1%;
-}
-
-/* Dropup Button */
-
-.dropbtn {
-  background-color: transparent;
-  color: white;
-  padding: 16px;
-  font-size: 14px;
-  border: none;
-  max-height: 53px;
-  border-left: solid 2px #aa6afc;
-}
-
-.more {
-  border-inline: solid 2px #aa6afc;
-}
-.smallButtons{
-  background-color: transparent;
-  color: white;
-  padding: 16px;
-  font-size: 14px;
-  border: none;
-  max-height: 53px;
-  border-left: solid 2px #aa6afc;
-}
-.rightBorder{
-  border-left: transparent;
-  border-right: solid 2px #aa6afc;
-}
-
-/* The container <div> - needed to position the dropup content */
-
-.dropup {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropup content (Hidden by Default) */
-
-.dropup-content {
-  display: none;
-  position: absolute;
-  bottom: 100%;
-  background-color: #181818;
-  min-width: 200%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-}
-
-/* Links inside the dropup */
-
-.dropup-content>a {
-  color: white;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  border-left: solid 5px #181818;
-}
-
-/* Change color of dropup links on hover */
-
-.dropup-content a:hover {
-  background-color: #242424;
-  border-left: solid 5px #aa6afc;
-}
-
-/* Show the dropup menu on hover */
-
-.dropup:hover .dropup-content {
-  display: block;
-}
-.dropup:hover:focus-within .dropup-content {
-  display: none;
-}
-
-/* Change the background color of the dropup button when the dropup content is shown */
-
-.dropup:hover .dropbtn {
-  background-color: #242424;
-  transition: 1s ease;
-}
-
-.buttonLink:hover {
-  background-color: #242424;
-  transition: 1s ease;
-}
-
-@media only screen and (max-width:575px) {
-  .dropbtn {
-    border-inline: solid 2px #aa6afc;
+#about {
+    margin: 0px;
+    background-color: transparent;
+    color: rgb(212, 212, 212);
+    padding: 16px;
+    font-size: 18px;
+    border: none;
   }
+
+  #about:hover{
+      color: white;
+  }
+
+ /* Dropdown Button */
+ .dropbtn {
+    background-color: transparent;
+    color: rgb(212, 212, 212);
+    padding: 16px;
+    font-size: 18px;
+    border: none;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    margin: 0px;
+    display: none;
+    position: absolute;
+    background-color: var(--highlightsBG);
+    min-width: 300px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+      font-size: 1.2rem;
+    margin: 0px;
+    color: rgb(212,212,212);
+    padding: 12px 16px;
+    width: auto;
+    text-decoration: none;
+    display: block;
+    border-left: 2px solid transparent;
+  }
+  .iconContent{
+      display: none;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color:var(--highlighted);color: white;border-left: 2px solid var(--purple);}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {color: white;} 
+
+@media screen and (max-width: 1350px){
+    nav a p {
+        display: none;
+    }
+    nav a{
+        margin-left: 6%;
+    }
+    nav div {
+        margin-left: 12.5%;
+    }
+    #client-area{
+        right: 6%;
+    }
+}
+
+@media screen and (max-width: 775px){
+    nav a{
+        margin-left: 2%;
+    }
+    nav div {
+        margin-left: 12.5%;
+    }
+    #client-area{
+        right: 2%;
+    }
+    .dropdown-content {
+        min-width: 200px;
+      }
+}
+
+@media screen and (max-width: 650px){
+    .textContent{
+        display: none;
+    }
+    .iconContent{
+        display: block;
+    }
+    #client-area{
+        width: 50px;
+    }
+}
+@media screen and (max-width: 460px){
+    #navbar {
+        top:initial;
+        background-color: var(--highlightsBG);
+        bottom: 0 !important;
+    }
+    #logo{
+        display: none;
+    }
+    .text{
+        margin-left: 2%;
+        position: absolute;
+        left: 0px;
+    }
+    .iconContent{
+        display: block;
+    }
+    #client-area{
+        width: 20px;
+    }
+    .dropbtn {
+        background-color: transparent;
+        color: rgb(212, 212, 212);
+        padding: 16px;
+        font-size: 18px;
+        border: none;
+      }
+      
+      /* The container <div> - needed to position the dropdown content */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      
+      /* Dropdown Content (Hidden by Default) */
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        bottom: 50px;
+        background-color: var(--highlightsBG);
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      
+      /* Links inside the dropdown */
+      .dropdown-content a {
+        color: rgb(212, 212, 212);
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      #support{
+          left: -90px;
+      }
+      .dropup-content a:hover {background-color: #ddd}
+
+      /* Show the dropup menu on hover */
+      .dropup:hover .dropup-content {
+        display: block;
+      }
+      
+      /* Change the background color of the dropup button when the dropup content is shown */
+      .dropup:hover .dropbtn {
+        background-color: #2980B9;
+      }
 }
