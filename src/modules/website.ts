@@ -2,12 +2,12 @@
 import express     from "express";
 import compression from "compression";
 import morgan      from "morgan";
-import minify	   from "express-minify";
+import minify      from "express-minify";
 import path        from "path";
-import fs 		   from "fs";
+import fs 		     from "fs";
 import config      from "../config.json";
 import { util }    from "../util";
-const app: express.Application = express();
+const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
 
 app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
@@ -19,8 +19,6 @@ app.use(minify());
 // serve static files
 app.use(express.static(path.join(__dirname, "views")));
 
-app.post("/*", )
-
 app.get("/", (r: express.Request, s: express.Response) => {
   s.sendFile(`${html}/index.html`);
 });
@@ -31,7 +29,7 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
 
   if (!fs.existsSync(file)) 
   	return s.status(404)
-  			.send("if you were searching for a 404.. you found it!!");
+            .send("if you were searching for a 404.. you found it!!");
   s.sendFile(file);
 });
 
