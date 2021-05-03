@@ -25,7 +25,7 @@ app.get("/", (r: express.Request, s: express.Response) => {
 
 // "smart" router
 app.get("/:name", (r: express.Request, s: express.Response) => {
-  const file: string = `${html}/${r.params.name}.html`;
+  const file = `${html}/${r.params.name}.html`;
 
   if (!fs.existsSync(file)) 
     return s.status(404)
