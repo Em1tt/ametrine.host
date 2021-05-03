@@ -15,11 +15,11 @@ export const prop = {
     if (args.length == 0) {
       let names = [];
       cmds.forEach(c => names.push("`" + c.prop.name + "`"));
-      return msg.reply(`All commands: ${names.join(", ")}`);
+      msg.reply(`All commands: ${names.join(", ")}`);
+    } else {
+      const cmd: Command = cmds.get(args[0]);
+      msg.reply(`${cmd.prop.desc} (\`${cmd.prop.usage}\`)`);
+      // See help on some command. (`help [command]`)
     }
-
-    const cmd: Command = cmds.get(args[0]);
-    msg.reply(`${cmd.prop.desc} (\`${cmd.prop.usage}\`)`);
-    // See help on some command. (`help [command]`)
   }
 }
