@@ -1,14 +1,10 @@
 {
   "website": {
-    "port": 8080
-  },
-
-  "db": {
-    "port": 6379
+    "port": 3000
   },
 
   "mail": {
-    "port": 9998
+    "port": 9997
   },
 
   "discord": {

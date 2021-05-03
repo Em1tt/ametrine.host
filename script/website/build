@@ -6,7 +6,7 @@ cp -r src/* dist
 
 # compile
 echo '[amethyst-build] compiling'
-npx tsc -p ./
+tsc -p ./
 
 # remove leftover typescript files
 echo '[amethyst-build] cleaning'

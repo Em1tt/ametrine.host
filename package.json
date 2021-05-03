@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
     "build": "rm -rf dist && mkdir dist && cp -r src/* dist && echo '[amethyst-build] compiling' && npx tsc -p ./ && echo '[amethyst-build] cleaning' && cd dist && find . -name '*.js.map' -type f -delete",
-    "start": "node dist/main.js"
+    "start": "pm2 start dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -24,8 +24,10 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "express-minify": "^1.0.0",
     "mailparser": "^3.2.0",
     "morgan": "^1.10.0",
+    "npx": "^10.2.2",
     "smtp-server": "^3.8.0"
   },
   "devDependencies": {
@@ -34,6 +36,6 @@
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint": "^7.23.0",
-    "typescript": "^4.2.3"
+    "typescript": "^4.2.4"
   }
 }
