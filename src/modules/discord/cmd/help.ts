@@ -11,9 +11,15 @@ export const prop = {
         msg : Message,
         args: Array<string>,
         cmds: Collection<string, Command>): void => {
-    const cmd: Command = cmds.get(args[0]);
+    // display all commands
+    if (args.length == 0) {
+      let names = [];
+      cmds.forEach(c => names.push("`" + c.prop.name + "`"));
+      return msg.reply(`All commands: ${names.join(", ")}`);
+    }
 
-    // See help on some command. (`help [command]`)
+    const cmd: Command = cmds.get(args[0]);
     msg.reply(`${cmd.prop.desc} (\`${cmd.prop.usage}\`)`);
+    // See help on some command. (`help [command]`)
   }
 }
