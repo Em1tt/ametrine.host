@@ -28,7 +28,7 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
   const file: string = `${html}/${r.params.name}.html`;
 
   if (!fs.existsSync(file)) 
-  	return s.status(404)
+    return s.status(404)
             .send("if you were searching for a 404.. you found it!!");
   s.sendFile(file);
 });
