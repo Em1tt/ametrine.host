@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "amethyst-host",
-=======
   "name": "amethyst.host",
->>>>>>> b0971d86bd0677da5403f5942cbc463b3220c580
   "version": "1.4.0",
   "description": "Hosting service providing yada yada yada @Em1t finish this text please",
   "main": "./dist/main.js",
