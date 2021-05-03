@@ -22,4 +22,4 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: bash script/lint
-    - run: bash script/build
+    - run: bash script/website/build
