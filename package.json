@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "amethyst-host",
+=======
+  "name": "amethyst.host",
+>>>>>>> b0971d86bd0677da5403f5942cbc463b3220c580
   "version": "1.4.0",
   "description": "Hosting service providing yada yada yada @Em1t finish this text please",
   "main": "./dist/main.js",
@@ -22,7 +26,6 @@
     "compression": "^1.7.4",
     "discord.js": "^12.5.3",
     "dotenv": "^8.2.0",
-    "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-minify": "^1.0.0",
     "mailparser": "^3.2.0",
