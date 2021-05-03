@@ -13,7 +13,7 @@ export const prop = {
         cmds: Collection<string, Command>): void => {
     // display all commands
     if (args.length == 0) {
-      let names = [];
+      const names = [];
       cmds.forEach(c => names.push("`" + c.prop.name + "`"));
       msg.reply(`All commands: ${names.join(", ")}`);
     } else {
