@@ -30,8 +30,8 @@ To make a module, make a `.ts` file in `src/modules`
 
 ## Credits
 The entirety of **Amethyst** is maintained by:
-* @Em1tt - CEO & frontend
-* @b1tt0 - backend
+* [Em1t](https://github.com/Em1tt) - CEO & frontend
+* [b1tt](https://github.com/b1tt0) - backend
 * kopolomo03 - investing
 * Bekah - managing finances & advertising
 
