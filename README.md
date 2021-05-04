@@ -1,6 +1,7 @@
 # ![Amethyst.host](/src/modules/views/images/ACLogoT.png?raw=true)
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub](https://img.shields.io/github/license/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host)
+
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Famethyst.host) ![Discord](https://img.shields.io/discord/825086628561027092)
 
 **amethyst.host** is a hosting service, providing premium Minecraft servers for 32% of our competitors price, with better specs & features. 
