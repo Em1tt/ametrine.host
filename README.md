@@ -1,14 +1,12 @@
 # Amethyst.host
-**amethyst.host** is a hosting service, providing premium Minecraft servers for 32% of our competitors price, with better specs & features. We strive to provide the cheapest but most exclusive feel to our service, that's why we're prioritizing customer satisfaction over profits.
+**amethyst.host** is a hosting service, providing premium Minecraft servers for 32% of our competitors price, with better specs & features. 
+
+We strive to provide the cheapest but most exclusive feel to our service, that's why we're prioritizing customer satisfaction over profits.
 
 ## Monthly Expenses
-We pay **€32.39** for each of our nodes, and at a full node we get back **€48**. Don't believe us? Our nodes are 60GB of RAM each, to prevent overselling and we sell each GB of RAM for **€0.80/GB**, feel free to do the Math.
+We pay **€32.39** for each of our nodes, and at a full node we get back **€48**. *Don't believe us?* Our nodes are **60GB** of RAM each, to prevent overselling and we sell each GB of RAM for **€0.80/GB**
 
-**Input: €32.39 + €8.27 = €40.66**  
-**Output: ~48EUR**  
-**Difference: ≈€7.34 / node**  
-
-We strive to be transparent about our income, technicalities, and team - That's why this Repository is public.
+We strive to be transparent about our income, technicalities, and team - **that's why this repository is public.**
 
 ## Backend deploying
 To start **amethyst.host**, do the following: 
@@ -30,8 +28,7 @@ To make a module, make a `.ts` file in `src/modules`
 The entirety of **Amethyst** is maintained by:
   1. Em1t, CEO & frontend
   2. b1tt, backend
-  3. Firee, backend
-  4. kopolomo03, investing
-  5. Beka, managing finances & advertising
+  3. kopolomo03, investing
+  4. Bekah, managing finances & advertising
 
 © Amethyst.host | Distribution / Modification of our software is prohibited.
