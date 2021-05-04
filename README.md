@@ -26,8 +26,8 @@ To make a module, make a `.ts` file in `src/modules`
 
 ## Credits
 The entirety of **Amethyst** is maintained by:
-* Em1t - CEO & frontend
-* b1tt - backend
+* @Em1tt - CEO & frontend
+* @b1tt0 - backend
 * kopolomo03 - investing
 * Bekah - managing finances & advertising
 
