@@ -1,0 +1,110 @@
+:root {
+    --highlightsBG: #1e1e24;
+    --highlighted: #282831;
+    --background: #24242c;
+    --pink: #ed5087;
+    --purple: #9250ed;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    scroll-behavior: smooth;
+    overflow: hidden;
+    color: white;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #24242c;
+}
+
+img {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+@keyframes flash {
+    0% {
+        color: white;
+    }
+    19% {
+        color: white;
+    }
+    20% {
+        color: red;
+    }
+    39% {
+        color: red;
+    }
+    40% {
+        color: white;
+    }
+    59% {
+        color: white;
+    }
+    60% {
+        color: red;
+    }
+    79% {
+        color: red;
+    }
+    80% {
+        color: white;
+    }
+    99% {
+        color: white;
+    }
+    100% {
+        color: red;
+    }
+}
+
+#response {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: red;
+    text-align: right;
+}
+
+.animate{
+    animation: flash 2s;
+}
+
+hr {
+    color: var(--pink);
+    width: 25vw;
+}
+
+a {
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--pink);
+}
+
+footer {
+    position: absolute;
+    height: 100px;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: var(--highlightsBG);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+footer a {
+    font-size: 1rem;
+}
+
+button {
+    padding: 20px 15%;
+    color: white;
+    background-color: var(--pink);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+}

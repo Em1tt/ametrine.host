@@ -1,16 +1,6 @@
-:root{
-    --highlightsBG: #1e1e24;
-    --highlighted: #282831;
-    --background: #24242c;
-    --pink: #ed5087;
-    --purple: #9250ed;
-    background-color: var(--background);
-}
-
-html{
+html {
     scroll-behavior: smooth;
 }
-
 
 body{
     font-family: 'Ubuntu', sans-serif;
@@ -64,12 +54,16 @@ header{
     background-repeat: no-repeat;
   }
   .gallery-cell:nth-child(2){
-    background-image: url("../images/bridge.jpg");
+    background-image: url("../images/code.jpg");
     background-size: cover;
-    background-position-y: -200px;
     background-repeat: no-repeat;
   }
   .gallery-cell:nth-child(3){
+    background-image: url("../images/bridge.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .gallery-cell:nth-child(4){
     background-image: url("../images/panel.jpg");
     background-size: cover;
     background-repeat: no-repeat;
