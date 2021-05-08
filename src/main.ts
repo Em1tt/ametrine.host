@@ -8,28 +8,33 @@ import child_process from "child_process";
 
 // files
 import { util } from "./util";
+import { cmds } from "./cli";
 
 // variables
 const MODULE_PATH: string = path.join(__dirname, "modules");
-const moduleNames: Array<any> = [];
-const modules    : Array<any> = [];
+const stdin      : any    = process.openStdin();
+const modules    : Map<string, child_process.ChildProcess> = new Map();
 
-// preload all modules
-fs.readdirSync(MODULE_PATH).forEach((file) => {
-  if (!file.endsWith(".js")) return;
-  moduleNames.push(file.replace(".js", ""));
+// preload & start all modules
+const mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
+                                .filter((f) => f.endsWith(".js"));
+
+for (const file of mfiles) {
+  modules.set(file.replace(".js", ""),
+              child_process.fork(`dist/modules/${file}`));
+}
+util.log(`${modules.size} module(s) started`);
+
+// "CLI"
+stdin.addListener("data", (d) => {
+  const args: Array<string> = d.toString().trim().split(" ");
+  const cmd : string        = args[0];
+  args.shift();
+
+  cmds[cmd](modules, args);
 });
 
-util.log(`${moduleNames.length} module(s) loaded`);
-
-// start all modules in separate processes
-moduleNames.forEach((m) => {
-  modules.push(
-    child_process.fork(`dist/modules/${m}.js`)
-  );
-});
-
-process.on("SIGINT", () => {
-  modules.forEach((m) => m.disconnect()); // stop modules
+process.once("SIGINT", () => {
+  modules.forEach((m) => m.disconnect());
   process.exit(0); // close nodejs
 });

@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "removeComments": true,
-    "esModuleInterop": true,
-    "noEmitOnError": true,
+    "target"                : "ES6",
+    "module"                : "commonjs",
+    "removeComments"        : true,
+    "esModuleInterop"       : true,
+    "noEmitOnError"         : true,
     "experimentalDecorators": true,
-    "preserveConstEnums": true,
-    "sourceMap": true,
-    "sourceRoot": "src",
-    "outDir": "dist"
+    "preserveConstEnums"    : true,
+    "sourceMap"             : true,
+    "sourceRoot"            : "src",
+    "outDir"                : "dist"
   },
 
   "include": [
