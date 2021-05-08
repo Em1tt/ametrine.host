@@ -11,8 +11,8 @@
         rel="stylesheet">
     <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css" media="screen">
     <noscript><link rel="stylesheet" href="https://unpkg.com/flickity@2.2.2/dist/flickity.css"></noscript>
-    <link rel="stylesheet" href="./css/index.css">
-    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     <meta charset="UTF-8">
     <meta name="title" content="Amethyst Host">
     <meta name="description"
@@ -24,7 +24,7 @@
 
 <body>
     <nav id="navbar">
-        <a href="#" aria-label="Home"><img src="../images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
+        <a href="./index.html" aria-label="Home"><img src="../images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
                 alt="" id="logo">
             <p>Amethyst.host</p>
         </a>
@@ -43,8 +43,8 @@
                             aria-label="Dropdown menu of our support options"></i></span></button>
                 <div class="dropdown-content">
                     <a href="#">Create a ticket</a>
-                    <a href="#">Join our Discord</a>
-                    <a href="#">Write an E-Mail</a>
+                    <a href="../api/redirect.html?url=https://discord.gg/d4DQKXd7qX">Join our Discord</a>
+                    <a href="mailto:support@amethyst.host" target="blank" rel="noreferrer noopener">Write an E-Mail</a>
                     <a href="#">Knowledgebase</a>
                 </div>
             </div>
@@ -53,9 +53,10 @@
                             class="fa fa-plus-circle"
                             aria-label="Navigation, more dropdown menu"></i></span></button>
                 <div class="dropdown-content" id="support">
-                    <a href="../html/about.html">About</a>
-                    <a href="../html/partners.html">Partners</a>
+                    <a href="./about.html">About</a>
+                    <a href="./partners.html">Partners</a>
                     <a href="#">Forum</a>
+                    <a href="#">API</a>
                 </div>
             </div>
         </div>
@@ -73,7 +74,13 @@
             </div>
             <div class="gallery-cell">
                 <div>
-                    <h2 class="heading">Join our <a href="#" style="color:#ed5087;text-decoration: none;">Discord Server</a></h2>
+                    <h2 class="heading">The most dev-friendly hosting</h2>
+                    <h3 class="subheading"><i style="text-shadow:2px 2px 10px black"><a href="../api/redirect.html?url=https://github.com/Em1tt/amethyst.host/wiki" style="color:#ed5087;text-decoration: none;">Check out our API</a></i></h3>
+                </div>
+            </div>
+            <div class="gallery-cell">
+                <div>
+                    <h2 class="heading">Join our <a href="../api/redirect.html?url=https://discord.gg/d4DQKXd7qX" style="color:#ed5087;text-decoration: none;">Discord Server</a></h2>
                     <h3 class="subheading"><i style="text-shadow:2px 2px 10px black">Community, support, suggestions, trial requests and much more!</i></h3>
                 </div>
             </div>

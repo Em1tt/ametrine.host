@@ -419,14 +419,19 @@ footer p {
         width: 75%;
         margin-bottom: 20px;
     }
+    main div {
+        flex-direction: column;
+        text-align: center;
+    }
 }
 
 @media screen and (max-width: 500px) {
     main {
-        height: 2180px;
+        height: 1880px;
+        padding: 15px;
     }
     main::before {
-        height: 2180px;
+        height: 1880px;
     }
 }
 

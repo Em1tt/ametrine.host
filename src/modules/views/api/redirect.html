@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Redirect | Amethyst.host</title>
+    <link rel="stylesheet" href="../css/redirect.css">
+</head>
+
+<body>
+    <img id="logo" src="../images/ACLogoT.png" width=100px; alt="Logo">
+    <code id="response"></code>
+    <div>
+        <h1 id="h1">Hold on! You're leaving our territory.</h1>
+        <h2 id="h2">You're about to get redirected to the following page:</h2>
+        <hr id="hr1">
+        <a id="url">Missing query "url"</a>
+        <hr id="hr2">
+        <button id="button" onclick="redirect()">Proceed</button>
+    </div>
+    <footer>
+        <a href="#">Redirect page by Amethyst.host</a>
+    </footer>
+    <script>
+        let queries = new URLSearchParams(window.location.search),
+            response = document.getElementById("response");
+        if (queries.get("bg") && (queries.get("bg").length == 6 || queries.get("bg").length == 3)) {
+            document.body.style = `background-color:#${queries.get("bg")};`;
+        } else if (queries.get("bg")) {
+            response.innerText += `- Detected query "bg" with an invalid value. Cannot parse "${queries.get("bg")}" as a HEX value.\n`;
+        }
+
+        if (queries.get("logo") && queries.get("logo").startsWith("https://")) {
+            document.getElementById("logo").src = queries.get("logo");
+        } else if (queries.get("logo")) {
+            response.innerText += `- Detected query "logo" with an invalid value. Cannot use "${queries.get("logo")}" as it is either not an URL or doesn't begin with https://.\n`;
+        }
+
+        if (queries.get("h1")) {
+            console.log(queries.get("h1"));
+            queries.get("h1") == "hidden" ? document.getElementById("h1").style = "display: none;" : document.getElementById("h1").innerText = queries.get("h1");
+        }
+
+        if (queries.get("h1col") && (queries.get("h1col").length == 6 || queries.get("h1col").length == 3)) {
+            document.getElementById("h1").style = `color:#${queries.get("h1col")};`;
+        } else if (queries.get("h1col")) {
+            response.innerText += `- Detected query "h1col" with an invalid value. Cannot parse "${queries.get("h1col")}" as a HEX value.\n`;
+        }
+
+        if (queries.get("h2")) {
+            console.log(queries.get("h2"));
+            queries.get("h2") == "hidden" ? document.getElementById("h2").style = "display: none;" : document.getElementById("h2").innerText = queries.get("h2");
+        }
+
+        if (queries.get("h2col") && (queries.get("h2col").length == 6 || queries.get("h2col").length == 3)) {
+            document.getElementById("h2").style = `color:#${queries.get("h2col")};`;
+        } else if (queries.get("h2col")) {
+            response.innerText += `- Detected query "h2col" with an invalid value. Cannot parse "${queries.get("h2col")}" as a HEX value.\n`;
+        }
+
+        if (queries.get("urlcol") && (queries.get("urlcol").length == 6 || queries.get("urlcol").length == 3)) {
+            document.getElementById("url").style = `color:#${queries.get("urlcol")};`;
+        } else if (queries.get("urlcol")) {
+            response.innerText += `- Detected query "urlcol" with an invalid value. Cannot parse "${queries.get("urlcol")}" as a HEX value.\n`;
+        }
+
+        if (queries.get("hr1col") && (queries.get("hr1col").length == 6 || queries.get("hr1col").length == 3)) {
+            document.getElementById("hr1").style = `color:#${queries.get("hr1col")};`;
+        } else if (queries.get("hr1col")) {
+            response.innerText += `- Detected query "hr1col" with an invalid value. Cannot parse "${queries.get("hr1col")}" as a HEX value.\n`;
+        }
+
+        if (queries.get("hr2col") && (queries.get("hr2col").length == 6 || queries.get("hr2col").length == 3)) {
+            document.getElementById("hr2").style = `color:#${queries.get("hr2col")};`;
+        } else if (queries.get("hr2col")) {
+            response.innerText += `- Detected query "hr2col" with an invalid value. Cannot parse "${queries.get("hr2col")}" as a HEX value.\n`;
+        }
+
+
+        if (queries.get("url") && queries.get("url").startsWith("https://")) {
+            document.getElementById("url").innerText = queries.get("url");
+        } else if (!queries.get("url")) {
+            response.innerText += `- Missing query "url". Ensure it is an URL and begins with https://.\n`;
+        } else if (queries.get("url")) {
+            response.innerText += `- Detected query "url" with an invalid value. Cannot use "${queries.get("url")}" as it is either not an URL or doesn't begin with https://.\n`;
+        }
+
+        if (queries.get("buttonbg") && (queries.get("buttonbg").length == 6 || queries.get("buttonbg").length == 3)) {
+        } else if (queries.get("buttonbg")) {
+            response.innerText += `- Detected query "buttonbg" with an invalid value. Cannot parse "${queries.get("buttonbg")}" as a HEX value.\n`;
+        }
+
+        if (queries.get("buttoncol") && (queries.get("buttoncol").length == 6 || queries.get("buttoncol").length == 3)) {
+        } else if (queries.get("buttoncol")) {
+            response.innerText += `- Detected query "buttoncol" with an invalid value. Cannot parse "${queries.get("buttoncol")}" as a HEX value.\n`;
+        }
+
+        document.getElementById("button").style = `color:#${queries?.get("buttoncol")};background-color:#${queries?.get("buttonbg")}`;
+
+        if (response.innerText != "") {
+            response.innerText += "\nhttps://github.com/Em1tt/amethyst.host/wiki";
+        }
+
+        var redirect = () => {
+            if (queries.get("url") && response.innerText == ""){
+                document.location.replace(queries.get("url"))
+            } else{
+                let a = setTimeout(() => {
+                    document.getElementById("response").classList.remove("animate");
+                }, 2000);
+                document.getElementById("response").classList.add("animate");
+
+            };
+        }
+
+    </script>
+</body>
+
+</html>
+
+<!--
+    127.0.0.1:5500/src/modules/views/html/discord.html
+-->
