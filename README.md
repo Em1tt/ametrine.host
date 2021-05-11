@@ -1,4 +1,4 @@
-# Amethyst.host
+# [Amethyst.host](https://amethyst.host)
 <p align="center"><img src="/src/modules/views/images/ACLogoT.png?raw=true" alt="Amethyst.host"/></p>
 
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host)
