@@ -1,6 +1,6 @@
 #!/bin/bash
 # get all system packages
-sudo apt-get install nodejs apache2
+sudo apt-get install nodejs nginx
 
 # get all npm packages
 npm ci
