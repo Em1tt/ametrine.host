@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS servers (
 CREATE TABLE IF NOT EXISTS receipts (
   id       INTEGER   PRIMARY KEY,
   opened   TIMESTAMP NOT NULL,
-  price    FLOAT     NOT NULL DEFAULT 0.00,
+  price    REAL      NOT NULL DEFAULT 0.00,
   currency TEXT      NOT NULL DEFAULT '€'
 );
 
@@ -23,6 +23,6 @@ CREATE TABLE IF NOT EXISTS invoices (
   id       INTEGER   PRIMARY KEY,
   opened   TIMESTAMP NOT NULL,
   due      TIMESTAMP NOT NULL,
-  price    FLOAT     NOT NULL DEFAULT 0.00,
+  price    REAL      NOT NULL DEFAULT 0.00,
   currency TEXT      NOT NULL DEFAULT '€'
 );
