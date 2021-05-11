@@ -4,7 +4,7 @@ import compression  from "compression";
 import morgan       from "morgan";
 import minify       from "express-minify";
 import path         from "path";
-import fs 		      from "fs";
+import fs           from "fs";
 import config       from "../config.json";
 import { util }     from "../util";
 import { Endpoint } from "../types/endpoint";
@@ -13,6 +13,13 @@ const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
 
 const endpoints: Map<string, Endpoint> = new Map();
+const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
+                                           .filter((f) => f.endsWith(".js"));
+for (const f of files) {
+  const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
+  endpoints.set(ep.prop.name, ep);
+}
+util.expressLog(`${endpoints.size} api endpoints loaded`);
 
 app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
 
@@ -46,13 +53,4 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
 // start up the website
 app.listen(config.website.port, () => {
   util.expressLog(`started website @${config.website.port}`);
-
-  const files = fs.readdirSync(`./dist/modules/api`)
-                  .filter((f) => f.endsWith(".js"));
-  for (const f of files) {
-    const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
-    endpoints.set(ep.prop.name, ep);
-  }
-
-  util.expressLog(`${endpoints.size} api endpoints loaded`);
 });
