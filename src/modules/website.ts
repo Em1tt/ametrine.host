@@ -1,13 +1,13 @@
 // imports
-import {express as e } from "express";
-import compression     from "compression";
-import morgan          from "morgan";
-import minify          from "express-minify";
-import path            from "path";
-import fs 		         from "fs";
-import config          from "../config.json";
-import { util }        from "../util";
-const app : e.Application = express();
+import { express as e } from "express";
+import compression      from "compression";
+import morgan           from "morgan";
+import minify           from "express-minify";
+import path             from "path";
+import fs 		          from "fs";
+import config           from "../config.json";
+import { util }         from "../util";
+const app : e.Application = e();
 const html: string = path.join(__dirname, "views", "html");
 
 app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
