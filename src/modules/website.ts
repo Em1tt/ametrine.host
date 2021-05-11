@@ -1,5 +1,5 @@
 // imports
-import { express as e } from "express";
+import { Express as e } from "express";
 import compression      from "compression";
 import morgan           from "morgan";
 import minify           from "express-minify";

@@ -25,7 +25,7 @@ export const prop = {
                                        );
 
 	exec.stdout.on("data", (d) => data += d);
-	exec.on("error", (e) => error = true);
+	exec.on("error", () => error = true);
 	exec.on("close", async (c) => {
     clearInterval(interval);
     if (error) {
