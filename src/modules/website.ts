@@ -38,7 +38,7 @@ app.get("/", (r: express.Request, s: express.Response) => {
    amethyst.host/api/auth
    and so on..            */
 app.get("/api/:method", (r: express.Request, s: express.Response) => {
-  endpoints.get(r.params.name).prop.run(r, s);
+  endpoints.get(r.params.method).prop.run(r, s);
 });
 
 // "smart" router
