@@ -21,7 +21,7 @@
   "dependencies": {
     "compression": "^1.7.4",
     "discord.js": "^12.5.3",
-    "dotenv": "^9.0.0",
+    "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-minify": "^1.0.0",
     "mailparser": "^3.2.0",
