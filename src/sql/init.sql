@@ -2,7 +2,9 @@
 CREATE TABLE IF NOT EXISTS users (
   id         INTEGER   PRIMARY KEY,
   registered TIMESTAMP NOT NULL,
-  name       TEXT      NOT NULL
+  name       TEXT      NOT NULL,
+  password   TEXT      NOT NULL,
+  salt       TEXT      NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS servers (
