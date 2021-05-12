@@ -7,12 +7,12 @@ export const prop = {
   name: "help",
   desc: "See help on some command.",
   usage: "help [command]",
-  category: "user",
+  category: "User",
 
   run: (bot: Client,
-    msg: Message,
-    args: Array<string>,
-    cmds: Collection<string, Command>): void => {
+        msg: Message,
+       args: Array<string>,
+       cmds: Collection<string, Command>): void => {
     // display all commands
     if (args.length == 0) {
       const categories = [];
@@ -24,7 +24,7 @@ export const prop = {
       const helpEmbed = new MessageEmbed()
         .setTitle("Help command")
         .setColor(config.discord.amethyst)
-        .setDescription(`My prefix is ${config.discord.prefix}. Do \`${config.discord.prefix}help <command>\` to get detailed help for a certain command.`);
+        .setDescription(`My prefix is \`${config.discord.prefix}\` | Do \`${config.discord.prefix}help <command>\` to get detailed help for a certain command.`);
       categories.forEach(cat => {
         helpEmbed.addField(cat, `${cmds.filter(cmd => cmd.prop.category == cat).map(c => `\`${c.prop.name}\` `)}`);
       });
