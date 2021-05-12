@@ -9,10 +9,10 @@ export const prop = {
   usage: "help [command]",
   category: "user",
 
-  run: (bot: Client,
-    msg: Message,
-    args: Array<string>,
-    cmds: Collection<string, Command>): void => {
+  run: (bot : Client,
+        msg : Message,
+        args: Array<string>,
+        cmds: Collection<string, Command>): void => {
     // display all commands
     if (args.length == 0) {
       const categories = [];
