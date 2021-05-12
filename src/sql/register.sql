@@ -5,5 +5,5 @@ INSERT INTO users (id, registered, name) VALUES(
   -- timestamp
   SELECT datetime("now", "unixepoch"),
   -- name and surname
-  @name
+  @n
 );
