@@ -19,7 +19,7 @@ export const prop = {
       msg.reply(`All commands: ${names.join(", ")}`);
     } else {
       const cmd: Command = cmds.get(args[0]);
-      msg.reply(`**${cmd.prop.name}\n${cmd.prop.desc}\n\nCategory: ${cmd.prop.category}\nUsage: \`${cmd.prop.usage}\``);
+      msg.reply(`**${cmd.prop.name}**\n${cmd.prop.desc}\n\nCategory: **${cmd.prop.category}**\nUsage: \`${cmd.prop.usage}\``);
     }
   }
 }
