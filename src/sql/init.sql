@@ -1,26 +1,23 @@
 -- initialize all tables
 CREATE TABLE IF NOT EXISTS users (
-  id         INTEGER   NOT NULL DEFAULT 0,
+  user_id         INTEGER   NOT NULL PRIMARY KEY,
   registered TIMESTAMP NOT NULL,
   name       TEXT      NOT NULL,
   password   TEXT      NOT NULL,
   salt       TEXT      NOT NULL
-  PRIMARY KEY("id")
 );
 
 CREATE TABLE IF NOT EXISTS servers (
-  id       INTEGER   NOT NULL DEFAULT 0,
+  server_id       INTEGER   NOT NULL PRIMARY KEY,
   opened   TIMESTAMP NOT NULL,
   name     TEXT      NOT NULL,
   location TEXT      NOT NULL DEFAULT "na" -- eu, us...
-  PRIMARY KEY("id")
 );
 
 CREATE TABLE IF NOT EXISTS invoices (
-  id       INTEGER   NOT NULL DEFAULT 0,
+  invoice_id       INTEGER   NOT NULL PRIMARY KEY,
   opened   TIMESTAMP NOT NULL,
   due      TIMESTAMP NOT NULL,
   price    REAL      NOT NULL DEFAULT 0.00,
   currency TEXT      NOT NULL DEFAULT '€'
-  PRIMARY KEY("id")
 );
