@@ -5,7 +5,8 @@
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] compiling'&& npx tsc -p .",
+    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&& npx tsc -p .",
+    "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .'",
     "start": "pm2 start dist/main.js"
   },
   "repository": {
