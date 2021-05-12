@@ -14,13 +14,6 @@ CREATE TABLE IF NOT EXISTS servers (
   location TEXT      NOT NULL DEFAULT "na" -- eu, us...
 );
 
-CREATE TABLE IF NOT EXISTS receipts (
-  id       INTEGER   PRIMARY KEY,
-  opened   TIMESTAMP NOT NULL,
-  price    REAL      NOT NULL DEFAULT 0.00,
-  currency TEXT      NOT NULL DEFAULT '€'
-);
-
 CREATE TABLE IF NOT EXISTS invoices (
   id       INTEGER   PRIMARY KEY,
   opened   TIMESTAMP NOT NULL,
