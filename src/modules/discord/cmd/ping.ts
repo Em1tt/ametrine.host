@@ -3,9 +3,10 @@
 import { Client, Message } from "discord.js";
 
 export const prop = {
-  name : "ping",
-  desc : "Check if the bot is alive.",
-  usage: "ping",
+  name    : "ping",
+  desc    : "Check if the bot is alive.",
+  usage   : "ping",
+  category: "Bot",
 
   run: (bot: Client, 
         msg: Message): void => { msg.reply("Pong!") }
