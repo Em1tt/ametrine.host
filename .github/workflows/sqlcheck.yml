@@ -1,9 +1,7 @@
 name: SQLCheck
 on: 
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main]
+  pull_request: branches: [main]
+  push:         branches: [main]
 
 jobs:
   sqlcheck:
@@ -13,7 +11,6 @@ jobs:
     - uses: actions/checkout@master
     - uses: yokawasa/action-sqlcheck@v1.3.0
       with:
-        post-comment: true
-        risk-level: 3
-        verbose: false
         token: ${{ secrets.GITHUB_TOKEN }}
+        directories: |
+          src/sql
