@@ -1,0 +1,15 @@
+name: SQLCheck
+on: pull_request
+
+jobs:
+  sqlcheck:
+    name: Check for SQL vulnerabilities
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: yokawasa/action-sqlcheck@v1.3.0
+      with:
+        post-comment: true
+        risk-level: 3
+        verbose: false
+        token: ${{ secrets.GITHUB_TOKEN }}
