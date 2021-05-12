@@ -9,7 +9,7 @@ export const prop = {
   name    : "bash",
   desc    : "Execute a bash command.",
   usage   : "bash [command] [...args]",
-  category: "Server",
+  category: "developer",
 
   run: async (bot: Client, msg: Message, args: Array<string>): Promise<void> => { 
   if (!config.discord.dev.includes(msg.author.id)) return;
