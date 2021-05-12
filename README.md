@@ -18,7 +18,9 @@ We strive to be transparent about our income, technicalities, and team - **that'
 To start **Amethyst.host**, do the following: 
 1. `npm i` to install dependencies
 1. `npm run build` to build backend source
-1. `npm run start` to start the backend up
+1. `npm run start` to start the backend up  
+  
+**This way to deploy is only supported on Linux machines**  
 
 ## Modules
 Amethyst backend is fully modular, which means you can have it do a **LOT** of stuff. Pros:
@@ -33,9 +35,9 @@ To make a module, make a `.ts` file in `src/modules`
 
 ## Credits
 The entirety of **Amethyst.host** is maintained by:
-* [Em1t](https://github.com/Em1tt) - CEO & frontend
+* [Em1t](https://github.com/Em1tt) - CEO & fullstack
 * [b1tt](https://github.com/b1tt0) - backend
-* kopolomo03 - investing
-* Rebekah - managing finances & advertising
+* [Firee](https://github.com/firemario211) - backend
+* [lrtz](https://github.com/lrtz0) - fullstack code checking
 
 © Amethyst.host | Distribution / Modification of our software is prohibited.
