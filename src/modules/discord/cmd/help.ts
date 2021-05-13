@@ -36,6 +36,9 @@ export const prop = {
         //Create a field with the name of category and the value of all commands inside that category
         helpEmbed.addField(cat, `${cmds.filter(cmd => cmd.prop.category == cat).map(c => `\`${c.prop.name}\` `)}`);
       });
+      //Add a verbose warning to tell the user the command they tried to get info of doesn't exist.
+      if(args.length != 0) helpEmbed.description += `\n\nCouldn't find the command \`${args[0]}\`.`;
+
       //Send the embed
       msg.channel.send(helpEmbed);
     } else {
