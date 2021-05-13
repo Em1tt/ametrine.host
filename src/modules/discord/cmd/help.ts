@@ -8,7 +8,7 @@ export const prop = {
   desc: "See help on some command.",
   usage: "help [command]",
   category: "User",
-  permissions: [""],
+  permissions: [],
 
   run: (bot: Client,
         msg: Message,
