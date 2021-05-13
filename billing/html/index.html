@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/index.css" rel="stylesheet">
+    <link href="../css/login.css" rel="stylesheet">
+    <title>Billing | Amethyst.host</title>
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous"
+        media="">
+    <noscript>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    </noscript>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="1" class="login-dialog disabled">
+        <div class="login-main">
+            <h1>Amethyst.host</h1>
+            <h2><i class="fa fa-lock"></i> Secure Login</h2>
+            <button onclick="toggleLoginDialog()" class="cancel"><i class="fa fa-times-circle"></i></button>
+            <form>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" required class="text-input"><br><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" required name="password" class="text-input"><br>
+                <div class="flex-align">
+                    <input type="checkbox" checked="true" id="remember" name="remember" class="checkbox">
+                    <label for="remember">Remember me</label><br>
+                </div>
+                <input type="submit" value="Continue" class="submit">
+            </form>
+        </div>
+        <div class="login-other">
+            <a href="#"><img src="../images/Discord.png" class="OAuth2"></a>
+            <a href="#"><img src="../images/Github.png" class="OAuth2"></a>
+        </div>
+    </div>
+    <div id="2" class="login-backdrop disabled"></div>
+    <nav>
+        <a href="#" id="home"><img src="../images/ACLogoT.png" width=60px;></a>
+        <div class="buttons">
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-home"></i> <span class="nav-text">Home</span></button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="nav-text">Order</span> <i class="fa fa-caret-down nav-text"></i><i
+                        class="fa fa-shopping-cart icon"></i></button>
+                <div class="dropdown-content first">
+                    <a href="#">Minecraft</a>
+                    <a href="#">Discord bot</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="nav-text">Support</span> <i
+                        class="fa fa-caret-down nav-text"></i><i class="fa fa-ticket-alt icon"></i></button>
+                <div class="dropdown-content second">
+                    <a href="#">Open a ticket</a>
+                    <a href="#">Write an E-Mail</a>
+                    <a href="#">Join our Discord</a>
+                    <a href="#">Knowledgebase</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="nav-text">More</span> <i class="fa fa-caret-down nav-text"></i><i
+                        class="fa fa-plus-circle icon"></i></button>
+                <div class="dropdown-content third">
+                    <a href="#">Referral program</a>
+                    <a href="#">Forum</a>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown alignToRight">
+            <button onclick="toggleLoginDialog()" class="dropbtn"><i class="fa fa-sign-in-alt"></i> <span class="nav-text">Login</span></button>
+        </div>
+    </nav>
+    <main>
+        <button class="item">
+            <div>
+                <i class="fa fa-cogs"></i>
+                <h2>Manage account</h2>
+            </div>
+            <p>Log-in and manage your account</p>
+        </button>
+        <button class="item">
+            <div>
+                <i class="fa fa-ticket-alt" style="transform:rotate(-45deg);"></i>
+                <h2>Support</h2>
+            </div>
+            <p>Open up a ticket, or write an E-mail</p>
+        </button>
+        <button class="item">
+            <div>
+                <i class="fa fa-info-circle"></i>
+                <h2>Knowledgebase</h2>
+            </div>
+            <p>Search our knowledgebase for useful tips & tricks</p>
+        </button>
+        <button class="item">
+            <div>
+                <i class="fab fa-discord"></i>
+                <h2>Join our Discord</h2>
+            </div>
+            <p>Community, events, giveaways and more!</p>
+        </button>
+        <button class="item">
+            <div>
+                <i class="fa fa-circle-notch"></i>
+                <h2>Referral statistics</h2>
+            </div>
+            <p>Log-in and manage your account</p>
+        </button>
+        <button class="item">
+            <div>
+                <i class="fa fa-columns"></i>
+                <h2>Game panel</h2>
+            </div>
+            <p>Manage all your servers from one place</p>
+        </button>
+    </main>
+    <script>
+        function toggleLoginDialog(){
+            document.getElementById("1").classList.toggle("disabled");
+            document.getElementById("2").classList.toggle("disabled");
+        };
+    </script>
+</body>
+
+</html>

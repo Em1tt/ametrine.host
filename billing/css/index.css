@@ -1,0 +1,73 @@
+:root{
+    --highlights: #ed5087;
+    --main: #1f1f25;
+    --sub: #24242c;
+    --items: #282831;
+    font-family: 'Ubuntu', sans-serif;
+    background-color: var(--sub);
+}
+body{
+    display: flex;
+    width: auto;
+}
+main{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 75%;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    flex-wrap: wrap;
+}
+.item{
+    background-color: var(--items);
+    width: 30%;
+    min-width: 350px;
+    height: 250px;
+    border-radius: 10px;
+    margin-inline: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: none;
+    border: 2px solid transparent;
+    transition: 1s ease;
+}
+.item:hover{
+    cursor: pointer;
+    border: 2px solid var(--highlights);
+    transition: 1s ease;
+}
+.item div{
+    justify-self: center;
+    align-self: baseline;
+    align-content:baseline;
+    justify-content: space-around;
+    margin-top: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+}
+.item div i{
+    color: var(--highlights);
+    font-size: 4rem;
+}
+.item div h2{
+    color: white;
+    font-size: 1.5rem;
+}
+.item p{
+    color: white;
+    font-size: 1.1rem;
+    align-self:flex-end;
+    width: 90%;
+    right: 5%;
+    position: relative;
+    text-align: center;
+}

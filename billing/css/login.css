@@ -1,0 +1,170 @@
+
+:root{
+    --highlights: #ed5087;
+    --main: #1f1f25;
+    --sub: #24242c;
+    --items: #282831;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.login-dialog{
+    width: 35%;
+    justify-self: center;
+    align-self: center;
+    position: absolute;
+    height: auto;
+    margin: auto;
+    z-index: 50;
+    right:0px;
+    left: 0px;
+    top: 100px;
+    background-color: var(--main);
+    border-radius: 10px;
+    padding: 0px 40px;
+    display: flex;
+    color: white;
+}
+
+.login-backdrop{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 35;
+}
+
+.login-main{
+    width: 85%;
+}
+
+.login-main h2{
+    color: var(--highlights);
+}
+
+.login-other{
+    width: 15%;
+    display: flex;
+    flex-direction: column-reverse;
+    max-height: calc(80vh - 9rem);
+    margin: 10px 0px;
+    padding: 0px 10px;
+    overflow-y: auto;
+    height: 100%;
+}
+ /* width */
+ ::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: var(--sub);
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--highlights);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  } 
+.login-other a{
+    margin: 10px 0px;
+    width: 80%;
+    height: 0;
+    padding: 40% 0;
+    background-color: var(--sub);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+.login-other a:hover{
+    background-color: var(--items);
+}
+.OAuth2{
+    width: 50%;
+}
+form{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+.text-input{
+    width: 75%;
+    border-radius: 10px;
+    border: 2px solid var(--main);
+    height: 50px;
+    margin-top: 10px;
+    background-color: var(--sub);
+    font-size: 1.35rem;
+    padding-inline: 10px;
+    color: var(--highlights);
+    margin-bottom: 10px;
+}
+.text-input:hover{
+    outline: none;
+    background-color: var(--items);
+}
+.text-input:focus{
+    outline: none;
+    border: 2px solid var(--highlights);
+}
+label{
+    margin-left: 20px;
+    font-size: 1.5rem;
+}
+.disabled{
+    display: none;
+}
+.checkbox{
+    width: 30px;
+    height: 30px;
+    appearance: none;
+    border: 5px solid var(--sub);
+    border-radius: 10px;
+    background-color: var(--sub);
+}
+.checkbox:hover{
+    cursor: pointer;
+}
+.checkbox:checked{
+    background-color: var(--highlights);
+}
+.submit{
+    margin: 20px 0px;
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    width: 80%;
+    color: white;
+    background-color: var(--highlights);
+    font-size: 1.25rem;
+}
+.submit:hover{
+    cursor: pointer;
+}
+.flex-align{
+    display: flex;
+    align-items: center;
+}
+.cancel{
+    padding: 0;
+    margin: 10px;
+    font-size: 2rem;
+    border-radius: 10px;
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: var(--highlights);
+}
+.cancel:hover{
+    color: white;
+    cursor: pointer;
+}

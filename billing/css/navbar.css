@@ -1,0 +1,116 @@
+:root{
+    --navHighlights: #ed5087;
+    --navMain: #1f1f25;
+    --navDrop: #24242c;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+nav {
+    background-color: var(--navMain);
+    height: 80px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+#home{
+    margin-left: 5vw;
+    margin-right: 10vw;
+}
+.alignToRight{
+    margin-right: 5vw !important;
+    margin-left: 10vw !important;
+    right: 0px !important;
+    position: absolute !important;
+}
+.buttons{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.dropbtn {
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    background: transparent;
+    font-size: 1.1rem;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--navMain);
+    min-width: 240px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-left: solid 2px transparent;
+  }
+  .icon{
+      display: none !important;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {
+      background-color: var(--navDrop);
+      border-left: 2px solid var(--navHighlights);
+      color: var(--navHighlights);
+}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:focus-within .dropdown-content {
+    display: block;
+    top: 67px;
+  }
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {
+    color: var(--navHighlights);
+  }
+
+  @media screen and (max-width: 851px){
+      #home{
+          display: none;
+      }
+  }
+  @media screen and (max-width: 651px){
+
+    .nav-text{
+        display: none !important;
+    }
+    .dropbtn{
+        padding: 10px;
+    }
+    .icon{
+        display: initial !important;
+    }
+    .first{
+        left: -50px;
+    }
+    .second{
+        left: -100px;
+    }
+    .third{
+        left: -150px;
+    }
+}
