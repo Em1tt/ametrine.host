@@ -43,8 +43,21 @@ export const prop = {
       msg.channel.send(helpEmbed);
     } else {
       //If there is an argument, try finding it from between the commands and give information about it.
-      const cmd: Command = cmds.get(args[0]);
-      msg.reply(`**${cmd.prop.name}**\n${cmd.prop.desc}\n\nCategory: **${cmd.prop.category}**\nUsage: \`${cmd.prop.usage}\``);
+      //Get the command requested - We know this exists due to the first condition of this if else statement.
+      const cmd: Command = cmds.get(args[0]),
+      //Create an embed
+      helpCommandEmbed: MessageEmbed = new MessageEmbed();
+
+      //Fill the embed out with information
+      helpCommandEmbed.setTitle(`Help command - ${cmd.prop.name}`)
+      .setColor(config.discord.amethyst)
+      .setDescription(`${cmd.prop.desc}\n**Usage:** ${cmd.prop.usage}`)
+      .addField("Category", cmd.prop.category, true);
+
+      //If command requires permissions, create a field with the required permissions.
+      if(cmd.prop.permissions.length != 0) helpCommandEmbed.addField("Permissions required", cmd.prop.permissions.map(p => `\`${p.toLowerCase()}\` `));
+
+      msg.channel.send(helpCommandEmbed);
     }
   }
 }
