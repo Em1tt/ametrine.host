@@ -8,23 +8,24 @@ export const prop = {
   desc: "See help on some command.",
   usage: "help [command]",
   category: "User",
+  permissions: [""],
 
-  run: (bot : Client,
-        msg : Message,
-        args: Array<string>,
-        cmds: Collection<string, Command>): void => {
+  run: (bot: Client,
+        msg: Message,
+       args: Array<string>,
+       cmds: Collection<string, Command>): void => {
     // display all commands
-    if (args.length == 0) {
-      const categories = [];
-      cmds.forEach(cmd => {
-        if (!categories.includes(cmd.prop.category)) {
-          categories.push(cmd.prop.category);
-        }
-      })
-      const helpEmbed = new MessageEmbed()
-        .setTitle("Help command")
+    if (!args) {
+      const categories: Array<string> = [],
+        helpEmbed: MessageEmbed = new MessageEmbed();
+
+      helpEmbed.setTitle("Help command")
         .setColor(config.discord.amethyst)
         .setDescription(`My prefix is \`${config.discord.prefix}\` | Do \`${config.discord.prefix}help <command>\` to get detailed help for a certain command.`);
+      cmds.forEach(cmd => {
+        if (cmd.prop.category in categories) return;
+        categories.push(cmd.prop.category);
+      })
       categories.forEach(cat => {
         helpEmbed.addField(cat, `${cmds.filter(cmd => cmd.prop.category == cat).map(c => `\`${c.prop.name}\` `)}`);
       });

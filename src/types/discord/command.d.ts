@@ -7,6 +7,7 @@ export interface Command {
     readonly desc    : string;
     readonly usage   : string;
     readonly category: string;
+    readonly permissions: Array<string>;
 
     run              : (bot : Client,
                         msg : Message,
