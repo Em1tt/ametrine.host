@@ -14,24 +14,32 @@ export const prop = {
         msg: Message,
        args: Array<string>,
        cmds: Collection<string, Command>): void => {
-    // display all commands
-    if (args.length == 0) {
-      const categories: Array<string> = [],
-        helpEmbed: MessageEmbed = new MessageEmbed();
 
+    if (args.length == 0 || !cmds.get(args[0])) {
+      // Display all commands if there's no args found or the argument doesn't match any command.
+      //Create constants for categories and embed
+      const categories: Array<string> = [],
+            helpEmbed : MessageEmbed = new MessageEmbed();
+      //Customize the embed for basic needs
       helpEmbed.setTitle("Help command")
         .setColor(config.discord.amethyst)
         .setDescription(`My prefix is \`${config.discord.prefix}\` | Do \`${config.discord.prefix}help <command>\` to get detailed help for a certain command.`);
+      //Run a check for each command, detect all categories and store unique categories in categories array | Creates a list of categories available
       cmds.forEach(cmd => {
+        //If category is already in categories array, ignore.
         if (cmd.prop.category in categories) return;
+        //Push new category into the categories array
         categories.push(cmd.prop.category);
       });
-      console.log(categories);
+      //For each category create an embed field
       categories.forEach(cat => {
+        //Create a field with the name of category and the value of all commands inside that category
         helpEmbed.addField(cat, `${cmds.filter(cmd => cmd.prop.category == cat).map(c => `\`${c.prop.name}\` `)}`);
       });
+      //Send the embed
       msg.channel.send(helpEmbed);
     } else {
+      //If there is an argument, try finding it from between the commands and give information about it.
       const cmd: Command = cmds.get(args[0]);
       msg.reply(`**${cmd.prop.name}**\n${cmd.prop.desc}\n\nCategory: **${cmd.prop.category}**\nUsage: \`${cmd.prop.usage}\``);
     }
