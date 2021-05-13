@@ -15,7 +15,7 @@ export const prop = {
        args: Array<string>,
        cmds: Collection<string, Command>): void => {
     // display all commands
-    if (!args) {
+    if (args.length == 0) {
       const categories: Array<string> = [],
         helpEmbed: MessageEmbed = new MessageEmbed();
 
@@ -23,9 +23,10 @@ export const prop = {
         .setColor(config.discord.amethyst)
         .setDescription(`My prefix is \`${config.discord.prefix}\` | Do \`${config.discord.prefix}help <command>\` to get detailed help for a certain command.`);
       cmds.forEach(cmd => {
-        if (categories.includes(cmd.prop.category)) return;
+        if (cmd.prop.category in categories) return;
         categories.push(cmd.prop.category);
       });
+      console.log(categories);
       categories.forEach(cat => {
         helpEmbed.addField(cat, `${cmds.filter(cmd => cmd.prop.category == cat).map(c => `\`${c.prop.name}\` `)}`);
       });
