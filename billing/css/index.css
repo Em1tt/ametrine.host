@@ -24,7 +24,7 @@ main{
 .item{
     background-color: var(--items);
     width: 30%;
-    min-width: 350px;
+    min-width: 280px;
     height: 250px;
     border-radius: 10px;
     margin-inline: 10px;
