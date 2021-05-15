@@ -4,7 +4,7 @@
   },
 
   "mail": {
-    "port": 9997
+    "port": 25
   },
 
   "discord": {
