@@ -12,7 +12,7 @@ const server: SMTPServer = new SMTPServer({
       util.mailLog(`Received E-Mail from ${p.from.text} regarding: ${p.subject}`);
       const mail = `${p.from.text} wrote:\n\n---------------------\n${p.subject}\n\n${p.text}\n\n${p.attachments.map(a => a)}`;
       writeFile(`./data/mail/${p.to.text}/${p.date.toISOString()}.txt`, mail, (err): void => {
-        err;
+        if(err) console.log(err);
       });
       stream.on("end", callback);
     })
