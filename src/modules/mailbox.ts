@@ -15,9 +15,11 @@ const server: SMTPServer = new SMTPServer({
       fs.mkdir(`./data/mail/${p.to.text}`, (err) => {
         if(err) console.log(err);
       });
-      fs.writeFile(`./data/mail/${p.to.text}/${p.date.toISOString().replace(new RegExp(":", "g"), ".")}`, mail, (err): void => {
-        console.log(err);
-      });
+      setTimeout(()=>{
+        fs.writeFile(`./data/mail/${p.to.text}/${p.date.toISOString().replace(new RegExp(":", "g"), ".")}`, mail, (err): void => {
+          console.log(err);
+        });
+      },1000);
       stream.on("end", callback);
     })
   },
