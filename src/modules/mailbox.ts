@@ -10,8 +10,7 @@ const server: SMTPServer = new SMTPServer({
     simpleParser(stream, {}, (e, p) => {
       if (e) return util.mailLog(`err: ${e}`);
       util.mailLog(`"${p.subject}" from ${p.from.text}`);
-      util.mailLog(`${p.text}`);
-      const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a)}`;
+      const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a.content)}\n`;
       fs.mkdir(`./data/mail/${p.to.text}`, (err) => {
         if(err && !fs.existsSync(`./data/mail/${p.to.text}`)) console.log(err);
       });
