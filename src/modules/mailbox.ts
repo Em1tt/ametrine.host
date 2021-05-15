@@ -9,7 +9,7 @@ const server: SMTPServer = new SMTPServer({
     simpleParser(stream, {}, (e, p) => {
       if (e) return util.mailLog(`err: ${e}`);
 
-      util.mailLog(`"${p.subject}" from ${p.from.text}`);
+      util.mailLog(`"${p.subject}" from ${p.from.text} for ${p.to.text}`);
       util.mailLog(`${p.text}`);
       stream.on("end", callback);
     })
