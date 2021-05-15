@@ -2,7 +2,7 @@
 import { SMTPServer }   from "smtp-server";
 import { simpleParser } from "mailparser";
 import { util }         from "../util";
-import { writeFile } from "fs";
+import fs from "fs";
 import config           from "../config.json";
 
 const server: SMTPServer = new SMTPServer({
@@ -12,7 +12,10 @@ const server: SMTPServer = new SMTPServer({
       util.mailLog(`"${p.subject}" from ${p.from.text}`);
       util.mailLog(`${p.text}`);
       const mail = `${p.from.text} wrote:\n\n---------------------\n${p.subject}\n\n${p.text}\n\n${p.attachments.map(a => a)}`;
-      writeFile(`./data/mail/${p.to.text}/${p.date.toISOString().replace(new RegExp(":", "g"), ".")}`, mail, (err): void => {
+      fs.mkdir(`./data/mail/${p.to.text}`, (err) => {
+        if(err) console.log(err);
+      });
+      fs.writeFile(`./data/mail/${p.to.text}/${p.date.toISOString().replace(new RegExp(":", "g"), ".")}`, mail, (err): void => {
         console.log(err);
       });
       stream.on("end", callback);
