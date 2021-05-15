@@ -14,7 +14,8 @@ const server: SMTPServer = new SMTPServer({
       stream.on("end", callback);
     })
   },
-  disabledCommands: ["AUTH"]
+  disabledCommands: ["AUTH"],
+  authOptional: true
 });
 
 server.listen(config.mail.port, "0.0.0.0", () => util.mailLog("server started"));
