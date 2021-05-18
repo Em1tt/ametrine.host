@@ -1,4 +1,6 @@
 {
+  "lang": "en",
+
   "website": {
     "port": 3000
   },

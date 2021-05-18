@@ -22,7 +22,7 @@ export const cmds = {
 
       modules.set(args[0],
                   child_process.fork(`dist/modules/${args[0]}.js`));
-      util.log(`loaded module "${args[0]}"`);
+      util.log(`loaded module ${args[0]}`);
   },
 
   usage: (): void => util.log(`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB`)

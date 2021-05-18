@@ -1,0 +1,24 @@
+{
+  "start": "started %0% modules",
+  "module": "loaded module %0%",
+
+  "website": {
+    "start": "website started @%0%",
+    "apiModules": "loaded %0% api endpoints",
+    "notFound": "404: page not found"
+  },
+
+  "discord": {
+    "start": "logged in",
+    "modules": "loaded {0} commands",
+    "playing": "on amethyst.host",
+    "executed": "executed %0% [%1%]",
+    "notExecuted": "not executed (%0%)"
+  },
+
+  "mail": {
+    "start": "mailbox started @%0%",
+    "notFound": "510: e-mail address does not exist",
+    "new": "received e-mail from %0%"
+  }
+}
