@@ -25,7 +25,6 @@ for (const file of mfiles) {
   modules.set(file.replace(".js", ""),
               child_process.fork(`dist/modules/${file}`));
 }
-console.log(util.sreplace("test %0%", ["hi"]));
 util.log(util.sreplace(strings.start, [modules.size]));
 
 // "CLI"

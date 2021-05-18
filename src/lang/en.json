@@ -1,6 +1,14 @@
 {
   "start": "started %0% modules",
-  "module": "loaded module %0%",
+
+  "modules": {
+    "load": "loaded module %0%",
+    "alreadyLoaded": "module %0% already loaded",
+    "disable": "disabled module %0%",
+    "unknown": "unknown module %0%",
+    "disabledAll": "disabled all modules",
+    "usage": "%0%MB"
+  },
 
   "website": {
     "start": "website started @%0%",
@@ -10,7 +18,7 @@
 
   "discord": {
     "start": "logged in",
-    "modules": "loaded {0} commands",
+    "modules": "loaded %0% commands",
     "playing": "on amethyst.host",
     "executed": "executed %0% [%1%]",
     "notExecuted": "not executed (%0%)"
