@@ -7,7 +7,7 @@ export const util = {
     // - b1tt, 17 May 2021
 
     for (let i = 0; i < 9; i ++) {
-      text.includes(`{${i}}`) ?
+      text.includes(`%${i}%`) ?
           text.replace(new RegExp(`%${i}%`, "g"), rep[i]) :
           null;
     }
