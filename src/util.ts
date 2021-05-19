@@ -5,7 +5,7 @@ export const util = {
     // but thats the only solution that comes in my head!!
     // whatcha gonna do about that? huh???????
     // - b1tt, 17 May 2021
-    for (let i = 0; i < 10; i ++) {
+    for (let i = 0; i < rep.length; i ++) {
       text = text.replace(new RegExp(`%${i}%`, "g"), rep[i]);
     }
     return text;
