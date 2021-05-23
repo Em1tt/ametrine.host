@@ -35,7 +35,7 @@ app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
 
 app.get("/", (r: express.Request, s: express.Response) => {
-  s.render(`${html}/index.html`);
+  s.sendFile(`${html}/index.html`);
 });
 
 /* amethyst.host/api/bill
