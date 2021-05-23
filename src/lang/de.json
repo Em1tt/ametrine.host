@@ -1,0 +1,34 @@
+{
+  "lang": "de - deutsch",
+  "author": "Vanilagy",
+  "start": "%0% Module gestartet",
+
+  "modules": {
+    "load": "Modul %0% geladen",
+    "alreadyLoaded": "Modul %0% bereits geladen",
+    "disable": "Module %0% deaktiviert",
+    "unknown": "unbekanntes Modul %0%",
+    "disabledAll": "Alle Module wurden deaktiviert",
+    "usage": "%0%MB"
+  },
+
+  "website": {
+    "start": "Website gestartet @%0%",
+    "apiModules": "%0% api-endpoints geladen",
+    "notFound": "404: Seite nicht gefunden"
+  },
+
+  "discord": {
+    "start": "Angemeldet",
+    "modules": "%0% Befehle geladen",
+    "playing": "auf amethyst.host",
+    "executed": "%0% [%1%] ausgeführt",
+    "notExecuted": "(%0%) nicht ausgeführt"
+  },
+
+  "mail": {
+    "start": "Mailbox gestartet @%0%",
+    "notFound": "510: E-Mail-Adresse existiert nicht",
+    "new": "E-Mail von %0% empfangen"
+  }
+}
