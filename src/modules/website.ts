@@ -35,7 +35,7 @@ app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
 
 app.get("/", (r: express.Request, s: express.Response) => {
-  s.sendFile(`${html}/index.eta`);
+  s.render(`${html}/index.eta`);
 });
 
 /* amethyst.host/api/bill
@@ -51,7 +51,7 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
 
   if (!fs.existsSync(file)) return s.status(404)
                                     .send("if you were searching for a 404.. you found it!!");
-  s.sendFile(file);
+  s.render(file);
 });
 
 // start up the website
