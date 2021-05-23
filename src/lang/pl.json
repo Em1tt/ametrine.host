@@ -1,7 +1,7 @@
 {
   "lang": "pl - polski",
   "author": "SirWafel",
-  "start": "started %0% modules",
+  "start": "uruchomiono %0% moduły",
 
   "modules": {
     "load": "wczytano moduł %0%",
