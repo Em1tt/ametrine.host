@@ -1,13 +1,14 @@
 {
   "name": "amethyst.host",
   "version": "1.4.0",
-  "description": "Hosting service providing yada yada yada @Em1t finish this text please",
+  "description": "Hosting service providing Minecraft servers at a small price.",
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&& npx tsc -p .",
+    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&&npx tsc -p .",
     "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .'",
-    "start": "pm2 start dist/main.js"
+    "start": "pm2 start dist/main.js",
+    "nstart": "node dist/main.js"
   },
   "repository": {
     "type": "git",

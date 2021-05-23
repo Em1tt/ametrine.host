@@ -5,6 +5,7 @@ import morgan       from "morgan";
 import minify       from "express-minify";
 import path         from "path";
 import fs           from "fs";
+import * as eta     from "eta";
 import config       from "../config.json";
 import { util }     from "../util";
 import { Endpoint } from "../types/endpoint";
@@ -29,9 +30,12 @@ app.use(compression());
 app.use(minify());
 // serve static files
 app.use(express.static(path.join(__dirname, "views")));
+// eta
+app.engine("eta", eta.renderFile);
+app.set("view engine", "eta");
 
 app.get("/", (r: express.Request, s: express.Response) => {
-  s.sendFile(`${html}/index.html`);
+  s.render(`${html}/index.html`);
 });
 
 /* amethyst.host/api/bill
