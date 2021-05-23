@@ -2,7 +2,7 @@
   "lang": "en",
 
   "website": {
-    "port": 48378
+    "port": 3000
   },
 
   "mail": {
