@@ -18,7 +18,7 @@ const html: string = path.join(__dirname, "views", "html");
 const endpoints: Map<string, Endpoint> = new Map();
 const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
                                            .filter((f) => f.endsWith(".js"));
-const notFound : String                = "if you were searching for a 404.. you found it!!";
+const notFound : string                = "if you were searching for a 404.. you found it!!";
 
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
