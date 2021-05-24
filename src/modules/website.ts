@@ -9,6 +9,7 @@ import * as eta     from "eta";
 import config       from "../config.json";
 import { util }     from "../util";
 import { Endpoint } from "../types/endpoint";
+import helmet       from "helmet"
 import bodyParser   from "body-parser"
 import cookieParser from "cookie-parser"
 
