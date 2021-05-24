@@ -1,12 +1,12 @@
 {
   "name": "amethyst.host",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Hosting service providing Minecraft servers at a small price.",
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&&npx tsc -p .",
-    "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .'",
+    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&npx tsc -p .",
+    "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&tsc -p .",
     "start": "pm2 start dist/main.js",
     "nstart": "node dist/main.js"
   },
@@ -21,12 +21,10 @@
   },
   "homepage": "https://github.com/Em1tt/amethyst.host#readme",
   "dependencies": {
-    "compression": "^1.7.4",
     "discord.js": "^12.5.3",
     "dotenv": "^9.0.0",
     "eta": "^1.12.1",
     "express": "^4.17.1",
-    "express-minify": "^1.0.0",
     "mailparser": "^3.2.0",
     "morgan": "^1.10.0",
     "smtp-server": "^3.8.0"

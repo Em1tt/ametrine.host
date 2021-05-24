@@ -1,8 +1,6 @@
 // imports
 import express      from "express";
-import compression  from "compression";
 import morgan       from "morgan";
-import minify       from "express-minify";
 import path         from "path";
 import fs           from "fs";
 import * as eta     from "eta";
@@ -24,10 +22,6 @@ util.expressLog(`${endpoints.size} api endpoints loaded`);
 
 app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
 
-// gzip
-app.use(compression());
-// minify static files
-app.use(minify());
 // serve static files
 app.use(express.static(path.join(__dirname, "views")));
 // eta
