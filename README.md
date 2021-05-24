@@ -38,6 +38,5 @@ The entirety of **Amethyst.host** is maintained by:
 * [Em1t](https://github.com/Em1tt) - CEO & fullstack
 * [b1tt](https://github.com/b1tt0) - backend
 * [Firee](https://github.com/firemario211) - backend
-* [lrtz](https://github.com/lrtz0) - fullstack code checking
 
 © Amethyst.host | Distribution / Modification of our software is prohibited.
