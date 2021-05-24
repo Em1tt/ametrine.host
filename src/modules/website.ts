@@ -18,7 +18,6 @@ const html: string = path.join(__dirname, "views", "html");
 const endpoints: Map<string, Endpoint> = new Map();
 const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
                                            .filter((f) => f.endsWith(".js"));
-const notFound : string                = "if you were searching for a 404.. you found it!!";
 
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
@@ -60,7 +59,7 @@ const apiMethod = function(r: express.Request, s: express.Response) {
     ep.prop.run(r, s);
   } else {
     return s.status(404)
-            .send(notFound);
+            .send("if you were searching for a 404.. you found it!!");
   }
 }
 
