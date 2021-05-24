@@ -9,7 +9,7 @@ import { createHash }          from 'crypto';
 import ms                      from 'ms';
 
 export const auth = {
-    login: async (req: express.Request, res: express.Response, data, rememberMe: Boolean) => { // Logging in via amethyst.host
+    login: async (req: express.Request, res: express.Response, data, rememberMe: boolean) => { // Logging in via amethyst.host
         const createdIn = parseInt(Date.now().toString().slice(0, -3)) // because for some reason node js decides to use an expanded timestamp
         const ipAddr = req.socket.remoteAddress;
         const salt = Buffer.alloc((process.env.SALT.length * 2) - 1, process.env.SALT)
@@ -20,7 +20,7 @@ export const auth = {
                                           })
         if (!verifiedHash) return 403;
         const userData = { email: data.email, name: data.name, id: data.user_id }
-        let accessTokenOpts = sql.jwtOptions
+        const accessTokenOpts = sql.jwtOptions
         let expiresIn = ms('1h')
         if (rememberMe) {
             expiresIn = ms('90 days')
@@ -34,7 +34,7 @@ export const auth = {
         sql.db.prepare("INSERT INTO sessions (user_id, jwt, createdIn, expiresIn, ip) VALUES (?, ?, ?, ?, ?)").run(userData.id, accessToken, createdIn, expiresIn, ip) // Adds the token to DB in case the user decides to logout.
         return { email: data.email, accessToken: accessToken };
     },
-    verifyToken: (user_id: Number, req: express.Request, res: express.Response, sendResponse: Boolean) => { // Probably not a good idea to do this, as most people use next()
+    verifyToken: (user_id: number, req: express.Request, res: express.Response, sendResponse: boolean) => { // Probably not a good idea to do this, as most people use next()
         const currentDate = parseInt(Date.now().toString().slice(0, -3))
         const authorization = req.headers['authorization'];
         if (!authorization) return (sendResponse) ? res.sendStatus(403) : 403;
