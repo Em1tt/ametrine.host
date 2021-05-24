@@ -29,7 +29,7 @@ app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
 
 app.get("/", (r: express.Request, s: express.Response) => {
-  s.render(`${html}/index.html`);
+  s.render(`${html}/index.eta`);
 });
 
 /* amethyst.host/api/bill
@@ -41,11 +41,11 @@ app.get("/api/:method", (r: express.Request, s: express.Response) => {
 
 // "smart" router
 app.get("/:name", (r: express.Request, s: express.Response) => {
-  const file = `${html}/${r.params.name}.html`;
+  const file = `${html}/${r.params.name}.eta`;
 
   if (!fs.existsSync(file)) return s.status(404)
                                     .send("if you were searching for a 404.. you found it!!");
-  s.sendFile(file);
+  s.render(file);
 });
 
 // start up the website
