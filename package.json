@@ -1,14 +1,15 @@
 {
   "name": "amethyst.host",
   "version": "1.4.0",
-  "description": "Hosting service providing Minecraft servers at a small price.",
+  "description": "Hosting service providing yada yada yada @Em1t finish this text please",
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&&npx tsc -p .",
+    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&& npx tsc -p .",
+    "sql": "echo '[amethyst-db] merging sql files'&&sqlite3 data/db/database.db < dist/sql/init.sql",
+    "jwtgen": "echo '[amethyst-host] generate key for JWT (Do not use a password when generating or itll state its missing a passphrase)'&&ssh-keygen -t rsa -b 4096 -m PEM -f jwt.key&&openssl rsa -in jwt.key -pubout -outform PEM -out jwt.key.pub",
     "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .'",
-    "start": "pm2 start dist/main.js",
-    "nstart": "node dist/main.js"
+    "start": "pm2 start dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -24,13 +25,11 @@
     "argon2": "^0.27.2",
     "better-sqlite3": "^7.4.0",
     "body-parser": "^1.19.0",
-    "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
     "eta": "^1.12.1",
     "express": "^4.17.1",
-    "express-minify": "^1.0.0",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mailparser": "^3.2.0",
