@@ -7,8 +7,6 @@
     "noEmitOnError"         : true,
     "experimentalDecorators": true,
     "preserveConstEnums"    : true,
-    "sourceMap"             : true,
-    "sourceRoot"            : "src",
     "outDir"                : "dist"
   },
 

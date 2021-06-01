@@ -1,6 +1,0 @@
-#!/bin/bash
-# lint and build
-bash script/lint
-
-# start the website
-npm run start
