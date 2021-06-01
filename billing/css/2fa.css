@@ -7,7 +7,7 @@
     font-family: 'Ubuntu', sans-serif;
 }
 
-.register-dialog{
+.two-fa-dialog{
     width: 35%;
     justify-self: center;
     align-self: center;
@@ -25,61 +25,27 @@
     color: white;
 }
 
-.register-main{
-    width: 85%;
+.two-fa{
+    width: 100%;
 }
 
-.register-main h2{
+.two-fa h2{
     color: var(--highlights);
 }
 
-.register-other{
-    width: 15%;
-    display: flex;
-    flex-direction: column-reverse;
-    max-height: calc(80vh - 9rem);
-    margin: 10px 20px 10px 0px;
-    padding: 0px 10px;
-    overflow-y: auto;
-    height: 100%;
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
- /* width */
- ::-webkit-scrollbar {
-    width: 2px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    background: var(--sub);
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: var(--highlights);
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  } 
-.register-other a{
-    margin: 10px 0px;
-    width: 80%;
-    height: 0;
-    padding: 40% 0;
-    background-color: var(--sub);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
-.register-other a:hover{
-    background-color: var(--items);
-}
-.OAuth2{
-    width: 50%;
-}
-.register{
+
+form{
     margin-top: 50px;
     display: flex;
     flex-direction: column;
@@ -112,7 +78,7 @@ label{
     display: none;
 }
 .checkbox{
-    min-width: 30px;
+    width: 30px;
     height: 30px;
     appearance: none;
     border: 5px solid var(--sub);
@@ -185,31 +151,31 @@ label{
 }
 
 @media screen and (max-width: 1000px){
-    .register-other a{
+    .login-other a{
         width: 100%;
         padding: 50% 0;
     }
 }
 @media screen and (max-width: 800px){
-    .register-dialog{
+    .two-fa-dialog{
         width: 50%;
     }
 }
 @media screen and (max-width: 600px){
-    .register-dialog{
+    .two-fa-dialog{
         width: 75%;
     }
 }
 
 @media screen and (max-width: 400px){
-    .register-dialog{
+    .two-fa-dialog{
         flex-direction: column;
         padding: 10px;
     }
-    .register-dialog h1{
+    .two-fa-dialog h1{
         font-size: 1.5rem;
     }
-    .register-dialog h2{
+    .two-fa-dialog h2{
         font-size: 1.25rem;
     }
     label{
@@ -219,14 +185,14 @@ label{
         font-size: 1rem;
         width: 100%;
     }
-    .register-other{
+    .login-other{
         width: 100%;
         flex-direction: row;
         padding: 0;
         overflow: auto;
         flex-wrap: wrap;
     }
-    .register-other a{
+    .login-other a{
         width: 25%;
         margin-right: 10px;
         padding: 12.5% 0;

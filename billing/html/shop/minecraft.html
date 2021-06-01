@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Minecraft Servers | Amethyst.host</title>
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous"
+        media="">
+    <noscript>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    </noscript>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../css/packages.css">
+    <link href="../../css/navbar.css" rel="stylesheet">
+    <link href="../../css/login.css" rel="stylesheet">
+    <link href="../../css/register.css" rel="stylesheet">
+    <link href="../../css/2fa.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div id="1" class="login-dialog disabled">
+        <div class="login-main">
+            <h1>Amethyst.host</h1>
+            <h2><i class="fa fa-lock"></i> Secure Login</h2>
+            <button onclick="toggleLoginDialog()" class="cancel"><i class="fa fa-times-circle"></i></button>
+            <form class="login">
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" required class="text-input"><br><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" required name="password" class="text-input"><br>
+                <div class="flex-align">
+                    <input type="checkbox" checked="true" id="remember" name="remember" class="checkbox">
+                    <label for="remember">Remember me</label><br>
+                </div>
+                <div class="register">
+                    <input type="submit" value="Continue" class="submit">
+                    <p>Not a member? <button id="register-toggle" onclick="toggleRegisterDialog()">Register
+                            now!</button></p>
+                </div>
+            </form>
+        </div>
+        <div class="login-other">
+            <a href="#"><img src="../../images/Discord.png" class="OAuth2"></img></a>
+            <a href="#"><img src="../../images/Github.png" class="OAuth2"></a>
+        </div>
+    </div>
+    <div id="3" class="register-dialog disabled">
+        <div class="register-main">
+            <h1>Amethyst.host</h1>
+            <h2><i class="fa fa-lock"></i> Secure Register</h2>
+            <button onclick="toggleRegisterDialog();  toggleLoginDialog();" class="cancel"><i
+                    class="fa fa-times-circle"></i></button>
+            <form class="register">
+                <label for="name">Full Name</label><br>
+                <input type="text" id="name" name="name" required class="text-input"><br>
+                <label for="email">Email</label><br>
+                <input type="email" id="email" name="email" required class="text-input"><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" required name="password" class="text-input"><br>
+                <label for="password-confirm">Confirm Password</label><br>
+                <input type="password" id="password-confirm" required name="password-confirm" class="text-input"><br>
+                <div class="flex-align">
+                    <input type="checkbox" required="true" id="remember" name="remember" class="checkbox">
+                    <label for="remember">I agree with the terms & conditions and I've read the privacy
+                        policy</label><br>
+                </div>
+                <div class="register">
+                    <input type="submit" value="Continue" class="submit">
+                    <p>Already a member? <button id="register-toggle" onclick="toggleRegisterDialog();">Log-in</button>
+                    </p>
+                </div>
+            </form>
+        </div>
+        <div class="login-other">
+            <a href="#"><img src="../../images/Discord.png" class="OAuth2"></a>
+            <a href="#"><img src="../../images/Github.png" class="OAuth2"></a>
+        </div>
+    </div>
+    <div id="4" class="two-fa-dialog disabled">
+        <div class="two-fa">
+            <h1>Amethyst.host</h1>
+            <h2><i class="fa fa-lock"></i> Secure Login</h2>
+            <button onclick="toggle2FADialog()" class="cancel"><i class="fa fa-times-circle"></i></button>
+            <form>
+                <label for="code">2-FA Code</label><br>
+                <input type="number" id="code" name="code" required class="text-input"><br><br>
+                <input type="submit" value="Continue" class="submit">
+            </form>
+        </div>
+    </div>
+    <div id="2" class="login-backdrop disabled"></div>
+    <nav>
+        <a href="#" id="home"><img src="../../images/ACLogoT.png" width=60px;></a>
+        <div class="buttons">
+            <div class="dropdown">
+                <button class="dropbtn"><i class="fa fa-home"></i> <span class="nav-text">Home</span></button>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="nav-text">Order</span> <i class="fa fa-caret-down nav-text"></i><i
+                        class="fa fa-shopping-cart icon"></i></button>
+                <div class="dropdown-content first">
+                    <a href="#">Minecraft</a>
+                    <a href="#">Discord bot</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="nav-text">Support</span> <i
+                        class="fa fa-caret-down nav-text"></i><i class="fa fa-ticket-alt icon"></i></button>
+                <div class="dropdown-content second">
+                    <a href="#">Open a ticket</a>
+                    <a href="#">Write an E-Mail</a>
+                    <a href="#">Join our Discord</a>
+                    <a href="#">Knowledgebase</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn"><span class="nav-text">More</span> <i class="fa fa-caret-down nav-text"></i><i
+                        class="fa fa-plus-circle icon"></i></button>
+                <div class="dropdown-content third">
+                    <a href="#">Referral program</a>
+                    <a href="#">Forum</a>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown alignToRight">
+            <button onclick="toggleLoginDialog()" class="dropbtn"><i class="fa fa-sign-in-alt"></i> <span
+                    class="nav-text">Login</span></button>
+        </div>
+    </nav>
+    <main>
+        <h1 id="h1">Please enable JavaScript for this process</h1>
+        <h2 id="h2">The package selection won't work without JavaScript enabled</h2>
+        <h3 id="h3"></h3>
+        <div id="line-selection" class="line-selection">
+            <div>
+                <h4>Budget</h4>
+                <ul>
+                    <li>AMD Ryzen 5 3600</li>
+                    <li>DDR4 RAM</li>
+                    <li>NVMe SSD</li>
+                    <li>1GB/s ports</li>
+                    <li>Unlimited bandwidth</li>
+                    <li>DDOS protection</li>
+                    <li>100% Uptime</li>
+                </ul>
+                <hr class="line-divider">
+                <p>Starting at €0.75/Mo</p>
+                <button onclick="url.searchParams.append('line', 'Budget'); window.location = (url);">Select</button>
+            </div>
+            <div>
+                <h4>Budget</h4>
+                <ul>
+                    <li>AMD Ryzen 5 3600</li>
+                    <li>DDR4 RAM</li>
+                    <li>NVMe SSD</li>
+                    <li>1GB/s ports</li>
+                    <li>Unlimited bandwidth</li>
+                    <li>DDOS protection</li>
+                    <li>100% Uptime</li>
+                </ul>
+                <hr class="line-divider">
+                <p>Starting at €0.75/Mo</p>
+                <button onclick="url.searchParams.append('line', 'Budget'); window.location = (url);">Select</button>
+            </div>
+        </div>
+        <form id="plans">
+            <div id="budget" class="unselected">
+                <div>
+                    <h4>Trial</h4>
+                    <ul>
+                        <li>1 CPU Core</li>
+                        <li>2GB RAM</li>
+                        <li>15GB NVMe SSD</li>
+                        <li>0 extra ports</li>
+                        <li>Wisp panel</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Lasts 7 days<br><a href="#">View requirements</a></p>
+                    <input type="radio" id="b0" value="b0" name="budget-plan">
+                    <label for="b0">Select</label>
+                </div>
+                <div>
+                    <h4>Proxy</h4>
+                    <ul>
+                        <li>1 CPU Core</li>
+                        <li>1GB RAM</li>
+                        <li>15GB NVMe SSD</li>
+                        <li>3 extra ports</li>
+                        <li>1 SQL Database</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €0.75/Mo</p>
+                    <input type="radio" id="b1" value="b1" name="budget-plan">
+                    <label for="b1">Select</label>
+                </div>
+                <div>
+                    <h4>Dirt</h4>
+                    <ul>
+                        <li>1 CPU Core</li>
+                        <li>2GB RAM</li>
+                        <li>25GB NVMe SSD</li>
+                        <li>3 extra ports</li>
+                        <li>1 SQL Database</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €1.50/Mo</p>
+                    <input type="radio" id="b2" value="b2" name="budget-plan">
+                    <label for="b2">Select</label>
+                </div>
+                <div>
+                    <h4>Sand</h4>
+                    <ul>
+                        <li>2 CPU Cores</li>
+                        <li>4GB RAM</li>
+                        <li>40GB NVMe SSD</li>
+                        <li>3 extra ports</li>
+                        <li>2 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €3.00/Mo</p>
+                    <input type="radio" id="b3" value="b3" name="budget-plan">
+                    <label for="b3">Select</label>
+                </div>
+                <div>
+                    <h4>Cobblestone</h4>
+                    <ul>
+                        <li>2 CPU Cores</li>
+                        <li>6GB RAM</li>
+                        <li>50GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>2 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €4.50/Mo</p>
+                    <input type="radio" id="b4" value="b4" name="budget-plan">
+                    <label for="b4">Select</label>
+                </div>
+                <div>
+                    <h4>Blackstone</h4>
+                    <ul>
+                        <li>2 CPU Cores</li>
+                        <li>8GB RAM</li>
+                        <li>60GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>3 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €6.00/Mo</p>
+                    <input type="radio" id="b5" value="b5" name="budget-plan">
+                    <label for="b5">Select</label>
+                </div>
+                <div>
+                    <h4>Coal</h4>
+                    <ul>
+                        <li>3 CPU Cores</li>
+                        <li>10GB RAM</li>
+                        <li>70GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>3 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €7.50/Mo</p>
+                    <input type="radio" id="b6" value="b6" name="budget-plan">
+                    <label for="b6">Select</label>
+                </div>
+                <div>
+                    <h4>Copper</h4>
+                    <ul>
+                        <li>3 CPU Cores</li>
+                        <li>12GB RAM</li>
+                        <li>80GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>4 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €9.00/Mo</p>
+                    <input type="radio" id="b7" value="b7" name="budget-plan">
+                    <label for="b7">Select</label>
+                </div>
+                <div>
+                    <h4>Iron</h4>
+                    <ul>
+                        <li>3 CPU Cores</li>
+                        <li>14GB RAM</li>
+                        <li>90GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>4 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €10.50/Mo</p>
+                    <input type="radio" id="b8" value="b8" name="budget-plan">
+                    <label for="b8">Select</label>
+                </div>
+                <div>
+                    <h4>Gold</h4>
+                    <ul>
+                        <li>3 CPU Cores</li>
+                        <li>16GB RAM</li>
+                        <li>100GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>5 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €12.00/Mo</p>
+                    <input type="radio" id="b9" value="b9" name="budget-plan">
+                    <label for="b9">Select</label>
+                </div>
+                <div>
+                    <h4>Lapis</h4>
+                    <ul>
+                        <li>4 CPU Cores</li>
+                        <li>18GB RAM</li>
+                        <li>110GB NVMe SSD</li>
+                        <li>4 extra ports</li>
+                        <li>5 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €13.50/Mo</p>
+                    <input disabled type="radio" id="b10" value="b10" name="budget-plan">
+                    <label for="b10">Select</label>
+                </div>
+                <div>
+                    <h4>Redstone</h4>
+                    <ul>
+                        <li>4 CPU Cores</li>
+                        <li>20GB RAM</li>
+                        <li>120GB NVMe SSD</li>
+                        <li>5 extra ports</li>
+                        <li>6 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €15.00/Mo</p>
+                    <input disabled type="radio" id="b11" value="b11" name="budget-plan">
+                    <label for="b11">Select</label>
+                </div>
+                <div>
+                    <h4>Diamond</h4>
+                    <ul>
+                        <li>4 CPU Cores</li>
+                        <li>26GB RAM</li>
+                        <li>140GB NVMe SSD</li>
+                        <li>5 extra ports</li>
+                        <li>6 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €19.50/Mo</p>
+                    <input disabled type="radio" id="b12" value="b12" name="budget-plan">
+                    <label for="b12">Select</label>
+                </div>
+                <div>
+                    <h4>Netherite</h4>
+                    <ul>
+                        <li>5 CPU Cores</li>
+                        <li>32GB RAM</li>
+                        <li>160GB NVMe SSD</li>
+                        <li>5 extra ports</li>
+                        <li>6 SQL Databases</li>
+                        <li>Unlimited bandwidth</li>
+                        <li>Unlimited player slots</li>
+                        <li>Instant setup</li>
+                        <li>Wisp panel</li>
+                    </ul>
+                    <hr class="line-divider">
+                    <p>Starting at €24.00/Mo</p>
+                    <input type="radio" disabled id="b13" value="b13" name="budget-plan">
+                    <label for="b13">Select</label>
+                </div>
+            </div>
+            <button id="continue" type="button" onclick="ContinueToCheckout()" class="disabled" disabled><i
+                    class="fa  fa-arrow-alt-circle-right"></i>Continue</button>
+        </form>
+    </main>
+    <script>
+        //If an input is disabled, automatically insert the "Out of stock" message.
+        $("input:disabled ~ label").html("<i class='fa fa-times-circle'></i> Out of stock");
+        const headers = { //Base text for headers
+            "h1": "Minecraft servers",
+            "h2": "Choose your line",
+            "h3": ""
+        },
+            queries = new URLSearchParams(window.location.search), //A list of all queries in the URL
+            availableLines = ["Budget"], //All available lines (protection against forging lines in frontend) - CAN BE MOVED INTO BACKEND
+            url = new URL(window.location.href), //The current URL the visitor is on.
+            pricing = { //Pricing used to display the final price. Actual billing is handled in backend - CAN BE MOVED INTO BACKEND AND SENT TO FRONTEND
+                b0: 0,  //NOTE: Might implement dynamic prices for the plans, so it's all editable through this object.
+                b1: 0.75,
+                b2: 1.50,
+                b3: 3,
+                b4: 4.50,
+                b5: 6,
+                b6: 7.50,
+                b7: 9,
+                b8: 10.50,
+                b9: 12,
+                b10: 13.50,
+                b11: 15,
+                b12: 19.50,
+                b13: 24
+            };
+        //Dynamically replace header texts. If JavaScript is disabled, this is omitted and the default "Enable JavaScript" warning will stay on screen
+        Object.entries(headers).forEach(o => {
+            document.getElementById(o[0]).innerHTML = o[1];
+        })
+        //Toggle the login dialog when the button is pressed
+        function toggleLoginDialog() {
+            document.getElementById("1").classList.toggle("disabled");
+            document.getElementById("2").classList.toggle("disabled");
+        };
+        //Toggle the register dialog when the register button is pressed
+        function toggleRegisterDialog() {
+            document.getElementById("1").classList.toggle("disabled");
+            document.getElementById("3").classList.toggle("disabled");
+        };
+        //Toggle the 2FA dialog when backend requests it.
+        function toggle2FADialog() {
+            document.getElementById("2").classList.toggle("disabled");
+            document.getElementById("4").classList.toggle("disabled");
+        };
+        //Add the plan query to the URL and redirect to it, updating the website to display new content
+        function ContinueToCheckout() {
+            let plan = $("#plans input:checked").attr("id");
+            if (url.searchParams.has("plan")) url.searchParams.delete("plan");
+            url.searchParams.append("plan", plan);
+            window.location.href = url;
+        }
+        //If the URL has a line query that matches a result in availableLines, toggle the content of the website to display plans of the line that's been chosen
+        if (availableLines.includes(queries.get("line")) && (!queries.get("plan") && !Object.keys(pricing).includes(queries.get("plan")))) {
+            document.getElementById("continue").classList.toggle("disabled");
+            document.getElementById("line-selection").classList.toggle("disabled");
+            document.getElementById("h2").innerHTML = `<i class="fa fa-box-open"></i> ${queries.get("line")} line - package selection`;
+            document.getElementById("h3").innerHTML = "<i class='fa fa-question-circle'></i> Only shared CPU cores - no dedicated CPU<br><i class='fa fa-exclamation-circle'></i>  Don't like our service? We provide a 100% refund within 14 days of the initial payment - no questions asked";
+            //Display the plans of the current line
+            document.getElementById(queries.get("line").toLowerCase()).classList.toggle("unselected");
+            $('input[type="radio"]').on('click change', function (e) {
+                document.getElementById("continue").disabled = false;
+            });
+        }else if(queries.get("line") && !availableLines.includes(queries.get("line"))){ //If the line doesn't exist, remove it from the URL and reload the page
+            url.searchParams.delete("line");
+            window.location.replace(url); //Replace the URL so the user can't return back to the invalid query URL
+        }
+        //If the URL has a plan query, try checking it against the pricing keys to see if the plan actually exists and wasn't query forged. Also check for the line query.
+        if((queries.get("plan") && Object.keys(pricing).includes(queries.get("plan"))) && (availableLines.includes(queries.get("line")))){
+            document.getElementById("line-selection").classList.toggle("disabled");
+            document.getElementById("h2").innerHTML = `<i class="fa fa-shopping-cart"></i> Select add-ons & checkout`;
+            document.getElementById("h3").innerHTML = "";
+        }else if(queries.get("plan")){ //If query plan doesn't exist, remove it from the URL
+            url.searchParams.delete("plan");
+            window.location.replace(url); //Replace the URL so the user can't return back to the invalid query URL
+        }
+    </script>
+</body>
+
+</html>

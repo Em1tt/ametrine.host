@@ -1,116 +1,114 @@
-:root{
-    --navHighlights: #ed5087;
-    --navMain: #1f1f25;
-    --navDrop: #24242c;
-    font-family: 'Ubuntu', sans-serif;
-}
-
 nav {
-    background-color: var(--navMain);
+    position: fixed;
+    left: 0;
+    top: 0;
     height: 80px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
     width: 100%;
     display: flex;
     justify-content: left;
     align-items: center;
+    z-index: 10;
+    transition: 1s ease;
+    /*Use the font Ubuntu and fall back to sans-serif as default*/
+    font-family: 'Ubuntu', sans-serif;
+    /**VARIABLES*/
+    --navHighlights: #ed5087;
+    --navMain: #1f1f25;
+    --navDrop: #24242c;
+    --textColor: white;
 }
-#home{
-    margin-left: 5vw;
-    margin-right: 10vw;
+
+nav>a {
+    margin-inline: 5vw 10vw;
 }
-.alignToRight{
-    margin-right: 5vw !important;
-    margin-left: 10vw !important;
-    right: 0px !important;
-    position: absolute !important;
-}
-.buttons{
+
+nav>div:nth-of-type(1) {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
+
+nav>div:nth-of-type(2) {
+    position: absolute;
+    right: 0;
+    margin-inline: 10vw 5vw;
+}
+
 .dropbtn {
-    color: white;
+    color: var(--textColor);
     padding: 16px;
-    font-size: 16px;
     border: none;
     cursor: pointer;
     width: 100%;
     background: transparent;
-    font-size: 1.1rem;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
+    font-size: 1rem;
+}
+
+.dropdown {
     position: relative;
+    top: -2px;
     display: inline-block;
     margin-left: 10px;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
+}
+
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: var(--navMain);
     min-width: 240px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-    color: white;
+}
+
+.dropdown-content a {
+    color: var(--textColor);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
     border-left: solid 2px transparent;
-  }
-  .icon{
-      display: none !important;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {
-      background-color: var(--navDrop);
-      border-left: 2px solid var(--navHighlights);
-      color: var(--navHighlights);
 }
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:focus-within .dropdown-content {
+
+.icon {
+    display: none !important;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--navDrop);
+    border-left: 2px solid var(--navHighlights);
+    color: var(--navHighlights);
+}
+
+.dropdown:focus-within .dropdown-content {
     display: block;
     top: 67px;
-  }
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {
+}
+
+.dropdown:hover .dropbtn {
     color: var(--navHighlights);
-  }
+}
 
-  @media screen and (max-width: 851px){
-      #home{
-          display: none;
-      }
-  }
-  @media screen and (max-width: 651px){
+@media screen and (max-width: 851px) {
+    nav a {
+        display: none;
+    }
+}
 
-    .nav-text{
+@media screen and (max-width: 651px) {
+    .nav-text {
         display: none !important;
     }
-    .dropbtn{
+    .dropbtn {
         padding: 10px;
     }
-    .icon{
+    .icon {
         display: initial !important;
     }
-    .first{
-        left: -50px;
+    #first {
+        left: -52px;
     }
-    .second{
+    #second {
         left: -100px;
     }
-    .third{
-        left: -150px;
+    #third {
+        left: -148px;
     }
 }

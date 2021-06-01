@@ -1,10 +1,18 @@
 {
+  "lang": "en",
+
   "website": {
     "port": 3000
   },
 
   "mail": {
-    "port": 9997
+    "port": 25,
+    "mails": [
+      "support@amethyst.host",
+      "admin@amethyst.host",
+      "no-reply@amethyst.host",
+      "partnerships@amethyst.host"
+    ]
   },
 
   "discord": {

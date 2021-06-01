@@ -5,8 +5,10 @@
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist && mkdir dist && cp -r src/* dist && echo '[amethyst-build] compiling' && npx tsc -p ./ && echo '[amethyst-build] cleaning' && cd dist && find . -name '*.js.map' -type f -delete",
-    "start": "pm2 start dist/main.js"
+    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&&npx tsc -p .",
+    "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .'",
+    "start": "pm2 start dist/main.js",
+    "nstart": "node dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,8 @@
     "compression": "^1.7.4",
     "discord.js": "^12.5.3",
     "dotenv": "^9.0.0",
+    "eslint-plugin-html": "^6.1.2",
+    "eta": "^1.12.1",
     "express": "^4.17.1",
     "express-minify": "^1.0.0",
     "mailparser": "^3.2.0",
@@ -34,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.22.1",
     "eslint": "^7.25.0",
+    "eslint-plugin-eta": "^0.1.0",
     "typescript": "^4.2.4"
   }
 }

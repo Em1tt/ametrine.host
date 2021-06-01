@@ -89,7 +89,7 @@
 .OAuth2{
     width: 50%;
 }
-form{
+.login{
     margin-top: 50px;
     display: flex;
     flex-direction: column;

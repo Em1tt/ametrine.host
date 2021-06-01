@@ -6,9 +6,11 @@ import config from "../../../config.json";
 let error = false;
 
 export const prop = {
-  name : "bash",
-  desc : "Execute a bash command.",
-  usage: "bash [command] [...args]",
+  name    : "bash",
+  desc    : "Execute a bash command.",
+  usage   : "bash [command] [...args]",
+  category: "Developer",
+  permissions: [],
 
   run: async (bot: Client, msg: Message, args: Array<string>): Promise<void> => { 
   if (!config.discord.dev.includes(msg.author.id)) return;
@@ -19,13 +21,12 @@ export const prop = {
   let   data         = "";
 
 	const m       : Message = await msg.channel.send(sh);
-	const exec    : any     = child_process.spawn(cmd, args);
-	const interval: any     = setInterval(m.edit, 1000,
-                                        sh + "\n" + data + "```"
-                                       );
+	const exec    : any = child_process.spawn(cmd, args);
+	const interval: any = setInterval(m.edit, 1000,
+                                    sh + "\n" + data + "```");
 
 	exec.stdout.on("data", (d) => data += d);
-	exec.on("error", (e) => error = true);
+	exec.on("error", () => error = true);
 	exec.on("close", async (c) => {
     clearInterval(interval);
     if (error) {

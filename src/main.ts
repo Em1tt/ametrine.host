@@ -9,8 +9,10 @@ import child_process from "child_process";
 // files
 import { util } from "./util";
 import { cmds } from "./cli";
+import config   from "./config.json";
 
 // variables
+const strings    : any    = require(`./lang/${config.lang}.json`);
 const MODULE_PATH: string = path.join(__dirname, "modules");
 const stdin      : any    = process.openStdin();
 const modules    : Map<string, child_process.ChildProcess> = new Map();
@@ -23,7 +25,7 @@ for (const file of mfiles) {
   modules.set(file.replace(".js", ""),
               child_process.fork(`dist/modules/${file}`));
 }
-util.log(`${modules.size} module(s) started`);
+util.log(util.sreplace(strings.start, [modules.size]));
 
 // "CLI"
 stdin.addListener("data", (d) => {

@@ -6,6 +6,7 @@
     <link href="../css/index.css" rel="stylesheet">
     <link href="../css/login.css" rel="stylesheet">
     <link href="../css/register.css" rel="stylesheet">
+    <link href="../css/2fa.css" rel="stylesheet">    
     <title>Billing | Amethyst.host</title>
     <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
         href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
@@ -37,7 +38,8 @@
                 </div>
                 <div class="register">
                     <input type="submit" value="Continue" class="submit">
-                    <p>Not a member? <button id="register-toggle" onclick="toggleRegisterDialog()">Register now!</button></p>
+                    <p>Not a member? <button id="register-toggle" onclick="toggleRegisterDialog()">Register
+                            now!</button></p>
                 </div>
             </form>
         </div>
@@ -50,7 +52,8 @@
         <div class="register-main">
             <h1>Amethyst.host</h1>
             <h2><i class="fa fa-lock"></i> Secure Register</h2>
-            <button onclick="toggleRegisterDialog();  toggleLoginDialog();" class="cancel"><i class="fa fa-times-circle"></i></button>
+            <button onclick="toggleRegisterDialog();  toggleLoginDialog();" class="cancel"><i
+                    class="fa fa-times-circle"></i></button>
             <form>
                 <label for="name">Full Name</label><br>
                 <input type="text" id="name" name="name" required class="text-input"><br>
@@ -62,11 +65,13 @@
                 <input type="password" id="password-confirm" required name="password-confirm" class="text-input"><br>
                 <div class="flex-align">
                     <input type="checkbox" required="true" id="remember" name="remember" class="checkbox">
-                    <label for="remember">I agree with the terms & conditions and I've read the privacy policy</label><br>
+                    <label for="remember">I agree with the terms & conditions and I've read the privacy
+                        policy</label><br>
                 </div>
                 <div class="register">
                     <input type="submit" value="Continue" class="submit">
-                    <p>Already a member? <button id="register-toggle" onclick="toggleRegisterDialog();">Log-in</button></p>
+                    <p>Already a member? <button id="register-toggle" onclick="toggleRegisterDialog();">Log-in</button>
+                    </p>
                 </div>
             </form>
         </div>
@@ -75,17 +80,29 @@
             <a href="#"><img src="../images/Github.png" class="OAuth2"></a>
         </div>
     </div>
+    <div id="4" class="two-fa-dialog disabled">
+        <div class="two-fa">
+            <h1>Amethyst.host</h1>
+            <h2><i class="fa fa-lock"></i> Secure Login</h2>
+            <button onclick="toggle2FADialog()" class="cancel"><i class="fa fa-times-circle"></i></button>
+            <form>
+                <label for="code">2-FA Code</label><br>
+                <input type="number" id="code" name="code" required class="text-input"><br><br>
+                <input type="submit" value="Continue" class="submit">
+            </form>
+        </div>
+    </div>
     <div id="2" class="login-backdrop disabled"></div>
-    <nav>
-        <a href="#" id="home"><img src="../images/ACLogoT.png" width=60px;></a>
-        <div class="buttons">
+    <nav id="nav">
+        <a href="#"><img src="../images/ACLogo2.webp" width=60px; height=60px;></a>
+        <div>
             <div class="dropdown">
                 <button class="dropbtn"><i class="fa fa-home"></i> <span class="nav-text">Home</span></button>
             </div>
             <div class="dropdown">
-                <button class="dropbtn"><span class="nav-text">Order</span> <i class="fa fa-caret-down nav-text"></i><i
+                <button class="dropbtn"><span class="nav-text">Pricing</span> <i class="fa fa-caret-down nav-text"></i><i
                         class="fa fa-shopping-cart icon"></i></button>
-                <div class="dropdown-content first">
+                <div class="dropdown-content" id="first">
                     <a href="#">Minecraft</a>
                     <a href="#">Discord bot</a>
                 </div>
@@ -93,7 +110,7 @@
             <div class="dropdown">
                 <button class="dropbtn"><span class="nav-text">Support</span> <i
                         class="fa fa-caret-down nav-text"></i><i class="fa fa-ticket-alt icon"></i></button>
-                <div class="dropdown-content second">
+                <div class="dropdown-content" id="second">
                     <a href="#">Open a ticket</a>
                     <a href="#">Write an E-Mail</a>
                     <a href="#">Join our Discord</a>
@@ -103,14 +120,16 @@
             <div class="dropdown">
                 <button class="dropbtn"><span class="nav-text">More</span> <i class="fa fa-caret-down nav-text"></i><i
                         class="fa fa-plus-circle icon"></i></button>
-                <div class="dropdown-content third">
+                <div class="dropdown-content" id="third">
                     <a href="#">Referral program</a>
                     <a href="#">Forum</a>
                 </div>
             </div>
         </div>
-        <div class="dropdown alignToRight">
-            <button onclick="toggleLoginDialog()" class="dropbtn"><i class="fa fa-sign-in-alt"></i> <span class="nav-text">Login</span></button>
+        <div>
+            <div class="dropdown">
+            <button href="#" onclick="toggleLoginDialog()" class="dropbtn"><i class="fa fa-users"></i> <span class="nav-text">Log-in</span></button>
+            </div>
         </div>
     </nav>
     <main>
@@ -158,13 +177,17 @@
         </button>
     </main>
     <script>
-        function toggleLoginDialog(){
+        function toggleLoginDialog() {
             document.getElementById("1").classList.toggle("disabled");
             document.getElementById("2").classList.toggle("disabled");
         };
-        function toggleRegisterDialog(){
+        function toggleRegisterDialog() {
             document.getElementById("1").classList.toggle("disabled");
             document.getElementById("3").classList.toggle("disabled");
+        };
+        function toggle2FADialog() {
+            document.getElementById("2").classList.toggle("disabled");
+            document.getElementById("4").classList.toggle("disabled");
         };
     </script>
 </body>
