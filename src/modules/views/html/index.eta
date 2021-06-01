@@ -44,12 +44,22 @@
 </head>
 
 <body>
+<<<<<<< HEAD:src/modules/views/html/index.html
     <nav>
         <div>
             <a href="#"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
                     width="50px"><span>Amethyst.host</span></a>
         </div>
         <div>
+=======
+    <% console.log("hello world") %>
+    <nav id="navbar">
+        <a href="/" aria-label="Home"><img src="../images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
+                alt="" id="logo">
+            <p>Amethyst.host</p>
+        </a>
+        <div class="text">
+>>>>>>> main:src/modules/views/html/index.eta
             <div class="dropdown">
                 <button><i class="fa fa-tags"></i> <span>Pricing</span></button>
                 <div class="dropdown-content">
@@ -66,12 +76,23 @@
                 </div>
             </div>
             <div class="dropdown">
+<<<<<<< HEAD:src/modules/views/html/index.html
                 <button><i class="fa fa-plus-circle"></i> <span>More</span></button>
                 <div class="dropdown-content">
                     <a href="#">About</a>
                     <a href="#">Partners</a>
                     <a href="#">Forum (Coming soon)</a>
                     <a href="#">API (Coming soon)</a>
+=======
+                <button class="dropbtn"><span class="textContent">More</span><span class="iconContent"><i
+                            class="fa fa-plus-circle"
+                            aria-label="Navigation, more dropdown menu"></i></span></button>
+                <div class="dropdown-content" id="support">
+                    <a href="/about">About</a>
+                    <a href="/partners">Partners</a>
+                    <a href="#">Forum</a>
+                    <a href="#">API</a>
+>>>>>>> main:src/modules/views/html/index.eta
                 </div>
             </div>
         </div>

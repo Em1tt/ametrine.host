@@ -1,9 +1,0 @@
-#!/bin/bash
-# get all system packages
-sudo apt-get install nodejs apache2
-
-# get all npm packages
-npm ci
-
-# build
-npm run build
