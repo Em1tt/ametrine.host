@@ -1,0 +1,419 @@
+:root {
+    --highlightsBG: #1e1e24;
+    --highlighted: #282831;
+    --background: #24242c;
+    --pink: #ed5087;
+    --purple: #9250ed;
+    background-color: var(--background);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Ubuntu', sans-serif;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+header {
+    position: static;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    color: white;
+    text-align: center;
+}
+
+.gallery {
+    width: 100%;
+    background: #EEE;
+    margin: 0px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    height: 100%;
+}
+
+.gallery-cell {
+    width: 100%;
+    height: 100% !important;
+    margin-right: 10px;
+    color: white;
+    counter-increment: gallery-cell;
+    filter: brightness(0.95);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.image{
+    border: solid 10px white;
+    width: 25vw;
+}
+
+.gallery-cell:hover {
+    filter: brightness(1);
+}
+
+.heading {
+    font-size: 4rem;
+}
+
+.subheading {
+    font-size: 2rem;
+}
+.subheading-url {
+    font-size: 2rem;
+    color: var(--pink);
+}
+
+.orderbutton{
+    width: 25%;
+    background-color: var(--pink);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+.gallery-cell:nth-child(1) {
+    background-image: url("../images/cliff.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.gallery-cell:nth-child(2) {
+    background-image: url("../images/Background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.flickity-viewport{
+    height: 90vh !important;
+}
+
+.flickity-page-dots {
+    z-index: 100;
+}
+
+main {
+    display: flex;
+    position: static;
+    color: black;
+    text-align: left;
+    grid-template-rows: 1vf 3vf 3vf 3vf 1vf;
+    flex-direction: column;
+    z-index: 30;
+    padding: 50px;
+    height: 1180px;
+}
+
+main div {
+    font-size: 1.75rem;
+    z-index: 30;
+    display: flex;
+    flex-direction: row;
+}
+main div hr{
+    width: 75%;
+    height: 0;
+    align-self: center;
+    color:rgb(206, 206, 206);
+}
+main *{
+    z-index: 30;
+    font-size: 1.5rem;
+}
+
+main p {
+    font-size: 1.5rem;
+    padding: 15px;
+    z-index: 30;
+}
+
+.cardParent {
+    display: flex;
+    width: 100%;
+    flex-flow: row wrap;
+    align-items: baseline;
+    align-content: space-around;
+    z-index: 35;
+}
+
+.card {
+    border-radius: 50px;
+    padding: 50px;
+    border: solid 1px rgb(206, 206, 206);
+    height: auto;
+    width: 400px;
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    transition: 1s;
+    z-index: 35;
+}
+
+main h4 a {
+    color: #de3ce4;
+    text-decoration: none;
+    z-index: 30;
+}
+
+main h4 a:hover {
+    color: #f562fa;
+    text-decoration: underline;
+    text-decoration-color: #f562fa;
+    z-index: 30;
+}
+
+.card a {
+    color: #f562fa;
+    text-decoration: none;
+}
+
+.card a:hover {
+    color: #f562fa;
+    text-decoration: underline;
+}
+
+.card:hover {
+    box-shadow: 6px 6px 8px rgba(136, 136, 136, 0.1);
+    background-color: rgb(226, 226, 226);
+    transition: 1s;
+}
+
+.card div {
+    display: flex;
+    margin: 0px;
+    justify-content: start;
+    font-size: 1.5rem;
+}
+
+.card div h5 {
+    margin: 0px;
+    margin-inline: 10px;
+    align-self: center;
+}
+
+.card p {
+    text-align: left;
+}
+
+main::before {
+    top: 85%;
+    display: grid;
+    background-color: rgb(223, 223, 223);
+    position: absolute;
+    content: "";
+    width: 100%;
+    left: 0px;
+    height: 1180px;
+    z-index: 2;
+    margin: 0px;
+    transform: skewY(-1deg);
+}
+
+.plans {
+    height: 100vh;
+    padding-bottom: 150px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    position: static;
+}
+
+footer {
+    position: absolute;
+    margin-top: auto;
+    z-index: 32;
+    background-color: var(--highlightsBG);
+    width: 100%;
+    left: 0px;
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.copyrightParent {
+    display: flex;
+}
+
+.copyright {
+    color: white;
+}
+
+.legal {
+    color: var(--pink);
+    margin-inline: 10px;
+    text-decoration: none;
+}
+
+.legal:hover {
+    color: var(--purple);
+}
+
+.legalParent {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    text-decoration: none;
+}
+
+footer p {
+    z-index: 32;
+}
+
+@media screen and (min-width: 3028px) {
+    main {
+        height: 1080px;
+    }
+    main::before {
+        height: 1080px;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    main {
+        height: 1180px;
+    }
+    main::before {
+        height: 1180px;
+    }
+    .plan-name {
+        font-size: 2rem;
+    }
+    .headers {
+        display: block;
+        width: 100%;
+        position: relative;
+        top: 7vh;
+        text-align: center;
+        height: auto;
+        color: white;
+    }
+}
+
+@media screen and (max-width: 1038px) {
+    main {
+        height: 2280px;
+    }
+    main::before {
+        height: 2280px;
+    }
+    .headers {
+        display: block;
+        width: 100%;
+        position: relative;
+        top: 5vh;
+        text-align: center;
+        height: auto;
+        color: white;
+    }
+    .gallery-cell {
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+    .heading {
+        font-size: 3rem;
+        margin: 0;
+    }
+    
+    .subheading {
+        font-size: 1.75rem;
+    }
+    .subheading-url {
+        font-size: 1.75rem;
+        color: var(--pink);
+    }
+}
+
+@media screen and (max-width: 806px) {
+    .plans {
+        height: auto;
+    }
+    .plan {
+        width: 75%;
+        margin-bottom: 20px;
+    }
+    .orderbutton{
+        width: 50%;
+    }
+    main div {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    main {
+        height: 1880px;
+        padding: 15px;
+    }
+    main::before {
+        height: 1880px;
+    }
+    .image{
+        border: solid 5px white;
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .heading {
+        font-size: 3rem;
+    }
+    .subheading {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    footer {
+        padding-bottom: 100px;
+        flex-direction: column;
+    }
+    .legalParent {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .heading {
+        font-size: 2rem;
+    }
+    .subheading {
+        font-size: 1rem;
+    }
+    main {
+        height: 2280px;
+    }
+    main::before {
+        height: 2280px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    main {
+        height: 2680px;
+    }
+    main::before {
+        height: 2680px;
+    }
+}
+
+@media screen and (max-width: 310px) {
+    main {
+        height: 2580px;
+    }
+    main::before {
+        height: 2580px;
+    }
+}
