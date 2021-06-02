@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <!-- Set the title of the html -->
+    <title>Amethyst.host</title>
+    <!-- Set the favicon -->
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!--STYLESHEETS-->
+    <!--Asynchronous load-->
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous"
+        media="">
+    <noscript>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    </noscript>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <!--Synchronous load-->
+    <link href="../css/navbar.css" rel="stylesheet">
+    <link href="../css/redirect.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <!--SCRIPTS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="../js/navbar.js"></script>
+    </head>
+    <body>
+        <nav>
+            <div>
+                <a href="#"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
+                        width="50px"><span>Amethyst.host</span></a>
+            </div>
+            <div>
+                <div class="dropdown">
+                    <button><i class="fa fa-tags"></i> <span>Pricing</span></button>
+                    <div class="dropdown-content">
+                        <a href="#">Minecraft</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button><i class="fa fa-question-circle"></i> <span>Support</span></button>
+                    <div class="dropdown-content">
+                        <a href="#">Write an E-Mail</a>
+                        <a href="#">Create a ticket</a>
+                        <a href="#">Join our Discord</a>
+                        <a href="#">Knowledgebase</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button><i class="fa fa-plus-circle"></i> <span>More</span></button>
+                    <div class="dropdown-content">
+                        <a href="#">About</a>
+                        <a href="#">Partners</a>
+                        <a href="#">Forum (Coming soon)</a>
+                        <a href="#">API (Coming soon)</a>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <a href="#"><i class="fa fa-users"></i> <span>Client Area</span></a>
+            </div>
+        </nav>
+        <div id="particles-js"></div>
+        <main>
+            <code class="error"></code>
+            <div>
+                <h1>Hold on! You're leaving our territory.</h1>
+                <h2><i>You're about to get redirected to the following page:</i></h2>
+                <hr>
+                <h3 class="h3">No URL found</h3>
+                <hr>
+                <a href="#" class="anchor">Proceed</a>
+            </div>
+        </main>
+        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+        <script defer src="../js/particles.js"></script>
+        <script type="text/javascript">
+            let queries = new URLSearchParams(window.location.search);
+            if(!queries.get("url")){
+                $(".error").html("Couldn't find a \"URL\" query.");
+            }else if(queries.get("url")){
+                $(".anchor").attr("href", queries.get("url"));
+                $(".h3").html(queries.get("url"));
+            }
+        </script>
+    </body>
+</html>
