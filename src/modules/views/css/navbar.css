@@ -1,233 +1,235 @@
-:root{
-    --highlightsBG: #1e1e24;
-    --highlighted: #282831;
-    --background: #24242c;
-    --pink: #ed5087;
-    --purple: #9250ed;
-    background-color: var(--background);
-}
-
-nav{
+nav {
+    /*Set the font for navbar to Ubuntu, with a fallback to sans-serif*/
+    font-family: "Ubuntu", Arial, Helvetica, sans-serif;
+    /*Display properties*/
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    height: 90px;
+    z-index: 10;
+    /*Position properties*/
     position: fixed;
-    left: 0px;
+    left: 0;
     top: 0;
-    width: 100%;
-    height: 50px;
-    display: flex;
-    color: white;
-    padding: 20px;
+    /*Animation properties*/
     transition: 0.5s ease;
-    z-index: 50;
+    /**VARIABLES*/
+    /*Amethyst.host text color*/
+    --amethyst-host: #ffffff;
+    /*Client area button*/
+    --client-area: #ffffff;
+    --client-area-bg: #cc379d;
+    --client-area-hover: #ffffff;
+    --client-area-bg-hover: #884bff;
+    /*Dropdowns*/
+    --dropdown-button: #dce0ff;
+    --dropdown-button-hover: #ffffff;
+    --dropdown-button-glow: 0 0 5px #ffffff;
+    --dropdown-button-focus: #cc379d;
+    --dropdown-button-focus-glow: 0 0 10px #cc379d;
+    /*URL*/
+    --url: white;
+    --url-bg: #1b1c23;
+    --url-bg-hover: #202029;
+    --url-border: 2px solid transparent;
+    --url-border-hover: 2px solid #cc379d;
 }
 
-nav a {
+nav>div>a>img {
+    /*Amethyst.host logo*/
+    /*Display properties*/
+    margin-inline: 0 10px;
+}
+
+nav>div:nth-of-type(1)>a {
+    /*Amethyst.host logo and text Ahref*/
+    /*Display properties*/
     display: flex;
-    margin: 0px;
-    padding: 0px;
-    margin-left: 12.5%;
-    vertical-align: center;
-    width: 50px;
+    align-items: center;
+    /*Position properties*/
+    margin-left: 4vw;
+    /*Text properties*/
     text-decoration: none;
-    color: white;
-    font-size: 24px;
-    justify-self: left;
+    font-size: 1.5rem;
+    /*Color properties*/
+    color: var(--amethyst-host);
 }
-nav a p {
-    margin: 25%;
-}
-nav div {
-    display: flex;
-    margin-left: 25%;
-    justify-self: center;
+
+nav>div:nth-of-type(2) {
+    /*Middle dropdown buttons wrapper*/
+    /*Display properties*/
+    display: inherit;
     justify-content: center;
     flex-direction: row;
     width: auto;
+    /*Position properties*/
+    margin: auto;
 }
 
-#client-area {
-    font-weight:initial;
-    border-radius: 50px;
-    background-color: var(--pink);
-    color: rgb(212, 212, 212);
-    padding: 16px;
-    font-size: 18px;
-    border: none;
-    width: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    right: 12.5%;
-}
-
-#about {
-    margin: 0px;
-    background-color: transparent;
-    color: rgb(212, 212, 212);
-    padding: 16px;
-    font-size: 18px;
-    border: none;
-  }
-
-  #about:hover{
-      color: white;
-  }
-
- /* Dropdown Button */
- .dropbtn {
-    background-color: transparent;
-    color: rgb(212, 212, 212);
-    padding: 16px;
-    font-size: 18px;
-    border: none;
-  }
-  
-  /* The container <div> - needed to position the dropdown content */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    margin: 0px;
+nav>div:nth-of-type(2)>div>button>i {
+    /*Display properties*/
     display: none;
-    position: absolute;
-    background-color: var(--highlightsBG);
-    min-width: 300px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  .dropdown-content a {
-      font-size: 1.2rem;
-    margin: 0px;
-    color: rgb(212,212,212);
-    padding: 12px 16px;
-    width: auto;
+}
+
+.dropdown-content {
+    /*Display properties*/
+    display: none;
+}
+
+.dropdown button {
+    /*Display properties*/
+    padding: 35px;
+    /*Text properties*/
+    font-size: 1.1rem;
+    text-align: center;
+    vertical-align: center;
+    /*Color properties*/
+    color: var(--dropdown-button);
+    background-color: transparent;
+    /*Border properties*/
+    border: none;
+    /*Cursor properties*/
+    cursor: pointer;
+}
+
+.dropdown button:hover {
+    /*Text properties*/
+    text-shadow: var(--dropdown-button-glow);
+    /*Color properties*/
+    color: var(--dropdown-button-hover);
+}
+
+.dropdown button:focus {
+    /*Text properties*/
+    text-shadow: var(--dropdown-button-focus-glow);
+    /*Color properties*/
+    color: var(--dropdown-button-focus);
+}
+
+.dropdown-content {
+    /*Display properties*/
+    width: 252px;
+}
+
+.dropdown-content a {
+    /*Display properties*/
+    width: 100%;
+    padding: 14px;
+    /*Text properties*/
     text-decoration: none;
-    display: block;
-    border-left: 2px solid transparent;
-  }
-  .iconContent{
-      display: none;
-  }
-  
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color:var(--highlighted);color: white;border-left: 2px solid var(--purple);}
-  
-  /* Show the dropdown menu on hover */
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {color: white;} 
+    /*Color properties*/
+    color: var(--url);
+    background-color: var(--url-bg);
+    /*Border properties*/
+    border-left: var(--url-border);
+}
 
-@media screen and (max-width: 1350px){
-    nav a p {
+.dropdown-content a:hover {
+    /*Color properties*/
+    background-color: var(--url-bg-hover);
+    /*Border properties*/
+    border-left: var(--url-border-hover);
+}
+
+.dropdown button:focus~.dropdown-content {
+    /*Display properties*/
+    display: flex;
+    flex-direction: column;
+    /*Position properties*/
+    position: absolute;
+    top: 90px;
+}
+
+nav>div:nth-of-type(3)>a {
+    /*Display properties*/
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    /*Position properties*/
+    margin-right: 12vw;
+    /*Text properties*/
+    text-decoration: none;
+    font-size: 1.1rem;
+    /*Color properties*/
+    color: var(--client-area);
+    background-color: var(--client-area-bg);
+    /*Border properties*/
+    border-radius: 10px;
+}
+
+nav>div:nth-of-type(3)>a:hover {
+    /*Color properties*/
+    color: var(--client-area-hover);
+    background-color: var(--client-area-bg-hover);
+}
+
+nav>div:nth-of-type(3)>a>i {
+    /*Display properties*/
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    nav>div:nth-of-type(1)>a>span {
+        /*Display properties*/
         display: none;
     }
-    nav a{
-        margin-left: 6%;
+    nav {
+        /*Display properties*/
+        padding-inline: 1vw;
+        width: 98%;
     }
-    nav div {
-        margin-left: 12.5%;
+    nav>div:nth-of-type(1)>a {
+        /*Position properties*/
+        margin-left: 2vw;
     }
-    #client-area{
-        right: 6%;
+    nav>div:nth-of-type(3)>a {
+        /*Position properties*/
+        margin-right: 2vw;
     }
 }
 
-@media screen and (max-width: 775px){
-    nav a{
-        margin-left: 2%;
-    }
-    nav div {
-        margin-left: 12.5%;
-    }
-    #client-area{
-        right: 2%;
-    }
-    .dropdown-content {
-        min-width: 200px;
-      }
-}
-
-@media screen and (max-width: 650px){
-    .textContent{
+@media screen and (max-width: 610px) {
+    nav>div:nth-of-type(1)>a>span {
+        /*Display properties*/
         display: none;
     }
-    .iconContent{
+    nav {
+        /*Display properties*/
+        padding-inline: 1vw;
+        width: 98%;
+    }
+    nav>div:nth-of-type(2)>div>button {
+        /*Display properties*/
+        padding-inline: 5vw;
+    }
+    nav>div:nth-of-type(2)>div>button>i {
+        /*Display properties*/
         display: block;
     }
-    #client-area{
+    nav>div:nth-of-type(3)>a>i {
+        /*Display properties*/
+        display: block;
+    }
+    nav>div:nth-of-type(1)>a {
+        /*Display properties*/
+        border-radius: 50%;
         width: 50px;
     }
-}
-@media screen and (max-width: 460px){
-    #navbar {
-        top:initial;
-        background-color: var(--highlightsBG);
-        bottom: 0 !important;
+    nav>div:nth-of-type(3)>a {
+        /*Display properties*/
+        border-radius: 50%;
+        height: 22px;
     }
-    #logo{
+    nav>div:nth-of-type(2)>div>button>span {
+        /*Display properties*/
         display: none;
     }
-    .text{
-        margin-left: 2%;
-        position: absolute;
+    nav>div:nth-of-type(3)>a>span {
+        /*Display properties*/
+        display: none;
+    }
+    .dropdown button:focus~.dropdown-content {
+        /*Display properties*/
         left: 0px;
     }
-    .iconContent{
-        display: block;
-    }
-    #client-area{
-        width: 20px;
-    }
-    .dropbtn {
-        background-color: transparent;
-        color: rgb(212, 212, 212);
-        padding: 16px;
-        font-size: 18px;
-        border: none;
-      }
-      
-      /* The container <div> - needed to position the dropdown content */
-      .dropdown {
-        position: relative;
-        display: inline-block;
-      }
-      
-      /* Dropdown Content (Hidden by Default) */
-      .dropdown-content {
-        display: none;
-        position: absolute;
-        bottom: 50px;
-        background-color: var(--highlightsBG);
-        min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-      }
-      
-      /* Links inside the dropdown */
-      .dropdown-content a {
-        color: rgb(212, 212, 212);
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-      }
-      #support{
-          left: -90px;
-      }
-      .dropup-content a:hover {background-color: #ddd}
-
-      /* Show the dropup menu on hover */
-      .dropup:hover .dropup-content {
-        display: block;
-      }
-      
-      /* Change the background color of the dropup button when the dropup content is shown */
-      .dropup:hover .dropbtn {
-        background-color: #2980B9;
-      }
 }
