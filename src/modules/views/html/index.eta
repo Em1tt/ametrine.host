@@ -9,6 +9,7 @@
     <!-- Meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js;">
     <meta name="description"
         content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
     <!-- APPLE -->
