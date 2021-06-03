@@ -203,7 +203,6 @@ main .text p a:hover {
 
 .isViewed:nth-of-type(3) {
     opacity: 1;
-    transform: translate(0, -100px);
     transition: 0.5s ease;
     transition-delay: 1s;
 }
