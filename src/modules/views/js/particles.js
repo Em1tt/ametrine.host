@@ -2,7 +2,7 @@ new SuperParticles({
     maxFPS: 30,
     useJquery: true,
     debug: {
-      showFps: true
+      showFps: false
     },
     particles: {
       amount: window.outerWidth / 13,
