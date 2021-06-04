@@ -8,8 +8,11 @@
     "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[amethyst-build] building (linux)'&&npx tsc -p .",
     "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .'",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4aa5f90e12a09a06bad154f1b9c562afcd33149c
+=======
+>>>>>>> parent of 47aa3e1 (Revert "SHUT THE FUCK UP LET ME PULL")
 =======
 >>>>>>> parent of 47aa3e1 (Revert "SHUT THE FUCK UP LET ME PULL")
     "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&npx tsc -p .",
@@ -36,8 +39,11 @@
     "dotenv": "^9.0.0",
     "eslint-plugin-html": "^6.1.2",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 4aa5f90e12a09a06bad154f1b9c562afcd33149c
+=======
+>>>>>>> parent of 47aa3e1 (Revert "SHUT THE FUCK UP LET ME PULL")
 =======
 >>>>>>> parent of 47aa3e1 (Revert "SHUT THE FUCK UP LET ME PULL")
     "dotenv": "^10.0.0",
