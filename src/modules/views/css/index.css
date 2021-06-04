@@ -27,15 +27,22 @@ html {
 }
 
 body > div:nth-of-type(1){
-    display: absolute;
+    position: absolute;
     width: 100%;
     height: 240% !important;
     z-index: -2;
 }
+body > div:nth-of-type(2){
+    position: absolute;
+    width: 100%;
+    height: 240%;
+    z-index: -1;
+}
 body > div:nth-of-type(1) > canvas{
-    display: absolute;
+    position: absolute;
     width: 100% !important;
     height: 100% !important;
+    z-index: -50;
 }
 
 header {
