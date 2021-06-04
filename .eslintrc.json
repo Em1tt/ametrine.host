@@ -6,8 +6,7 @@
     },
     "extends": [
         "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:eslint-plugin-eta"
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -15,22 +14,9 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint",
-        "eta",
-        "html"
+        "@typescript-eslint"
     ],
-    "settings": {
-        "html/html-extensions": [".html", ".eta"]
-    },
     "rules": {
         "@typescript-eslint/no-var-requires": 0
-    },
-    "overrides": [
-        {
-            "files": [
-                "*.eta"
-            ],
-            "processor": "eta/eta"
-        }
-    ]
+    }
 }
