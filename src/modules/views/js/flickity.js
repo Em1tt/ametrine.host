@@ -1,11 +1,10 @@
-$(".carousel").flickity({
-  cellSelector: ".carousel-cell",
+$('.carousel').flickity({
   cellAlign: 'center',
   contain: true,
   groupCells: true,
   wrapAround: true,
+  freeScroll: true,
   prevNextButtons: false,
   pageDots: false,
-  autoPlay: 5000,
-  lazyLoad: true
+  autoPlay: 5000
 });

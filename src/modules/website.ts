@@ -1,15 +1,24 @@
 // imports
 import express      from "express";
+<<<<<<< HEAD
+import compression  from "compression";
 import morgan       from "morgan";
+import minify       from "express-minify";
+=======
+import morgan       from "morgan";
+>>>>>>> main
 import path         from "path";
 import fs           from "fs";
 import * as eta     from "eta";
 import config       from "../config.json";
 import { util }     from "../util";
 import { Endpoint } from "../types/endpoint";
+<<<<<<< HEAD
+=======
 import helmet       from "helmet"
 import bodyParser   from "body-parser"
 import cookieParser from "cookie-parser"
+>>>>>>> main
 
 const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
@@ -17,7 +26,10 @@ const html: string = path.join(__dirname, "views", "html");
 const endpoints: Map<string, Endpoint> = new Map();
 const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
                                            .filter((f) => f.endsWith(".js"));
+<<<<<<< HEAD
+=======
 
+>>>>>>> main
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
   endpoints.set(ep.prop.name, ep);
@@ -28,6 +40,9 @@ app.use(morgan("[express]\t:method :url :status :res[content-length] - :response
 
 // serve static files
 app.use(express.static(path.join(__dirname, "views")));
+// eta
+app.engine("eta", eta.renderFile);
+app.set("view engine", "eta");
 
 // Create Parse for application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false })) // Required for req.body
@@ -37,7 +52,7 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
-//app.use(helmet());
+app.use(helmet());
 
 // eta
 app.engine("eta", eta.renderFile);
@@ -47,6 +62,8 @@ app.get("/", (r: express.Request, s: express.Response) => {
   s.render(`${html}/index.eta`);
 });
 
+<<<<<<< HEAD
+=======
 // Probably another method to do this, but this is the best I can think of right now.
 const apiMethod = function(r: express.Request, s: express.Response) {
   const ep: Endpoint = endpoints.get(r.params.method)
@@ -58,14 +75,19 @@ const apiMethod = function(r: express.Request, s: express.Response) {
   }
 }
 
+>>>>>>> main
 /* amethyst.host/api/bill
    amethyst.host/api/auth
    and so on..            */
 app.get("/api/:method", (r: express.Request, s: express.Response) => {
+<<<<<<< HEAD
+  endpoints.get(r.params.method).prop.run(r, s);
+=======
   apiMethod(r, s);
 });
 app.post("/api/:method", (r: express.Request, s: express.Response) => {
   apiMethod(r, s);
+>>>>>>> main
 });
 
 // "smart" router

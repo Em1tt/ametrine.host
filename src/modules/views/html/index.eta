@@ -37,7 +37,6 @@
     <!--Synchronous load-->
     <link href="../css/navbar.css" rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
-    <link href="../css/flickity.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <!--SCRIPTS-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -45,13 +44,22 @@
 </head>
 
 <body>
-    <div></div>
+<<<<<<< HEAD:src/modules/views/html/index.html
     <nav>
         <div>
             <a href="#"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
                     width="50px"><span>Amethyst.host</span></a>
         </div>
         <div>
+=======
+    <% console.log("hello world") %>
+    <nav id="navbar">
+        <a href="/" aria-label="Home"><img src="../images/ACLogoT.png" aria-hidden="true" aria-label="Logo of amethyst.host"
+                alt="" id="logo">
+            <p>Amethyst.host</p>
+        </a>
+        <div class="text">
+>>>>>>> main:src/modules/views/html/index.eta
             <div class="dropdown">
                 <button><i class="fa fa-tags"></i> <span>Pricing</span></button>
                 <div class="dropdown-content">
@@ -68,12 +76,23 @@
                 </div>
             </div>
             <div class="dropdown">
+<<<<<<< HEAD:src/modules/views/html/index.html
                 <button><i class="fa fa-plus-circle"></i> <span>More</span></button>
                 <div class="dropdown-content">
                     <a href="#">About</a>
                     <a href="#">Partners</a>
                     <a href="#">Forum (Coming soon)</a>
                     <a href="#">API (Coming soon)</a>
+=======
+                <button class="dropbtn"><span class="textContent">More</span><span class="iconContent"><i
+                            class="fa fa-plus-circle"
+                            aria-label="Navigation, more dropdown menu"></i></span></button>
+                <div class="dropdown-content" id="support">
+                    <a href="/about">About</a>
+                    <a href="/partners">Partners</a>
+                    <a href="#">Forum</a>
+                    <a href="#">API</a>
+>>>>>>> main:src/modules/views/html/index.eta
                 </div>
             </div>
         </div>
@@ -81,8 +100,8 @@
             <a href="#"><i class="fa fa-users"></i> <span>Client Area</span></a>
         </div>
     </nav>
-    <button aria-label="Go to top" class="back-to-top" onclick="topFunction()"><i
-            class="fa fa-arrow-circle-up"></i></button>
+    <button aria-label="Go to top" class="back-to-top" onclick="topFunction()"><i class="fa fa-arrow-circle-up"></i></button>
+    <div id="particles-js"></div>
     <header>
         <div>
             <h1>Amethyst.host</h1>
@@ -128,98 +147,17 @@
                 <p>We do not oversell our nodes, resulting in maximum performance at a low cost</p>
             </div>
         </div>
-        <div class="images animation-element">
-            <img src="../images/png/server_rack.png" width="300px" alt="Server rack icon">
-            <div>
-                <h2>Powerful servers with great uptime</h2>
-                <p>Our servers run the <b>AMD Ryzen 5 3600</b> CPUs to provide the best efficiency for your servers,
-                    combined with a proven record of <b>xx.xxx%</b> uptime
-
-                </p>
-            </div>
-        </div>
-        <div class="images flip animation-element">
-            <div>
-                <h2>Play from anywhere. Anytime.</h2>
-                <p>Our servers do not have IP restrictions, and were tested from all around the world - with a ping
-                    estimate of <b>XXXms.</b>
-
-                </p>
-            </div>
-            <img src="../images/png/globe.png" width="300px" alt="Server rack icon">
-        </div>
-        <div class="images animation-element">
-            <img src="../images/png/support_agent.png" width="300px" alt="Server rack icon">
-            <div>
-                <h2>Contact our support team</h2>
-                <p>With our support team you are guaranteed to have your tickets or inquiries answered / escalated in
-                    less than 12 hours! <b><i>Contact us now for a free trial!
-
-                        </i></b>
-                </p>
-            </div>
-        </div>
-        <footer>
-            <div>
-                <!--LEFT 25%-->
-                <h2>Find us here</h2>
-                <a><i aria-label="Discord" class="fab fa-discord"></i></a>
-                <a><i aria-label="Twitter" class="fab fa-twitter"></i></a>
-                <a><i aria-label="Instagram" class="fab fa-instagram"></i></a>
-            </div>
-            <div>
-                <!--RIGHT 75%-->
-                <div>
-                    <!--Column-->
-                    <h2>Products</h2>
-                    <a href="#">Minecraft</a>
-                    <a href="#">Rust (soon)</a>
-                    <a href="#">Discord bots (soon)</a>
-                    <a href="#">Website hosting (soon)</a>
-                    <a href="#">VPS (soon)</a>
-                </div>
-                <div>
-                    <!--Column-->
-                    <h2>Company</h2>
-                    <a href="#">About us</a>
-                    <a href="#">Contact form</a>
-                    <a href="#">Staff team</a>
-                    <a href="#">TrustPilot</a>
-                    <a href="#">Status Page</a>
-                </div>
-                <div>
-                    <!--Column-->
-                    <h2>Resources</h2>
-                    <a href="#">Support</a>
-                    <a href="#">Knowledgebase</a>
-                    <a href="#">Forums</a>
-                    <a href="#">Wisp panel</a>
-                    <a href="#">Billing panel</a>
-                    <a href="#">FAQ</a>
-                    <a href="#">Partners</a>
-                </div>
-                <div>
-                    <!--Column-->
-                    <h2>Legal</h2>
-                    <a href="#">Terms</a>
-                    <a href="#">Privacy</a>
-                    <a href="#">SLA</a>
-                </div>
-            </div>
-            <div>
-                <!--Full row-->
-                <p>© 2021 Amethyst.host, All rights reserved</p>
-            </div>
-        </footer>
     </main>
-    <script src="https://pixijs.download/dev-graphics-batch-pool/pixi.js"></script>
-        <!--Credit: https://github.com/T-vK/SuperParticles-->
-    <script src="https://cdn.jsdelivr.net/gh/T-vK/SuperParticles@master/SuperParticles.js"></script>
-    <script src="../js/particles.js"></script>
-    <script src="../js/main.js"></script>
+    <footer class="ocean">
+            <div class="wave"></div>
+            <div class="wave"></div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script defer src="../js/particles.js"></script>
+    <script defer src="../js/main.js"></script>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
-    <script src="../js/backtotop.js"></script>
-    <script src="../js/flickity.js"></script>
+    <script defer src="../js/backtotop.js"></script>
+    <script defer src="../js/flickity.js"></script>
 </body>
 
 </html>

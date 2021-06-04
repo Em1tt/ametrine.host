@@ -1,5 +1,12 @@
 -- initialize all tables
 CREATE TABLE IF NOT EXISTS users (
+<<<<<<< HEAD
+  user_id    INTEGER   NOT NULL PRIMARY KEY,
+  registered TIMESTAMP NOT NULL,
+  name       TEXT      NOT NULL,
+  password   TEXT      NOT NULL,
+  salt       TEXT      NOT NULL
+=======
   user_id    INTEGER   NOT NULL PRIMARY KEY, -- The Users ID
   registered TIMESTAMP NOT NULL,             -- When the user registered
   name       TEXT      NOT NULL,             -- The users real name
@@ -7,6 +14,7 @@ CREATE TABLE IF NOT EXISTS users (
   password   TEXT      NOT NULL,             -- Required
   salt       TEXT      NOT NULL,             -- Extra Security, this will be used as an extra salt
   verified   INTEGER   NOT NULL DEFAULT 0    -- If the user verified their email (1) or if they verified their phone # (2)
+>>>>>>> main
 );
 
 CREATE TABLE IF NOT EXISTS servers (
@@ -23,6 +31,8 @@ CREATE TABLE IF NOT EXISTS invoices (
   price       REAL      NOT NULL DEFAULT 0.00,
   currency    TEXT      NOT NULL DEFAULT '€'
 );
+<<<<<<< HEAD
+=======
 
 CREATE TABLE IF NOT EXISTS sessions (
   session_id  INTEGER   NOT NULL PRIMARY KEY, -- Session ID
@@ -33,3 +43,4 @@ CREATE TABLE IF NOT EXISTS sessions (
   ip          TEXT      NOT NULL              -- Remote Address
   rememberMe  INTEGER   NOT NULL DEFAULT 0    -- Will change what expiresIn should be
 );
+>>>>>>> main
