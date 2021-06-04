@@ -213,6 +213,7 @@
         </footer>
     </main>
     <script src="https://pixijs.download/dev-graphics-batch-pool/pixi.js"></script>
+        <!--Credit: https://github.com/T-vK/SuperParticles-->
     <script src="https://cdn.jsdelivr.net/gh/T-vK/SuperParticles@master/SuperParticles.js"></script>
     <script src="../js/particles.js"></script>
     <script src="../js/main.js"></script>
