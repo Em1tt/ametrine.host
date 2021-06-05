@@ -36,6 +36,6 @@ export const prop = {
         const account = await sql.db.prepare('SELECT * FROM users WHERE email = ? AND name = ? AND registered = ?').get(email, name, registeredAt);
         const loginToken = await auth.login(req, res, account, false);
         if (loginToken == 403) return res.sendStatus(403);
-        res.status(200).json(loginToken)
+        res.json(loginToken)
     }
 }

@@ -10,9 +10,12 @@ import { Endpoint } from "../types/endpoint";
 import helmet       from "helmet"
 import bodyParser   from "body-parser"
 import cookieParser from "cookie-parser"
+import { auth }     from "./api/auth"
+//import cors       from "cors"
 
 const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
+const billing: string = path.join(__dirname, "views", "billing", "html");
 
 const endpoints: Map<string, Endpoint> = new Map();
 const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
@@ -24,6 +27,8 @@ for (const f of files) {
 }
 util.expressLog(`${endpoints.size} api endpoints loaded`);
 
+app.use(cookieParser())
+
 app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
 
 // serve static files
@@ -34,10 +39,19 @@ app.use(bodyParser.urlencoded({ extended: false })) // Required for req.body
 // Create Parse for application/json
 app.use(bodyParser.json())
 // Create Parse for Cookies
-app.use(cookieParser())
+
 
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
-//app.use(helmet());
+app.use(helmet({contentSecurityPolicy: {
+  useDefaults: true, // nonce when
+    directives: {
+      defaultSrc: ["'self'"],
+      "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com"],
+      "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
+      "script-src-attr": ["'self'", "'unsafe-inline'"]
+    }
+  }}
+));
 
 // eta
 app.engine("eta", eta.renderFile);
@@ -68,6 +82,23 @@ app.post("/api/:method", (r: express.Request, s: express.Response) => {
   apiMethod(r, s);
 });
 
+// billing
+app.get("/billing", async (r: express.Request, s: express.Response) => {
+  const userData = await auth.getUserData(r, s)
+  s.render(`${billing}/index.eta`, {
+    name: (userData) ? userData["name"] : "Log-in"
+  });
+});
+app.get("/billing/:name", (r: express.Request, s: express.Response) => {
+  const file = `${billing}/${r.params.name}.eta`;
+
+  if (!fs.existsSync(file)) return s.status(404)
+                                    .send("if you were searching for a 404.. you found it!!");
+  s.render(file);
+  
+});
+
+
 // "smart" router
 app.get("/:name", (r: express.Request, s: express.Response) => {
   const file = `${html}/${r.params.name}.eta`;
@@ -75,7 +106,10 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
   if (!fs.existsSync(file)) return s.status(404)
                                     .send("if you were searching for a 404.. you found it!!");
   s.render(file);
+  
 });
+
+
 
 // start up the website
 app.listen(config.website.port, () => {

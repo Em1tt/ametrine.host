@@ -30,6 +30,6 @@ CREATE TABLE IF NOT EXISTS sessions (
   jwt         TEXT      NOT NULL,             -- JWT token
   createdIn   TIMESTAMP NOT NULL,             -- When the Token was created
   expiresIn   TIMESTAMP NOT NULL,             -- When the token expires
-  ip          TEXT      NOT NULL              -- Remote Address
+  ip          TEXT      NOT NULL,             -- Remote Address
   rememberMe  INTEGER   NOT NULL DEFAULT 0    -- Will change what expiresIn should be
 );
