@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
     "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&npx tsc -p .",
-    "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&tsc -p .",
     "start": "pm2 start dist/main.js",
-    "nstart": "node dist/main.js"
+    "nstart": "node dist/main.js",
+    "update": "git pull && npm run build && pm2 restart 0"
   },
   "repository": {
     "type": "git",
