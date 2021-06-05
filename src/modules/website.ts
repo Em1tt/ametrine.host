@@ -45,7 +45,7 @@ app.use(helmet({contentSecurityPolicy: {
   useDefaults: true, // nonce when
     directives: {
       defaultSrc: ["'self'"],
-      "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "pixijs.download"],
+      "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
       "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
       "script-src-attr": ["'self'", "'unsafe-inline'"]
     }
