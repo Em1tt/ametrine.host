@@ -40,7 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false })) // Required for req.body
 app.use(bodyParser.json())
 // Create Parse for Cookies
 
-
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
 app.use(helmet({contentSecurityPolicy: {
   useDefaults: true, // nonce when
@@ -97,12 +96,9 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   s.render(file);
 });
 
-app.get(["/.env", "/admin/:n"], 
-        (r: express.Request, s: express.Response) => {
+app.get("/.env", (r: express.Request, s: express.Response) => {
   s.redirect("https://youtu.be/dQw4w9WgXcQ");
 });
-
-
 
 // "smart" router
 app.get("/:name", (r: express.Request, s: express.Response) => {
@@ -113,8 +109,6 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
   s.render(file);
   
 });
-
-
 
 // start up the website
 app.listen(config.website.port, () => {
