@@ -21,8 +21,9 @@ const server: SMTPServer = new SMTPServer({
         });
       }, 1000);
       setTimeout(() => {
-        const amount = fs.readdirSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`);
-        console.log(amount);
+        fs.readdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err, files) => {
+          console.log(files);
+        });
         fs.writeFile(`./data/mail/${p.to.text}/`, mail, (err): void => {
           if (err) console.log(err);
         });
