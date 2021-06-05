@@ -56,7 +56,8 @@ To make a module, make a `.ts` file in `src/modules`
 
 **Keep in mind!** If you want to split a module into multiple files, make its **own folder**.
   
-readme by B1tt, enhanced by Em1t.
+  
+> readme by B1tt, enhanced by Em1t.
 <p align="center"><img src="./src/modules/views/images/GitHubSmall.png?raw=true" alt="Amethyst.host"/></p>  
 
 <p align="center">© Amethyst.host | Distribution / Modification of our software is prohibited.</p>
