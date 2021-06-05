@@ -85,7 +85,7 @@ app.post("/api/:method", (r: express.Request, s: express.Response) => {
 app.get("/billing", async (r: express.Request, s: express.Response) => {
   const userData = await auth.getUserData(r, s)
   s.render(`${billing}/index.eta`, {
-    name: (userData) ? `${userData["name"]}` : "Log-in",
+    name: (userData) ? ` ${userData["name"]}` : " Log-in",
     icon: (userData) ? 'fa fa-bars' : 'fa fa-users'
   });
 });
