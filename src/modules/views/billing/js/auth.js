@@ -2,7 +2,7 @@
 const exclamationCircle = `<i class="fa fa-exclamation-circle"></i>`
 const loginUser = async (user) => {
     const loginError = document.getElementById('loginerror');
-    const url = "http://localhost:3000/api/auth"
+    const url = "https://amethyst.host/api/auth"
     console.log(user)
     user.rememberMe = (user.rememberMe == "on")
     //const url = "/api/auth"
@@ -25,7 +25,7 @@ const loginUser = async (user) => {
 
 const registerUser = async (user) => {
     const regError = document.getElementById('regerror');
-    const url = "http://localhost:3000/api/register"
+    const url = "https://amethyst.host/api/register"
     //const url = "/api/auth"
     try {
         const response = await axios.post(url, user)
