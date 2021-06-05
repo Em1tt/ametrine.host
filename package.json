@@ -9,7 +9,7 @@
     "sql": "echo '[amethyst-db] merging sql files'&&sqlite3 data/db/database.db < dist/sql/init.sql",
     "winbuild": "rmdir /s /q dist&&mkdir dist&&xcopy /s src\\* dist&&echo '[amethyst-build] building (windows)&&tsc -p .",
     "start": "pm2 start dist/main.js",
-    "nstart": "node dist/main.js"
+    "nstart": "node dist/main.js",
     "update": "git pull && npm run build && pm2 restart 0"
   },
   "repository": {
