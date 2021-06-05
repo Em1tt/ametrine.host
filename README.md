@@ -1,7 +1,6 @@
 # [Amethyst.host](https://amethyst.host)
-<p align="center"><img src="/src/modules/views/images/GitHubSmall.png?raw=true" alt="Amethyst.host"/></p>
 
-![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host) [![Lint & build](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml/badge.svg)](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml) ![Website](https://img.shields.io/website?url=https%3A%2F%2Famethyst.host) ![Discord](https://img.shields.io/discord/825086628561027092)
+<p align="center"><img src="/src/modules/views/images/GitHubSmall.png?raw=true" alt="Amethyst.host"/></p> ![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host) [![Lint & build](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml/badge.svg)](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml) ![Website](https://img.shields.io/website?url=https%3A%2F%2Famethyst.host) ![Discord](https://img.shields.io/discord/825086628561027092)
 
 **Amethyst.host** is a hosting service, providing premium Minecraft servers for 32% of our competitors price, with better specs & features. 
 
