@@ -16,7 +16,7 @@ const server: SMTPServer = new SMTPServer({
         if (err && !fs.existsSync(`./data/mail/${p.to.text}`)) return console.error(err);
       });
       setTimeout(() => {
-        fs.mkdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".")}`, (err): void => {
+        fs.mkdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err): void => {
           if (err && !fs.existsSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".")}`)) return console.error(err);
         });
       }, 1000);
