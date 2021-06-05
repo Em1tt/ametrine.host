@@ -95,8 +95,13 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   if (!fs.existsSync(file)) return s.status(404)
                                     .send("if you were searching for a 404.. you found it!!");
   s.render(file);
-  
 });
+
+app.get(["/.env", "/admin/:n"], 
+        (r: express.Request, s: express.Response) => {
+  s.redirect("https://youtu.be/dQw4w9WgXcQ");
+});
+
 
 
 // "smart" router
