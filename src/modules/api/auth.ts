@@ -48,7 +48,7 @@ export const auth = {
             return false;
         }
     },
-    verifyToken: (user_id: number, req: express.Request, res: express.Response, sendResponse: boolean, useAuthorization: Boolean) => { // Probably not a good idea to do this, as most people use next()
+    verifyToken: (user_id: number, req: express.Request, res: express.Response, sendResponse: boolean, useAuthorization: boolean) => { // Probably not a good idea to do this, as most people use next()
         const currentDate = parseInt(Date.now().toString().slice(0, -3))
         let authorization;
         let token;
