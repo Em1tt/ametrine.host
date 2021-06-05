@@ -35,7 +35,7 @@
                 <label for="password">Password</label><br>
                 <input type="password" id="login-password" novalidate required name="password" class="text-input"><br>
                 <div class="flex-align">
-                    <input type="checkbox" checked="true" novalidate class="remember" name="remember" class="checkbox">
+                    <input type="checkbox" checked="true" novalidate id="remember" name="remember" class="checkbox">
                     <label for="remember">Remember me</label><br>
                 </div>
                 <div class="register">
@@ -67,7 +67,7 @@
                 <label for="password-confirm">Confirm Password</label><br>
                 <input type="password" id="password-confirm" novalidate required name="password-confirm" class="text-input"><br>
                 <div class="flex-align">
-                    <input type="checkbox" required="true" novalidate class="remember" name="remember" class="checkbox">
+                    <input type="checkbox" required="true" novalidate id="agreement" name="remember" class="checkbox">
                     <label for="remember">I agree with the terms & conditions and I've read the privacy
                         policy</label><br>
                 </div>
