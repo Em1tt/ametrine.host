@@ -24,7 +24,7 @@ const server: SMTPServer = new SMTPServer({
         fs.readdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err, files) => {
           console.log(files);
         });
-        fs.writeFile(`./data/mail/${p.to.text}/`, mail, (err): void => {
+        fs.writeFile(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}/a`, mail, (err): void => {
           if (err) console.log(err);
         });
       }, 2000);
