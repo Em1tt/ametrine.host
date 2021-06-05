@@ -45,6 +45,7 @@
 </head>
 
 <body>
+    <div></div>
     <nav>
         <div>
             <a href="#"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
@@ -82,7 +83,6 @@
     </nav>
     <button aria-label="Go to top" class="back-to-top" onclick="topFunction()"><i
             class="fa fa-arrow-circle-up"></i></button>
-    <div id="particles-js"></div>
     <header>
         <div>
             <h1>Amethyst.host</h1>
@@ -141,7 +141,8 @@
         <div class="images flip animation-element">
             <div>
                 <h2>Play from anywhere. Anytime.</h2>
-                <p>Our servers do not have IP restrictions, and were tested from all around the world - with a ping estimate of <b>XXXms.</b>
+                <p>Our servers do not have IP restrictions, and were tested from all around the world - with a ping
+                    estimate of <b>XXXms.</b>
 
                 </p>
             </div>
@@ -151,21 +152,25 @@
             <img src="../images/png/support_agent.png" width="300px" alt="Server rack icon">
             <div>
                 <h2>Contact our support team</h2>
-                <p>With our support team you are guaranteed to have your tickets or inquiries answered / escalated in less than 12 hours! <b><i>Contact us now for a free trial!
+                <p>With our support team you are guaranteed to have your tickets or inquiries answered / escalated in
+                    less than 12 hours! <b><i>Contact us now for a free trial!
 
-                </i></b>
+                        </i></b>
                 </p>
             </div>
         </div>
         <footer>
-            <div> <!--LEFT 25%-->
+            <div>
+                <!--LEFT 25%-->
                 <h2>Find us here</h2>
                 <a><i aria-label="Discord" class="fab fa-discord"></i></a>
                 <a><i aria-label="Twitter" class="fab fa-twitter"></i></a>
                 <a><i aria-label="Instagram" class="fab fa-instagram"></i></a>
             </div>
-            <div> <!--RIGHT 75%-->
-                <div> <!--Column-->
+            <div>
+                <!--RIGHT 75%-->
+                <div>
+                    <!--Column-->
                     <h2>Products</h2>
                     <a href="#">Minecraft</a>
                     <a href="#">Rust (soon)</a>
@@ -173,7 +178,8 @@
                     <a href="#">Website hosting (soon)</a>
                     <a href="#">VPS (soon)</a>
                 </div>
-                <div> <!--Column-->
+                <div>
+                    <!--Column-->
                     <h2>Company</h2>
                     <a href="#">About us</a>
                     <a href="#">Contact form</a>
@@ -181,7 +187,8 @@
                     <a href="#">TrustPilot</a>
                     <a href="#">Status Page</a>
                 </div>
-                <div> <!--Column-->
+                <div>
+                    <!--Column-->
                     <h2>Resources</h2>
                     <a href="#">Support</a>
                     <a href="#">Knowledgebase</a>
@@ -191,19 +198,23 @@
                     <a href="#">FAQ</a>
                     <a href="#">Partners</a>
                 </div>
-                <div> <!--Column-->
+                <div>
+                    <!--Column-->
                     <h2>Legal</h2>
                     <a href="#">Terms</a>
                     <a href="#">Privacy</a>
                     <a href="#">SLA</a>
                 </div>
             </div>
-            <div> <!--Full row-->
+            <div>
+                <!--Full row-->
                 <p>© 2021 Amethyst.host, All rights reserved</p>
             </div>
         </footer>
     </main>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://pixijs.download/dev-graphics-batch-pool/pixi.js"></script>
+        <!--Credit: https://github.com/T-vK/SuperParticles-->
+    <script src="https://cdn.jsdelivr.net/gh/T-vK/SuperParticles@master/SuperParticles.js"></script>
     <script src="../js/particles.js"></script>
     <script src="../js/main.js"></script>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>

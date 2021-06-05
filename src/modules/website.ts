@@ -42,7 +42,6 @@ app.use(bodyParser.json())
 
 
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
-
 app.use(helmet({contentSecurityPolicy: {
   useDefaults: true, // nonce when
     directives: {
@@ -53,8 +52,6 @@ app.use(helmet({contentSecurityPolicy: {
     }
   }}
 ));
-
-//app.use(cors())
 
 // eta
 app.engine("eta", eta.renderFile);

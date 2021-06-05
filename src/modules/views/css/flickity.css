@@ -2,24 +2,21 @@
     margin-inline: auto;
     width: 90%;
     position: relative;
-    top: 100px;
+    top: 0px;
     height: 175px;
-    border-radius: 10px;
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .carousel-cell h3 {
     color: #cc379d;
 }
 
-.carousel-cell:hover h3 {
-    color: #884bff;
-}
 
 .carousel-cell {
     width: 22.5%;
     height: 100%;
-    margin-right: 10px;
+    margin-inline: 10px;
     padding-inline: 20px;
     background-color: #1b1c23;
     border-radius: 9px;
@@ -35,6 +32,6 @@
         height: 250px;
     }
     .carousel-cell {
-        width: 50%;
+        width: 90%;
     }
 }
