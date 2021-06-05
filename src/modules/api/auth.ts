@@ -33,7 +33,7 @@ export const auth = {
         sql.db.prepare("INSERT INTO sessions (user_id, jwt, createdIn, expiresIn, ip) VALUES (?, ?, ?, ?, ?)").run(userData.id, accessToken, createdIn, expiresIn, ip) // Adds the token to DB in case the user decides to logout.
         return { email: data.email, accessToken: accessToken, expiresIn: expiresIn };
     },
-    setCookie: async (req: express.Request, res: express.Response, value: String, expiresIn: number) => {
+    setCookie: async (req: express.Request, res: express.Response, value: string, expiresIn: number) => {
         res.cookie('jwt', value, { secure: true, httpOnly: true, maxAge: expiresIn, sameSite: 'strict' }); // Client Side wont access this because httpOnly.
     },
     getUserData: async (req: express.Request, res: express.Response) => {
