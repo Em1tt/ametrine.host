@@ -132,7 +132,7 @@
         </div>
         <div>
             <div class="dropdown">
-            <button href="#" onclick="toggleLoginDialog()" class="dropbtn"><span class="nav-text"><%= it.name %></span></button>
+            <button href="#" onclick="toggleLoginDialog()" class="dropbtn"><i class="<%= it.icon %>"></i><span class="nav-text"><%= it.name %></span></button>
             </div>
         </div>
     </nav>
