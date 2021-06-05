@@ -17,11 +17,11 @@ const server: SMTPServer = new SMTPServer({
       });
       setTimeout(() => {
         fs.mkdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err): void => {
-          if (err && !fs.existsSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".")}`)) return console.error(err);
+          if (err && !fs.existsSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`)) return console.error(err);
         });
       }, 1000);
       setTimeout(() => {
-        const amount = fs.readdirSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".")}`);
+        const amount = fs.readdirSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`);
         console.log(amount);
         fs.writeFile(`./data/mail/${p.to.text}/`, mail, (err): void => {
           if (err) console.log(err);
