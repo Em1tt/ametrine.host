@@ -5,7 +5,7 @@ new SuperParticles({
       showFps: false
     },
     particles: {
-      amount: window.outerWidth / 13,
+      amount: window.outerWidth / 15,
       velocity: 10,
       color: "0xdce0ff",
     },

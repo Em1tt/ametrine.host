@@ -44,7 +44,7 @@
     <body>
         <nav>
             <div>
-                <a href="#"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
+                <a href="./index.html"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
                         width="50px"><span>Amethyst.host</span></a>
             </div>
             <div>
@@ -59,7 +59,7 @@
                     <div class="dropdown-content">
                         <a href="#">Write an E-Mail</a>
                         <a href="#">Create a ticket</a>
-                        <a href="#">Join our Discord</a>
+                        <a href="./redirect.html?url=https://discord.gg/kavXaFt8CK">Join our Discord</a>
                         <a href="#">Knowledgebase</a>
                     </div>
                 </div>
@@ -89,8 +89,10 @@
                 <a href="#" class="anchor">Proceed</a>
             </div>
         </main>
-        <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-        <script defer src="../js/particles.js"></script>
+        <script src="https://pixijs.download/dev-graphics-batch-pool/pixi.js"></script>
+        <!--Credit: https://github.com/T-vK/SuperParticles-->
+    <script src="https://cdn.jsdelivr.net/gh/T-vK/SuperParticles@master/SuperParticles.js"></script>
+    <script src="../js/particles.js"></script>
         <script type="text/javascript">
             let queries = new URLSearchParams(window.location.search);
             if(!queries.get("url")){
