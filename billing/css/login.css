@@ -194,6 +194,10 @@ label{
     cursor: pointer;
 }
 
+#loginerror{
+    color: var(--highlights);
+}
+
 @media screen and (max-width: 1000px){
     .login-other a{
         width: 100%;

@@ -184,6 +184,10 @@ label{
     cursor: pointer;
 }
 
+#regerror{
+    color: var(--highlights);
+}
+
 @media screen and (max-width: 1000px){
     .register-other a{
         width: 100%;
