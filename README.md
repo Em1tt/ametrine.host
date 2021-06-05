@@ -1,42 +1,62 @@
 # [Amethyst.host](https://amethyst.host)
-<p align="center"><img src="/src/modules/views/images/GitHubSmall.png?raw=true" alt="Amethyst.host"/></p>  
   
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host) [![Lint & build](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml/badge.svg)](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml) ![Website](https://img.shields.io/website?url=https%3A%2F%2Famethyst.host) ![Discord](https://img.shields.io/discord/825086628561027092)
 
-**Amethyst.host** is a hosting service, providing premium Minecraft servers for 32% of our competitors price, with better specs & features. 
+<p align="center"><img src="./src/modules/views/images/AmethystGHAbout.png?raw=true" alt="About"/></p> 
 
+## About  
+
+### Company
+**Amethyst.host** is a transparent hosting company, owned by @Em1tt. This GitHub repository is open to public to further support our transparency claims. 
+
+### Our Goal
 We strive to provide the cheapest but most exclusive feel to our service, that's why we're prioritizing customer satisfaction over profits.
-![Minecraft cave](/src/modules/views/images/cave.jpg?raw=true)
 
-## Monthly Expenses
-We pay **€32.39** for each of our nodes, and at a full node we get back **€48**. *Don't believe us?* Our nodes are **60GB** of RAM each, to prevent overselling and we sell each GB of RAM for **€0.80/GB**
+### Copyright & Licensing
+If you're a maintainer of any packages we have used in our code and wish to have your code removed, or something altered, please contact us on **admin@amethyst.host** or open a **GitHub issue**.
 
-We strive to be transparent about our income, technicalities, and team - **that's why this repository is public.**
-![Minecraft bridge](/src/modules/views/images/bridge.jpg?raw=true)
+### Maintainers
+* @Em1tt - Fullstack, CEO
+* @b1tt0 - Backend, professional dumbass (Messed up the main branch twice)
+* @FireMario211 - Backend, our savior (Fixed the main branch twice)
 
-## Backend deploying
-To start **Amethyst.host**, do the following: 
-1. `npm i` to install dependencies
-1. `npm run build` to build backend source
-1. `npm run start` to start the backend up  
-  
-**This way to deploy is only supported on Linux machines**  
+### Collaborators
+Thanks to all collaborators for helping out! **Collaborators get a special Discord role** and get access to extra channels!
+
+<p align="center"><img src="./src/modules/views/images/AmethystGHCode.png?raw=true" alt="About"/></p> 
+
+## Code
+
+### Starting up the backend
+Do this in the order specified
+> This backend has scripts built only for Linux machines as of now.
+```powershell
+npm i  #install dependencies
+npm run build #to build backend source
+npm run start #to start the backend up  
+```
+
+### Additional commands
+```powershell
+npm run nstart #Starts in a dev environment, with start traces
+npm run update #Pulls from the GitHub repo, builds and restarts the process
+npm run lint #Lints ts files
+```
 
 ## Modules
-Amethyst backend is fully modular, which means you can have it do a **LOT** of stuff. Pros:
-* Safe uptime (if one module fails - the rest will work fine)
-* High extensibility
+### Info
+Our backend is extremely flexible for use in any production, whether big or small. It works on a modular base, which brings the following pros:
+* Safe uptime - When a module crashes, all the other work just fine.
 * Easy to write
+* High extensibility
+
+### Creating a module
 
 To make a module, make a `.ts` file in `src/modules`
 
 **Keep in mind!** If you want to split a module into multiple files, make its **own folder**.
-![Minecraft window](/src/modules/views/images/window.jpg?raw=true)
+  
+readme by B1tt, enhanced by Em1t.
+<p align="center"><img src="./src/modules/views/images/GitHubSmall.png?raw=true" alt="Amethyst.host"/></p>  
 
-## Credits
-The entirety of **Amethyst.host** is maintained by:
-* [Em1t](https://github.com/Em1tt) - CEO & fullstack
-* [b1tt](https://github.com/b1tt0) - backend
-* [Firee](https://github.com/firemario211) - backend
-
-© Amethyst.host | Distribution / Modification of our software is prohibited.
+<p align="center">© Amethyst.host | Distribution / Modification of our software is prohibited.</p>
