@@ -30,6 +30,7 @@
     <noscript>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
     </noscript>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
@@ -104,7 +105,7 @@
     </header>
     <div id="forms">
         <h2 id="form-header"><i class="fa fa-lock"></i> Secure Login</h2>
-        <form>
+        <form id="loginForm">
             <fieldset id="login">
                 <div>
                     <input type="email" required id="login-email" placeholder="Email"><i class="fa fa-at"></i><span
@@ -119,8 +120,10 @@
                     <label for="rememberMe"></label><p>Remember me</p>
                 </div>
                 <p id="loginerror"></p>
-                <input type="submit">
+                <input type="submit" value="Login">
             </fieldset>
+        </form>
+        <form id="registerForm">
             <fieldset id="register" disabled="true">
                 <div>
                     <input type="text" required id="register-fullname" placeholder="Full Name"><i class="fa fa-user"></i><span
@@ -143,7 +146,7 @@
                     <label for="checkboxTwo"></label><p>I agree with the terms & conditions and I've read the privacy policy</p>
                 </div>
                 <p id="regerror"></p>
-                <input type="submit">
+                <input type="submit" value="Register">
             </fieldset>
             <a class="no-acc-a" id="forgot-pass">Forgot Password?</a>
             <hr class="divide-login">

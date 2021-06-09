@@ -2,12 +2,11 @@
 const exclamationCircle = `<i class="fa fa-exclamation-circle"></i>`
 const loginUser = async (user) => {
     const loginError = document.getElementById('loginerror');
-    const url = "https://amethyst.host/api/auth"
-    console.log(user)
+    const url = "/api/auth"
     user.rememberMe = (user.rememberMe == "on")
-    //const url = "/api/auth"
     try {
         const response = await axios.post(url, user)
+        console.log(response)
         location.reload()
     } catch (e) {
         let errorText = "Unknown Error (Look in Console for more details)";
@@ -20,13 +19,13 @@ const loginUser = async (user) => {
                 break;
         }
         loginError.innerHTML = `${exclamationCircle} ${errorText}`;
+        console.error(e);
     }
 }
 
 const registerUser = async (user) => {
     const regError = document.getElementById('regerror');
-    const url = "https://amethyst.host/api/register"
-    //const url = "/api/auth"
+    const url = "/api/register"
     try {
         const response = await axios.post(url, user)
         console.log(response)
@@ -42,12 +41,13 @@ const registerUser = async (user) => {
                 break;
         }
         regError.innerHTML = `${exclamationCircle} Error: ${errorText}`;
+        console.error(e);
     }
 }
 
 function onLoad() {
-    const loginForm = document.querySelector("#login");
-    const registerForm = document.querySelector('#register')
+    const loginForm = document.querySelector("#loginForm");
+    const registerForm = document.querySelector('#registerForm')
     loginForm.addEventListener('submit', event => {
         event.preventDefault();
         const email = loginForm.querySelector('div > #login-email').value;
