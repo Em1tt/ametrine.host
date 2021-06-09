@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en/EN">
+<html lang="en">
 
 <head>
     <!-- Set the title of the html -->
@@ -106,11 +106,11 @@
         <form>
             <fieldset id="login">
                 <div>
-                    <input type="email" placeholder="Email"><i class="fa fa-at"></i><span
+                    <input type="email" id="login-email" placeholder="Email"><i class="fa fa-at"></i><span
                         class="underline-element"></span>
                 </div>
                 <div>
-                    <input type="password" placeholder="Password"><i class="fa fa-lock"></i><span
+                    <input type="password" id="login-password" placeholder="Password"><i class="fa fa-lock"></i><span
                         class="underline-element"></span>
                 </div>
                 <div class="checkboxwrap">
@@ -122,19 +122,19 @@
             </fieldset>
             <fieldset id="register" disabled="true">
                 <div>
-                    <input type="text" placeholder="Full name"><i class="fa fa-user"></i><span
+                    <input type="text" id="register-fullname" placeholder="Full name"><i class="fa fa-user"></i><span
                         class="underline-element"></span>
                 </div>
                 <div>
-                    <input type="email" placeholder="Email"><i class="fa fa-at"></i><span
+                    <input type="email" id="register-email" placeholder="Email"><i class="fa fa-at"></i><span
                         class="underline-element"></span>
                 </div>
                 <div>
-                    <input type="password" placeholder="Password"><i class="fa fa-lock"></i><span
+                    <input type="password" id="register-password" placeholder="Password"><i class="fa fa-lock"></i><span
                         class="underline-element"></span>
                 </div>
                 <div>
-                    <input type="password" placeholder="Confirm Password"><i class="fa fa-lock"></i><span
+                    <input type="password" id="register-confirm-password" placeholder="Confirm Password"><i class="fa fa-lock"></i><span
                         class="underline-element"></span>
                 </div>
                 <div class="checkboxwrap">
@@ -144,9 +144,9 @@
                 <p id="regerror"></p>
                 <input type="submit">
             </fieldset>
-            <a href="#" class="no-acc-a">Forgot Password?</a>
+            <a href="#" class="no-acc-a" id="forgot-pass">Forgot Password?</a>
             <hr class="divide-login">
-            <p class="no-acc-p">Don't have an account?</p>
+            <p class="no-acc-p" id="no-acc-text">Don't have an account?</p>
             <a href="#" id="register-button" class="no-acc-a">Register now</a>
         </form>
     </div>
