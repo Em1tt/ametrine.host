@@ -36,9 +36,10 @@
         rel="stylesheet">
     <link href="../css/index.css" rel="stylesheet">
     <script defer src="../js/theme.js"></script>
+    <script src="../js/auth.js"></script>
 </head>
 
-<body>
+<body onload="onLoad()">
     <nav class="navbar">
         <ul class="navbar-nav">
             <li class="logo">

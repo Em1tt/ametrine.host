@@ -46,13 +46,13 @@ const registerUser = async (user) => {
 }
 
 function onLoad() {
-    const loginForm = document.getElementsByClassName('login-main').item(0).querySelector('form')
-    const registerForm = document.getElementsByClassName('register-main').item(0).querySelector('form')
+    const loginForm = document.querySelector("#login");
+    const registerForm = document.querySelector('#register')
     loginForm.addEventListener('submit', event => {
         event.preventDefault();
-        const email = loginForm.querySelector('#login-email').value;
-        const password = loginForm.querySelector('#login-password').value;
-        const remember = loginForm.getElementsByClassName('flex-align').item(0).querySelector('#remember').value;
+        const email = loginForm.querySelector('div > #login-email').value;
+        const password = loginForm.querySelector('div > #login-password').value;
+        const remember = loginForm.querySelector('.checkboxwrap > #rememberMe').value;
         loginUser({
             email,
             password,
@@ -61,10 +61,10 @@ function onLoad() {
     });
     registerForm.addEventListener('submit', event => {
         event.preventDefault();
-        const name = registerForm.querySelector('#name').value;
-        const email = registerForm.querySelector('#email').value;
-        const password = registerForm.querySelector('#password').value;
-        const passwordConfirm = registerForm.querySelector('#password-confirm').value;
+        const name = registerForm.querySelector('div > #register-fullname').value;
+        const email = registerForm.querySelector('div > #register-email').value;
+        const password = registerForm.querySelector('div > #register-password').value;
+        const passwordConfirm = registerForm.querySelector('div > #register-confirm-password').value;
         if (password != passwordConfirm) return 403;
         registerUser({
             name,
