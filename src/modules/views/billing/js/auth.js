@@ -8,7 +8,7 @@ const loginUser = async (user) => {
     //const url = "/api/auth"
     try {
         const response = await axios.post(url, user)
-        //location.reload()
+        location.reload()
     } catch (e) {
         let errorText = "Unknown Error (Look in Console for more details)";
         switch (e.toString()) {
