@@ -17,6 +17,7 @@ function toggleRegisterDialog(){
         document.getElementById("login").removeAttribute("disabled");
         document.getElementById("form-header").innerHTML  ="<i class=\"fa fa-lock\"></i> Secure Login";
         document.getElementById("forgot-pass").style = "visibility:initial;";
+        document.getElementById("no-acc-text").innerHTML = "Don't have an account?";
         document.getElementById("register-button").innerHTML = "Register now";
     }
 }
