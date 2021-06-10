@@ -101,7 +101,7 @@
         </ul>
     </nav>
     <header>
-        <h1>Welcome<%= it.name=="" ? "" : ` back, ${it.name}` %>!</h1>
+        <h1>Welcome<%= it.name=="" ? "" : ` back, ${it.name.split(" ")[0]}` %>!</h1>
         <hr>
         <h2>Please log-in or create an account to view your account information</h2>
     </header>
@@ -109,7 +109,7 @@
         <button class=" collapsible">Account Details</button>
                 <div class="content">
                     <form>
-                        <input type="text" placeholder="Full Name" value=<%= it.name %>>
+                        <input type="text" placeholder="Full Name" value=`<%= it.name %>`>
                         <input type="text" value=<%= it.name %>>
                     </form>
                 </div>
