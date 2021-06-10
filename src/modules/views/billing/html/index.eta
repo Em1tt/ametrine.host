@@ -105,7 +105,7 @@
         <hr>
         <h2>Please log-in or create an account to view your account information</h2>
     </header>
-    <main> <% if(it.name == ""){ %>
+    <main> <% if(it.name != ""){ %>
         <button class=" collapsible">Account Details</button>
                 <div class="content">
                     <form>
