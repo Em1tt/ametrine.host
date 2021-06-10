@@ -107,26 +107,26 @@
     </header>
     <main> <% if(it.name != ""){ %>
         <button class=" collapsible">Account Details</button>
-                <div class="content">
-                    <form>
-                        <input type="text" placeholder="Full Name" value=`<%= it.name %>`>
-                        <input type="text" value=<%= it.name %>>
-                    </form>
-                </div>
-                <button class=" collapsible">Services</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-                <button class=" collapsible">Transactions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
+            <div class="content">
+                <form>
+                    <input type="text" placeholder="Full Name" value=`${<%= it.name %>}`>
+                    <input type="text" value=<%= it.name %>>
+                </form>
+            </div>
+        <button class=" collapsible">Services</button>
+            <div class="content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+        <button class=" collapsible">Transactions</button>
+            <div class="content">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                    laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
     <% } %>
                 </main>
 
