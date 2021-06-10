@@ -162,31 +162,6 @@ body {
     transition: var(--nav-transition-speed);
 }
 
-header {
-    margin-top: 10vh;
-    margin-left: 10rem;
-    padding: 1rem;
-    z-index: -1;
-}
-
-header>h1 {
-    color: var(--h-h1);
-    font-size: 3rem;
-}
-
-header>hr {
-    width: 80%;
-    margin-left: 0;
-    background-color: var(--h-hr);
-    height: 2px;
-    border: none;
-}
-
-header>h2 {
-    color: var(--h-h2);
-    font-size: 1.5rem;
-}
-
 #forms {
     width: 20rem;
     top: 0;
@@ -388,6 +363,76 @@ form>a {
     left: -1000;
 }
 
+header {
+    margin-top: 10vh;
+    margin-left: 10rem;
+    padding: 1rem;
+    z-index: -1;
+}
+
+header>h1 {
+    color: var(--h-h1);
+    font-size: 3rem;
+    white-space: wrap;
+}
+
+header>hr {
+    width: 80%;
+    margin-left: 0;
+    background-color: var(--h-hr);
+    height: 2px;
+    border: none;
+}
+
+header>h2 {
+    color: var(--h-h2);
+    font-size: 1.5rem;
+}
+
+main{
+    width: 100%;
+    height: 100%;
+}
+
+.collapsible {
+    margin-left: 11rem;
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 40%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .collapsible:hover {
+    background-color: #555;
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.content {
+    margin-left: 11rem;
+    width: 80%;
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    color: white;
+}
+
 /* Small screens */
 
 @media only screen and (max-width: 600px) {
@@ -413,6 +458,12 @@ form>a {
     }
     header {
         margin-left: 0;
+    }
+    .collapsible {
+        margin-left: 1rem;
+    }
+    .content {
+        margin-left: 1rem;
     }
 }
 
@@ -444,7 +495,7 @@ form>a {
 }
 
 .dark {
-/* ---DEFAULT THEME--- */
+    /* ---DEFAULT THEME--- */
     /* NAVBAR PROPERTIES */
     /*Background*/
     --nav-bg-primary: #292a35;
@@ -503,7 +554,7 @@ form>a {
 }
 
 .light {
-/* ---LIGHT THEME--- */
+    /* ---LIGHT THEME--- */
     /* NAVBAR PROPERTIES */
     /*Background*/
     --nav-bg-primary: #d2d2d2;
@@ -562,7 +613,7 @@ form>a {
 }
 
 .amoled {
-/* ---DEFAULT THEME--- */
+    /* ---DEFAULT THEME--- */
     /* NAVBAR PROPERTIES */
     /*Background*/
     --nav-bg-primary: #161616;
