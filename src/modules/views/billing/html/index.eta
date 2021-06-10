@@ -105,7 +105,7 @@
         <hr>
         <h2>Please log-in or create an account to view your account information</h2>
     </header>
-    <main <%= it.name == "" ? style="display:none" : "" %>>
+    <main> <% if(it.name == ""){ %>
         <button class=" collapsible">Account Details</button>
                 <div class="content">
                     <form>
@@ -127,7 +127,9 @@
                         laboris nisi ut aliquip ex ea commodo consequat.
                     </p>
                 </div>
+    <% } %>
                 </main>
+
                 <div id="forms">
                     <h2 id="form-header"><i class="fa fa-lock"></i> Secure Login</h2>
                     <form id="loginForm">
