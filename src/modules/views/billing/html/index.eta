@@ -87,7 +87,7 @@
             <li class="nav-item">
                 <a class="nav-link" aria-label="Log-In" id="login-button">
                     <i class="<%= it.icon%>"></i>
-                    <span aria-hidden="true" class="link-text"><%= it.name%></span>
+                    <span aria-hidden="true" class="link-text"><%= it.state%></span>
                 </a>
             </li>
             <li class="nav-item" aria-label="Change the theme">
@@ -99,7 +99,7 @@
         </ul>
     </nav>
     <header>
-        <h1>Welcome!</h1>
+        <h1>Welcome<%= it.name = "" ? "" : ` back, ${it.name.split(" ")[0]}` %>!</h1>
         <hr>
         <h2>Please log-in or create an account to view your account information</h2>
     </header>
