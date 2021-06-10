@@ -35,9 +35,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-    <link href="../css/index.css" rel="stylesheet">
-    <script defer src="../js/theme.js"></script>
-    <script src="../js/auth.js"></script>
+    <link href="./css/index.css" rel="stylesheet">
+    <script defer src="./js/theme.js"></script>
+    <script src="./js/auth.js"></script>
 </head>
 
 <body onload="onLoad()">
@@ -182,8 +182,8 @@
                         <a id="register-button" class="no-acc-a">Register now</a>
                     </form>
                 </div>
-                <script src="../js/logreg.js"></script>
-                <script src="../js/collapsibles.js"></script>
+                <script src="./js/logreg.js"></script>
+                <script src="./js/collapsibles.js"></script>
 </body>
 
 </html>
