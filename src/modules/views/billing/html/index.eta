@@ -188,8 +188,8 @@
                 <script src="./js/logreg.js"></script>
                 <script src="./js/collapsibles.js"></script>
                 <script>
-                let name = document.getElementByID("fullName").innerText;
-                    document.getElementByID("main-full-name").value = name.join(" ");
+                let name = document.getElementById("fullName").innerText;
+                    document.getElementById("main-full-name").value = name.join(" ");
                 </script>
 </body>
 
