@@ -188,7 +188,7 @@
                 <script src="./js/collapsibles.js"></script>
                 <script>
                 let name = <%it.name%>;
-                    document.getElementByID("main-full-name").value = name;
+                    document.getElementByID("main-full-name").value = name.join(" ");
                 </script>
 </body>
 
