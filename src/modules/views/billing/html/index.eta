@@ -108,7 +108,7 @@
     </header>
     <main> <% if(it.name.length != 0){ %>
         <button class=" collapsible">Account Details</button>
-            <div class="content" onclick="fillCredentials()">
+            <div class="content" onclick=`fillCredentials(<%it.name%>)`>
                 <form>
                     <input type="text" placeholder="Full Name" id="main-full-name" >
                 </form>
@@ -187,10 +187,11 @@
                 <p id="fullName-main" style="visibility: hidden;"><%=it.name.join(" ")%></p>
                 <script src="./js/logreg.js"></script>
                 <script src="./js/collapsibles.js"></script>
-                <script defer>
-                function fillCredentials(){
-                let name = document.getElementById("fullName-main").innerText;
+                <script>
+                function fillCredentials(name){
                 console.log(name);
+                let name2 = document.getElementById("fullName-main").innerText;
+                console.log(name2);
                 document.getElementById("main-full-name").value = name;
                 }
                 </script>
