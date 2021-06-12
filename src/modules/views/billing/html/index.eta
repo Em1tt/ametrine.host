@@ -109,7 +109,7 @@
         <button class=" collapsible">Account Details</button>
             <div class="content">
                 <form>
-                    <input type="text" placeholder="Full Name" value= <%= it.name.replace(",", "") %> >
+                    <input type="text" placeholder="Full Name" value= <%= new String(it.name.replace(",", " ")) %> >
                 </form>
             </div>
         <button class=" collapsible">Services</button>
