@@ -187,7 +187,7 @@
                 <p id="fullName" style="visibility: hidden;"><%=it.name.join(" ")%></p>
                 <script src="./js/logreg.js"></script>
                 <script src="./js/collapsibles.js"></script>
-                <script>
+                <script defer>
                 let name = document.getElementById("fullName").innerText;
                 await console.log(name);
                 document.getElementById("main-full-name").value = name;
