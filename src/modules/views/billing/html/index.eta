@@ -109,7 +109,7 @@
         <button class=" collapsible">Account Details</button>
             <div class="content">
                 <form>
-                    <input type="text" placeholder="Full Name" value='<%it.name.split(" ").join(" ")%>'>
+                    <input type="text" placeholder="Full Name" value=<%=it.name%>>
                     <input type="text" value=<%= it.name %>>
                 </form>
             </div>
