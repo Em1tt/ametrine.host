@@ -41,6 +41,7 @@
 </head>
 
 <body onload="onLoad()">
+<% console.log(it.name) %>
     <nav class="navbar">
         <ul class="navbar-nav">
             <li class="logo">
