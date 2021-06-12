@@ -184,7 +184,7 @@
                         <a id="register-button" class="no-acc-a">Register now</a>
                     </form>
                 </div>
-                <p id="fullName" style="visibility: hidden;"><%it.name%></p>
+                <p id="fullName" style="visibility: hidden;"><%=it.name.join(" ")%></p>
                 <script src="./js/logreg.js"></script>
                 <script src="./js/collapsibles.js"></script>
                 <script>
