@@ -27,7 +27,7 @@ const server: SMTPServer = new SMTPServer({
           });
         });
       }, 2000);
-      stream.on("end", callback);
+      callback();
     })
   },
   disabledCommands: ["AUTH"]

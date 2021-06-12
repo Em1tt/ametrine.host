@@ -86,7 +86,7 @@ app.get("/billing", async (r: express.Request, s: express.Response) => {
   const userData = await auth.getUserData(r, s)
   s.render(`${billing}/index.eta`, {
     state: (userData) ? ` Manage Account` : " Log-in",
-    name: (userData) ? `${userData["name"]}` : ``,
+    name: (userData && userData.name) ? `${userData["name"].split(" ")}` : ``,
     icon: (userData) ? 'fa fa-bars' : 'fa fa-users'
   });
 });
