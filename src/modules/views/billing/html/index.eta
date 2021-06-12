@@ -110,7 +110,7 @@
         <button class=" collapsible">Account Details</button>
             <div class="content">
                 <form>
-                    <input type="text" placeholder="Full Name" value= <%= new String(it.name.join(" ")) %> >
+                    <input type="text" placeholder="Full Name" id="main-full-name" >
                 </form>
             </div>
         <button class=" collapsible">Services</button>
@@ -186,6 +186,10 @@
                 </div>
                 <script src="./js/logreg.js"></script>
                 <script src="./js/collapsibles.js"></script>
+                <script>
+                let name = <%it.name%>;
+                    document.getElementByID("main-full-name").value = name;
+                </script>
 </body>
 
 </html>
