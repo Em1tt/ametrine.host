@@ -189,7 +189,7 @@
                 <script src="./js/collapsibles.js"></script>
                 <script defer>
                 let name = document.getElementById("fullName").innerText;
-                await console.log(name);
+                console.log(name);
                 document.getElementById("main-full-name").value = name;
                 </script>
 </body>
