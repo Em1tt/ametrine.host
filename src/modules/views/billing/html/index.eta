@@ -108,9 +108,9 @@
     </header>
     <main> <% if(it.name.length != 0){ %>
         <button class=" collapsible">Account Details</button>
-            <div class="content" onclick=`fillCredentials(<%it.name%>)`>
+            <div class="content">
                 <form>
-                    <input type="text" placeholder="Full Name" id="main-full-name" >
+                    <input type="text" placeholder="Full Name" id="main-full-name" value=<%= it.name.join()%> >
                 </form>
             </div>
         <button class=" collapsible">Services</button>
@@ -184,17 +184,8 @@
                         <a id="register-button" class="no-acc-a">Register now</a>
                     </form>
                 </div>
-                <p id="fullName-main" style="visibility: hidden;"><%=it.name.join(" ")%></p>
                 <script src="./js/logreg.js"></script>
                 <script src="./js/collapsibles.js"></script>
-                <script>
-                function fillCredentials(name){
-                console.log(name);
-                let name2 = document.getElementById("fullName-main").innerText;
-                console.log(name2);
-                document.getElementById("main-full-name").value = name;
-                }
-                </script>
 </body>
 
 </html>
