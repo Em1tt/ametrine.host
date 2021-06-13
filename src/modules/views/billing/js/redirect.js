@@ -1,1 +1,1 @@
-document.getElementById("login-button").setAttribute("href", "./index.eta");
+document.getElementById("login-button").setAttribute("href", "./index");
