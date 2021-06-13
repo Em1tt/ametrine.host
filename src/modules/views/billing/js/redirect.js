@@ -1,1 +1,1 @@
-document.getElementById("login-button").setAttribute("href", "./index");
+document.getElementById("login-button").setAttribute("href", "./");
