@@ -1,6 +1,7 @@
 const toggleLoginDialog = () => {
     document.getElementById("forms").classList.toggle("forms-activated");
 };
+
 let bool = false;
 function toggleRegisterDialog(){
     if(!bool){
