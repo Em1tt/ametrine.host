@@ -75,6 +75,7 @@ const server: SMTPServer = new SMTPServer({
 
       //Put into ratelimit
       if(ratelimit.getOccurrenceCount(p.from.text) > ratelimit.getLimit().ignore && !ratelimit.getCache().ignored.includes(p.from.text)){
+        console.log("mute");
         if(!ratelimit.getCache.ignored.includes(p.from.text)){
           ratelimit.addIgnore(p.from.text);
           ratelimit.addIgnoreMem(p.from.text);
@@ -87,6 +88,7 @@ const server: SMTPServer = new SMTPServer({
         }
         return errorHandler(510, callback);
       }else if(ratelimit.getOccurrenceCount(p.from.text) > ratelimit.getLimit().ban && ratelimit.getCache().ignoredMem.includes(p.from.text)){
+        console.log("ban");
         if(!ratelimit.getCache.banned.includes(p.from.text)){
           ratelimit.addBan(p.from.text);
         }
@@ -96,7 +98,7 @@ const server: SMTPServer = new SMTPServer({
       setTimeout(() => {
         ratelimit.removeAddress(p.from.text);
       }, ratelimit.getLimit().ignoreInt * 1000);
-
+      util.mailLog(ratelimit);
       util.mailLog(`Received E-Mail from "${p.from.text}"`);
       const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a.content)}\n`;
       fs.mkdir(`./data/mail/${p.to.text}`, (err): void => {
