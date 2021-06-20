@@ -87,6 +87,7 @@ app.get("/billing", async (r: express.Request, s: express.Response) => {
   s.render(`${billing}/index.eta`, {
     state: (userData) ? ` Manage Account` : " Log-in",
     name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
+    email: (userData && userData["email"]) ? userData["email"] : "",
     icon: (userData) ? 'fa fa-bars' : 'fa fa-users'
   });
 });

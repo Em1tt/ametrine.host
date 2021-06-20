@@ -41,7 +41,6 @@
 </head>
 
 <body onload="onLoad()">
-<% console.log(it.name) %>
     <nav class="navbar">
         <ul class="navbar-nav">
             <li class="logo">
@@ -104,14 +103,21 @@
     <header>
         <h1>Welcome<%= (!it.name.length) ? "" : ` back, ${it.name[0]}` %>!</h1>
         <hr>
-        <h2>Please log-in or create an account to view your account information</h2>
+        <h2><%= (!it.name.length) ? "Please log-in or create an account to view your account information" : `You have 0 new notifications.`%></h2>
     </header>
     <main> <% if(it.name.length){ %>
         <button class=" collapsible">Account Details</button>
             <div class="content">
                 <form>
-                    <input type="text" placeholder="Full Name" value="<%= it.name.join(' ') %>" >
-                    <input type="text" placeholder="E-Mail" value="<%= it.name.join(' ') %>" >
+                <fieldset>
+                    <label for="main-full-name">Full Name</label>
+                    <input type="text" name="main-full-name" id="main-full-name" placeholder="Full Name" value="<%= it.name.join(' ') %>" >
+                </fieldset>
+                <fieldset>
+                    <label for="main-email">E-Mail</label>
+                    <input type="text" name="main-email" id="main-email" placeholder="E-Mail" value="<%= it.email %>" >
+                </fieldset>
+                    <input type="submit" value="Update Information">
                 </form>
             </div>
         <button class=" collapsible">Services</button>
@@ -186,7 +192,7 @@
                     </form>
                 </div>
                 <% if(it.name){%>
-                    <script src="./js/redirect.js"></script>
+                     <script src="./js/redirect.js"></script>
                 <% }else{%>
                     <script src="./js/logreg.js"></script>
                 <%}%>

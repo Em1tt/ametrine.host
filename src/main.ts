@@ -5,6 +5,7 @@ import "dotenv/config";
 import path          from "path";
 import fs            from "fs";
 import child_process from "child_process";
+import readline      from "readline";
 
 // files
 import { util } from "./util";
@@ -14,7 +15,7 @@ import config   from "./config.json";
 // variables
 const strings    : any    = require(`./lang/${config.lang}.json`);
 const MODULE_PATH: string = path.join(__dirname, "modules");
-const stdin      : any    = process.openStdin();
+const stdin      : any    = readline;
 const modules    : Map<string, child_process.ChildProcess> = new Map();
 
 // preload & start all modules
@@ -28,15 +29,19 @@ for (const file of mfiles) {
 util.log(util.sreplace(strings.start, [modules.size]));
 
 // "CLI"
-stdin.addListener("data", (d) => {
-  const args: Array<string> = d.toString().trim().split(" ");
+const CLI = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+CLI.on("line", (input) => {
+  const args: Array<string> = input.toString().trim().split(" ");
   const cmd : string        = args[0];
   args.shift();
 
   cmds[cmd](modules, args);
-});
+})
 
 process.once("SIGINT", () => {
-  modules.forEach((m) => m.disconnect());
+  modules.forEach((m) => m.kill());
   process.exit(0); // close nodejs
 });

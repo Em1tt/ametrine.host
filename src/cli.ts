@@ -7,7 +7,10 @@ const s: any = require(`./lang/${config.lang}.json`);
 export const cmds = {
   disable: (modules: Map<string, child_process.ChildProcess>, args: Array<string>): void => {
       if (args[0] == "*") {
-        modules.forEach((m) => m.kill());
+        modules.forEach((m) => {
+          m.kill();
+        });
+        modules.clear();
         return util.log(s.modules.disabledAll);
       }
       if (!modules.has(args[0]))
