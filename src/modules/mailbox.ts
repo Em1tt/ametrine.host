@@ -98,7 +98,7 @@ const server: SMTPServer = new SMTPServer({
       setTimeout(() => {
         ratelimit.removeAddress(p.from.text);
       }, ratelimit.getLimit().ignoreInt * 1000);
-      util.mailLog(ratelimit);
+      util.mailLog(ratelimit.getLimit() + ratelimit.getCache());
       util.mailLog(`Received E-Mail from "${p.from.text}"`);
       const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a.content)}\n`;
       fs.mkdir(`./data/mail/${p.to.text}`, (err): void => {
