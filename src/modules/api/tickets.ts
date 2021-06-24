@@ -172,6 +172,7 @@ export const prop = {
                                 return res.status(200).json(newMsg(getMessage));
                             }
                             case "PATCH": { // Editing the message.
+                                if (getMessage.user_id != userData["user_id"]) return res.sendStatus(403);
                                 const newContent = encode_base64(content);
                                 await sql.db.prepare('UPDATE ticket_msgs SET content = ?, editedIn = ? WHERE ticket_id = ? AND msg_id = ?').run(newContent, timestamp, getTicket["ticket_id"], getMessage["msg_id"])
                                 getMessage["content"] = newContent;
