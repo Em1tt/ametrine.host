@@ -1,0 +1,21 @@
+{
+    "1": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"]
+    },
+    "2": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"]
+    },
+    "2:3": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"]
+    },
+    "2:4": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"]
+    },
+    "2:5": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"]
+    },
+    "4": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete"]
+    }
+    
+}
