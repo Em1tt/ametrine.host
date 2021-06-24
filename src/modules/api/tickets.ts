@@ -246,6 +246,7 @@ export const prop = {
                                     sql.db.prepare('UPDATE tickets SET content = ? WHERE ticket_id = ?').run(encode_base64(content), getTicket["ticket_id"]);
                                 }
                                 if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
+                                if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
                                 if (subject && subject.length) {
                                     sql.db.prepare('UPDATE tickets SET subject = ? WHERE ticket_id = ?').run(encode_base64(subject), getTicket["ticket_id"]);
                                     if (content && content.length) {
