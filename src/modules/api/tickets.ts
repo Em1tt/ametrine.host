@@ -43,7 +43,9 @@ function allowedMethod(req: express.Request, res: express.Response, type: Array<
     }
     return true;
 }
-
+function editContent(content, timestamp, ticket_id) {
+    sql.db.prepare('UPDATE tickets SET content = ?, editedIn = ? WHERE ticket_id = ?').run(content, timestamp, ticket_id);
+}
 
 export const prop = {
     name: "tickets",
@@ -99,8 +101,8 @@ export const prop = {
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
                     if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
-                    let category_ids = (categories) ? categories.split(",").map(category => {
-                        let findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
+                    const category_ids = (categories) ? categories.split(",").map(category => {
+                        const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
                         if (findCategory) {
                             category = parseInt(category); // Converting it to Int in case of any strings at the end.
                             return category;
@@ -196,6 +198,7 @@ export const prop = {
                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
                         const { content } = req.body;
                         // Using {} at switch cases because ESLint is complaining
+                        
                         switch (req.method) {
                             case "GET": { // Viewing the Ticket Conversation.
                                 let page = 1;
@@ -243,25 +246,23 @@ export const prop = {
                                     return res.sendStatus(204);
                                 }
 
-                                function editContent() {
-                                    sql.db.prepare('UPDATE tickets SET content = ?, editedIn = ? WHERE ticket_id = ?').run(encode_base64(content), timestamp, getTicket["ticket_id"]);
-                                }
+                                
                                 if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
                                 if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
                                 if (subject && subject.length) {
                                     sql.db.prepare('UPDATE tickets SET subject = ? editedIn = ? WHERE ticket_id = ?').run(encode_base64(subject), timestamp, getTicket["ticket_id"]);
                                     if (content && content.length) {
-                                        editContent()
+                                        editContent(encode_base64(content), timestamp, getTicket["ticket_id"])
                                     }
                                     return res.sendStatus(204);
                                 }
                                 if (content && content.length) {
-                                    editContent();
+                                    editContent(encode_base64(content), timestamp, getTicket["ticket_id"]);
                                     return res.sendStatus(204);
                                 }
                                 if (categories && categories.length) {
-                                    let category_ids = (categories) ? categories.split(",").map(category => {
-                                        let findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
+                                    const category_ids = (categories) ? categories.split(",").map(category => {
+                                        const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
                                         if (findCategory) {
                                             category = parseInt(category); // Converting it to Int in case of any strings at the end.
                                             return category;
