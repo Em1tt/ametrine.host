@@ -74,13 +74,9 @@ const apiMethod = function(r: express.Request, s: express.Response) {
 /* amethyst.host/api/bill
    amethyst.host/api/auth
    and so on..            */
-app.get("/api/:method", (r: express.Request, s: express.Response) => {
+app.all("/api/:method*", (r: express.Request, s: express.Response) => {
   apiMethod(r, s);
 });
-app.post("/api/:method", (r: express.Request, s: express.Response) => {
-  apiMethod(r, s);
-});
-
 // billing
 app.get("/billing", async (r: express.Request, s: express.Response) => {
   const userData = await auth.getUserData(r, s)
