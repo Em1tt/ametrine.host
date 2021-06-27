@@ -8,7 +8,7 @@ import permission from '../permissions.json'
  * 1 - Client - Users who have bought a service can access pages normal users cannot access, like services.
  * 2:level - Support - Staff members who have access to list available tickets at their level. They can only access tickets from their level below.
  * 3 - Developer - Users who have access to special pages.
- * 4 - Administrator - Users who has access to almost all pages.
+ * 4 - Administrator - Users who have access to almost all pages.
  *
  */
 
