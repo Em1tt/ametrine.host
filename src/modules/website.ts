@@ -18,8 +18,8 @@ const html: string = path.join(__dirname, "views", "html");
 const billing: string = path.join(__dirname, "views", "billing", "html");
 
 const endpoints: Map<string, Endpoint> = new Map();
-const files: Array<string> = fs.readdirSync(`./dist/modules/api`)
-  .filter((f) => f.endsWith(".js"));
+const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
+                                           .filter((f) => f.endsWith(".js"));
 
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
@@ -41,22 +41,31 @@ app.use(bodyParser.json())
 // Create Parse for Cookies
 
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
-app.use(helmet({
-  contentSecurityPolicy: {
-    useDefaults: true, // nonce when
-    directives: {
-      defaultSrc: ["'self'"],
-      "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
-      "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
-      "script-src-attr": ["'self'", "'unsafe-inline'"]
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      useDefaults: true, // nonce when
+      directives: {
+        defaultSrc: ["'self'"],
+        "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
+        "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
+        "script-src-attr": ["'self'", "'unsafe-inline'"]
+      }
     }
   }
-}
 ));
 
 // eta
 app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
+
+app.use(async (r: express.Request, s: express.Response, next: express.NextFunction) => {
+  const userData = await auth.getUserData(r, s)
+  s.locals.userData = userData
+  next()
+})
+
+
 
 app.get("/", (r: express.Request, s: express.Response) => {
   s.render(`${html}/index.eta`);
@@ -69,7 +78,7 @@ const apiMethod = function (r: express.Request, s: express.Response) {
     ep.prop.run(r, s);
   } else {
     return s.status(404)
-      .send("if you were searching for a 404.. you found it!!");
+            .send("if you were searching for a 404.. you found it!!");
   }
 }
 
@@ -80,8 +89,9 @@ app.all("/api/:method*", (r: express.Request, s: express.Response) => {
   apiMethod(r, s);
 });
 // billing
-app.get("/billing", async (r: express.Request, s: express.Response) => {
-  const userData = await auth.getUserData(r, s)
+app.get("/billing", (r: express.Request, s: express.Response) => {
+  // You could use ETA and test whether or not it._locals.userData isnt null, and if it is then show stuff like Manage Account, similar to how you have "(!it.name.length) ?" in index.eta
+  const userData = s.locals.userData;
   s.render(`${billing}/index.eta`, {
     state: (userData) ? ` Manage Account` : " Log-in",
     name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
@@ -90,12 +100,12 @@ app.get("/billing", async (r: express.Request, s: express.Response) => {
     id: (userData) ? userData["user_id"] : ``
   });
 });
-app.get("/billing/:name", async (r: express.Request, s: express.Response) => {
+app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   const file = `${billing}/${r.params.name}.eta`;
 
   if (!fs.existsSync(file)) return s.status(404)
-    .send("if you were searching for a 404.. you found it!!");
-  const userData = await auth.getUserData(r, s)
+                                    .send("if you were searching for a 404.. you found it!!");
+  const userData = s.locals.userData;
   s.render(file, {
     state: (userData) ? ` Manage Account` : " Log-in",
     name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
@@ -114,7 +124,7 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
   const file = `${html}/${r.params.name}.eta`;
 
   if (!fs.existsSync(file)) return s.status(404)
-    .send("if you were searching for a 404.. you found it!!");
+                                    .send("if you were searching for a 404.. you found it!!");
   s.render(file);
 
 });
