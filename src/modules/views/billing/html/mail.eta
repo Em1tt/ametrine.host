@@ -36,7 +36,7 @@
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
     <link href="./css/shared.css" rel="stylesheet">
-    <link href="./css/index.css" rel="stylesheet">
+    <link href="./css/mail.css" rel="stylesheet">
     <script defer src="./js/theme.js"></script>
     <script src="./js/auth.js"></script>
 </head>
@@ -101,74 +101,18 @@
             </li>
         </ul>
     </nav>
+
     <header>
-        <h1>Welcome<%= (!it.name.length) ? "" : ` back, ${it.name[0]}` %>!</h1>
-        <hr>
-        <h2>
-            <%= (!it.name.length) ? "Please log-in or create an account to view your account information" : `You have 0
-                new notifications.`%>
-        </h2>
+    <h1>Got any questions?</h1>
+    <h2>Send us an E-Mail and we'll get back to you soon!</h2>
     </header>
     <main>
-        <% if(it.name.length){ %>
-            <div>
-                <button class=" collapsible">Account Details & Options</button>
-                <div class="content">
-                    <form>
-                        <fieldset>
-                            <label for="main-full-name">Full Name</label>
-                            <input spellcheck="false" type="text" name="main-full-name" id="main-full-name"
-                                placeholder="Full Name" value="<%= it.name.join(' ') %>">
-                        </fieldset>
-                        <fieldset>
-                            <label for="main-email">E-Mail</label>
-                            <input spellcheck="false" type="text" name="main-email" id="main-email" placeholder="E-Mail"
-                                value="<%= it.email %>">
-                        </fieldset>
-                        <fieldset>
-                            <input type="submit" value="Update Information">
-                        </fieldset>
-                    </form>
-                    <div>
-                        <p class="more">More Options</p>
-                        <a class="accountSettings" href="#">Change Password</a>
-                        <a class="accountSettings" href="#">Enable 2-FA</a>
-                        <a class="accountSettings" href="#">Manage Payment options</a>
-                        <hr>
-                        <a class="accountSettings" href="#">Log Out</a>
-                        <p class="clientID">Client ID: <%=it.id%>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Services</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Transactions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Sessions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <% } %>
+        <form id="mailer">
+            <input type="email" placeholder="Your E-Mail" name="email" id="mailEmail">
+            <input type="text" placeholder="Subject" maxlength="50" name="subject" id="mailSubject">
+            <textarea id="mailText" placeholder="Content (max. 2000 characters)" maxlength="2000" rows="20" cols="100" style="font-family: 'Ubuntu'"></textarea>
+            <input type="submit">
+        </form>    
     </main>
 
     <div id="forms">
@@ -234,7 +178,6 @@
     <% }else{%>
         <script src="./js/logreg.js"></script>
     <%}%>
-    <script src="./js/collapsibles.js"></script>
     <script src="./js/support.js"></script>
 </body>
 

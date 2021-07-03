@@ -1,0 +1,222 @@
+:root {
+    font-size: 16px;
+    /* ---DEFAULT THEME--- */
+    /* NAVBAR PROPERTIES */
+    /*Background*/
+    --nav-bg-primary: #292a35;
+    --nav-bg-secondary: #1b1c23;
+    --nav-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    /*Text Color*/
+    --nav-text: #b6b6b6;
+    --nav-text-hover: #ececec;
+    /*Header*/
+    --nav-header-text-gradient: -webkit-linear-gradient(0deg, #3a3c49 25%, #1b1c23 75%);
+    --nav-header-arrow: white;
+    --nav-header-arrow-hover: #cc379d;
+    /*Other properties*/
+    --nav-border: none;
+    --nav-filter: grayscale(100%) opacity(0.7);
+    --nav-filter-hover: grayscale(0%) opacity(1);
+    --nav-transition-speed: 600ms;
+    /* BODY PROPERTIES */
+    --body-bg: #292a35;
+    --h-h1: #cc379d;
+    --h-hr: #3a3c49;
+    --h-h2: #dce0ff;
+    /* FORMS */
+    /*Backgrounds*/
+    --form-bg: #292a35;
+    --form-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    --form-submit-bg: #3a3c49;
+    --form-submit-focus-bg: #cc379d;
+    /*Colors*/
+    --form-header: #cc379d;
+    --form-icon-color: white;
+    --form-icon-focus-color: #cc379d;
+    --form-input-color: white;
+    --form-input-focus-color: #cc379d;
+    --form-placeholder-color: white;
+    --form-placeholder-focus-color: gray;
+    --form-underline: #3a3c49;
+    --form-underline-active: #cc379d;
+    --form-error-message: #cc379d;
+    --form-submit-color: white;
+    --form-submit-focus-color: white;
+    --form-question: gray;
+    --form-divider: #3a3c49;
+    --form-no-acc: #cc379d;
+    /*Dropdown Forms*/
+    --label-col: gray;
+    --bg-col: #1b1c23;
+    --input-color: white;
+    --input-focus-color: #cc379d;
+    --placeholder-color: white;
+    --placeholder-focus-color: gray;
+    --submit-color-hover: #cc379d;
+    /*Checkbox*/
+    --form-checkbox-bg: transparent;
+    --form-checkbox-checked-bg: #cc379d;
+    --form-checkbox-border: 2px solid #3a3c49;
+    --form-checkbox-comment: white;
+    /*Other properties*/
+    --form-activate-transition: 0.5s ease;
+    --form-deactivate-transition: 0.5s ease;
+    --form-underline-activate-transition: 1s ease;
+    --form-underline-deactivate-transition: 0.3s ease;
+    --support-activate-transition: 0.5s ease;
+    --support-deactivate-transition: 0.5s ease;
+    /*DROPDOWN*/
+    --dropdown-bg: transparent;
+    --dropdown-bg-active: #2b2c38;
+    --dropdown-text: white;
+    --dropdown-border: 2px solid #333442;
+    --dropdown-content-active: #2b2c38;
+    --dropdown-text-active: #cc379d;
+    --dropdown-symbol: white;
+    --dropdown-symbol-active: #cc379d;
+    --dropdown-border-active: none;
+    /*dropdown content*/
+    --content-text: white;
+    --hr-color: #3a3c49;
+    --client-color: gray;
+    --more-color: #cc379d;
+    /*Account Buttons*/
+    --acc-bg-color: #1b1c23;
+    --acc-color: white;
+    --acc-bg-color-hover: #202129;
+    --acc-color-hover: #cc379d;
+    /*SUPPORT POPUP*/
+    --support-bg: #292a35;
+    --support-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    --support-secondary: #1b1c23;
+    --support-icon: #cc379d;
+    --support-border: none;
+    font-family: Ubuntu, Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: var(--body-bg);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+header{
+    margin-left: 11rem;
+    margin-top: 5rem;
+}
+header > h1{
+    color: var(--h-h1);
+    font-size: 3rem;
+    white-space: wrap;
+}
+header>h2 {
+    color: var(--h-h2);
+    font-size: 1.5rem;
+}
+
+main form {
+    margin-left: 11rem;
+    display: flex;
+    flex-flow: column wrap;
+    width: 45%;
+    align-content: center;
+    padding-bottom: 10rem;
+}
+
+main input {
+    background: var(--bg-col);
+    padding: 10px;
+    border: none;
+    outline: none;
+    min-width: 250px;
+    width: 100%;
+    color: var(--input-color);
+    font-size: 1.25rem;
+    vertical-align: middle;
+    margin: 10px;
+}
+
+main textarea {
+    background: var(--bg-col);
+    padding: 10px;
+    border: none;
+    outline: none;
+    min-width: 250px;
+    width: 100%;
+    color: var(--input-color);
+    font-size: 1.3rem;
+    vertical-align: middle;
+    margin: 10px;
+    resize: none;
+}
+
+main input[type=submit] {
+    cursor: pointer;
+    min-width: 270px;
+}
+
+main input[type=submit]:hover {
+    color: var(--submit-color-hover);
+}
+
+main label {
+    color: var(--label-col);
+    width: 200px;
+}
+
+main *:focus {
+    color: var(--input-focus-color);
+}
+
+main input::placeholder {
+    color: var(--placeholder-color);
+}
+main textarea::placeholder {
+    color: var(--placeholder-color);
+
+}
+
+main textarea:focus::placeholder {
+    color: var(--placeholder-focus-color);
+}
+
+main input:focus::placeholder {
+    color: var(--placeholder-focus-color);
+}
+
+@media only screen and (max-width: 600px) {
+    header{
+        margin: 10px;
+    }
+    main form {
+        margin: 0;
+        width: 100%;
+    }
+    
+    main input {
+        padding: 10px;
+        width: 90%;
+        min-width: 245px;
+        font-size: 1.25rem;
+        vertical-align: middle;
+    }
+    main textarea {
+        padding: 10px;
+        width: 90%;
+        min-width: 245px;
+        font-size: 1.25rem;
+        vertical-align: middle;
+    }
+    
+    main input[type=submit] {
+        min-width: 265px;
+        width: 97%;
+        cursor: pointer;
+    }
+    
+    main form fieldset {
+        padding-inline: 0;
+        margin: 3%;
+        width: 90%;
+    }
+}

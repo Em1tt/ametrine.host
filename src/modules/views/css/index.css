@@ -310,6 +310,12 @@ footer > div:nth-of-type(3){
     color: white;
 }
 
+@media screen and (max-width: 1600px){
+    body {
+        height: 1800px;
+    }
+}
+
 @media screen and (max-width: 1415px) {
     .images>div {
         margin-top: 4%;
@@ -317,15 +323,24 @@ footer > div:nth-of-type(3){
     .flip>div {
         margin-top: 0;
     }
+    body {
+        height: 1700px;
+    }
 }
 
 @media screen and (max-width: 1200px) {
     .images>div {
         margin-top: 1%;
     }
+    body {
+        height: 1600px;
+    }
 }
 
 @media screen and (max-width: 915px) {
+    body {
+        height: 1700px;
+    }
     .isViewed:nth-of-type(4) {
         opacity: 1;
         transform: translate(0, -100px);
@@ -401,5 +416,18 @@ footer > div:nth-of-type(3){
     }
     footer > div:nth-of-type(3){
         padding-bottom: 50px;
+    }
+    body {
+        height: 1800px;
+    }
+}
+@media screen and (max-width: 500px) {
+    body {
+        height: 1900px;
+    }
+}
+@media screen and (max-width: 3200px) {
+    body {
+        height: 2000px;
     }
 }

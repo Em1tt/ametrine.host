@@ -63,7 +63,7 @@
                 <div class="dropdown-content">
                     <a href="https://google.com">Write an E-Mail</a>
                     <a href="#">Create a ticket</a>
-                    <a href="./redirect.html?url=https://discord.gg/kavXaFt8CK">Join our Discord</a>
+                    <a href="./redirect?url=https://discord.gg/kavXaFt8CK">Join our Discord</a>
                     <a href="#">Knowledgebase</a>
                 </div>
             </div>
