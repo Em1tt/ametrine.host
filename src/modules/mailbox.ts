@@ -7,34 +7,42 @@ import config from "../config.json";
 
 const limit = 200;
 
+export const mailbox = {
+  receiveMail: (p, session, callback) => {
+    if (!config.mail.mails.includes(p.to.text.trim())) return errorHandler(510, callback);
+    util.mailLog(`Received E-Mail from "${p.from.text}"`);
+    const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a.content)}\n`;
+    fs.mkdir(`./data/mail/${p.to.text}`, (err): void => {
+      if (err && !fs.existsSync(`./data/mail/${p.to.text}`)) return console.error(err);
+    });
+    setTimeout(() => {
+      fs.mkdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err): void => {
+        if (err && !fs.existsSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`)) return console.error(err);
+      });
+    }, 1000);
+    setTimeout(() => {
+      fs.readdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err, files) => {
+        if (files.length > limit) return errorHandler(422, callback);
+        fs.writeFile(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}/${p.from.text.split("@")[0]}-${files.length}`, mail, (err): void => {
+          if (err) console.log(err);
+        });
+      });
+    }, 2000);
+    callback();    
+  }
+}
+
 const server: SMTPServer = new SMTPServer({
   onData(stream, session, callback) {
     simpleParser(stream, {}, (e, p) => {
       if (e) return util.mailLog(`err: ${e}`);
-      if (!config.mail.mails.includes(p.to.text.trim())) return errorHandler(510, callback);
-      util.mailLog(`Received E-Mail from "${p.from.text}"`);
-      const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a.content)}\n`;
-      fs.mkdir(`./data/mail/${p.to.text}`, (err): void => {
-        if (err && !fs.existsSync(`./data/mail/${p.to.text}`)) return console.error(err);
-      });
-      setTimeout(() => {
-        fs.mkdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err): void => {
-          if (err && !fs.existsSync(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`)) return console.error(err);
-        });
-      }, 1000);
-      setTimeout(() => {
-        fs.readdir(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}`, (err, files) => {
-          if (files.length > limit) return errorHandler(422, callback);
-          fs.writeFile(`./data/mail/${p.to.text}/${p.date.toDateString().replace(new RegExp(":", "g"), ".").replace(" ", "-")}/${p.from.text.split("@")[0]}-${files.length}`, mail, (err): void => {
-            if (err) console.log(err);
-          });
-        });
-      }, 2000);
-      callback();
+      return mailbox.receiveMail(p, session, callback);
     })
   },
   disabledCommands: ["AUTH"]
 });
+
+// server.listen keeps crashing with my firewall saying I cant run port 25, if you're facing the same issue, comment out server.listen
 
 server.listen(config.mail.port, "0.0.0.0", () => util.mailLog("server started"));
 
