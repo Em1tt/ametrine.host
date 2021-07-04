@@ -1,4 +1,4 @@
-// mail server
+// mail box
 import { SMTPServer } from "smtp-server";
 import { simpleParser } from "mailparser";
 import { util } from "../util";
@@ -29,22 +29,9 @@ export const mailbox = {
       });
     }, 2000);
     callback();    
-  }
-}
-
-const server: SMTPServer = new SMTPServer({
-  onData(stream, session, callback) {
-    simpleParser(stream, {}, (e, p) => {
-      if (e) return util.mailLog(`err: ${e}`);
-      return mailbox.receiveMail(p, session, callback);
-    })
   },
-  disabledCommands: ["AUTH"]
-});
-
-// server.listen keeps crashing with my firewall saying I cant run port 25, if you're facing the same issue, comment out server.listen
-
-server.listen(config.mail.port, "0.0.0.0", () => util.mailLog("server started"));
+}
+// Port 25 already in use probably happens because im importing from src/modules/api/mail.ts
 
 function errorHandler(code: number, callback): void {
   switch (code) {
