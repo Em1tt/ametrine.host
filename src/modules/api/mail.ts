@@ -14,7 +14,7 @@ const settings = {
 }
 // Values taken from mail.eta
 
-const emailRegex = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/g
+const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 // Also copying and pasting from src/modules/mailbox.ts.
 export const prop = {
@@ -27,14 +27,17 @@ export const prop = {
         if (typeof userData != "object") return res.sendStatus(userData);
         if (!permissions.hasPermission(userData['permission_id'], `/mail`)) return res.sendStatus(403); // If you want anyone to be able to use the mail, comment this out.
         const { subject, content, email } = req.body;
+        if ([subject, content, email].includes(undefined)) return res.status(406)
+                                                                     .send("Please enter in an Email, Subject, and Content");
+
         // May need to implement an email check to make sure the email is actually valid, for now I'll use a regex check from https://www.emailregex.com/ to determine if its the right email format. May not be a good way to check if the email is valid though.
-        if (!emailRegex.test(email)) return res.status(405).send("Invalid Email.")
+        if (!emailRegex.test(email.toLowerCase())) return res.status(405).send("Invalid Email.")
         const stream = {
             to: {
                 text: "support@amethyst.host"
             },
             from: {
-                text: email
+                text: email.toLowerCase()
             },
             subject: subject,
             text: content,
