@@ -108,6 +108,7 @@
     <h2>Send us an E-Mail and we'll get back to you soon!</h2>
     </header>
     <main>
+        <p id="mailError"></p>
         <form id="mailer">
             <input type="email" placeholder="Your E-Mail" name="email" id="mailEmail">
             <input type="text" placeholder="Subject" maxlength="50" name="subject" id="mailSubject">

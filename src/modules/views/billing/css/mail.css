@@ -9,6 +9,7 @@
     /*Text Color*/
     --nav-text: #b6b6b6;
     --nav-text-hover: #ececec;
+    --main-p: #cc379d;
     /*Header*/
     --nav-header-text-gradient: -webkit-linear-gradient(0deg, #3a3c49 25%, #1b1c23 75%);
     --nav-header-arrow: white;
@@ -182,6 +183,11 @@ main textarea:focus::placeholder {
 
 main input:focus::placeholder {
     color: var(--placeholder-focus-color);
+}
+
+main p{
+    margin-inline: 11rem;
+    color: var(--main-p);
 }
 
 @media only screen and (max-width: 600px) {

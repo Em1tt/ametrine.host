@@ -225,7 +225,7 @@
         </form>
     </div>
     <div class="supportPopup" id="supportPopup">
-        <a href="#"><i class="fa fa-at"></i><br>Write an E-Mail</a>
+        <a href="./mail"><i class="fa fa-at"></i><br>Write an E-Mail</a>
         <a href="#"><i class="fa fa-ticket-alt"></i><br>Create a ticket</a>
         <a href="https://discord.gg/d4DQKXd7qX" target="_blank" rel="noopener"><i class="fab fa-discord"></i><br>Join our Discord</a>
     </div>
