@@ -135,7 +135,7 @@
                         <a class="accountSettings" href="#">Enable 2-FA</a>
                         <a class="accountSettings" href="#">Manage Payment options</a>
                         <hr>
-                        <a class="accountSettings" href="#">Log Out</a>
+                        <a class="accountSettings" id="logOutButton" href="#">Log Out</a>
                         <p class="clientID">Client ID: <%=it.id%>
                         </p>
                     </div>

@@ -15,7 +15,7 @@ const loginUser = async (user) => {
                 errorText = "Email or Password is incorrect."
                 break;
             case "Error: Request failed with status code 404":
-                errorText = "User not found.";    
+                errorText = "User not found.";
                 break;
         }
         loginError.innerHTML = `${exclamationCircle} ${errorText}`;
@@ -37,7 +37,7 @@ const registerUser = async (user) => {
                 errorText = "Password must not be less than 6 characters."
                 break;
             case "Error: Request failed with status code 409":
-                errorText = "The email you provided has already been used!";    
+                errorText = "The email you provided has already been used!";
                 break;
         }
         regError.innerHTML = `${exclamationCircle} Error: ${errorText}`;
@@ -45,9 +45,26 @@ const registerUser = async (user) => {
     }
 }
 
+const logOut = async () => {
+    const url = "/api/auth"
+    try {
+        document.cookie = 'jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        localStorage.removeItem('jwt')
+        sessionStorage.removeItem('jwt')
+        const response = await axios.post(url);
+        console.log(response)
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 function onLoad() {
     const loginForm = document.querySelector("#loginForm");
     const registerForm = document.querySelector('#registerForm')
+    const logOutButton = document.querySelector('#logOutButton')
     loginForm.addEventListener('submit', event => {
         event.preventDefault();
         const email = loginForm.querySelector('div > #login-email').value;
@@ -72,4 +89,12 @@ function onLoad() {
             password,
         });
     });
+    try {
+        logOutButton.addEventListener('click', event => {
+            event.preventDefault();
+            logOut();
+        })
+    } catch (e) {
+        e;
+    }
 }

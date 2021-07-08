@@ -117,15 +117,27 @@ export const auth = {
     },
     discord: async (data) => { // Authenticating with Discord
 
+    },
+    deleteSession: async (req: express.Request, res: express.Response) => {
+        if (req.cookies.jwt) {
+            const verifyToken = await auth.verifyToken(req, res, false, false)
+            if (verifyToken && verifyToken["accessToken"]) {
+                return sql.db.prepare('DELETE FROM sessions WHERE user_id = ?').run(verifyToken.user_id);
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
-
 export const prop = {
     name: "auth",
     desc: "Authenticates a user (Logging in)",
     run: async (req: express.Request, res: express.Response) => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
+        if(!req.cookies.jwt){
         const { email, password, rememberMe } = req.body;
         if ([email, password].includes(undefined)) return res.status(406)
                                                                     .send("Please enter in an Email, and Password.");
@@ -136,5 +148,8 @@ export const prop = {
         if (loginToken == 403) return res.sendStatus(403);
         auth.setCookie(req, res, loginToken.accessToken, loginToken.expiresIn);
         res.json(loginToken)
+        }else{
+            auth.deleteSession(req, res);
+        }
     }
 }
