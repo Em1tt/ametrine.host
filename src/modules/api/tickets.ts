@@ -55,7 +55,12 @@ export const prop = {
         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405) // If the request isn't included from allowed methods, then respond with Method not Allowed.
-        const userData = await auth.verifyToken(req, res, false, false) //true
+        let userData = await auth.verifyToken(req, res, false, "both") //true
+        if (userData == 101) {
+            const newAccessToken = await auth.regenAccessToken(req, res);
+            if (typeof newAccessToken != "string") return false;
+            userData = await auth.verifyToken(req, res, false, "both")
+        }
         if (typeof userData != "object") return res.sendStatus(userData);
         const timestamp = Date.now();
         let paramName = params[0]

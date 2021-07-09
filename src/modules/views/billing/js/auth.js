@@ -19,6 +19,9 @@ const loginUser = async (user) => {
                 break;
         }
         loginError.innerHTML = `${exclamationCircle} ${errorText}`;
+        setTimeout(function() {
+            loginError.innerHTML = ''
+        }, 3000)
         console.error(e);
     }
 }
@@ -41,21 +44,31 @@ const registerUser = async (user) => {
                 break;
         }
         regError.innerHTML = `${exclamationCircle} Error: ${errorText}`;
+        setTimeout(function() {
+            regError.innerHTML = ''
+        }, 3000)
         console.error(e);
     }
 }
 
 const logOut = async () => {
-    const url = "/api/auth"
+    const url = "/api/user/logout"
     try {
-        document.cookie = 'jwt=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        localStorage.removeItem('jwt')
-        sessionStorage.removeItem('jwt')
         const response = await axios.post(url);
         console.log(response)
-        setTimeout(() => {
-            location.reload();
-        }, 1000);
+        window.scrollTo(0,0) // So users wont have to scroll back up, you can remove this if you want to.
+        location.reload();
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+const updateUser = async (user) => {
+    const url = "/api/user"
+    try {
+        const response = await axios.put(url, user);
+        console.log(response)
+        if (response.status == 200) location.reload();
     } catch (e) {
         console.log(e);
     }
@@ -63,8 +76,9 @@ const logOut = async () => {
 
 function onLoad() {
     const loginForm = document.querySelector("#loginForm");
-    const registerForm = document.querySelector('#registerForm')
-    const logOutButton = document.querySelector('#logOutButton')
+    const registerForm = document.querySelector('#registerForm');
+    const updateForm = document.querySelector('#updateForm');
+    const logOutButton = document.querySelector('#logOutButton');
     loginForm.addEventListener('submit', event => {
         event.preventDefault();
         const email = loginForm.querySelector('div > #login-email').value;
@@ -87,6 +101,15 @@ function onLoad() {
             name,
             email,
             password,
+        });
+    });
+    updateForm.addEventListener('submit', event => {
+        event.preventDefault();
+        const name = updateForm.querySelector('#main-full-name').value;
+        const email = updateForm.querySelector('#main-email').value;
+        updateUser({
+            name,
+            email,
         });
     });
     try {
