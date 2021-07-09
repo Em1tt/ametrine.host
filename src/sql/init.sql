@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS invoices (
 CREATE TABLE IF NOT EXISTS sessions (
   session_id  INTEGER   NOT NULL PRIMARY KEY, -- Session ID
   user_id     INTEGER   NOT NULL,             -- User ID
-  jwt         TEXT      NOT NULL,             -- JWT token
+  jwt         TEXT      NOT NULL,             -- JWT token (Refresh Token)
   createdIn   TIMESTAMP NOT NULL,             -- When the Token was created
   expiresIn   TIMESTAMP NOT NULL,             -- When the token expires
   ip          TEXT      NOT NULL,             -- Remote Address

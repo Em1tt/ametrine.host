@@ -2,9 +2,7 @@
  * API for creating an account on Amethyst.host
  */
 import express                 from 'express';
-import argon2, { argon2id }    from 'argon2'
 import { sql }                 from '../sql';
-import { randomBytes }         from 'crypto';
 import { auth }                from './auth';
 
 export const prop = {
@@ -20,19 +18,12 @@ export const prop = {
                                        .pluck().get(email); // Checks if the user exists.
         if (userExists) return res.status(409)
                                   .send("409 Existing Email Exists (Conflict)."); // User exists
-        
-        
 
-        const MIN_PASS_LENGTH = 6; // Minimum password length
-        const SECRET_LENGTH = 32
-
-        if (MIN_PASS_LENGTH > password.length) return res.status(406)
-                                                         .send("Password must not be less than 6 characters."); // User exists
-        const userSalt = randomBytes(SECRET_LENGTH);
-        const salt = Buffer.alloc((process.env.SALT.length * 2) - 1, process.env.SALT)
-        const hashedPass = await argon2.hash(password, {type: argon2id, salt: salt, secret: userSalt});
+        const passResult = await auth.setPassword(password);
+        if (passResult.result && passResult.result == 406) return res.status(406)
+                                                                     .send("Password must not be less than 6 characters.");
         const registeredAt = Date.now()
-        await sql.db.prepare('INSERT INTO users (registered, name, email, password, salt) VALUES (?, ?, ?, ?, ?)').run(registeredAt, name, email, hashedPass, userSalt.toString('hex'))
+        await sql.db.prepare('INSERT INTO users (registered, name, email, password, salt) VALUES (?, ?, ?, ?, ?)').run(registeredAt, name, email, passResult.password, passResult.salt)
         const account = await sql.db.prepare('SELECT * FROM users WHERE email = ? AND name = ? AND registered = ?').get(email, name, registeredAt);
         const loginToken = await auth.login(req, res, account, false);
         if (loginToken == 403) return res.sendStatus(403);

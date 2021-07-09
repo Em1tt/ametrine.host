@@ -23,7 +23,12 @@ export const prop = {
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't a POST request, then respond with Method not Allowed.
-        const userData = await auth.verifyToken(req, res, false, false);
+        let userData = await auth.verifyToken(req, res, false, "both");
+        if (userData == 101) {
+            const newAccessToken = await auth.regenAccessToken(req, res);
+            if (typeof newAccessToken != "string") return false;
+            userData = await auth.verifyToken(req, res, false, "both")
+        }
         if (typeof userData != "object") return res.sendStatus(userData);
         if (!permissions.hasPermission(userData['permission_id'], `/mail`)) return res.sendStatus(403); // If you want anyone to be able to use the mail, comment this out.
         const { subject, content, email } = req.body;

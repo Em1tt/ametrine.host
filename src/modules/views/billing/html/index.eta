@@ -114,7 +114,7 @@
             <div>
                 <button class=" collapsible">Account Details & Options</button>
                 <div class="content">
-                    <form>
+                    <form id="updateForm">
                         <fieldset>
                             <label for="main-full-name">Full Name</label>
                             <input spellcheck="false" type="text" name="main-full-name" id="main-full-name"

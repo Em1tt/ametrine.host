@@ -51,7 +51,8 @@ app.use(
         "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"]
       }
-    }
+    },
+    xssFilter: true
   }
 ));
 
