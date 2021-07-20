@@ -44,7 +44,7 @@
     <body>
         <nav>
             <div>
-                <a href="./index"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
+                <a href="./index"><img alt="" src="../images/webp/Ametrine.webp" height="50px"
                         width="50px"><span>Amethyst.host</span></a>
             </div>
             <div>
@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div>
-                <a href="#"><i class="fa fa-users"></i> <span>Client Area</span></a>
+                <a href="../billing/"><i class="fa fa-users"></i> <span>Client Area</span></a>
             </div>
         </nav>
         <div id="particles-js"></div>

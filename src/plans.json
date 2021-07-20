@@ -1,0 +1,71 @@
+{
+    "vps": {
+        "description": "High Performance Shared KVM VPS Hosting - Using AMD Ryzen 5 3600 & 100% NVMe Storage",
+        "0": {
+            "name": "VPS-NVME XS",
+            "price": 3.00,
+            "setupFee": 0,
+            "recurring": 3.00,
+            "instantSetup": true,
+            "refund": {
+                "enabled": true,
+                "days": 14
+            },
+            "includes": [
+                "1 CPU Core",
+                "4GB DDR4 RAM",
+                "60GB NVMe Storage",
+                "Unlimited Bandwidth",
+                "1 Snapshot",
+                "Basic DDOS protection"
+            ],
+            "locations": [
+                {
+                    "name": "Germany",
+                    "price": 0.00
+                },
+                {
+                    "name": "Canada",
+                    "price": 3
+                }
+            ],
+            "os": [
+                {
+                "name":"Ubuntu-20.04-x86_64",
+                "price": 0
+                },
+                {
+                    "name":"Ubuntu-18.04-x86_64",
+                    "price": 0
+                },
+                {
+                    "name":"Debian-10-x86_64",
+                    "price": 0
+                },
+                {
+                    "name":"CentOS-7.6-x86_64",
+                    "price": 0
+                },
+                {
+                    "name":"CentOS-8-x86_64",
+                    "price": 0
+                }
+            ],
+            "addOns": [
+                {
+                    "name": "Dedicated IP",
+                    "choices": [
+                        {
+                            "name": "shared IP",
+                            "price": 0
+                        },
+                        {
+                            "name": "dedicated IP",
+                            "price": 0.84
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

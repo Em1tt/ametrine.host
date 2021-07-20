@@ -296,7 +296,7 @@ form>a {
     top: -1000;
     left: -1000;
 }
-.supportPopup{
+.popup{
     position: fixed;
     width: 20rem;
     background-color: var(--support-bg);
@@ -312,7 +312,10 @@ form>a {
     box-shadow: var(--support-shadow);
     transition: var(--support-deactivate-transition) !important;
 }
-.supportPopup > a {
+.popup div{
+    width: 100%;
+}
+.popup  a {
     width: 100%;
     height: 33.33%;
     min-height: 240px;
@@ -326,26 +329,31 @@ form>a {
     text-decoration: none;
     border-top: var(--support-border);
 }
-.supportPopup > a:nth-of-type(1) {
+.popup  a:nth-of-type(1) {
     border-top: none;
 }
-.supportPopup > a:hover {
+.popup  a:hover {
 background-color: var(--support-secondary);
 }
-.supportPopup > a > i {
+.popup  a > i {
     font-size: 2rem;
     color: var(--support-icon);
 }
 
-.support-activated{
+.popup-activated{
     right: 0 !important;
     transition: var(--support-activate-transition) !important;
+}
+
+.pricing{
+    line-height: 40px;
+    color: gray;
 }
 
 /* Small screens */
 
 @media only screen and (max-width: 600px) {
-    .supportPopup > a:last-of-type {
+    .popup  a:last-of-type {
         margin-bottom: 50px;
     }
     #forms {
@@ -402,7 +410,7 @@ background-color: var(--support-secondary);
         right: 0px;
         transition: var(--form-underline-deactivate-transition);
     }
-    .supportPopup{
+    .popup{
         width: 100%;
         right: -100%;
     }

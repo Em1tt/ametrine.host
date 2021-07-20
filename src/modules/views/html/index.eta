@@ -3,7 +3,7 @@
 
 <head>
     <!-- Set the title of the html -->
-    <title>Amethyst.host</title>
+    <title>Ametrine.host</title>
     <!-- Set the favicon -->
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <!-- Meta tags -->
@@ -48,8 +48,8 @@
     <div></div>
     <nav>
         <div>
-            <a href="#"><img alt="" src="../images/webp/ACLogo2.webp" height="50px"
-                    width="50px"><span>Amethyst.host</span></a>
+            <a href="#"><img alt="" src="../images/webp/Ametrine.webp" height="50px"
+                    width="50px"><span>Ametrine.host</span></a>
         </div>
         <div>
             <div class="dropdown">
@@ -78,14 +78,14 @@
             </div>
         </div>
         <div>
-            <a href="#"><i class="fa fa-users"></i> <span>Client Area</span></a>
+            <a href="../billing/"><i class="fa fa-users"></i> <span>Client Area</span></a>
         </div>
     </nav>
     <button aria-label="Go to top" class="back-to-top" onclick="topFunction()"><i
             class="fa fa-arrow-circle-up"></i></button>
     <header>
         <div>
-            <h1>Amethyst.host</h1>
+            <h1>Ametrine.host</h1>
             <h2><i>Industry standard hosting solutions at affordable prices.</i></h2>
             <a aria-label="Go to main content" href="#main"><i class="fa fa-arrow-down"></i></a>
         </div>
@@ -100,7 +100,7 @@
         </div>
         <div class="text animation-element">
             <h2>Dream big - let us handle the rest</h2>
-            <p>Our Minecraft hosting plans starting at <b>€0.75/GB</b> have you covered. All our servers have guaranteed
+            <p>Our VPS hosting plans starting at <b>€0.80/GB</b> have you covered. All our servers have guaranteed
                 <b>100% uptime</b>, covered by our <a href="#">SLA.</a>
             </p>
             <a href="#">Compare our plans</a>

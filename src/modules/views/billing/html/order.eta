@@ -5,7 +5,7 @@
     <!-- Set the title of the html -->
     <title>Ametrine.host | Billing</title>
     <!-- Set the favicon -->
-    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
     <!-- Meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -37,12 +37,12 @@
         rel="stylesheet">
     <link href="./css/shared.css" rel="stylesheet">
     <link href="./css/index.css" rel="stylesheet">
+    <link href="./css/order.css" rel="stylesheet">
     <script defer src="./js/theme.js"></script>
     <script src="./js/auth.js"></script>
 </head>
 
-<body onload="onLoad()">
-    <p class="announcement">We are not accepting orders yet! We're still heavy in development. Est. release date is September</p>
+<body onload="onLoad(); updatePrice()">
     <nav class="navbar">
         <ul class="navbar-nav">
             <li class="logo">
@@ -103,85 +103,83 @@
         </ul>
     </nav>
     <header>
-        <h1>Welcome<%= (!it.name.length) ? "" : ` back, ${it.name[0]}` %>!</h1>
+        <h1>Order - <%=it.details.name%></h1>
         <hr>
-        <h2>
-            <%= (!it.name.length) ? "Please log-in or create an account to view your account information" : `You have 0
-                new notifications.`%>
-        </h2>
+        <h2><%=it.details.includes.map(i => ` ${i}`)%></h2>
     </header>
     <main>
-        <% if(it.name.length){ %>
-            <div>
-                <button class=" collapsible">Account Details & Options</button>
-                <div class="content">
-                    <form autocomplete="on" id="updateForm">
-                        <fieldset>
-                            <label for="main-full-name">Full Name<span class="tooltip">?<span class="tooltiptext">Used to apply your full name to invoices.</span></label>
-                            <input spellcheck="false" type="text" name="main-full-name" id="main-full-name"
-                                placeholder="Full Name" value="<%= it.name.join(' ') %>">
-                        </fieldset>
-                        <fieldset>
-                            <label for="main-email">E-Mail<span class="tooltip">?<span class="tooltiptext">Used to sign-in. You'll also receive invoices & other notifications to this E-Mail.</span></label>
-                            <input autocomplete="username" spellcheck="false" type="text" name="main-email" id="main-email" placeholder="E-Mail"
-                                value="<%= it.email %>">
-                        </fieldset>
-                        <fieldset>
-                            <input type="submit" value="Update Information">
-                        </fieldset>
-                    </form>
+        <div>
+            <form>
+                <p>Additional Options</p>
+                <fieldset>
+                <label for="location">Location<span class="tooltip">?<span class="tooltiptext">Choose the location that's the closest to you or the place you wish to operate in.</span></span></label>
+                <select id="location" name="location" onchange="updatePrice()">
+                    <% it.details.locations.forEach((location) => {%>
+                        <option id="<%=location.name%>" value="<%=location.price%>"><%= `${location.name} ${location.price != 0 ? `(+€${location.price}/Mo.)` : ""}` %></option>
+                    <%})%>
+                </select>
+                <%if(it.item == "vps"){%>
+                <label for="os">Operating System</label>
+                <select id="os" name="os" onchange="updatePrice()">
+                    <% it.details.os.forEach((os) => {%>
+                        <option id="<%=os.name%>" value="<%=os.price%>"><%= `${os.name} ${os.price != 0 ? `(+€${os.price}/Mo.)` : ""}` %></option>
+                    <%})%>
+                </select>
+                <br>
+                <label>VPS Password</label><br>
+                <input type="password" id="vpsPassword" placeholder="Password"><br>
+                <input type="password" id="vpsPasswordConfirm" placeholder="Confirm Password">
+                <%}%>
+                <label for="location">Billing Cycle<span class="tooltip">?<span class="tooltiptext">How often should we bill you?</span></span></label>
+                <select id="cycle" name="cycle" onchange="updatePrice()">
+                        <option id="monthly" value="1">Monthly</option>
+                        <option id="quarterly" value="3">Quarterly (3 Months)</option>
+                        <option id="semiannually" value="6">Semi-Annually (6 Months)</option>
+                        <option id="annually" value="12">Annually (12 Months)</option>
+                </select>
+                                <%if(it.details.addOns.length > 0){%>
+                <hr>
+                <p>Addons</p>
+                <%it.details.addOns.forEach(addon => {%>
+                    <select class="addon" id="<%=addon.name%>" onchange="updatePrice()">
+                        <% addon.choices.forEach(choice => { %>
+                            <option id="<%=choice.name%>" value="<%=choice.price%>"><%= `${choice.name} ${choice.price != 0 ? `(+€${choice.price}/Mo.)` : ""}` %></option>})
+                        <%})%>
+                    </select>
+                <%})%>
+                <%}%>
+                </fieldset>
+                <p class="errorMessage" id="errorMessage"></p>
+            </form>
+        </div>
+        <div>
+            <form>
+            <p>Coupons & Checkout</p>
+                <fieldset class="coupon">
+                    <label>Coupon code<span class="tooltip">?<span class="tooltiptext">Apply discount codes to get even better deals!</span></span></label>
                     <div>
-                        <p class="more">More Options</p>
-                        <a class="accountSettings" href="#">Change Password</a>
-                        <a class="accountSettings" href="#">Enable 2-FA</a>
-                        <a class="accountSettings" href="#">Manage Payment options</a>
-                        <hr>
-                        <a class="accountSettings" id="logOutButton" href="#">Log Out</a>
-                        <p class="clientID">Client ID: <%=it.id%>
-                        </p>
+                        <input id="couponcode" type="text" placeholder="Coupon code">
+                        <input id="couponsubmit" type="submit" value="Submit">
                     </div>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Services</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Transactions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Sessions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <% } %>
+                </fieldset>
+                <p class="price">Due Today: €<span class="fullPrice"><%=it.details.price%></span></p>
+                <p class="tax">Tax calculated at checkout*</p>
+                <span style="visibility:hidden;"class="beginningPrice"><%=it.details.price%></span>
+                <a id="checkout">Checkout with Stripe</a>
+            </form>
+        </div>
     </main>
 
     <div id="forms">
         <h2 id="form-header"><i class="fa fa-lock"></i> Secure Login</h2>
-        <form autocomplete="on" id="loginForm">
+        <form id="loginForm">
             <fieldset id="login">
                 <div>
-                    <input autocomplete="username" type="email" required id="login-email" placeholder="Email"><i class="fa fa-at"></i><span
+                    <input type="email" required id="login-email" placeholder="Email"><i class="fa fa-at"></i><span
                         class="underline-element"></span>
                 </div>
                 <div>
-                    <input autocomplete="current-password" type="password" required id="login-password" placeholder="Password"><i
+                    <input type="password" required id="login-password" placeholder="Password"><i
                         class="fa fa-lock"></i><span class="underline-element"></span>
                 </div>
                 <div class="checkboxwrap">
@@ -193,22 +191,22 @@
                 <input type="submit" value="Login">
             </fieldset>
         </form>
-        <form autocomplete="on" id="registerForm">
+        <form id="registerForm">
             <fieldset id="register" disabled="true">
                 <div>
                     <input type="text" required id="register-fullname" placeholder="Full Name"><i
                         class="fa fa-user"></i><span class="underline-element"></span>
                 </div>
                 <div>
-                    <input autocomplete="username" type="email" required id="register-email" placeholder="Email"><i class="fa fa-at"></i><span
+                    <input type="email" required id="register-email" placeholder="Email"><i class="fa fa-at"></i><span
                         class="underline-element"></span>
                 </div>
                 <div>
-                    <input autocomplete="new-password" type="password" required id="register-password" placeholder="Password"><i
+                    <input type="password" required id="register-password" placeholder="Password"><i
                         class="fa fa-lock"></i><span class="underline-element"></span>
                 </div>
                 <div>
-                    <input autocomplete="new-password" type="password" required id="register-confirm-password" placeholder="Confirm Password"><i
+                    <input type="password" required id="register-confirm-password" placeholder="Confirm Password"><i
                         class="fa fa-lock"></i><span class="underline-element"></span>
                 </div>
                 <div class="checkboxwrap">
@@ -232,14 +230,13 @@
     </div>
     <div class="popup orderPopup" id="orderPopup">
         <div>
-            <a href="./vps">Virtual Private Servers<br><span class="pricing">€0.75/GB RAM</span></a>
+            <a href="./vps">Virtual Private Servers<br><span class="viewPlans">View plans</span></a>
         </div>
     </div>
                 <div class="passwordPopup passwordPopup-Hidden">
                 <p>Please type in your password to save the changes</p>
-                <form autocomplete="on">
-                    <input hidden="true" autocomplete="username" value="<%= it.email %>" type="text" placeholder="Email">
-                    <input autocomplete="current-password" type="password" placeholder="Password">
+                <form>
+                    <input type="password" placeholder="Password">
                     <br>
                     <input type="submit" value="Submit">
                 </form>
@@ -251,6 +248,7 @@
     <%}%>
     <script src="./js/collapsibles.js"></script>
     <script src="./js/popups.js"></script>
+    <script src="./js/updatePrice.js"></script>
 </body>
-
+<%console.log(it.details)%>
 </html>

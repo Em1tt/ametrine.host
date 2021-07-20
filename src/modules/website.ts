@@ -11,6 +11,7 @@ import helmet       from "helmet"
 import bodyParser   from "body-parser"
 import cookieParser from "cookie-parser"
 import { auth }     from "./api/auth"
+import * as plans from "../plans.json"
 //import cors       from "cors"
 
 const app : express.Application = express();
@@ -101,6 +102,45 @@ app.get("/billing", (r: express.Request, s: express.Response) => {
     id: (userData) ? userData["user_id"] : ``
   });
 });
+
+app.get("/billing/order", (r: express.Request, s: express.Response) => {
+  //console.log(r);
+  const file = `${billing}/order.eta`;
+
+  if (!fs.existsSync(file)) return s.status(404)
+                                    .send("if you were searching for a 404.. you found it!!");
+  let id = r.query?.id?.toString(); //Optional chaining. Thank you ECMA!
+  let item = r.query?.type?.toString();
+  if(!id){
+    id = "0"
+  }
+  if(!item){
+    id = "vps"
+  }
+  let details = plans?.[item]?.[id];
+  if(!details){ //Default values so the backend doesn't shit itself when someone forges queries
+      id = "0";
+      item = "vps";
+      details = plans[item][id];
+  }
+    const desc = plans[item].description;
+    console.log(details);
+    const userData = s.locals.userData;
+  s.render(file, {
+    details: details,
+    item: item,
+    itemid: id,
+    description: desc,
+    state: (userData) ? ` Manage Account` : " Log-in",
+    name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
+    email: (userData && userData["email"]) ? userData["email"] : "",
+    icon: (userData) ? 'fa fa-bars' : 'fa fa-users',
+    id: (userData) ? userData["user_id"] : ``
+  });
+});
+
+
+
 app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   const file = `${billing}/${r.params.name}.eta`;
 

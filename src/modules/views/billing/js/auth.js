@@ -103,6 +103,7 @@ function onLoad() {
             password,
         });
     });
+    try{
     updateForm.addEventListener('submit', event => {
         event.preventDefault();
         const name = updateForm.querySelector('#main-full-name').value;
@@ -112,12 +113,20 @@ function onLoad() {
             email,
         });
     });
+    }catch(e){
+        e;
+    }
     try {
         logOutButton.addEventListener('click', event => {
             event.preventDefault();
             logOut();
         })
     } catch (e) {
+        e;
+    }
+    try{
+        prepareOrderButtons();
+    }catch(e){
         e;
     }
 }

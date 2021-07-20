@@ -284,6 +284,79 @@ main {
     background: var(--acc-bg-color-hover);
 }
 
+.passwordPopup-Hidden{
+    display: none !important;
+}
+
+.passwordPopup{
+    position: fixed;
+    margin: auto;
+    width: 600px;
+    top: 50%;
+    background: #2b2c38;
+    display: grid;
+    place-items: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+}
+.passwordPopup p{
+    color: #dce0ff;
+    font-size: 1.25rem;
+}
+.passwordPopup form{
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 50%;
+}
+.passwordPopup form input{
+    width: 100%;
+    border: none;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+.passwordPopup form input[type="password"]{
+    width: 94%;
+    padding: 10px !important;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+    margin-left: 10px;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+   
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+  }
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
+.announcement{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: yellow;
+    color: black;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
 /* Small screens */
 
 @media only screen and (max-width: 600px) {

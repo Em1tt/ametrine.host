@@ -1,0 +1,86 @@
+body {
+    background: var(--body-bg);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+header h1{
+    background: -webkit-linear-gradient(135deg, #cc379d 75%, #e7894a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+main{
+    margin-inline: 8rem;
+    width: 90%;
+}
+main div{
+    display: flex;
+    flex-flow: row wrap;
+}
+main div div hr{
+    width: 80%;
+    border: solid 1px #3a3c49;
+}
+main div div{
+    display: inherit;
+    flex-flow: column nowrap;
+    padding: 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    width: 200px;
+    margin: 15px;
+}
+main div div ul{
+    list-style: none;
+    padding-inline: 0;
+}
+main div div h3{
+    background: -webkit-linear-gradient(135deg, #cc379d, #e7894a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+main div div li{
+    color: #dce0ff;
+    font-size: 1.1rem;
+    line-height: 25px;
+}
+main div div p{
+    color: #acafc5;
+    font-size: 1.1rem;
+}
+main div div p span{
+    background: -webkit-linear-gradient(135deg, #cc379d, #e7894a);
+    font-size: 1.25rem;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+main div div a{
+    padding: 10px;
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+    background-color: #cc379d;
+}
+main div div a:hover{
+    background-color: #e7894a;
+}
+
+.orderButton{
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px){
+    main{
+        margin-inline: 1rem;
+        width: 90%;
+    }
+    main div div{
+        width: 100%;
+    }
+    main div div:last-of-type{
+        margin-bottom: 100px;
+    }
+}

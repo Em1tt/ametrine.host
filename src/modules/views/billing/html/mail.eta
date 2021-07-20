@@ -47,13 +47,13 @@
         <ul class="navbar-nav">
             <li class="logo">
                 <a href="./" class="nav-link">
-                    <span aria-hidden="true" class="link-text logo-text">Amethyst.host</span>
+                    <span aria-hidden="true" class="link-text logo-text">Ametrine.host</span>
                     <i class="fa fa-angle-double-right"></i>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="#" aria-label="Order" class="nav-link">
+                <a href="#" id="order" aria-label="Order" class="nav-link">
                     <i class="fa fa-shopping-cart"></i>
                     <span aria-hidden="true" class="link-text">Order</span>
                 </a>
@@ -170,17 +170,21 @@
             <a id="register-button" class="no-acc-a">Register now</a>
         </form>
     </div>
-    <div class="supportPopup" id="supportPopup">
+    <div class="popup supportPopup" id="supportPopup">
         <a href="#"><i class="fa fa-at"></i><br>Write an E-Mail</a>
         <a href="#"><i class="fa fa-ticket-alt"></i><br>Create a ticket</a>
         <a href="https://discord.gg/d4DQKXd7qX" target="_blank" rel="noopener"><i class="fab fa-discord"></i><br>Join our Discord</a>
     </div>
+        <div class="popup orderPopup" id="orderPopup">
+        <div>
+            <a href="./vps">Virtual Private Servers<br><span class="pricing">€0.75/GB RAM</span></a>
+        </div>
     <% if(it.name){%>
         <script src="./js/redirect.js"></script>
     <% }else{%>
         <script src="./js/logreg.js"></script>
     <%}%>
-    <script src="./js/support.js"></script>
+    <script src="./js/popups.js"></script>
 </body>
 
 </html>
