@@ -1,9 +1,12 @@
-let priceTag = document.querySelector(".fullPrice"),
+let priceTag = document.querySelectorAll(".fullPrice"),
     beginningPrice = document.querySelector(".beginningPrice"),
     locations = document.querySelector("#location"),
     oss = document.querySelector("#os"),
     cycles = document.querySelector("#cycle"),
-    addons = document.querySelectorAll(".addon");
+    addons = document.querySelectorAll(".addon"),
+    setupPrice = document.querySelector(".setupPrice"),
+    couponFloat = 1,
+    recurringCouponFloat = 1;
 let updatePrice = () => {
     const chosenLocation = locations.options[locations.selectedIndex],
           chosenOS = oss.options[oss.selectedIndex],
@@ -12,9 +15,14 @@ let updatePrice = () => {
     let addonPrice = 0
 
     Array.prototype.forEach.call(addons, (addon) => {
-        console.log(addon);
         addonPrice += addon.options[addon.selectedIndex].value
     })
-    console.log(addonPrice, parseFloat(beginningPrice.innerHTML), parseFloat(chosenLocation.value), parseFloat(chosenOS.value), chosenCycle.value)
-    priceTag.innerHTML = ((parseFloat(beginningPrice.innerHTML) + parseFloat(chosenLocation.value) + parseFloat(chosenOS.value) + parseFloat(addonPrice)) * parseFloat(chosenCycle.value)).toFixed(2);
+    Array.prototype.forEach.call(priceTag, (tag) => {
+        if(tag.classList.contains("recurring")){ //RECURRING
+            tag.innerHTML = (((parseFloat(beginningPrice.innerHTML) + parseFloat(chosenLocation.value) + parseFloat(chosenOS.value) + parseFloat(addonPrice)) * parseFloat(chosenCycle.value)) * recurringCouponFloat).toFixed(2);
+        }else{ //FIRST PAYMENT
+        tag.innerHTML = (((parseFloat(beginningPrice.innerHTML) + parseFloat(chosenLocation.value) + parseFloat(chosenOS.value) + parseFloat(addonPrice)) * parseFloat(chosenCycle.value) + parseFloat(setupPrice.innerHTML)) * couponFloat).toFixed(2);
+        }
+    })
+
 }

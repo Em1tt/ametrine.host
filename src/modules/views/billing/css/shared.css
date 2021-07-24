@@ -94,6 +94,7 @@
     transform: rotate(-180deg);
     transition: var(--nav-transition-speed);
 }
+
 #forms {
     width: 20rem;
     top: 0;
@@ -111,6 +112,7 @@
     overflow-y: auto !important;
     display: flex;
 }
+
 .forms-activated {
     right: 0 !important;
     opacity: 1 !important;
@@ -296,7 +298,8 @@ form>a {
     top: -1000;
     left: -1000;
 }
-.popup{
+
+.popup {
     position: fixed;
     width: 20rem;
     background-color: var(--support-bg);
@@ -312,10 +315,12 @@ form>a {
     box-shadow: var(--support-shadow);
     transition: var(--support-deactivate-transition) !important;
 }
-.popup div{
+
+.popup div {
     width: 100%;
 }
-.popup  a {
+
+.popup a {
     width: 100%;
     height: 33.33%;
     min-height: 240px;
@@ -329,31 +334,104 @@ form>a {
     text-decoration: none;
     border-top: var(--support-border);
 }
-.popup  a:nth-of-type(1) {
+
+.popup a:nth-of-type(1) {
     border-top: none;
 }
-.popup  a:hover {
-background-color: var(--support-secondary);
+
+.popup a:hover {
+    background-color: var(--support-secondary);
 }
-.popup  a > i {
+
+.popup a>i {
     font-size: 2rem;
     color: var(--support-icon);
 }
 
-.popup-activated{
+.popup-activated {
     right: 0 !important;
     transition: var(--support-activate-transition) !important;
 }
 
-.pricing{
+.pricing {
     line-height: 40px;
     color: gray;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+    margin-left: 10px;
+    color: gray;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    font-size: 0.9rem;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 1);
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.passwordPopup-Hidden {
+    display: none !important;
+}
+
+.passwordPopup {
+    position: fixed;
+    margin: auto;
+    width: 600px;
+    top: 50%;
+    background: #2b2c38;
+    display: grid;
+    place-items: center;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.4);
+}
+
+.passwordPopup p {
+    color: #dce0ff;
+    font-size: 1.25rem;
+}
+
+.passwordPopup form {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    width: 50%;
+}
+
+.passwordPopup form input {
+    width: 100%;
+    border: none;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.passwordPopup form input[type="password"] {
+    width: 94%;
+    padding: 10px !important;
 }
 
 /* Small screens */
 
 @media only screen and (max-width: 600px) {
-    .popup  a:last-of-type {
+    .popup a:last-of-type {
         margin-bottom: 50px;
     }
     #forms {
@@ -410,11 +488,12 @@ background-color: var(--support-secondary);
         right: 0px;
         transition: var(--form-underline-deactivate-transition);
     }
-    .popup{
+    .popup {
         width: 100%;
         right: -100%;
     }
 }
+
 /* Large screens */
 
 @media only screen and (min-width: 601px) {

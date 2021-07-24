@@ -43,65 +43,7 @@
 </head>
 
 <body onload="onLoad(); updatePrice()">
-    <nav class="navbar">
-        <ul class="navbar-nav">
-            <li class="logo">
-                <a href="/" class="nav-link">
-                    <span aria-hidden="true" class="link-text logo-text">Ametrine.host</span>
-                    <i class="fa fa-angle-double-right"></i>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a aria-label="Order" id="order" class="nav-link">
-                    <i class="fa fa-shopping-cart"></i>
-                    <span aria-hidden="true" class="link-text">Order</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a  aria-label="Support" id="support" class="nav-link">
-                    <i class="fa fa-ticket-alt"></i>
-                    <span aria-hidden="true" class="link-text">Support</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" aria-label="Knowledgebase" class="nav-link">
-                    <i class="fa fa-info-circle"></i>
-                    <span aria-hidden="true" class="link-text">Knowledgebase</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" aria-label="Join our Discord" class="nav-link">
-                    <i class="fab fa-discord"></i>
-                    <span aria-hidden="true" class="link-text">Join our Discord</span>
-                </a>
-            </li>
-
-            <li class="nav-item">
-                <a href="#" aria-label="Referral" class="nav-link">
-                    <i class="fa fa-user-plus"></i>
-                    <span aria-hidden="true" class="link-text">Referral</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" aria-label="Log-In" id="login-button">
-                    <i class="<%= it.icon%>"></i>
-                    <span aria-hidden="true" class="link-text">
-                        <%= it.state%>
-                    </span>
-                </a>
-            </li>
-            <li class="nav-item" aria-label="Change the theme">
-                <a class="nav-link" aria-label="Log-In" id="theme-button">
-                    <i class="fa fa-paint-roller"></i>
-                    <span aria-hidden="true" class="link-text">Re-Theme</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <%~ E.includeFile('../templates/navbar.eta', {icon: it.icon, state: it.state}) %>
     <header>
         <h1>Order - <%=it.details.name%></h1>
         <hr>
@@ -162,85 +104,19 @@
                         <input id="couponsubmit" type="submit" value="Submit">
                     </div>
                 </fieldset>
+                                <hr class="divider">
+                <p class="small">Base Amount: €<span class="beginningPrice"><%=it.details.price%></span>/Mo</p>
+                <p class="small">Setup Fee: €<span class="setupPrice"><%=it.details.setupFee%></span></p>
+                <p class="small">Recurring Amount: €<span class="fullPrice recurring"><%=it.details.price%></span></p>
                 <p class="price">Due Today: €<span class="fullPrice"><%=it.details.price%></span></p>
-                <p class="tax">Tax calculated at checkout*</p>
-                <span style="visibility:hidden;"class="beginningPrice"><%=it.details.price%></span>
+                <p class="small">+ VAT calculated at checkout*</p>
                 <a id="checkout">Checkout with Stripe</a>
             </form>
         </div>
     </main>
 
-    <div id="forms">
-        <h2 id="form-header"><i class="fa fa-lock"></i> Secure Login</h2>
-        <form id="loginForm">
-            <fieldset id="login">
-                <div>
-                    <input type="email" required id="login-email" placeholder="Email"><i class="fa fa-at"></i><span
-                        class="underline-element"></span>
-                </div>
-                <div>
-                    <input type="password" required id="login-password" placeholder="Password"><i
-                        class="fa fa-lock"></i><span class="underline-element"></span>
-                </div>
-                <div class="checkboxwrap">
-                    <input type="checkbox" id="rememberMe">
-                    <label for="rememberMe"></label>
-                    <p>Remember me</p>
-                </div>
-                <p id="loginerror"></p>
-                <input type="submit" value="Login">
-            </fieldset>
-        </form>
-        <form id="registerForm">
-            <fieldset id="register" disabled="true">
-                <div>
-                    <input type="text" required id="register-fullname" placeholder="Full Name"><i
-                        class="fa fa-user"></i><span class="underline-element"></span>
-                </div>
-                <div>
-                    <input type="email" required id="register-email" placeholder="Email"><i class="fa fa-at"></i><span
-                        class="underline-element"></span>
-                </div>
-                <div>
-                    <input type="password" required id="register-password" placeholder="Password"><i
-                        class="fa fa-lock"></i><span class="underline-element"></span>
-                </div>
-                <div>
-                    <input type="password" required id="register-confirm-password" placeholder="Confirm Password"><i
-                        class="fa fa-lock"></i><span class="underline-element"></span>
-                </div>
-                <div class="checkboxwrap">
-                    <input type="checkbox" required id="checkboxTwo">
-                    <label for="checkboxTwo"></label>
-                    <p>I agree with the terms & conditions and I've read the privacy policy</p>
-                </div>
-                <p id="regerror"></p>
-                <input type="submit" value="Register">
-            </fieldset>
-            <a class="no-acc-a" id="forgot-pass">Forgot Password?</a>
-            <hr class="divide-login">
-            <p class="no-acc-p" id="no-acc-text">Don't have an account?</p>
-            <a id="register-button" class="no-acc-a">Register now</a>
-        </form>
-    </div>
-    <div class="popup supportPopup" id="supportPopup">
-        <a href="./mail"><i class="fa fa-at"></i><br>Write an E-Mail</a>
-        <a href="#"><i class="fa fa-ticket-alt"></i><br>Create a ticket</a>
-        <a href="https://discord.gg/d4DQKXd7qX" target="_blank" rel="noopener"><i class="fab fa-discord"></i><br>Join our Discord</a>
-    </div>
-    <div class="popup orderPopup" id="orderPopup">
-        <div>
-            <a href="./vps">Virtual Private Servers<br><span class="viewPlans">View plans</span></a>
-        </div>
-    </div>
-                <div class="passwordPopup passwordPopup-Hidden">
-                <p>Please type in your password to save the changes</p>
-                <form>
-                    <input type="password" placeholder="Password">
-                    <br>
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
+    <%~ E.includeFile('../templates/popups.eta', {email: it.email}) %>
+    
     <% if(it.name){%>
         <script src="./js/redirect.js"></script>
     <% }else{%>

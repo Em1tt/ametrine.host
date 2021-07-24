@@ -41,30 +41,6 @@ form fieldset select:focus{
 form fieldset select:focus option{
     color: white !important;
 }
-.tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
-    margin-left: 10px;
-    color: gray;
-}
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 240px;
-    background-color: rgba(0, 0, 0, 1);
-    color: #fff;
-    text-align: center;
-    padding: 5px;
-    border-radius: 6px;
-   
-    /* Position the tooltip text - see examples below! */
-    position: absolute;
-    z-index: 1;
-  }
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-  }
 
   form fieldset input {
     border: none;
@@ -119,7 +95,7 @@ form fieldset input:focus::placeholder {
 .price{
     margin-bottom: 0;
 }
-.tax{
+.small{
     font-size: 0.8rem;
     color: gray;
     margin-top: 5px;
@@ -130,6 +106,7 @@ form fieldset input:focus::placeholder {
     background-color:#cc379d;
     font-size: 1.25rem;
     text-align: center;
+    margin-top: 20px;
 }
 #checkout:hover{
     color: white;
@@ -138,4 +115,12 @@ form fieldset input:focus::placeholder {
     background-color:#e7894a;
     font-size: 1.25rem;
     text-align: center;
+}
+.divider{
+    background-color:#1b1c23;
+    width: 80%;
+    height: 2px;
+    border: none;
+    margin: 0;
+    margin-bottom: 20px;
 }
