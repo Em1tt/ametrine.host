@@ -58,4 +58,12 @@ CREATE TABLE IF NOT EXISTS ticket_msgs (
   files      TEXT      NOT NULL DEFAULT 0,          -- Any files that are uploaded. (Will be shown in URL form)
   createdIn  TIMESTAMP NOT NULL,                    -- When the message was created.
   editedIn   TIMESTAMP NOT NULL DEFAULT 0           -- When the message was edited.
-)
+);
+
+CREATE TABLE IF NOT EXISTS coupons (
+  coupon_id    INTEGER   NOT NULL PRIMARY KEY,        -- Coupon ID.
+  coupon_name  TEXT      NOT NULL DEFAULT 'CODE25',   -- Coupon Name.
+  value        INTEGER   NOT NULL DEFAULT 0.25,       -- Value (percentage) that should be taken off.
+  forever      INTEGER   NOT NULL DEFAULT 0,          -- If this coupon should apply in reoccuring payments or not. (0 = False | 1 = True)
+  createdIn    TIMESTAMP NOT NULL                     -- When the coupon was created
+);
