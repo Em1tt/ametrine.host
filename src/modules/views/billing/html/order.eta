@@ -80,7 +80,7 @@
                         <option id="annually" value="12">Annually (12 Months)</option>
                 </select>
                                 <%if(it.details.addOns.length > 0){%>
-                <hr>
+                <hr class="divider">
                 <p>Addons</p>
                 <%it.details.addOns.forEach(addon => {%>
                     <select class="addon" id="<%=addon.name%>" onchange="updatePrice()">
@@ -104,7 +104,7 @@
                         <input id="couponsubmit" type="submit" value="Submit">
                     </div>
                 </fieldset>
-                                <hr class="divider">
+                                <hr class="divider secondDivider">
                 <p class="small">Base Amount: €<span class="beginningPrice"><%=it.details.price%></span>/Mo</p>
                 <p class="small">Setup Fee: €<span class="setupPrice"><%=it.details.setupFee%></span></p>
                 <p class="small">Recurring Amount: €<span class="fullPrice recurring"><%=it.details.price%></span></p>
