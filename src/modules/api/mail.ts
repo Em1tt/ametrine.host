@@ -2,7 +2,6 @@
  * API for /billing/mail
 */
 import express                 from 'express';
-import { sql }                 from '../sql';
 import { auth }                from './auth';
 import { permissions }         from '../permissions'
 import { mailbox }             from '../mailbox'
@@ -59,4 +58,3 @@ export const prop = {
         })
     }
 }
-  
