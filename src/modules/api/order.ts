@@ -4,6 +4,9 @@
 import express                 from 'express';
 import { sql }                 from '../sql';
 import { auth }                from './auth';
+const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST); // This looks bad but its required.
+
+// stripe listen --forward-to localhost:3000/api/order/webhook
 
 export const prop = {
     name: "order",
@@ -19,11 +22,59 @@ export const prop = {
             if (typeof newAccessToken != "string") return false;
             userData = await auth.verifyToken(req, res, false, "both")
         }
-        if (typeof userData != "object") return res.sendStatus(userData);
         const paramName = params[0]
+        if (typeof userData != "object" && paramName != "webhook") return res.sendStatus(userData);
         switch (paramName) {
-            case "checkout": { // Currently not finished
-                break;
+            case "checkout": {
+                res.set("Allow", "POST");
+                if (req.method != "POST") return res.sendStatus(405);
+                const session = await stripe.checkout.sessions.create({
+                    customer_email: userData['email'],
+                    success_url: `http://${req.get('host')}/billing/success`,
+                    cancel_url: `http://${req.get('host')}/billing/cancel`,
+                    payment_method_types: ['card'],
+                    line_items: [
+                      {price: '', quantity: 1},
+                    ],
+                    mode: 'subscription',
+                });
+                return res.redirect(303, session.url)
+            }
+            case "webhook": { // May switch to /api/stripe/webhook instead.
+                const endpointSecret = process.env.WEBHOOK_SECRET
+                const payload = req.body;
+                
+                const sig = req.headers['stripe-signature'];
+                let event;
+                try {
+                    event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+                } catch (err) {
+                    console.log(err.message)
+                    return res.status(400).send(`Webhook Error: ${err.message}`);
+                }
+                switch (event.type) {
+                    case 'checkout.session.completed': {
+                      const session = event.data.object;
+                      console.log("create order");
+                      if (session.payment_status === 'paid') {
+                        console.log("fulfill order (create VPS)");
+                      }
+                      break;
+                    }
+                
+                    case 'checkout.session.async_payment_succeeded': {
+                      const session = event.data.object;
+                      console.log("fulfill order (create VPS)");
+                      break;
+                    }
+                
+                    case 'checkout.session.async_payment_failed': {
+                      const session = event.data.object;
+                      console.log("email customer saying to retry order");
+                      break;
+                    }
+                  }
+                return res.sendStatus(200);
             }
             case "coupon": {
                 res.set("Allow", "GET");

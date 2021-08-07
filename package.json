@@ -37,8 +37,10 @@
     "mailparser": "^3.2.0",
     "morgan": "^1.10.0",
     "ms": "^2.1.2",
+    "node-fetch": "^2.6.1",
     "nodemailer": "^6.5.0",
-    "smtp-server": "^3.9.0"
+    "smtp-server": "^3.9.0",
+    "stripe": "^8.167.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.12",

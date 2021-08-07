@@ -8,7 +8,6 @@ import config       from "../config.json";
 import { util }     from "../util";
 import { Endpoint } from "../types/endpoint";
 import helmet       from "helmet"
-import bodyParser   from "body-parser"
 import cookieParser from "cookie-parser"
 import { auth }     from "./api/auth"
 import * as plans from "../plans.json"
@@ -36,9 +35,10 @@ app.use(morgan("[express]\t:method :url :status :res[content-length] - :response
 app.use(express.static(path.join(__dirname, "views")));
 
 // Create Parse for application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false })) // Required for req.body
+app.use(express.urlencoded({ extended: false })) // Required for req.body
+app.use('/api/order/webhook', express.raw({type: 'application/json'}));
 // Create Parse for application/json
-app.use(bodyParser.json())
+app.use(express.json())
 // Create Parse for Cookies
 
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
@@ -47,8 +47,8 @@ app.use(
     contentSecurityPolicy: {
       useDefaults: true, // nonce when
       directives: {
-        defaultSrc: ["'self'"],
-        "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
+        defaultSrc: ["'self'", "www.recaptcha.net"],
+        "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
         "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"]
       }

@@ -67,3 +67,12 @@ CREATE TABLE IF NOT EXISTS coupons (
   forever      INTEGER   NOT NULL DEFAULT 0,          -- If this coupon should apply in reoccuring payments or not. (0 = False | 1 = True)
   createdIn    TIMESTAMP NOT NULL                     -- When the coupon was created
 );
+
+CREATE TABLE IF NOT EXISTS announcements (
+  announcement_id      INTEGER   NOT NULL PRIMARY KEY,              -- Announcement ID.
+  announcementType     TEXT      NOT NULL DEFAULT 'news',           -- Announcement Type ("outage", "news", "warning")
+  announcementText     TEXT      NOT NULL DEFAULT 'Announcement',   -- What the text should show
+  deleteIn             TIMESTAMP NOT NULL,                          -- When the announcement should be deleted (or invalid)
+  showToCustomersOnly  INTEGER   NOT NULL DEFAULT 0                 -- If it should only show to users who are logged in (0 = False | 1 = True)
+);
+
