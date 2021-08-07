@@ -95,7 +95,7 @@
             </form>
         </div>
         <div>
-            <form>
+            <form action="/api/order/checkout" method="POST">
             <p>Coupons & Checkout</p>
                 <fieldset class="coupon">
                     <label>Coupon code<span class="tooltip">?<span class="tooltiptext">Apply discount codes to get even better deals!</span></span></label>
@@ -110,7 +110,10 @@
                 <p class="small">Recurring Amount: €<span class="fullPrice recurring"><%=it.details.price%></span></p>
                 <p class="price">Due Today: €<span class="fullPrice"><%=it.details.price%></span></p>
                 <p class="small">+ VAT calculated at checkout*</p>
-                <a id="checkout">Checkout with Stripe</a>
+                <!--<form action="/api/order/redirect" method="POST">-->
+                    <!--<a id="checkout">Checkout with Stripe</a>-->
+                    <button id="checkout" type="submit">Checkout with Stripe</button>
+                <!--</form>-->
             </form>
         </div>
     </main>

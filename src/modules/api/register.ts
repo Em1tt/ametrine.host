@@ -4,6 +4,7 @@
 import express                 from 'express';
 import { sql }                 from '../sql';
 import { auth }                from './auth';
+import fetch                   from 'node-fetch';
 
 export const prop = {
     name: "register",
@@ -13,7 +14,27 @@ export const prop = {
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
         const { name, email, password } = req.body;
         if ([name, email, password].includes(undefined)) return res.status(406)
-                                                                           .send("Please enter in a Name, Email, and Password.");
+                                                                   .send("Please enter in a Name, Email, and Password.");
+        
+        function recaptcha() {
+            const key = process.env.RECAPTCHA_SECRET;
+            return new Promise((resolve, reject) => { // Promises are great.
+                const response = req.body["g-recaptcha-response"];
+                fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${key}&response=${response}`, {
+                    method: 'POST',
+                }).then(resp => resp.json())
+                  .then(json => resolve(json))
+                  .catch(e => reject(e));
+            })
+        }
+        /*
+        <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+        <div class="g-recaptcha brochure__form__captcha"
+            data-sitekey="PUBLIC_KEY">
+        </div>
+        */
+        const recaptcha_response = await recaptcha();
+        if (!recaptcha_response || (recaptcha_response && !recaptcha_response["success"])) return res.status(403).send("Recaptcha failed!");
         const userExists = await sql.db.prepare("SELECT count(*) FROM users WHERE email = ?")
                                        .pluck().get(email); // Checks if the user exists.
         if (userExists) return res.status(409)

@@ -100,7 +100,8 @@ function onLoad() {
         registerUser({
             name,
             email,
-            password,
+            password//,
+            //"g-recaptcha-response": grecaptcha.getResponse()
         });
     });
     try{
