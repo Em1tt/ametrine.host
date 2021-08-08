@@ -1,4 +1,4 @@
-# [Amethyst.host](https://amethyst.host)
+# [Ametrine.host](https://ametrine.host)
   
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Em1tt/amethyst.host) ![GitHub repo size](https://img.shields.io/github/repo-size/Em1tt/amethyst.host) ![GitHub last commit](https://img.shields.io/github/last-commit/Em1tt/amethyst.host) [![Lint & build](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml/badge.svg)](https://github.com/Em1tt/amethyst.host/actions/workflows/node.js.yml) ![Website](https://img.shields.io/website?url=https%3A%2F%2Famethyst.host) ![Discord](https://img.shields.io/discord/825086628561027092)
 
@@ -7,13 +7,13 @@
 ## About  
 
 ### Company
-**Amethyst.host** is a transparent hosting company, owned by @Em1tt. This GitHub repository is open to public to further support our transparency claims. 
+**Ametrine.host** is a transparent hosting company, owned by @Em1tt. This GitHub repository is open to public to further support our transparency claims. 
 
 ### Our Goal
 We strive to provide the cheapest but most exclusive feel to our service, that's why we're prioritizing customer satisfaction over profits.
 
 ### Copyright & Licensing
-If you're a maintainer of any packages we have used in our code and wish to have your code removed, or something altered, please contact us on **admin@amethyst.host** or open a **GitHub issue**.
+If you're a maintainer of any packages we have used in our code and wish to have your code removed, or something altered, please contact us on **admin@ametrine.host** or open a **GitHub issue**.
 
 ### Maintainers
 * @Em1tt - Fullstack, CEO
@@ -58,6 +58,6 @@ To make a module, make a `.ts` file in `src/modules`
   
   
 > readme by B1tt, enhanced by Em1t.
-<p align="center"><img src="./src/modules/views/images/GitHubSmall.png?raw=true" alt="Amethyst.host"/></p>  
+<p align="center"><img src="./src/modules/views/images/GitHubSmall.png?raw=true" alt="Ametrine.host"/></p>  
 
-<p align="center">© Amethyst.host | Distribution / Modification of our software is prohibited.</p>
+<p align="center">© Ametrine.host | Distribution / Modification of our software is prohibited.</p>
