@@ -17,8 +17,8 @@ If you're a maintainer of any packages we have used in our code and wish to have
 
 ### Maintainers
 * @Em1tt - Fullstack, CEO
-* @b1tt0 - Backend
-* @FireMario211 - Backend
+* @b1tt0 - Former Backend Developer <3
+* @FireMario211 - Backend Developer <3
 
 ### Collaborators
 Thanks to all collaborators for helping out! **Collaborators get a special Discord role** and get access to extra channels!
