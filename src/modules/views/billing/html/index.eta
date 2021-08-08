@@ -76,7 +76,7 @@
                     <input type="email" placeholder="E-Mail">
                     <input type="password" placeholder="Password">
                     <input type="submit">
-                </fieldset>
+                </fieldset> <!---->
             </form>
         </div>
     </aside>
