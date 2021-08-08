@@ -1,0 +1,135 @@
+:root {
+    font-size: 16px;
+    font-family: "Ubuntu", Arial, Helvetica, sans-serif
+}
+*{
+    box-sizing: border-box;
+}
+html{
+    background-color: var(--main-bg);
+}
+main{
+    margin: 3rem 0 0 7rem;
+    display: grid;
+    grid-template-areas:  
+        "main banner";
+    grid-template-columns: 70% 250px;
+    grid-template-rows: auto;
+    justify-content: space-between;
+}
+main > div{
+    grid-area: main;
+}
+main > aside{
+    margin-right:1rem;
+    height: 100% !important;
+}
+main > aside img{
+    grid-area: banner;
+    object-fit: cover;
+    width: 100%;
+    max-height: 100%;
+    border: 2px solid #3e404f;
+}
+.hideMedium{
+    height: 90vw;
+}
+main h1{
+    background: -webkit-linear-gradient(-200deg, #cc37c0 80%, #e6b530);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+main h2{
+    color: #DCE0FF;
+}
+main hr{
+    border: none;
+    height: 2px;
+    background-color: #3e404f;
+}
+
+.decowrapper{
+    display: flex;
+    flex-flow: row wrap;
+    margin-top: 10vw;
+    align-items: baseline;
+}
+.deco{
+    display: block;
+    border-radius: 20px;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.deco:nth-of-type(1){
+    width: 40%;
+    background-color: #3e404f;
+    height: 70px;
+    min-width: 140px;
+}
+.deco:nth-of-type(2){
+    width: 50%;
+    background-color: #333541;
+    height: 70px;
+    min-width: 150px;
+}
+.deco:nth-of-type(3){
+    width: 20%;
+    background-color: #3e404f;
+    height: 50px;
+    min-width: 100px;
+}
+.deco:nth-of-type(4){
+    width: 35%;
+    background-color: #333541;
+    height: 50px;
+    min-width: 130px;
+}
+.deco:nth-of-type(5){
+    width: 15%;
+    background-color: #3e404f;
+    height: 50px;
+    min-width: 80px;
+}
+.deco:nth-of-type(6){
+    width: 60%;
+    background-color: #333541;
+    height: 30px;
+    min-width: 160px;
+}
+.deco:nth-of-type(7){
+    width: 30%;
+    background-color: #3e404f;
+    height: 30px;
+    min-width: 200px;
+}
+.deco:nth-of-type(8){
+    width: 35%;
+    background-color: #3e404f;
+    height: 40px;
+    min-width: 90px;
+}
+
+@media screen and (max-width: 1000px) {
+    .hideMedium{
+        visibility: hidden !important;
+        display: none !important;
+    }
+    main{
+        grid-template-areas:  
+        "main";
+        grid-template-columns: 90%;
+    }
+}
+@media screen and (max-width: 600px){
+    main{
+        margin: 3rem 0 0 1rem;
+        grid-template-areas:  
+        "main";
+        grid-template-columns: 90%;
+    }
+    .deco:nth-of-type(8){
+        margin-bottom: 100px;
+    }
+}

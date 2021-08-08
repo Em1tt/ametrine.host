@@ -1,0 +1,31 @@
+:root{
+    --nav-bg-primary: #1e1f26;
+    --nav-border: none;
+    --nav-text: #dce0ff;
+    --nav-filter: grayscale(100%) opacity(0.7);
+    --nav-transition-speed: none;
+    --nav-filter-hover: grayscale(0%) opacity(1);
+    --nav-bg-secondary: #141419;
+    --nav-text-hover: #fff;
+    --text-secondary: #141419;
+    --nav-bg-header: #141419;
+    --nav-header-arrow: #cc37c0;
+    --nav-header-arrow-hover: #cc37c0;
+    --nav-transition-speed: 600ms;
+    --nav-header-text-gradient: -webkit-linear-gradient(0deg, #292a34 25%, #141419 75%);
+    --nav-icon: #cc37c0;
+
+    --main-bg: #292a34;
+    --main-h1: -webkit-linear-gradient(135deg, #cc37c0 80%, #e6b530);
+    --main-h2: #dce0ff;
+
+    --aside-border: #3e404f 2px solid;
+    --deco1:#333541;
+    --deco2:#1e1f26;
+    --deco3:#141419;
+    --deco4:#333541;
+    --deco5:#1e1f26;
+    --deco6:#3e404f;
+    --deco7:#1e1f26;
+    --deco8:#333541;
+}
