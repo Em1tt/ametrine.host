@@ -13,13 +13,12 @@ import { cmds } from "./cli";
 import config   from "./config.json";
 
 // variables
-const strings    : any    = require(`./lang/${config.lang}.json`);
-const MODULE_PATH: string = path.join(__dirname, "modules");
-const stdin      : any    = readline;
-const modules    : Map<string, child_process.ChildProcess> = new Map();
+const strings    : any    = require(`./lang/${config.lang}.json`),
+      MODULE_PATH: string = path.join(__dirname, "modules"),
+      modules    : Map<string, child_process.ChildProcess> = new Map(),
 
 // preload & start all modules
-const mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
+      mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
                                 .filter((f) => f.endsWith(".js"));
 
 for (const file of mfiles) {

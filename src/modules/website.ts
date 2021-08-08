@@ -95,7 +95,7 @@ app.get("/billing", (r: express.Request, s: express.Response) => {
   // You could use ETA and test whether or not it._locals.userData isnt null, and if it is then show stuff like Manage Account, similar to how you have "(!it.name.length) ?" in index.eta
   const userData = s.locals.userData;
   s.render(`${billing}/index.eta`, {
-    state: (userData) ? ` Manage Account` : " Log-in",
+    state: (userData) ? ` Manage Account` : " Sign-in",
     name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
     email: (userData && userData["email"]) ? userData["email"] : "",
     icon: (userData) ? 'fa fa-bars' : 'fa fa-users',
@@ -131,7 +131,7 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
     item: item,
     itemid: id,
     description: desc,
-    state: (userData) ? ` Manage Account` : " Log-in",
+    state: (userData) ? ` Manage Account` : " Sign-in",
     name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
     email: (userData && userData["email"]) ? userData["email"] : "",
     icon: (userData) ? 'fa fa-bars' : 'fa fa-users',
@@ -148,7 +148,7 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
                                     .send("if you were searching for a 404.. you found it!!");
   const userData = s.locals.userData;
   s.render(file, {
-    state: (userData) ? ` Manage Account` : " Log-in",
+    state: (userData) ? ` Manage Account` : " Sign-in",
     name: (userData && userData["name"]) ? userData["name"].split(" ") : ``,
     email: (userData && userData["email"]) ? userData["email"] : "",
     icon: (userData) ? 'fa fa-bars' : 'fa fa-users',

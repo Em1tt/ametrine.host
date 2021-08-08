@@ -1,0 +1,27 @@
+body > aside{
+    position: absolute;
+    height: 100%;
+    width: 280px;
+    right: 0;
+    top: 0;
+    background-color: #1e1f26;
+}
+body > aside > div{
+    margin: 1rem;
+}
+body > aside > div > h3{
+    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+}
+#login fieldset{
+    border: none;
+}
+#login fieldset > *{
+    margin-inline: auto;
+}
+#authentication input[type="email"], #authentication input[type="password"]{
+    background-color: black;
+}

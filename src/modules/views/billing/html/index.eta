@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-    <!-- Set the title of the html -->
     <title>Ametrine.host | Billing</title>
-    <!-- Set the favicon -->
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <!-- Meta tags -->
     <meta charset="utf-8">
@@ -35,92 +33,51 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-    <link href="./css/shared.css" rel="stylesheet">
-    <link href="./css/index.css" rel="stylesheet">
-    <script defer src="./js/theme.js"></script>
-    <script src="./js/auth.js"></script>
+    <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/index.css" rel="stylesheet">
+    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
 </head>
 
 <body onload="onLoad()">
-    <p class="announcement">We are not accepting orders yet! We're still heavy in development. Est. release date is September</p>
-    <%~ E.includeFile('../templates/navbar.eta', {icon: it.icon, state: it.state}) %>
-    <header>
-        <h1>Welcome<%= (!it.name.length) ? "" : ` back, ${it.name[0]}` %>!</h1>
-        <hr>
-        <h2>
-            <%= (!it.name.length) ? "Please log-in or create an account to view your account information" : `You have 0
-                new notifications.`%>
-        </h2>
-    </header>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.icon, state: it.state}) %>
     <main>
-        <% if(it.name.length){ %>
-            <div>
-                <button class=" collapsible">Account Details & Options</button>
-                <div class="content">
-                    <form autocomplete="on" id="updateForm">
-                        <fieldset>
-                            <label for="main-full-name">Full Name<span class="tooltip">?<span class="tooltiptext">Used to apply your full name to invoices.</span></label>
-                            <input spellcheck="false" type="text" name="main-full-name" id="main-full-name"
-                                placeholder="Full Name" value="<%= it.name.join(' ') %>">
-                        </fieldset>
-                        <fieldset>
-                            <label for="main-email">E-Mail<span class="tooltip">?<span class="tooltiptext">Used to sign-in. You'll also receive invoices & other notifications to this E-Mail.</span></label>
-                            <input autocomplete="username" spellcheck="false" type="text" name="main-email" id="main-email" placeholder="E-Mail"
-                                value="<%= it.email %>">
-                        </fieldset>
-                        <fieldset>
-                            <input type="submit" value="Update Information">
-                        </fieldset>
-                    </form>
-                    <div>
-                        <p class="more">More Options</p>
-                        <a class="accountSettings" href="#">Change Password</a>
-                        <a class="accountSettings" href="#">Enable 2-FA</a>
-                        <a class="accountSettings" href="#">Manage Payment options</a>
-                        <hr>
-                        <a class="accountSettings" id="logOutButton" href="#">Log Out</a>
-                        <p class="clientID">Client ID: <%=it.id%>
-                        </p>
-                    </div>
-                </div>
+        <div>
+            <h1>Welcome, user!</h1>
+            <hr>
+            <h2>Please sign-in to view your profile details.</h2>
+            <div class="decowrapper">
+                <div class="deco"></div>
+                <div class="deco"></div>
+                <div class="deco"></div>
+                <div class="deco"></div>
+                <div class="deco"></div>
+                <div class="deco"></div>
+                <div class="deco"></div>
+                <div class="deco"></div>
             </div>
-            <div>
-                <button class=" collapsible">Services</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Transactions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <div>
-                <button class=" collapsible">Sessions</button>
-                <div class="content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                        laboris nisi ut aliquip ex ea commodo consequat.
-                    </p>
-                </div>
-            </div>
-            <% } %>
+            <!--<form action="" method="post">
+                <input type="text">
+                <div class="g-recaptcha brochure__form__captcha" data-sitekey="6Lec7uUbAAAAAHyQtVXjSccy6h00rzvTYyqA2Kox"></div>
+                <span id="captcha" style="color:red"></span>
+                <input type="submit">
+            </form>-->
+        </div>
+        <aside class="hideMedium">
+            <a href="#"><img src="/billing/public/images/Banner.png"></a>
+        </aside>
     </main>
-    <%~ E.includeFile('../templates/popups.eta', {email: it.email}) %>
-    <% if(it.name){%>
-        <script src="./js/redirect.js"></script>
-    <% }else{%>
-        <script src="./js/logreg.js"></script>
-    <%}%>
-    <script src="./js/collapsibles.js"></script>
-    <script src="./js/popups.js"></script>
+    <aside id="authentication">
+        <div>
+            <h3><i class="fa fa-lock"></i> Secure Log-In</h3>
+            <form id="login">
+                <fieldset>
+                    <input type="email" placeholder="E-Mail">
+                    <input type="password" placeholder="Password">
+                    <input type="submit">
+                </fieldset>
+            </form>
+        </div>
+    </aside>
 </body>
-
-</html>
