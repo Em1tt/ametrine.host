@@ -1,4 +1,5 @@
 // help command
+/*
 import { Client, Message, Collection, MessageEmbed } from "discord.js";
 import { Command } from "../../../types/discord/command";
 import config from "../../../config.json";
@@ -60,4 +61,4 @@ export const prop = {
       msg.channel.send(helpCommandEmbed);
     }
   }
-}
+}*/

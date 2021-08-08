@@ -1,12 +1,12 @@
 // discord bot
-import "dotenv/config";
+/*import "dotenv/config";
 import Discord     from "discord.js";
 import fs          from "fs";
 import config      from "../config.json";
 import { Command } from "../types/discord/command";
 import { util }    from "../util";
 
-const bot : Discord.Client = new Discord.Client();
+const bot : Discord.Client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 const cmds: Discord.Collection<string, Command> 
                            = new Discord.Collection();
 
@@ -43,3 +43,4 @@ bot.on("message", async (msg: Discord.Message) => {
 });
 
 bot.login(process.env.TOKEN);
+*/
