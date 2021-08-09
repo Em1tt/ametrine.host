@@ -1,0 +1,59 @@
+    <aside id="authentication" class="hidden">
+        <div>
+            <h3 id="authHeader"><i class="fa fa-lock"></i> Secure Sign-In</h3>
+            <form id="login">
+                <fieldset>
+                <p id="login-error"></p>
+                    <div>
+                        <input required type="email" id="login-email" placeholder="E-Mail">
+                        <i class="authIcon fa fa-at"></i>
+                    </div>
+                    <div>
+                        <input required type="password" id="login-password" placeholder="Password">
+                        <i class="authIcon fa fa-lock"></i>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="login-rememberSession" name="login-rememberSession">
+                        <label for="login-rememberSession" id="login-rememberSessionButton"><i class="fa fa-check"></i></label>
+                        <label for="login-rememberSession" id="login-rememberSessionLabel"> Remember Me</label>
+                    </div>
+                    <div>
+                        <input type="submit">
+                    </div>
+                </fieldset>
+            </form>
+            <form id="register" class="hide">
+                <fieldset>
+                <p id="register-error"></p>
+                    <div>
+                        <input required type="text" id="register-name" placeholder="Full Name">
+                        <i class="authIcon fa fa-user"></i>
+                        <div class="popup"></div>
+                    </div>
+                    <div>
+                        <input required type="email" id="register-email" placeholder="E-Mail">
+                        <i class="authIcon fa fa-at"></i>
+                    </div>
+                    <div>
+                        <input required type="password" id="register-password" placeholder="Password">
+                        <i class="authIcon fa fa-lock"></i>
+                    </div>
+                    <div>
+                        <input required type="password" id="register-password-confirm" placeholder="Confirm Password">
+                        <i class="authIcon fa fa-lock"></i>
+                    </div>
+                    <div>
+                        <p>By registering you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
+                    </div>
+                    <div id="recaptcha" class="g-recaptcha" data-size="compact" data-theme="dark" data-sitekey="6Lec7uUbAAAAAHyQtVXjSccy6h00rzvTYyqA2Kox"></div>
+                    <span id="captcha" style="color:red"></span>
+                    <div>
+                        <input type="submit">
+                    </div>
+                </fieldset>
+            </form>
+                <hr id="switchLine">
+                    <p id="switchPrompt">Don't have an account?</p>
+                    <button id="switchAuth">Register now!</button>
+        </div>
+    </aside>

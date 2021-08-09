@@ -16,12 +16,135 @@ body > aside > div > h3{
     -webkit-text-fill-color: transparent;
     text-align: center;
 }
-#login fieldset{
+#authentication{
+    transition: 600ms ease;
+}
+#authentication fieldset{
     border: none;
+    padding: 0 !important;
 }
-#login fieldset > *{
-    margin-inline: auto;
+
+#authentication fieldset div{
+    display: flex;
+    flex-flow: row-reverse nowrap;
+    align-items: center;
+    margin-top: 10px;
 }
-#authentication input[type="email"], #authentication input[type="password"]{
-    background-color: black;
+#authentication #login fieldset div:nth-of-type(3){
+    flex-flow: row nowrap;
+}
+.authIcon{
+    position: relative;
+    width: auto;
+    padding-inline: 10px;
+    background-color: #141419;
+    z-index: 10;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #e6b530;
+}
+
+#authentication input[type="email"], #authentication input[type="password"], #authentication input[type="submit"], #authentication input[type="text"]{
+    background-color: #141419;
+    width: 100%;
+    padding-right: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #e6b530;
+    border: none;
+    outline: none;
+    height: 36px;
+}
+#authentication input[type="submit"]:hover{
+    cursor: pointer;
+    background-color: #17171d;
+    color: #cc37c0;
+}
+#authentication input[type="email"]::placeholder, #authentication input[type="password"]::placeholder, #authentication input[type="text"]::placeholder{
+    color: #e6b530;
+}
+#authentication input[type="email"]:focus::placeholder, #authentication input[type="password"]:focus::placeholder, #authentication input[type="text"]:focus::placeholder{
+    color: #cc37c0;
+}
+#authentication input[type="email"]:focus, #authentication input[type="password"]:focus, #authentication input[type="text"]:focus{
+    color: #cc37c0;
+}
+#authentication input[type="email"]:focus ~ .authIcon, #authentication input[type="password"]:focus ~  .authIcon, #authentication input[type="text"]:focus ~  .authIcon{
+    color: #cc37c0;
+}
+#authentication input[type="checkbox"]{
+    visibility: hidden;
+    position: absolute;
+}
+#authentication #login-rememberSessionButton{
+    width: 36px;
+    height: 36px;
+    background-color: #141419;
+    cursor: pointer;
+    margin-right: 5%;
+}
+#authentication #login-rememberSessionButton:hover{
+    background-color: #17171d;
+}
+#authentication #login-rememberSessionButton:hover i{
+    color: #17171d;
+}
+#authentication #login-rememberSessionButton i{
+    color: #141419;
+}
+#authentication input[type="checkbox"]:checked ~ #login-rememberSessionButton{
+    width: 36px;
+    height: 36px;
+    padding: 5px;
+    padding-left: 6px;
+    background-color: #e6b530;
+    border: 4px solid #141419;
+    cursor: pointer;
+}
+#authentication input[type="checkbox"]:checked ~ #login-rememberSessionButton:hover{
+    background-color: #cc37c0;
+}
+#authentication #login-rememberSessionLabel{
+    color: #dce0ff;
+}
+#switchLine{
+    border: none;
+    background: #292a34;
+    height: 2px;
+    margin-top: 20px;
+}
+#switchPrompt{
+    color: #dce0ff;
+}
+#switchAuth{
+    background-color: transparent;
+    border: none;
+    color: #e6b530;
+    text-align: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+#switchAuth:hover{
+    color: #cc37c0;
+}
+#authentication .hide{
+    display: none;
+}
+#authentication #register p{
+    color: #dce0ff;
+}
+#authentication #register p a{
+    color: #e6b530;
+}
+#authentication #register p a:hover{
+    color: #cc37c0;
+}
+.g-recaptcha{
+    justify-content: center;
+}
+.hidden{
+    right: -280px !important;
+    transition: 600ms ease;
 }

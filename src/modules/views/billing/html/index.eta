@@ -40,8 +40,9 @@
     <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
 </head>
 
-<body onload="onLoad()">
-    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.icon, state: it.state}) %>
+<body>
+<%console.log(it)%>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "bars" : "users", text: it.userData.email ? "Account Settings" : "Sign-In"}) %>
     <main>
         <div>
             <h1>Welcome, user!</h1>
@@ -57,27 +58,11 @@
                 <div class="deco"></div>
                 <div class="deco"></div>
             </div>
-            <!--<form action="" method="post">
-                <input type="text">
-                <div class="g-recaptcha brochure__form__captcha" data-sitekey="6Lec7uUbAAAAAHyQtVXjSccy6h00rzvTYyqA2Kox"></div>
-                <span id="captcha" style="color:red"></span>
-                <input type="submit">
-            </form>-->
         </div>
         <aside class="hideMedium">
             <a href="#"><img src="/billing/public/images/Banner.png"></a>
         </aside>
     </main>
-    <aside id="authentication">
-        <div>
-            <h3><i class="fa fa-lock"></i> Secure Log-In</h3>
-            <form id="login">
-                <fieldset>
-                    <input type="email" placeholder="E-Mail">
-                    <input type="password" placeholder="Password">
-                    <input type="submit">
-                </fieldset> <!---->
-            </form>
-        </div>
-    </aside>
+    <%~ E.includeFile('../public/templates/authentication.eta') %>
+    <script src="/billing/public/javascripts/authentication.js" async defer></script>
 </body>

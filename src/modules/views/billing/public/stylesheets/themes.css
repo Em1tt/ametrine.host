@@ -3,7 +3,6 @@
     --nav-border: none;
     --nav-text: #dce0ff;
     --nav-filter: grayscale(100%) opacity(0.7);
-    --nav-transition-speed: none;
     --nav-filter-hover: grayscale(0%) opacity(1);
     --nav-bg-secondary: #141419;
     --nav-text-hover: #fff;

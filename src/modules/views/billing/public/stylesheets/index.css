@@ -8,6 +8,9 @@
 html{
     background-color: var(--main-bg);
 }
+body{
+    overflow-x: hidden;
+}
 main{
     margin: 3rem 0 0 7rem;
     display: grid;
