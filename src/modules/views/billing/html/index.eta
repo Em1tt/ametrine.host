@@ -42,7 +42,7 @@
 
 <body>
 <%console.log(it)%>
-    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "bars" : "users", text: it.userData.email ? "Account Settings" : "Sign-In"}) %>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "Account Settings" : "Sign-In"}) %>
     <main>
         <div>
             <h1>Welcome, user!</h1>
@@ -64,5 +64,8 @@
         </aside>
     </main>
     <%~ E.includeFile('../public/templates/authentication.eta') %>
+    <%~ E.includeFile('../public/templates/announcements.eta') %>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
+    <script src="/billing/public/javascripts/popups.js" async defer></script>
+    <script src="/billing/public/javascripts/announcements.js" async defer></script>
 </body>

@@ -27,15 +27,21 @@
                 <p id="register-error"></p>
                     <div>
                         <input required type="text" id="register-name" placeholder="Full Name">
-                        <i class="authIcon fa fa-user"></i>
-                        <div class="popup"></div>
+                        <div class="popup">
+                            <i class="authIcon fa fa-user"></i>
+                            <p class="popupText">Used for applying your name to invoices</p>
+                        </div>
                     </div>
                     <div>
                         <input required type="email" id="register-email" placeholder="E-Mail">
-                        <i class="authIcon fa fa-at"></i>
+                        <div class="popup">
+                            <i class="authIcon fa fa-at"></i>
+                            <p class="popupText">Used for logging-in and sending invoices/checks</p>
+                        </div>
                     </div>
                     <div>
                         <input required type="password" id="register-password" placeholder="Password">
+                        <span></span><span></span><span></span>
                         <i class="authIcon fa fa-lock"></i>
                     </div>
                     <div>

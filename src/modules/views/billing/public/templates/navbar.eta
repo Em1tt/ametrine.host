@@ -38,7 +38,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="#" aria-label="Announcements" class="nav-link">
+            <a onclick=announcementsToggle() aria-label="Announcements" class="nav-link">
                 <i class="fa fa-bell"></i>
                 <span aria-hidden="true" class="link-text">Announcements</span>
             </a>
@@ -52,7 +52,7 @@
         </li>
 
         <li class="nav-item">
-            <a <%= (it.text !== "Sign-In") ? 'href=/billing' : "onclick=toggle();" %> class="nav-link" aria-label="Log-In" id="login-button">
+            <a <%= (it.text !== "Sign-In") ? 'href=/billing' : "onclick=toggle('authentication');" %> class="nav-link" aria-label="Log-In" id="login-button">
                 <i class="fa fa-<%=it.icon%>"></i>
                 <span aria-hidden="true" class="link-text">
                     <%=it.text%>

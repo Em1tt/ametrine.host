@@ -1,5 +1,5 @@
 body > aside{
-    position: absolute;
+    position: fixed;
     height: 100%;
     width: 280px;
     right: 0;
@@ -41,7 +41,7 @@ body > aside > div > h3{
     z-index: 10;
     padding-top: 10px;
     padding-bottom: 10px;
-    color: #e6b530;
+    color: #dce0ff;
 }
 
 #authentication input[type="email"], #authentication input[type="password"], #authentication input[type="submit"], #authentication input[type="text"]{
@@ -61,7 +61,7 @@ body > aside > div > h3{
     color: #cc37c0;
 }
 #authentication input[type="email"]::placeholder, #authentication input[type="password"]::placeholder, #authentication input[type="text"]::placeholder{
-    color: #e6b530;
+    color: #dce0ff;
 }
 #authentication input[type="email"]:focus::placeholder, #authentication input[type="password"]:focus::placeholder, #authentication input[type="text"]:focus::placeholder{
     color: #cc37c0;
@@ -147,4 +147,129 @@ body > aside > div > h3{
 .hidden{
     right: -280px !important;
     transition: 600ms ease;
+}
+.popup{
+    margin: 0 !important;
+    position: relative;
+    display: inline-block;
+    z-index: 1;
+}
+.popup .popupText {
+    visibility: hidden;
+    width: 120px;
+    background-color: #333541;
+    color: #dce0ff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    left: 110%;
+    position: absolute;
+  }
+.popup:hover .popupText {
+    visibility: visible;
+  }
+.popup .popupText::before {
+    content: " ";
+    position: absolute;
+    top: 43%;
+    right: 100%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #333541 transparent transparent;
+    z-index: -1;
+  }
+#register-password:focus span{
+    background-color: white;
+    height: 10px !important;
+    width: 25% !important;
+    margin-inline: 2%;
+}
+
+#announcements{
+    width: 280px;
+    height: 300px;
+    position: fixed;
+    bottom: -300px;
+    right: 300px;
+    background-color: #1e1f26;
+    transition: 600ms ease;
+}
+.showAnnouncements{
+    bottom: 0 !important;
+    transition: 600ms ease;
+}
+
+#announcements #header{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #141419;
+}
+
+#announcements h3{
+    padding: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: left;
+}
+#announcements a i{
+    padding: 10px;
+    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+#announcements a:hover i{
+    color: #fff !important;
+    background: transparent !important;
+    background-clip:initial;
+    -webkit-background-clip:initial;
+    -webkit-text-fill-color:initial;
+}
+#announcementsWrapper{
+    height: 258px;
+    overflow-y: auto;
+}
+#announcementsWrapper > div{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 3px;
+    padding-inline: 10px;
+    color: white;
+    margin-inline: 3px;
+    filter: brightness(0.9);
+}
+#announcementsWrapper > div:hover{
+    filter: brightness(1);
+}
+#announcementsWrapper .new{
+    background-color: rgba(87, 255, 84, 0.4);
+    border-left: 3px solid rgba(87, 255, 84, 1);
+}
+#announcementsWrapper .error{
+    background-color: rgba(255, 84, 84, 0.4);
+    border-left: 3px solid rgba(255, 84, 84, 1);
+}
+#announcementsWrapper .warning{
+    background-color: rgba(255, 252, 84, 0.4);
+    border-left: 3px solid rgba(255, 252, 84, 1);
+}
+
+@media screen and (max-width:680px) {
+    #announcements{
+        right: 0;
+        z-index: 5;
+    }
+}
+@media screen and (max-width:600px) {
+    #announcements{
+        bottom: 80px;
+    }
 }

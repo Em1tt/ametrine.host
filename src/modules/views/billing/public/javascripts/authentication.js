@@ -85,10 +85,6 @@ const switcher = async () => {
     });
 }
 
-const toggle = async () => {
-    document.getElementById("authentication").classList.toggle("hidden");
-}
-
 window.onload = () => {
     const updateForm = document.querySelector('#updateForm');
     const logOutButton = document.querySelector('#logOutButton');

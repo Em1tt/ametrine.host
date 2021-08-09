@@ -136,7 +136,7 @@
   .navbar {
     top: 0;
     width: 5rem;
-    height: 100vh;
+    height: 100%;
     overflow-x: hidden;
   }
   .navbar:hover {
