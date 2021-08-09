@@ -187,16 +187,16 @@ body > aside > div > h3{
 }
 
 #announcements{
-    width: 280px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
     position: fixed;
-    bottom: -300px;
+    bottom: -400px;
     right: 300px;
     background-color: #1e1f26;
     transition: 600ms ease;
 }
 .showAnnouncements{
-    bottom: 0 !important;
+    bottom: 0px !important;
     transition: 600ms ease;
 }
 
@@ -234,7 +234,7 @@ body > aside > div > h3{
     -webkit-text-fill-color:initial;
 }
 #announcementsWrapper{
-    height: 258px;
+    height: 355px;
     overflow-y: auto;
 }
 #announcementsWrapper > div{
@@ -249,11 +249,11 @@ body > aside > div > h3{
 #announcementsWrapper > div:hover{
     filter: brightness(1);
 }
-#announcementsWrapper .new{
+#announcementsWrapper .news{
     background-color: rgba(87, 255, 84, 0.4);
     border-left: 3px solid rgba(87, 255, 84, 1);
 }
-#announcementsWrapper .error{
+#announcementsWrapper .outage{
     background-color: rgba(255, 84, 84, 0.4);
     border-left: 3px solid rgba(255, 84, 84, 1);
 }
@@ -262,7 +262,7 @@ body > aside > div > h3{
     border-left: 3px solid rgba(255, 252, 84, 1);
 }
 
-@media screen and (max-width:680px) {
+@media screen and (max-width:780px) {
     #announcements{
         right: 0;
         z-index: 5;
@@ -271,5 +271,9 @@ body > aside > div > h3{
 @media screen and (max-width:600px) {
     #announcements{
         bottom: 80px;
+        width: 280px;
+    }
+    .showAnnouncements{
+        bottom: -400px !important;
     }
 }

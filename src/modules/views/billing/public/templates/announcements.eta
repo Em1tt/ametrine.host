@@ -4,17 +4,5 @@
         <a onclick=announcementsToggle()><i class="fa fa-times-circle"></i></a>
     </div>
     <div id="announcementsWrapper">
-        <div class="new">
-            <p>Lorem ipsum new.</p>
-        </div>
-        <div class="error">
-            <p>Lorem ipsum error.</p>
-        </div>
-        <div class="warning">
-            <p>Lorem ipsum warning.</p>
-        </div>
-        <div class="warning">
-            <p>Lorem ipsum warning.</p>
-        </div>
     </div>
 </div>

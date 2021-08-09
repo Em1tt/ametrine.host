@@ -65,7 +65,7 @@
     </main>
     <%~ E.includeFile('../public/templates/authentication.eta') %>
     <%~ E.includeFile('../public/templates/announcements.eta') %>
+    <script src="/billing/public/javascripts/announcements.js" async defer></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
-    <script src="/billing/public/javascripts/announcements.js" async defer></script>
 </body>

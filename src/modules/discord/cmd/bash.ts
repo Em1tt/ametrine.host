@@ -1,5 +1,5 @@
 // execute a bash command
-/*import { Client, Message } from "discord.js";
+import { Client, Message } from "discord.js";
 import child_process       from "child_process";
 import config from "../../../config.json";
 
@@ -36,4 +36,3 @@ export const prop = {
   });
   }
 }
-*/

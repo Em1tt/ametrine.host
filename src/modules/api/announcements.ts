@@ -36,15 +36,16 @@ export const prop = {
                 if (!type) type = "null";
                 if (!["outage", "news", "warning", "null"].includes(type.toString().toLowerCase())) return res.sendStatus(406);
                 const params: Array<any> = [Date.now()]; // ESLint wont stop complaining about this.
-                let query = "SELECT announcementText, showToCustomersOnly, announcementType FROM announcements WHERE deleteIn > ?";
+                let query = "SELECT announcementText, showToCustomersOnly, announcementType, dateCreated FROM announcements WHERE deleteIn > ?";
                 if (type != "null") {
                     query += " AND announcementType = ?"
                     params.push(type);
                 } else if (typeof userData != "object") {
                     query += " AND showToCustomersOnly = 0"
                 }
+                query += " ORDER BY dateCreated DESC";
                 const announcements = await sql.db.prepare(query).all(params);
-                if (!announcements.length) return res.sendStatus(404); // Announcement not found
+                if (!announcements.length) return res.json([]); // Announcement not found
                 if (announcements.showToCustomersOnly && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
                 return res.status(200).json(announcements.map(announcement => {
                     announcement.announcementText = decode_base64(announcement.announcementText);
@@ -69,8 +70,8 @@ export const prop = {
                     case "false": showCustomers = 0; break;
                 }
                 await sql.db.prepare(`INSERT INTO announcements
-                                    (announcementType, announcementText, deleteIn, showToCustomersOnly) VALUES
-                                    (?, ?, ?, ?)`).run(type, encode_base64(announcement), deleteOn, showCustomers);
+                                    (announcementType, announcementText, deleteIn, showToCustomersOnly, dateCreated) VALUES
+                                    (?, ?, ?, ?, ?)`).run(type, encode_base64(announcement), deleteOn, showCustomers, currentDate);
                 const getAnnouncementID = await sql.db.prepare('SELECT announcement_id FROM announcements WHERE deleteIn = ? AND announcementType = ? AND announcementText = ?')
                                                       .get(deleteOn, type, encode_base64(announcement));
                 if (!getAnnouncementID) return res.sendStatus(204);

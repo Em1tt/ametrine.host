@@ -1,6 +1,6 @@
 // ping command
 // should just write "pong"
-/*import { Client, Message } from "discord.js";
+import { Client, Message } from "discord.js";
 
 export const prop = {
   name    : "ping",
@@ -11,4 +11,4 @@ export const prop = {
 
   run: (bot: Client, 
         msg: Message): void => { msg.reply("Pong!") }
-}*/
+}

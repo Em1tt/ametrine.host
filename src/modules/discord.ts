@@ -1,5 +1,5 @@
 // discord bot
-/*import "dotenv/config";
+import "dotenv/config";
 import Discord     from "discord.js";
 import fs          from "fs";
 import config      from "../config.json";
@@ -19,7 +19,7 @@ bot.once("ready", () => {
       const cmd: Command = require(`./discord/cmd/${f.replace(".js", "")}`);
       cmds.set(cmd.prop.name, cmd);
   }
-  util.discordLog(`${cmds.array().length} command(s) loaded`);
+  util.discordLog(`${[...cmds.values()].length} command(s) loaded`);
 
   bot.user.setActivity("on amethyst.host", {type: "PLAYING"});
 });
@@ -43,4 +43,3 @@ bot.on("message", async (msg: Discord.Message) => {
 });
 
 bot.login(process.env.TOKEN);
-*/

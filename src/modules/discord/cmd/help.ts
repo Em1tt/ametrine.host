@@ -1,5 +1,5 @@
 // help command
-/*
+
 import { Client, Message, Collection, MessageEmbed } from "discord.js";
 import { Command } from "../../../types/discord/command";
 import config from "../../../config.json";
@@ -9,7 +9,7 @@ export const prop = {
   desc: "See help on some command.",
   usage: "help [command]",
   category: "User",
-  permissions: [],
+  permissions: [""],
 
   run: (bot: Client,
         msg: Message,
@@ -41,7 +41,7 @@ export const prop = {
       if(args.length != 0) helpEmbed.description += `\n\n> Couldn't find the command \`${args[0]}\`. Check for typos, and make sure the command exists.`;
 
       //Send the embed
-      msg.channel.send(helpEmbed);
+      msg.channel.send({embeds: [helpEmbed]});
     } else {
       //If there is an argument, try finding it from between the commands and give information about it.
       //Get the command requested - We know this exists due to the first condition of this if else statement.
@@ -56,9 +56,9 @@ export const prop = {
       .addField("Category", cmd.prop.category, true);
 
       //If command requires permissions, create a field with the required permissions.
-      if(cmd.prop.permissions.length != 0) helpCommandEmbed.addField("Permissions required", cmd.prop.permissions.map(p => `\`${p.toLowerCase()}\` `));
+      if(cmd.prop.permissions.length != 0) helpCommandEmbed.addField("Permissions required", cmd.prop.permissions.flat().join(" "));
 
-      msg.channel.send(helpCommandEmbed);
+      msg.channel.send({ embeds: [helpCommandEmbed]});
     }
   }
-}*/
+}
