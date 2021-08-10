@@ -4,3 +4,4 @@ data/
 .env
 log.txt
 .vscode
+dist copy/

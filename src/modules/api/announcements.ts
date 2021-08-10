@@ -44,8 +44,10 @@ export const prop = {
                     query += " AND showToCustomersOnly = 0"
                 }
                 query += " ORDER BY dateCreated DESC";
-                const announcements = await sql.db.prepare(query).all(params);
+                let announcements = await sql.db.prepare(query).all(params);
                 if (!announcements.length) return res.json([]); // Announcement not found
+                if(!req.query.hasPermission) req.query.hasPermission = 0;
+                announcements = announcements.filter(announcement => announcement.showToCustomersOnly <= req.query.hasPermission);
                 if (announcements.showToCustomersOnly && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
                 return res.status(200).json(announcements.map(announcement => {
                     announcement.announcementText = decode_base64(announcement.announcementText);

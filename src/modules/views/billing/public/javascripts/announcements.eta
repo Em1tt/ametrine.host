@@ -1,0 +1,31 @@
+<script>
+( async (hasPermission) => {
+    const announcements = document.getElementById("announcementsWrapper");
+    try{
+        const response = await axios.get("/api/announcements", {
+            params: {
+                hasPermission: hasPermission
+            }
+        });
+        console.log(response);
+        if(response.data.length > 0){
+        response.data.forEach((announcement) => {
+            const wrapper = document.createElement('div');
+            wrapper.classList.add(announcement.announcementType);
+            const announcementText = document.createElement('p');
+            announcementText.innerText = announcement.announcementText;
+            wrapper.appendChild(announcementText);
+            announcements.appendChild(wrapper);
+        });
+        }else{
+            const wrapper = document.createElement('div');
+            const announcementText = document.createElement('p');
+            announcementText.innerText = "No announcements yet!";
+            wrapper.appendChild(announcementText);
+            announcements.appendChild(wrapper);
+        }
+    }catch(e){
+        console.log(e);
+    }
+})(<%=it.userData.permission_id%>)
+</script>
