@@ -60,4 +60,4 @@ To make a module, make a `.ts` file in `src/modules`
 > readme by B1tt, enhanced by Em1t.
 <p align="center"><img src="./src/modules/views/images/GitHubSmall.png?raw=true" alt="Ametrine.host"/></p>  
 
-<p align="center">© Ametrine.host | Distribution / Modification of our software is prohibited.</p>
+<p align="center">© Ametrine.host | Licensed under MIT license</p>
