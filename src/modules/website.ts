@@ -94,9 +94,10 @@ app.all("/api/:method*", (r: express.Request, s: express.Response) => {
 app.get("/billing", (r: express.Request, s: express.Response) => {
   // You could use ETA and test whether or not it._locals.userData isnt null, and if it is then show stuff like Manage Account, similar to how you have "(!it.name.length) ?" in index.eta
   const userData = s.locals.userData;
-  console.log(userData);
+  console.log(userData, config.billing);
   s.render(`${billing}/index.eta`, {
-    userdata: userData
+    userdata: userData,
+    config: config.billing
   }
 );
 });
@@ -128,7 +129,8 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
     item: item,
     itemid: id,
     description: desc,
-    userData: userData
+    userData: userData,
+    config: config.billing
   });
 });
 
@@ -141,7 +143,8 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
                                     .send("if you were searching for a 404.. you found it!!");
   const userData = s.locals.userData;
   s.render(file, {
-    userData: userData
+    userData: userData,
+    config: config.billing
   });
 });
 

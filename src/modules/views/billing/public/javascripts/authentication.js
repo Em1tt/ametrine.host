@@ -85,8 +85,30 @@ const switcher = async () => {
     });
 }
 
+const toggleEditMode = async () => {
+    const name = document.querySelector("#account #account-fullName"),
+         email = document.querySelector("#account #account-email"),
+       button1 = document.querySelector("#account #button1"),
+       button2 = document.querySelector("#account #button2"),
+       button3 = document.querySelector("#account #button3"),
+       button4 = document.querySelector("#account #button4");
+    name.readOnly ? name.readOnly = false : name.readOnly = true;
+    email.readOnly ? email.readOnly = false : email.readOnly = true;
+    if(!name.readOnly){
+        button1.style = "visibility: hidden; position: absolute;";
+        button2.style = "visibility: hidden; position: absolute;";
+        button3.style = "visibility: visible; position: block;";
+        button4.style = "visibility: visible; position: block;";
+    }else{
+        button4.style = "visibility: hidden; position: absolute;";
+        button3.style = "visibility: hidden; position: absolute;";
+        button2.style = "visibility: visible; position: block;";
+        button1.style = "visibility: visible; position: block;";
+    };
+};
+
 window.onload = () => {
-    const updateForm = document.querySelector('#updateForm');
+    const updateForm = document.querySelector('#account form');
     const logOutButton = document.querySelector('#logOutButton');
     switcher();
     loginForm.addEventListener('submit', event => {
@@ -114,12 +136,11 @@ window.onload = () => {
             "g-recaptcha-response": grecaptcha.getResponse()
         });
     });
-    /*
     try{
     updateForm.addEventListener('submit', event => {
         event.preventDefault();
-        const name = updateForm.querySelector('#main-full-name').value;
-        const email = updateForm.querySelector('#main-email').value;
+        const name = updateForm.querySelector('#account-fullName').value;
+        const email = updateForm.querySelector('#account-email').value;
         updateUser({
             name,
             email,
@@ -140,5 +161,5 @@ window.onload = () => {
         prepareOrderButtons();
     }catch(e){
         e;
-    }*/
+    }
 };

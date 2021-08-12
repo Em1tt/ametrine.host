@@ -41,14 +41,61 @@
 </head>
 
 <body>
-<%console.log(it.userData.permission_id)%>
-    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "Account Settings" : "Sign-In"}) %>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
     <main>
         <div>
-            <h1>Welcome, user!</h1>
+            <h1><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
             <hr>
-            <h2>Please sign-in to view your profile details.</h2>
-            <div class="decowrapper">
+            <% if(!it.userData.email) {%>
+            <h2>"Please sign-in to view your profile details."</h2>
+            <%}%>
+            <% if(it.userData.email){ %>
+                <div class="cardWrapper">
+                    <div id="account">
+                        <h3><i class="fa fa-user-circle"></i> Account</h3>
+                        <form>
+                            <fieldset>
+                                <label for="">Full Name</label><br>
+                                <input type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"><br>
+                                <label for="">E-Mail</label><br>
+                                <input type="email" required readonly id="account-email" value="<%=it.userData.email%>"><br>
+                                <p>User ID: <%=it.userData.user_id%></p>
+                                <p>Permission ID: <%=it.userData.permission_id%></p>
+                            </fieldset>
+                            <div>
+                                <div class="popup" id="button1">
+                                    <button onclick="toggleEditMode()" aria-label="Edit Account"><i class="fa fa-wrench"></i></button>
+                                    <p class="popupText" id="button1-tooltip">Edit Account Information</p>
+                                </div>
+                                <div class="popup" id="button2">
+                                    <button id="logOutButton" aria-label="Log Out"><i class="fa fa-sign-out-alt"></i></button>
+                                    <p class="popupText" id="button2-tooltip">Sign-Out</p>
+                                </div>
+                                <div style="visibility: hidden;position: absolute;" class="popup" id="button3">
+                                    <label onclick="toggleEditMode()" for="button3-in" class="labelButton"><i class="fa fa-times"></i></label>
+                                    <input type="reset" id="button3-in" name="button3-in" aria-label="Discard Changes">
+                                    <p class="popupText" id="button1-tooltip">Discard changes</p>
+                                </div>
+                                <div style="visibility: hidden;position: absolute;" class="popup" id="button4">
+                                    <label for="button4-in" class="labelButton"><i class="fa fa-check"></i></label>
+                                    <input type="submit" name="button4-in" id="button4-in" aria-label="Accept Changes">
+                                    <p class="popupText" id="button1-tooltip">Accept changes</p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="security">
+                        <h3><i class="fa fa-shield-alt"></i> Security</h3>
+                    </div>
+                    <div id="services">
+                        <h3><i class="fa fa-box"></i> Services</h3>
+                    </div>
+                    <div id="transactions">
+                        <h3><i class="fa fa-file-invoice"></i> Transactions</h3>
+                    </div>
+                </div>
+            <% }else{%>
+                <div class="decowrapper">
                 <div class="deco"></div>
                 <div class="deco"></div>
                 <div class="deco"></div>
@@ -58,13 +105,14 @@
                 <div class="deco"></div>
                 <div class="deco"></div>
             </div>
+            <% }%>
         </div>
         <aside class="hideMedium">
             <a href="#"><img src="/billing/public/images/Banner.png"></a>
         </aside>
     </main>
-    <%~ E.includeFile('../public/templates/authentication.eta') %>
-    <%~ E.includeFile('../public/templates/announcements.eta', {isCustomer: it.userData.permission_id}) %>
+    <%~ E.includeFile('../public/templates/authentication.eta')%>
+    <%~ E.includeFile('../public/templates/announcements.eta') %>
     <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it.userData}) %>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>

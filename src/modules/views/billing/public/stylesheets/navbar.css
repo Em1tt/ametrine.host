@@ -3,7 +3,7 @@
   left: 0;
   background: var(--nav-bg-primary);
   transition: width 600ms ease;
-  overflow: auto;
+  overflow: hidden;
   border-right: var(--nav-border);
   z-index: 10;
 }
@@ -26,7 +26,7 @@
   cursor: pointer;
 }
 
-.nav-item:nth-child(8) {
+.nav-item:nth-child(6) {
   margin-top: auto;
 }
 
@@ -114,6 +114,7 @@
     width: 100vw;
     height: 5rem;
     overflow-y: hidden;
+    overflow-x: auto;
     border-top: var(--nav-border);
   }
   .header {
@@ -141,6 +142,7 @@
   }
   .navbar:hover {
     width: 16rem;
+    overflow-y: auto;
   }
   .navbar:hover .link-text {
     display: inline;

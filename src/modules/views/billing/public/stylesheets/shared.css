@@ -270,10 +270,10 @@ body > aside > div > h3{
 }
 @media screen and (max-width:600px) {
     #announcements{
-        bottom: 80px;
+        bottom: -400px;
         width: 280px;
     }
     .showAnnouncements{
-        bottom: -400px !important;
+        bottom: 80px !important;
     }
 }

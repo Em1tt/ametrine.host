@@ -124,6 +124,130 @@ main hr{
     min-width: 90px;
 }
 
+.cardWrapper{
+    display: grid;
+    grid-template-areas:
+        "account security"
+        "services services"
+        "transactions transactions";
+    column-gap: 5%;
+    row-gap: 50px;
+}
+
+.cardWrapper div{
+    color: #dce0ff;
+    background-color: #1e1f26;
+    height: auto;
+}
+.cardWrapper div h3{
+    color: #dce0ff;
+    background-color: #141419;
+    padding: 5px 10px;
+    margin-top: 0;
+    width: 100%;
+}
+
+.cardWrapper form{
+    padding: 0px 10px 10px;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between
+}
+
+.cardWrapper form div{
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.cardWrapper form fieldset{
+    padding: 10px;
+    width: 75%;
+    border: none;
+    line-height: 25px;
+}
+
+.cardWrapper form fieldset label{
+    color: #dce0ff;
+}
+
+.cardWrapper form input{
+    margin-top: 10px;
+    outline: none;
+}
+
+.cardWrapper form input[type="reset"]{
+    visibility:hidden;
+    position: absolute;
+}
+
+.cardWrapper form input[type="submit"]{
+    visibility:hidden;
+    position: absolute;
+}
+
+.cardWrapper form input:read-only{
+    color: #3e404f;
+}
+.cardWrapper form input{
+    color: #dce0ff;
+    background-color: #141419;
+    padding: 5px 10px;
+    margin-top: 0;
+    border: none;
+}
+
+.cardWrapper form p{
+    color: #3e404f;
+}
+
+.cardWrapper .labelButton{
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    background-color: #141419;
+    border: none;
+    color: #dce0ff;
+    font-size: 2rem;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+}
+
+.cardWrapper .labelButton:hover{
+    background-color: #292a34;
+    color: #dce0ff;
+}
+
+.cardWrapper button{
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    background-color: #141419;
+    border: none;
+    color: #dce0ff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.cardWrapper button:hover{
+    background-color: #292a34;
+    color: #dce0ff;
+}
+
+#account{
+    grid-area: account;
+}
+#security{
+    grid-area: security;
+}
+#services{
+    grid-area: services;
+}
+#transactions{
+    grid-area: transactions;
+}
+
 @media screen and (max-width: 1000px) {
     .hideMedium{
         visibility: hidden !important;
@@ -133,6 +257,16 @@ main hr{
         grid-template-areas:  
         "main";
         grid-template-columns: 90%;
+    }
+    .cardWrapper{
+        display: grid;
+        grid-template-areas:
+            "account account"
+            "security security"
+            "services services"
+            "transactions transactions";
+        column-gap: 5%;
+        row-gap: 50px;
     }
 }
 @media screen and (max-width: 600px){

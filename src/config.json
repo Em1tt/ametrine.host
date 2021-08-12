@@ -4,6 +4,10 @@
   "website": {
     "port": 3000
   },
+  
+  "billing": {
+    "staffMinLevel": 2
+  },
 
   "mail": {
     "port": 25,

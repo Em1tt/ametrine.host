@@ -1,4 +1,4 @@
-<div onload="checkAnnouncements(<%=it.isCustomer%>);" id="announcements">
+<div onload="checkAnnouncements();" id="announcements">
     <div id="header">
         <h3><i class="fa fa-bell"></i> Announcements</h3>
         <a onclick=announcementsToggle()><i class="fa fa-times-circle"></i></a>
