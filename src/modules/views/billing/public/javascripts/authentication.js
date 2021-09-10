@@ -91,7 +91,9 @@ const toggleEditMode = async () => {
        button1 = document.querySelector("#account #button1"),
        button2 = document.querySelector("#account #button2"),
        button3 = document.querySelector("#account #button3"),
-       button4 = document.querySelector("#account #button4");
+       button4 = document.querySelector("#account #button4"),
+       passwordConfirm = document.querySelector("#account-confirm-password"),
+       passwordConfirmLabel = document.querySelector("#account-confirm-password-label");
     name.readOnly ? name.readOnly = false : name.readOnly = true;
     email.readOnly ? email.readOnly = false : email.readOnly = true;
     if(!name.readOnly){
@@ -99,11 +101,15 @@ const toggleEditMode = async () => {
         button2.style = "visibility: hidden; position: absolute;";
         button3.style = "visibility: visible; position: block;";
         button4.style = "visibility: visible; position: block;";
+        passwordConfirm.style = "visibility: visible; position: block;";
+        passwordConfirmLabel.style = "visibility: visible; position: block;";
     }else{
         button4.style = "visibility: hidden; position: absolute;";
         button3.style = "visibility: hidden; position: absolute;";
         button2.style = "visibility: visible; position: block;";
         button1.style = "visibility: visible; position: block;";
+        passwordConfirm.style = "visibility: hidden; position: absolute;";
+        passwordConfirmLabel.style = "visibility: hidden; position: absolute;";
     };
 };
 
@@ -137,13 +143,19 @@ window.onload = () => {
         });
     });
     try{
-    updateForm.addEventListener('submit', event => {
+    updateForm.addEventListener('submit', async event => {
         event.preventDefault();
         const name = updateForm.querySelector('#account-fullName').value;
         const email = updateForm.querySelector('#account-email').value;
+        const password = updateForm.querySelector('#account-confirm-password').value;
+
+        const userData = await axios.post(`/api/auth`, {email, password});
+        console.log(userData);
+        //const passwordCheck = axios.post(`/api/auth/verifyPassword`)(password, )
+
         updateUser({
             name,
-            email,
+            email
         });
     });
     }catch(e){

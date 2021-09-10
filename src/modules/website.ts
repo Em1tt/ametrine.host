@@ -50,7 +50,8 @@ app.use(
         defaultSrc: ["'self'", "www.recaptcha.net"],
         "script-src": ["'self'", "'unsafe-inline'", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
         "style-src": ["'self'", "'unsafe-inline'", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
-        "script-src-attr": ["'self'", "'unsafe-inline'"]
+        "script-src-attr": ["'self'", "'unsafe-inline'"],
+        "img-src": ["'self'", "https: data:"]
       }
     },
     xssFilter: true
@@ -145,6 +146,21 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   s.render(file, {
     userData: userData,
     config: config.billing
+  });
+});
+
+app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => {
+  const file = `${billing}/tickets/create.eta`;
+
+  if (!fs.existsSync(file)) return s.status(404)
+                                    .send("if you were searching for a 404.. you found it!!");
+  const userData = s.locals.userData;
+  if(!userData) return s.status(403).send("Must be logged in to do this");
+  const ticketCats = require("../../src/ticket_categories.json");
+  s.render(file, {
+    userData: userData,
+    config: config.billing,
+    ticket_categories: ticketCats
   });
 });
 

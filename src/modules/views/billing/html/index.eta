@@ -38,16 +38,17 @@
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/index.css" rel="stylesheet">
     <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+    <script src="/billing/public/javascripts/theme.js" async defer></script>
 </head>
-
-<body>
+ <!--afwegwgwg-->
+<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
     <main>
         <div>
             <h1><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
             <hr>
             <% if(!it.userData.email) {%>
-            <h2>"Please sign-in to view your profile details."</h2>
+            <h2>Please sign-in to view your profile details.</h2>
             <%}%>
             <% if(it.userData.email){ %>
                 <div class="cardWrapper">
@@ -55,10 +56,12 @@
                         <h3><i class="fa fa-user-circle"></i> Account</h3>
                         <form>
                             <fieldset>
-                                <label for="">Full Name</label><br>
+                                <label for="account-fullName">Full Name</label><br>
                                 <input type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"><br>
-                                <label for="">E-Mail</label><br>
+                                <label for="account-email">E-Mail</label><br>
                                 <input type="email" required readonly id="account-email" value="<%=it.userData.email%>"><br>
+                                <label style="visibility: hidden; position: absolute;" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
+                                <input style="visibility: hidden; position: absolute;" type="password" required id="account-confirm-password"><br>
                                 <p>User ID: <%=it.userData.user_id%></p>
                                 <p>Permission ID: <%=it.userData.permission_id%></p>
                             </fieldset>
@@ -78,14 +81,19 @@
                                 </div>
                                 <div style="visibility: hidden;position: absolute;" class="popup" id="button4">
                                     <label for="button4-in" class="labelButton"><i class="fa fa-check"></i></label>
-                                    <input type="submit" name="button4-in" id="button4-in" aria-label="Accept Changes">
-                                    <p class="popupText" id="button1-tooltip">Accept changes</p>
+                                    <input type="submit" name="button4-in" id="button4-in" aria-label="Save Changes">
+                                    <p class="popupText" id="button1-tooltip">Save changes</p>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div id="security">
                         <h3><i class="fa fa-shield-alt"></i> Security</h3>
+                        <div>
+                            <button>Change Password</button>
+                            <button>Enable 2FA</button>
+                            <button>Link With Discord (Coming Soon)</button>
+                        </div>
                     </div>
                     <div id="services">
                         <h3><i class="fa fa-box"></i> Services</h3>
@@ -108,12 +116,14 @@
             <% }%>
         </div>
         <aside class="hideMedium">
-            <a href="#"><img src="/billing/public/images/Banner.png"></a>
+            <a href="#"><div aria-hidden="true"></div></a>
         </aside>
     </main>
     <%~ E.includeFile('../public/templates/authentication.eta')%>
+    <%~ E.includeFile('../public/templates/support.eta')%>
     <%~ E.includeFile('../public/templates/announcements.eta') %>
     <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it.userData}) %>
+    <%~ E.includeFile('../public/javascripts/retheme.eta', {userData: it.userData}) %>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
 </body>

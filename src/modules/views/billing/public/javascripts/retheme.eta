@@ -1,10 +1,10 @@
-<script>
-( async () => {
-    const announcements = document.getElementById("announcementsWrapper");
+<!--<script>
+let loadThemes = () => {
+    const themesList = document.getElementById("announcementsWrapper");
     try{
         const response = await axios.get("/api/announcements", {
             params: {
-                hasPermission: "<%=it.userData.permission_id%>"
+                hasPermission: <%=it.userData.permission_id%>
             }
         });
         console.log(response);
@@ -27,5 +27,8 @@
     }catch(e){
         console.log(e);
     }
-})()
+}
 </script>
+<div>
+
+</div>-->

@@ -18,7 +18,7 @@ function decode_base64(str) {
 
 const settings = {
     maxTitle: 100, // Maximum Length for the title of the ticket.
-    maxBody: 1000, // Maximum Length for messages.
+    maxBody: 2000, // Maximum Length for messages.
     maxUploadLimit: 12 // 12 MB limit for files/images.
 }
 
@@ -67,8 +67,11 @@ export const prop = {
         if (!isNaN(parseInt(paramName))) {
             paramName = ":ticketid";
         }
-        let level = userData['permission_id'].split(":")
-        if ([3,4].includes(level[0])) { // Developer & Administrator
+        let level = userData['permission_id'];
+        if(typeof level === "string"){
+            level = level.split(":");
+        }
+        if ([3,4].includes(parseInt(level[0]))) { // Developer & Administrator
             level = 5;
         }
         if (level[1]) { // Support Level
@@ -142,7 +145,7 @@ export const prop = {
                     } else {
                         if (level > 5 || level < 3) return res.sendStatus(403);
                         if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, opened, closed, level FROM tickets WHERE level < ? AND status = ? ORDER BY opened ASC LIMIT ? OFFSET ?')
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE level < ? AND status = ? ORDER BY opened ASC LIMIT ? OFFSET ?')
                                               .all(level + 1, status, pageLimit, ((page - 1) * pageLimit));
                     }
                     /*const result = tickets.map(ticket => {
@@ -300,7 +303,7 @@ export const prop = {
                 break;
             }
             default: // If none of the above are provided.
-                return res.sendStatus(404);
+                return res.status(404).send("didnt find owo");
         }
     }
 }

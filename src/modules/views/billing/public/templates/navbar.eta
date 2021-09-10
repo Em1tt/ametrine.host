@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-            <a aria-label="Support" id="support" class="nav-link">
+            <a aria-label="Support" id="support" onclick=toggle("supportPopup"); class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
                 <span aria-hidden="true" class="link-text">Support</span>
             </a>
@@ -34,15 +34,6 @@
             <a href="#" aria-label="Referral" class="nav-link">
                 <i class="fa fa-user-plus"></i>
                 <span aria-hidden="true" class="link-text">Referral</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
-            <a <%= (it.text !== "Sign-In") ? 'href=/billing' : "onclick=toggle('authentication');" %> class="nav-link" aria-label="Log-In" id="login-button">
-                <i class="fa fa-<%=it.icon%>"></i>
-                <span aria-hidden="true" class="link-text">
-                    <%=it.text%>
-                </span>
             </a>
         </li>
 
@@ -61,6 +52,15 @@
             <a class="nav-link" aria-label="Theme-Changer" id="theme-button">
                 <i class="fa fa-paint-roller"></i>
                 <span aria-hidden="true" class="link-text">Re-Theme</span>
+            </a>
+        </li>
+
+                <li class="nav-item">
+            <a <%= (it.text !== "Sign-In") ? 'href=/billing' : "onclick=toggle('authentication');" %> class="nav-link" aria-label="Log-In" id="login-button">
+                <i class="fa fa-<%=it.icon%>"></i>
+                <span aria-hidden="true" class="link-text">
+                    <%=it.text%>
+                </span>
             </a>
         </li>
 

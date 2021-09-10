@@ -4,8 +4,8 @@
   background: var(--nav-bg-primary);
   transition: width 600ms ease;
   overflow: hidden;
-  border-right: var(--nav-border);
   z-index: 10;
+  text-align: center;
 }
 
 .navbar-nav {
@@ -111,7 +111,7 @@
 @media only screen and (max-width: 600px) {
   .navbar {
     bottom: 0;
-    width: 100vw;
+    width: 100%;
     height: 5rem;
     overflow-y: hidden;
     overflow-x: auto;
