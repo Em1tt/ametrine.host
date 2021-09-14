@@ -48,8 +48,8 @@ app.use(
       useDefaults: true, // nonce when
       directives: {
         defaultSrc: ["'self'", "www.recaptcha.net"],
-        "script-src": ["'self'", "'unsafe-inline'", "https://cdn.quilljs.com/1.3.6/quill.min.js", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
-        "style-src": ["'self'", "'unsafe-inline'", "https://cdn.quilljs.com/1.3.6/quill.snow.css", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
+        "script-src": ["'self'", "'unsafe-inline'", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
+        "style-src": ["'self'", "'unsafe-inline'", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "https: data:"]
       }

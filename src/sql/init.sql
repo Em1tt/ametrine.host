@@ -77,3 +77,11 @@ CREATE TABLE IF NOT EXISTS announcements (
   dateCreated          TIMESTAMP NOT NULL                           -- Date when the announcement was created
 );
 
+CREATE TABLE IF NOT EXISTS themes (
+  theme_id      INTEGER   NOT NULL PRIMARY KEY,                                           -- Theme ID.
+  themeName     TEXT      NOT NULL DEFAULT 'Default Theme',                               -- Name of the Theme.
+  themeDesc     TEXT      NOT NULL DEFAULT 'Tell us about your artwork, URLs allowed!',   -- Theme description.
+  themeAuthor   INTEGER   NOT NULL,                                                       -- Account ID of the Author.
+  themeColors   TEXT      NOT NULL,                                                       -- Hex data
+  dateCreated   TIMESTAMP NOT NULL                                                        -- When the Theme was uploaded.
+);

@@ -38,6 +38,9 @@ const registerUser = async (user) => {
             case "Error: Request failed with status code 406":
                 errorText = "Password must not be less than 6 characters."
                 break;
+            case "Error: Request failed with status code 403":
+                errorText = "Login failed. (Either due to Recaptcha or Login Token invalid)"
+                break;
             case "Error: Request failed with status code 409":
                 errorText = "The email you provided has already been used!";
                 break;

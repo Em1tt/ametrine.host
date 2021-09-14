@@ -6,7 +6,7 @@
     const priority = document.querySelector("#priority");
     const screenshots = document.querySelector("#screenshots");
     const screenshotsStatus = document.querySelector("#screenshotsStatus");
-    const deltaFormat = editor.getContents(); //Rich text in a JSON format
+    let deltaFormat = editor.getContents(); //Rich text in a JSON format
     const ticketForm = document.querySelector("#ticketCreate");
     const errorText = document.querySelector("#errorText");
 
@@ -23,7 +23,8 @@
 
     ticketForm.addEventListener("submit", async (event) => {
         event.preventDefault();
-        try{
+        deltaFormat = editor.getContents(); // Bug fix, this updates deltaFormat, because without it, it'll just show { insert: '\n' } in ops
+        try {
         const response = await axios.post("/api/tickets/create", {
             subject: subject.value,
             content: deltaFormat,
@@ -33,16 +34,16 @@
         });
         console.log(response);
         window.location.href = `/billing/tickets/${response.data.ticket_id}`;
-    }catch(e){
-        let errorText = "Unknown Error (Look in Console for more details)";
-        switch(e.toString()){
-            case "Error: Request failed with status code 403":
-                errorText = "Subject or content is too long. Content is max. 2000 characters."
-                break;
+        } catch(e) {
+            let errorText = "Unknown Error (Look in Console for more details)";
+            switch(e.toString()){
+                case "Error: Request failed with status code 403":
+                    errorText = "Subject or content is too long. Content is max. 2000 characters."
+                    break;
+            }
+            errorText.innerHTML = `${exclamationCircle} ${errorText}`;
+            console.error(e);
         }
-        errorText.innerHTML = `${exclamationCircle} ${errorText}`;
-        console.error(e);
-    }
     });
 
 })();

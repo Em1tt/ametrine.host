@@ -44,6 +44,7 @@ export const prop = {
         if (passResult.result && passResult.result == 406) return res.status(406)
                                                                      .send("Password must not be less than 6 characters.");
         const registeredAt = Date.now()
+        // Encrypt data such as email, name, etc in AES256 later.
         await sql.db.prepare('INSERT INTO users (registered, name, email, password, salt) VALUES (?, ?, ?, ?, ?)').run(registeredAt, name, email, passResult.password, passResult.salt)
         const account = await sql.db.prepare('SELECT * FROM users WHERE email = ? AND name = ? AND registered = ?').get(email, name, registeredAt);
         const loginToken = await auth.login(req, res, account, false);

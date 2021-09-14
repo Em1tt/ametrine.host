@@ -79,7 +79,7 @@ export const prop = {
         }
 
         function newMsg(msg) {
-            msg["content"] = decode_base64(msg["content"]);
+            //msg["content"] = decode_base64(msg["content"]);
             msg["createdIn"] = new Date(msg["createdIn"]);
             msg["editedIn"] = (msg["editedIn"] == 0) ? null : new Date(msg["editedIn"]);
             return msg;
@@ -92,7 +92,7 @@ export const prop = {
                     ticket['content'] = ticket['content'].slice(0, 100);
                 }
                 ticket["subject"] = decode_base64(ticket["subject"]);
-                ticket["content"] = decode_base64(ticket["content"]);
+                //ticket["content"] = decode_base64(ticket["content"]);
                 ticket["opened"] = new Date(ticket["opened"]);
                 ticket["editedIn"] = (ticket["editedIn"] == 0) ? null : new Date(ticket["editedIn"]);
                 ticket["closed"] = (ticket["closed"] == 0) ? null : new Date(ticket["closed"]);
@@ -117,7 +117,7 @@ export const prop = {
                         }
                     }) : []
                     await sql.db.prepare('INSERT INTO tickets (user_id, subject, content, category_ids, opened, createdIn) VALUES (?, ?, ?, ?, ?, ?)')
-                                .run(userData["user_id"], encode_base64(subject), encode_base64(content), category_ids.join(","), timestamp, timestamp);
+                                .run(userData["user_id"], encode_base64(subject), JSON.stringify(content), category_ids.join(","), timestamp, timestamp);
                     const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, opened FROM tickets WHERE user_id = ? AND subject = ? AND opened = ?').get(userData["user_id"], encode_base64(subject), timestamp);
                     if (!getTicket) return res.sendStatus(201)
                     return res.status(201).json(getTicket);
@@ -183,7 +183,7 @@ export const prop = {
                             }
                             case "PATCH": { // Editing the message.
                                 if (getMessage.user_id != userData["user_id"]) return res.sendStatus(403);
-                                const newContent = encode_base64(content);
+                                const newContent = JSON.stringify(content);
                                 await sql.db.prepare('UPDATE ticket_msgs SET content = ?, editedIn = ? WHERE ticket_id = ? AND msg_id = ?').run(newContent, timestamp, getTicket["ticket_id"], getMessage["msg_id"])
                                 getMessage["content"] = newContent;
                                 getMessage["editedIn"] = timestamp;
@@ -227,8 +227,8 @@ export const prop = {
                                 if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
                                 
                                 await sql.db.prepare('INSERT INTO ticket_msgs (ticket_id, user_id, content, createdIn) VALUES (?, ?, ?, ?)')
-                                            .run(getTicket["ticket_id"], userData["user_id"], encode_base64(content), timestamp);
-                                const getMsg = await sql.db.prepare('SELECT msg_id, ticket_id, user_id, content, createdIn FROM ticket_msgs WHERE user_id = ? AND content = ? AND createdIn = ?').get(userData["user_id"], encode_base64(content), timestamp);
+                                            .run(getTicket["ticket_id"], userData["user_id"], JSON.stringify(content), timestamp);
+                                const getMsg = await sql.db.prepare('SELECT msg_id, ticket_id, user_id, content, createdIn FROM ticket_msgs WHERE user_id = ? AND content = ? AND createdIn = ?').get(userData["user_id"], JSON.stringify(content), timestamp);
                                 if (!getMsg) return res.sendStatus(201);
                                 return res.status(201).json(getMsg);
                             }
@@ -260,12 +260,12 @@ export const prop = {
                                 if (subject && subject.length) {
                                     sql.db.prepare('UPDATE tickets SET subject = ? editedIn = ? WHERE ticket_id = ?').run(encode_base64(subject), timestamp, getTicket["ticket_id"]);
                                     if (content && content.length) {
-                                        editContent(encode_base64(content), timestamp, getTicket["ticket_id"])
+                                        editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"])
                                     }
                                     return res.sendStatus(204);
                                 }
                                 if (content && content.length) {
-                                    editContent(encode_base64(content), timestamp, getTicket["ticket_id"]);
+                                    editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"]);
                                     return res.sendStatus(204);
                                 }
                                 if (categories && categories.length) {
