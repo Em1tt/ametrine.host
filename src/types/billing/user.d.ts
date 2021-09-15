@@ -1,4 +1,4 @@
-export interface User {
+export interface UserData {
     readonly refreshToken   : string;
     readonly accessToken    : string;
     readonly user_id        : number;
