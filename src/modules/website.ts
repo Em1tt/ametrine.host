@@ -10,9 +10,11 @@ import { Endpoint } from "../types/endpoint";
 import helmet       from "helmet"
 import cookieParser from "cookie-parser"
 import { auth }     from "./api/auth"
-import * as plans from "../plans.json"
+import * as plans   from "../plans.json"
+import { sql }      from './sql'
+import { Ticket } from "../types/billing/ticket";
+import { UserData } from "../types/billing/user";
 //import cors       from "cors"
-
 const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
 const billing: string = path.join(__dirname, "views", "billing", "html");
@@ -164,6 +166,26 @@ app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => 
   });
 });
 
+app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Response) => {
+  const file = `${billing}/tickets/ticket.eta`,
+    ticketID = r.params.ticketID;
+    if(!parseInt(ticketID)) return s.status(404).send("ticket IDs are always numeric values.");
+
+  const getTicket : Ticket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level FROM tickets WHERE ticket_id = ?')
+                                                      .get(ticketID);
+  if (!fs.existsSync(file)) return s.status(404)
+                                    .send("if you were searching for a 404.. you found it!!");
+  const userData: UserData = s.locals.userData;
+  if(!userData) return s.status(403).send("Must be logged in to do this");
+  if(userData.user_id != getTicket.user_id) return s.status(403).send("No permission");
+  const ticketCats = require("../../src/ticket_categories.json");
+  s.render(file, {
+    userData: userData,
+    config: config.billing,
+    ticket_categories: ticketCats,
+    ticket: getTicket,
+  });
+});
 app.get("/.env", (r: express.Request, s: express.Response) => {
   s.redirect("https://youtu.be/dQw4w9WgXcQ");
 });

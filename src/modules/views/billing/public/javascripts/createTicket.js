@@ -20,7 +20,6 @@
 
         screenshotsStatus.innerText = fileList.map(f => `${f.name}`).join(", ");
     }
-
     ticketForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         deltaFormat = editor.getContents(); // Bug fix, this updates deltaFormat, because without it, it'll just show { insert: '\n' } in ops

@@ -6,6 +6,14 @@
             const response = await axios.get("/api/tickets/list");
             console.log(response);
             const tickets = response.data;
+            console.log("b");
+            console.log(tickets.length);
+            if(tickets.length == 0){
+                console.log("a");
+                const header2 = document.createElement("h2");
+                header2.innerText = "Nothing here... Yet...";
+                return ticketsWrapper.appendChild(header2);
+            }else{
             tickets.forEach((ticket) => {
                 const clickable = document.createElement("a");
                 const header = document.createElement("h2");
@@ -61,6 +69,7 @@
                 footer.appendChild(p3);
                 clickable.appendChild(footer);
             });
+        }
         }catch(e){
             e;
         }

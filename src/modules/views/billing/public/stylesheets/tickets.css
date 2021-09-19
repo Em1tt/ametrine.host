@@ -31,7 +31,7 @@ main > div > div{
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: auto;
     margin-bottom: 20px;
 }
 main > div > div span{
@@ -134,4 +134,24 @@ main hr {
 }
 #ticketWrapper footer > *{
     margin-inline: 2px;
+}
+
+@media screen and (max-width:600px){
+    main{
+        margin-left: 0.5rem;
+        overflow-y: auto;
+        display: block;
+    }
+    form #subject {
+        width: 200px;
+        padding: 5px;
+        font-size: 0.9rem;
+      }
+    form{
+        margin-bottom: 100px;
+    }
+    #content .ql-editor{
+        height: 100px !important;
+        margin-bottom: 100px;
+    }
 }
