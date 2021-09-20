@@ -50,7 +50,22 @@
                 <h1><%=decodeURI(atob(it.ticket.subject))%></h1><p class="ticketID">Ticket ID: <%=it.ticket.ticket_id%></p>
             </div>
             <hr>
-            <h2><%= (it.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>
+            <form id="editTicket">
+                <fieldset>
+                    <label for="priority">Priority:</label>
+                    <select disabled name="ticket_priority" id="priority">
+                        <option value=<%=it.ticket.priority%>><%=it.ticket.priority%></option>
+                    </select>
+                </fieldset>
+                                <fieldset>
+                    <label for="category">Category:</label>
+                    <select disabled name="category" id="category">
+                                                <% it.ticket_categories.forEach(category => { %>
+                            <option <%=category.id == it.ticket.category_ids ? "selected" : ""%> value="<%=category.id%>"><%=category.name%></option>
+                        <% }) %>
+                    </select>
+                </fieldset>
+            </form>
 <form id="ticketCreate">
                 <fieldset>
                     <!--PUT TEXTAREA HERE-->
@@ -65,7 +80,9 @@
                     <p id="screenshotsStatus">Max. 5 screenshots</p>
                 </fieldset>
                 <fieldset id="submitWrapper">
-                    <button><i class="fa fa-times-circle"></i> Close Ticket</button>
+                <button id="closeTicket"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                <button><i class="fa fa-edit"></i> Edit Ticket</button>
+
                     <input type="submit" value="Send a new message">
                 </fieldset>
             </form>

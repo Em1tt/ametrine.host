@@ -64,8 +64,8 @@
                     <select name="ticket_service" id="service">
                         <option value="" selected hidden>Choose Service (to be added)</option>
                     </select>
-                    <select required name="ticket_priority" id="priority">
-                        <option value="" selected disabled hidden>Choose Priority</option>
+                    <select name="ticket_priority" id="priority">
+                        <option value=undefined selected disabled hidden>Choose Priority</option>
                         <option value="emergency">Emergency</option>
                         <option value="high">High</option>
                         <option value="medium">Medium</option>

@@ -26,6 +26,7 @@
   main > div{
       width: 90%;
   }
+
   main > div > div{
     display: flex;
     flex-flow: row wrap;
@@ -34,6 +35,36 @@
     height: auto;
     margin-bottom: 20px;
 }
+
+#editTicket{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+#editTicket > fieldset{
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#editTicket label{
+    color: white;
+    background-color: transparent;
+    cursor: default;
+    padding-inline: 0;
+}
+#editTicket select{
+    background-color: #141419;
+    color: white;
+    outline: none;
+    border: none;
+    margin: 5px 10px 5px 0;
+    padding: 5px;
+}
+
+#editTicket select:disabled{
+    color: gray;
+}
+
 main > div > div > h1 {
     background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
     background-clip: text;

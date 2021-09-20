@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS tickets (
   files         TEXT      NOT NULL DEFAULT 0,         -- Any files that are uploaded. (Will be shown in URL form)
   level         INTEGER   NOT NULL DEFAULT 3,         -- Level of support
   createdIn     TIMESTAMP NOT NULL,                   -- When the ticket was created.
-  editedIn      TIMESTAMP NOT NULL DEFAULT 0          -- When the ticket was edited.
+  editedIn      TIMESTAMP NOT NULL DEFAULT 0,         -- When the ticket was edited.
+  priority      TEXT      NOT NULL DEFAULT 'medium'  -- What priority the ticket is
 );
 
 CREATE TABLE IF NOT EXISTS ticket_msgs (

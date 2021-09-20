@@ -76,7 +76,8 @@ main hr {
 }
 #ticketWrapper{
     display: flex;
-    flex-direction: row wrap;
+    flex-direction: row;
+    flex-wrap: wrap;
     height: auto;
     justify-content: left;
 }

@@ -14,7 +14,7 @@
                 header2.innerText = "Nothing here... Yet...";
                 return ticketsWrapper.appendChild(header2);
             }else{
-            tickets.forEach((ticket) => {
+            tickets.reverse().forEach((ticket) => {
                 const clickable = document.createElement("a");
                 const header = document.createElement("h2");
                 header.innerText = `#${ticket.ticket_id}`;

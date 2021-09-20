@@ -8,7 +8,7 @@
     const screenshotsStatus = document.querySelector("#screenshotsStatus");
     let deltaFormat = editor.getContents(); //Rich text in a JSON format
     const ticketForm = document.querySelector("#ticketCreate");
-    const errorText = document.querySelector("#errorText");
+    const errorP = document.querySelector("#errorText");
 
     screenshots.onchange = function(event) {
         var fileList = [...screenshots.files];
@@ -40,7 +40,7 @@
                     errorText = "Subject or content is too long. Content is max. 2000 characters."
                     break;
             }
-            errorText.innerHTML = `${exclamationCircle} ${errorText}`;
+            errorP.innerHTML = `${exclamationCircle} ${errorText}`;
             console.error(e);
         }
     });
