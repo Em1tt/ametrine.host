@@ -135,18 +135,18 @@ export const prop = {
                     let status = 0;
                     let pageLimit = 10;
                     if (req.query.page) page = parseInt(req.query.page.toString());
-                    if (req.query.status == "closed") status = 1;
+                    //if (req.query.status == "closed") status = 1;
                     if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                     let tickets = [];
                     if (typeof level == 'object') {
                         if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, opened, closed, level FROM tickets WHERE user_id = ? AND status = ? ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                              .all(userData["user_id"], status, pageLimit, ((page - 1) * pageLimit));
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE user_id = ? ORDER BY opened ASC LIMIT ? OFFSET ?')
+                                              .all(userData["user_id"], pageLimit, ((page - 1) * pageLimit));
                     } else {
                         if (level > 5 || level < 3) return res.sendStatus(403);
                         if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE level < ? AND status = ? ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                              .all(level + 1, status, pageLimit, ((page - 1) * pageLimit));
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE level < ? ORDER BY opened ASC LIMIT ? OFFSET ?')
+                                              .all(level + 1, pageLimit, ((page - 1) * pageLimit));
                     }
                     /*const result = tickets.map(ticket => {
                         const name = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(ticket.user_id);
@@ -307,4 +307,3 @@ export const prop = {
         }
     }
 }
- 
