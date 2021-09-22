@@ -171,6 +171,8 @@ app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Resp
     ticketID = r.params.ticketID;
     if(!parseInt(ticketID)) return s.status(404).send("ticket IDs are always numeric values.");
 
+
+    // Will add priority to the fields.
   const getTicket : Ticket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level, priority FROM tickets WHERE ticket_id = ?')
                                                       .get(ticketID);
   if (!fs.existsSync(file)) return s.status(404)

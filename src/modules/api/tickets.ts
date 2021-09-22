@@ -68,7 +68,7 @@ export const prop = {
             paramName = ":ticketid";
         }
         let level = userData['permission_id'];
-        if(typeof level === "string"){
+        if (typeof level === "string"){
             level = level.split(":");
         }
         if ([3,4].includes(parseInt(level[0]))) { // Developer & Administrator
@@ -132,21 +132,28 @@ export const prop = {
             case "list": { // Lists the tickets
                 if (allowedMethod(req, res, ["GET"], paramName, userData)) {
                     let page = 1;
-                    let status = 0;
+                    let status = -1;
+                    const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
                     let pageLimit = 10;
                     if (req.query.page) page = parseInt(req.query.page.toString());
-                    //if (req.query.status == "closed") status = 1;
+                    if (req.query.status == "closed") status = 1;
+                    if (req.query.status == "opened") status = 0;
                     if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                     let tickets = [];
-                    if (typeof level == 'object') {
+                    const elements = [userData["user_id"]]
+                    if (status != -1) elements.push(status)
+                    if (typeof level != 'object') { // fix forbidden bug
                         if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE user_id = ? ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                              .all(userData["user_id"], pageLimit, ((page - 1) * pageLimit));
+                        elements.push(pageLimit, (page - 1) * pageLimit);
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE user_id = ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
+                                              .all(elements);
                     } else {
                         if (level > 5 || level < 3) return res.sendStatus(403);
                         if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE level < ? ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                              .all(level + 1, pageLimit, ((page - 1) * pageLimit));
+                        elements[0] = (level + 1)
+                        elements.push(pageLimit, (page - 1) * pageLimit);
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE level < ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
+                                              .all(elements);
                     }
                     /*const result = tickets.map(ticket => {
                         const name = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(ticket.user_id);
@@ -303,7 +310,7 @@ export const prop = {
                 break;
             }
             default: // If none of the above are provided.
-                return res.status(404).send("didnt find owo");
+                return res.status(404).send("didnt find owo"); // excuse me what
         }
     }
 }
