@@ -38,7 +38,7 @@
     "morgan": "^1.10.0",
     "ms": "^2.1.2",
     "node-fetch": "^2.6.2",
-    "nodemailer": "^6.6.3",
+    "nodemailer": "^6.6.5",
     "smtp-server": "^3.9.0",
     "stripe": "^8.174.0"
   },
