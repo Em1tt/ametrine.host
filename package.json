@@ -40,7 +40,7 @@
     "node-fetch": "^2.6.2",
     "nodemailer": "^6.6.3",
     "smtp-server": "^3.9.0",
-    "stripe": "^8.174.0"
+    "stripe": "^8.178.0"
   },
   "devDependencies": {
     "@types/node": "^16.9.1",
