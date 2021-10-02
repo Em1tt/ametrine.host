@@ -212,6 +212,10 @@ export const auth = {
 export const prop = {
     name: "auth",
     desc: "Authenticates a user (Logging in)",
+    rateLimit: {
+        max: 10,
+        time: 60 * 1000
+    },
     run: async (req: express.Request, res: express.Response): Promise<unknown> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.

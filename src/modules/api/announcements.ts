@@ -16,9 +16,13 @@ function decode_base64(str) {
 }
 
 export const prop = {
-     name: "announcements",
-     desc: "API for Announcements",
-     run: async (req: express.Request, res: express.Response): Promise<any> => {
+    name: "announcements",
+    desc: "API for Announcements",
+    rateLimit: {
+       max: 10,
+       time: 30 * 1000
+    },
+    run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405);

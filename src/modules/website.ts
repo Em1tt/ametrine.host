@@ -12,8 +12,9 @@ import cookieParser from "cookie-parser"
 import { auth }     from "./api/auth"
 import * as plans   from "../plans.json"
 import { sql }      from './sql'
-import { Ticket } from "../types/billing/ticket";
+import { Ticket }   from "../types/billing/ticket";
 import { UserData } from "../types/billing/user";
+import rateLimit    from "express-rate-limit";
 //import cors       from "cors"
 const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
@@ -26,10 +27,26 @@ const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
   endpoints.set(ep.prop.name, ep);
+  if (ep.prop["rateLimit"]) {
+    app.use("/api/" + ep.prop.name + "*", rateLimit({
+      windowMs: ep.prop["rateLimit"].time,
+      max: ep.prop["rateLimit"].max,
+      message: "You are sending too many API requests! Please try again later.",
+    }));
+    // There could be another solution for doing this.
+  }
+      
 }
 util.expressLog(`${endpoints.size} api endpoints loaded`);
 
 app.use(cookieParser())
+
+// 30 requests every 40 seconds
+const apiLimiter = rateLimit({
+  windowMs: 40 * 1000, // 40 seconds
+  max: 30,
+  message: "You are sending too many API requests! Please try again later."
+});
 
 app.use(morgan("[express]\t:method :url :status :res[content-length] - :response-time ms"));
 
@@ -77,21 +94,22 @@ app.get("/", (r: express.Request, s: express.Response) => {
 });
 
 // Probably another method to do this, but this is the best I can think of right now.
-const apiMethod = function (r: express.Request, s: express.Response) {
+const apiMethod = async function (r: express.Request, s: express.Response, next: express.NextFunction) {
   const ep: Endpoint = endpoints.get(r.params.method)
   if (ep) { // Prevent site from sending errors when the :method is not defined.
-    ep.prop.run(r, s);
+
+    // Ratelimiter could be improved.
+    await ep.prop.run(r, s);
   } else {
     return s.status(404)
             .send("if you were searching for a 404.. you found it!!");
   }
 }
-
 /* amethyst.host/api/bill
    amethyst.host/api/auth
    and so on..            */
-app.all("/api/:method*", (r: express.Request, s: express.Response) => {
-  apiMethod(r, s);
+app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response, next: express.NextFunction) => {
+  apiMethod(r, s, next);
 });
 // billing
 app.get("/billing", (r: express.Request, s: express.Response) => {

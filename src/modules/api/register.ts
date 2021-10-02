@@ -9,6 +9,10 @@ import fetch                   from 'node-fetch';
 export const prop = {
     name: "register",
     desc: "Creates an account (Only on Website)",
+    rateLimit: {
+        max: 3,
+        time: 2 * (60 * 1000) // 2 Minutes
+    },
     run: async (req: express.Request, res: express.Response) => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.

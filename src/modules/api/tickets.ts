@@ -50,6 +50,10 @@ function editContent(content, timestamp, ticket_id) {
 export const prop = {
     name: "tickets",
     desc: "Support Ticket System",
+    rateLimit: {
+        max: 20,
+        time: 10 * 1000
+    },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.

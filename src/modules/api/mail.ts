@@ -19,6 +19,10 @@ const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@
 export const prop = {
     name: "mail",
     desc: "Sends a \"mail\" from /billing/mail to support@amethyst.host",
+    rateLimit: {
+        max: 3,
+        time: 60 * 1000
+    },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't a POST request, then respond with Method not Allowed.

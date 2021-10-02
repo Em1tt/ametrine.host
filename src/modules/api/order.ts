@@ -11,6 +11,10 @@ const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST); 
 export const prop = {
     name: "order",
     desc: "API for ordering a service",
+    rateLimit: {
+      max: 1,
+      time: 30 * 1000
+    },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
