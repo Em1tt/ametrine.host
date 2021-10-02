@@ -80,6 +80,7 @@ main hr {
     flex-wrap: wrap;
     height: auto;
     justify-content: left;
+    margin-bottom: 100px;
 }
 #ticketWrapper a{
     background-color: #1e1f26;
@@ -89,7 +90,9 @@ main hr {
     text-align: center;
     text-decoration: none;
     margin-right: 25px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+    margin-top: 60px;
+
 }
 #ticketWrapper a > h2{
     font-size: 1.2rem;
@@ -120,6 +123,7 @@ main hr {
     flex-flow: row wrap;
     align-items: center;
     justify-content: center;
+    margin-bottom: 40px;
 }
 #ticketWrapper .answered{
     background-color: rgb(131, 194, 36);

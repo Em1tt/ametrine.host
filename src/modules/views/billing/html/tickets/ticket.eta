@@ -90,7 +90,21 @@
                 <hr id="logs">
                 <span class="opened">
                     <hr>
-                    <p>Ticket Content:</p>
+                    <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
+                if(opened[2].startsWith(0)){
+                    opened[2] = opened[2].slice(1);
+                }
+                if(opened[2].endsWith(1)){
+                    opened[2] = opened[2]+"st"
+                }else if(opened[2].endsWith(2)){
+                    opened[2] = opened[2]+"nd"
+                }else if(opened[2].endsWith(3)){
+                    opened[2] = opened[2]+"rd"
+                }else{
+                    opened[2] = opened[2]+"th"
+                }
+                opened = [opened[2], opened[1], opened[3]].join(" ");%>
+                <p><%=opened%>:</p>
                     <span class="title">
                         <img src="/billing/public/images/User.svg" height="50" width="50" alt="User">
                             <div>
