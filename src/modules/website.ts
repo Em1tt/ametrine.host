@@ -94,12 +94,10 @@ app.get("/", (r: express.Request, s: express.Response) => {
 });
 
 // Probably another method to do this, but this is the best I can think of right now.
-const apiMethod = async function (r: express.Request, s: express.Response, next: express.NextFunction) {
+const apiMethod = function (r: express.Request, s: express.Response) {
   const ep: Endpoint = endpoints.get(r.params.method)
   if (ep) { // Prevent site from sending errors when the :method is not defined.
-
-    // Ratelimiter could be improved.
-    await ep.prop.run(r, s);
+    ep.prop.run(r, s);
   } else {
     return s.status(404)
             .send("if you were searching for a 404.. you found it!!");
@@ -108,8 +106,8 @@ const apiMethod = async function (r: express.Request, s: express.Response, next:
 /* amethyst.host/api/bill
    amethyst.host/api/auth
    and so on..            */
-app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response, next: express.NextFunction) => {
-  apiMethod(r, s, next);
+app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) => {
+  apiMethod(r, s);
 });
 // billing
 app.get("/billing", (r: express.Request, s: express.Response) => {
