@@ -9,11 +9,11 @@ import ticket_categories       from '../../ticket_categories.json';
 
 function encode_base64(str) {
     if (!str.length) return false;
-        return btoa(encodeURIComponent(str));
+    return btoa(encodeURIComponent(str));
 }
 function decode_base64(str) {
     if (!str.length) return false;
-        return decodeURIComponent(atob(str));
+    return decodeURIComponent(atob(str));
 }
 
 const settings = {
@@ -244,7 +244,8 @@ export const prop = {
                                 return res.status(201).json(getMsg);
                             }
                             case "PUT": { // Updates the status on the ticket (Either opening it again after being closed, setting tags, etc)
-                                const { closed, subject, categories, reopen, priority } = req.body;
+                                const { closed, subject, categories, reopen, priority, content } = req.body;
+                                let updated = false;
 
                                 /**
                                  * closed (closed=1) - Close the ticket
@@ -257,12 +258,12 @@ export const prop = {
                                 if (closed && closed == "1" && !reopen) { // If closed is provided, close the ticket.
                                     if (getTicket["closed"] != 0) return res.sendStatus(204);
                                     sql.db.prepare('UPDATE tickets SET status = 1, closed = ? WHERE ticket_id = ?').run(timestamp, getTicket["ticket_id"]);
-                                    return res.sendStatus(204);
+                                    updated = true;
                                 }
                                 if (reopen && reopen == "1") { // If reopen is provided, Open the ticket again.
                                     if (getTicket["closed"] == 0) return res.sendStatus(406);
                                     sql.db.prepare('UPDATE tickets SET status = 0, opened = ?, closed = 0 WHERE ticket_id = ?').run(timestamp, getTicket["ticket_id"]);
-                                    return res.sendStatus(204);
+                                    updated = true;
                                 }
 
                                 
@@ -270,32 +271,44 @@ export const prop = {
                                 if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
                                 if (subject && subject.length) {
                                     sql.db.prepare('UPDATE tickets SET subject = ?, editedIn = ? WHERE ticket_id = ?').run(encode_base64(subject), timestamp, getTicket["ticket_id"]);
-                                    if (content && content.length) {
+                                    if (content) {
                                         editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"])
                                     }
-                                    return res.sendStatus(204);
+                                    updated = true;
                                 }
-                                if (content && content.length) {
+                                if (content) {
                                     editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"]);
-                                    return res.sendStatus(204);
+                                    updated = true;
                                 }
                                 if (categories && categories.length) {
-                                    const category_ids = (categories) ? categories.split(",").map(category => {
-                                        const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
-                                        if (findCategory) {
-                                            category = parseInt(category); // Converting it to Int in case of any strings at the end.
-                                            return category;
-                                        }
-                                    }) : []
+                                    let category_ids = []
+                                    console.log(typeof categories)
+                                    if (typeof categories == "string") {
+                                        category_ids = (categories) ? categories.split(",").map(category => { // TS is telling me that number cant be converted to string when parseInt on this, but it works on the else statement
+                                            const findCategory = ticket_categories.find(cate => cate.id == category);
+                                            if (findCategory) {
+                                                //category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                                                return category;
+                                            }
+                                        }) : []
+                                    } else {
+                                        category_ids = categories.map(category => {
+                                            const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
+                                            if (findCategory) {
+                                                category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                                                return category;
+                                            }
+                                        })
+                                    }
                                     if (!category_ids.length) return res.sendStatus(406);
                                     sql.db.prepare('UPDATE tickets SET category_ids = ? WHERE ticket_id = ?').run(category_ids.join(","), getTicket["ticket_id"]);
-                                    return res.sendStatus(204);
+                                    updated = true;
                                 }
                                 if (priority && priority !== null){
                                     sql.db.prepare('UPDATE tickets SET priority = ? WHERE ticket_id = ?').run(priority, getTicket["ticket_id"]);
-                                    return res.sendStatus(204);
+                                    updated = true;
                                 }
-                                return res.sendStatus(406);
+                                return (updated) ? res.sendStatus(204) : res.sendStatus(406)
                             }
                             case "DELETE": { // Closes the Ticket.
                                 if (permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`) && req.body.force) { // Force delete a message. (Used for spam tickets)
@@ -308,7 +321,6 @@ export const prop = {
                                     await sql.db.prepare('UPDATE tickets SET status = 1, closed = ? WHERE ticket_id = ?').run(timestamp, getTicket["ticket_id"]);
                                     return res.sendStatus(204);
                                 }
-                                break;
                             }
                             default:
                                 return res.sendStatus(404); // This should never happen.
