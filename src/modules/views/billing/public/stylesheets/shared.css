@@ -16,9 +16,13 @@ body > aside > div > h3{
     -webkit-text-fill-color: transparent;
     text-align: center;
 }
+#login-error{
+    color:#fff;
+}
 #authentication{
     transition: 600ms ease;
     right: -280px;
+    overflow-y: auto;
 }
 #authentication fieldset{
     border: none;
@@ -88,10 +92,10 @@ body > aside > div > h3{
     background-color: #17171d;
 }
 #authentication #login-rememberSessionButton:hover i{
-    color: #17171d;
+    color: #17171d !important;
 }
 #authentication #login-rememberSessionButton i{
-    color: #141419;
+    color: #141419 !important;
 }
 #authentication input[type="checkbox"]:checked ~ #login-rememberSessionButton{
     width: 36px;
@@ -126,12 +130,17 @@ body > aside > div > h3{
     cursor: pointer;
     text-decoration: underline;
     padding: 0;
+    margin-bottom: 100px;
 }
 #switchAuth:hover{
     color: #cc37c0;
 }
 #authentication .hide{
     display: none;
+}
+#authentication #register{
+    overflow-y: auto !important;
+    margin-bottom: 0;
 }
 #authentication #register p{
     color: #dce0ff;

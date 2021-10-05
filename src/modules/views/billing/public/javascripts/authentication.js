@@ -21,7 +21,7 @@ const loginUser = async (user) => {
         loginError.innerHTML = `${exclamationCircle} ${errorText}`;
         setTimeout(function() {
             loginError.innerHTML = ''
-        }, 3000)
+        }, 10000)
         console.error(e);
     }
 }
@@ -48,7 +48,7 @@ const registerUser = async (user) => {
         regError.innerHTML = `${exclamationCircle} Error: ${errorText}`;
         setTimeout(function() {
             regError.innerHTML = ''
-        }, 3000)
+        }, 10000)
         console.error(e);
     }
 }
@@ -137,11 +137,11 @@ window.onload = () => {
         const email = registerForm.querySelector('fieldset #register-email').value;
         const password = registerForm.querySelector('fieldset #register-password').value;
         const passwordConfirm = registerForm.querySelector('fieldset #register-password-confirm').value;
-        if (password != passwordConfirm) return 403;
         registerUser({
             name,
             email,
             password,
+            passwordConfirm,
             "g-recaptcha-response": grecaptcha.getResponse()
         });
     });

@@ -292,19 +292,35 @@ form #submitWrapper button:hover{
     color: white;
     border: greenyellow 2px solid;
 }
-
-.ticketID{
-    color: gray;
+.important{
+        background-color: #cc37c0 !important;
+        color: #1e1f26 !important;
+        font-weight: bold;
 }
-
+.important:hover{
+    background-color: #141419 !important;
+    color: #cc37c0 !important;
+    font-weight: bold;
+}
+.ticketInfo{
+    display: flex;
+    flex-flow: row wrap;
+}
+.ticketInfo *{
+    color: gray;
+    margin-inline: 10px;
+}
+.hidden{
+    visibility: hidden;
+    position: absolute;
+}
 #logs{
     border: none;
     height: 2px;
     background-color: #3e404f;
-    margin: none !important;
+    margin: 40px 0 100px 0 !important;
     overflow: visible;
     text-align: center;
-    margin-bottom: 100px;
 }
 #logs:after {
     content: 'Logs';

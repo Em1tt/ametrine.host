@@ -189,7 +189,7 @@ app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Resp
 
 
     // Will add priority to the fields.
-  const getTicket : Ticket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level, priority FROM tickets WHERE ticket_id = ?')
+  const getTicket : Ticket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level, editedIn, priority FROM tickets WHERE ticket_id = ?')
                                                       .get(ticketID);
   if (!fs.existsSync(file)) return s.status(404)
                                     .send("if you were searching for a 404.. you found it!!");

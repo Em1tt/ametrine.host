@@ -149,14 +149,14 @@ export const prop = {
                     if (typeof level != 'object') { // fix forbidden bug
                         if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
                         elements.push(pageLimit, (page - 1) * pageLimit);
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE user_id = ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE user_id = ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
                                               .all(elements);
                     } else {
                         if (level > 5 || level < 3) return res.sendStatus(403);
                         if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
                         elements[0] = (level + 1)
                         elements.push(pageLimit, (page - 1) * pageLimit);
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, level FROM tickets WHERE level < ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE level < ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
                                               .all(elements);
                     }
                     /*const result = tickets.map(ticket => {
@@ -178,7 +178,7 @@ export const prop = {
                 if (params[1]) { // Without api/tickets/:ticketid/:msgid
                     if (allowedMethod(req, res, ["GET", "PATCH", "DELETE"], paramName, userData)) { // copy paste
                         if (ticketID < 0) return res.sendStatus(406);
-                        const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level FROM tickets WHERE ticket_id = ?')
+                        const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, editedIn, level FROM tickets WHERE ticket_id = ?')
                                                       .get(ticketID);
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
@@ -211,7 +211,7 @@ export const prop = {
                 } else {
                     if (allowedMethod(req, res, ["GET", "POST", "PUT", "DELETE"], paramName, userData)) {
                         if (ticketID < 0) return res.sendStatus(406);
-                        const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level FROM tickets WHERE ticket_id = ?')
+                        const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, editedIn, level FROM tickets WHERE ticket_id = ?')
                                                         .get(ticketID); // ESLint wants me to use const
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
@@ -244,7 +244,7 @@ export const prop = {
                                 return res.status(201).json(getMsg);
                             }
                             case "PUT": { // Updates the status on the ticket (Either opening it again after being closed, setting tags, etc)
-                                const { closed, subject, categories, reopen } = req.body;
+                                const { closed, subject, categories, reopen, priority } = req.body;
 
                                 /**
                                  * closed (closed=1) - Close the ticket
@@ -289,6 +289,10 @@ export const prop = {
                                     }) : []
                                     if (!category_ids.length) return res.sendStatus(406);
                                     sql.db.prepare('UPDATE tickets SET category_ids = ? WHERE ticket_id = ?').run(category_ids.join(","), getTicket["ticket_id"]);
+                                    return res.sendStatus(204);
+                                }
+                                if (priority && priority !== null){
+                                    sql.db.prepare('UPDATE tickets SET priority = ? WHERE ticket_id = ?').run(priority, getTicket["ticket_id"]);
                                     return res.sendStatus(204);
                                 }
                                 return res.sendStatus(406);

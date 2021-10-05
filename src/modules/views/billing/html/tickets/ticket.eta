@@ -43,18 +43,30 @@
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+    <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it.ticket.ticket_id%></p>
     <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
     <main>
         <div>
             <div>
-                <h1><%=decodeURI(atob(it.ticket.subject))%></h1><p class="ticketID">Ticket ID: <%=it.ticket.ticket_id%></p>
+                <h1><%=decodeURI(atob(it.ticket.subject))%></h1>
+                <div class="ticketInfo">
+                <p>Last Edit: <%=it.ticket.editedIn == 0 ? "never" : new Date(it.ticket.editedIn).toDateString()%></p>
+                <p>Ticket ID: <%=it.ticket.ticket_id%></p>
+                </div>
             </div>
             <hr>
             <form id="editTicket">
+                <fieldset id="subjectWrapper" class="hidden">
+                    <label for="subject">New Subject:</label>
+                    <input type="text" id="subject" name="subject" value=<%=atob(it.ticket.subject)%>>
+                </fieldset>
                 <fieldset>
                     <label for="priority">Priority:</label>
                     <select disabled name="ticket_priority" id="priority">
-                        <option value=<%=it.ticket.priority%>><%=it.ticket.priority%></option>
+                        <option <%=it.ticket.priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
+                        <option <%=it.ticket.priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
+                        <option <%=it.ticket.priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
+                        <option <%=it.ticket.priority.toLowerCase() == "low" ? "selected" : ""%> value="Low">Low</option>
                     </select>
                 </fieldset>
                                 <fieldset>
@@ -80,10 +92,11 @@
                     <p id="screenshotsStatus">Max. 5 screenshots</p>
                 </fieldset>
                 <fieldset id="submitWrapper">
-                <button id="closeTicket"><i class="fa fa-times-circle"></i> Close Ticket</button>
-                <button><i class="fa fa-edit"></i> Edit Ticket</button>
-
-                    <input type="submit" value="Send a new message">
+                <button type="button" class="buttons" id="closeTicket"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                <button type="button" class="buttons" onclick="editMode()"><i class="fa fa-edit"></i> Edit Ticket</button>
+                <input class="buttons" type="submit" value="Send a new message">
+                <button type="reset" form="editTicket" class="editButtons hidden" onclick="editMode()"><i class="fa fa-times-circle"></i> Discard Edits</button>
+                <button type="button" class="editButtons hidden important" onclick="saveEdits()"><i class="fa fa-check-circle"></i> Apply Edits</button>
                 </fieldset>
             </form>
             <span class="logs">
@@ -123,6 +136,7 @@
     <%~ E.includeFile('../../public/templates/announcements.eta') %>
     <%~ E.includeFile('../../public/javascripts/announcements.eta', {userData: it.userData}) %>
     <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
+    <script src="/billing/public/javascripts/ticket.js" async defer></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
     <script>
@@ -139,5 +153,14 @@
             }
         });
         editor2.setContents(<%~it.ticket.content%>, "api")
+        function editMode(){
+    [...editButtons, ...buttons].forEach(btn => {
+        btn.classList.toggle("hidden");
+    });
+    subjectWrapper.classList.toggle("hidden");
+    priority.hasAttribute("disabled") ? priority.removeAttribute("disabled") : priority.setAttribute("disabled", true);
+    category.hasAttribute("disabled") ? category.removeAttribute("disabled") : category.setAttribute("disabled", true);
+    category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~it.ticket.content%>, "api")
+}
     </script>
 </body>

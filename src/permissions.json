@@ -1,4 +1,7 @@
 {
+    "0": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/:ticketid"]
+    },
     "1": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"]
     },

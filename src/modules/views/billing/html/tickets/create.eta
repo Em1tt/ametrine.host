@@ -66,10 +66,10 @@
                     </select>
                     <select name="ticket_priority" id="priority">
                         <option value=undefined selected disabled hidden>Choose Priority</option>
-                        <option value="emergency">Emergency</option>
-                        <option value="high">High</option>
-                        <option value="medium">Medium</option>
-                        <option value="low">Low</option>
+                        <option value="Emergency">Emergency</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
                     </select>
                     </div>
                     <!--PUT TEXTAREA HERE-->
