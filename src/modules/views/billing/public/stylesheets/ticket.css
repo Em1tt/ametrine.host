@@ -157,9 +157,9 @@ form input[type="file"]{
     top: 0;
 }
 
-form input[type="submit"]{
-    background-color: #cc37c0;
-    color: #1e1f26;
+.highlightButton{
+    background-color: #cc37c0 !important;
+    color: #1e1f26 !important;
     padding: 10px;
     cursor: pointer;
     margin-inline: 10px;
@@ -181,9 +181,14 @@ form #submitWrapper button{
 
 }
 
-form input[type="submit"]:hover{
-    background-color: #141419;
-    color: #cc37c0;
+.highlightButton:hover{
+    background-color: #141419 !important;
+    color: #cc37c0 !important;
+}
+
+.message{
+    border: none !important; 
+    color: white !important;
 }
 
 form #submitWrapper button:hover{
@@ -198,6 +203,7 @@ form #submitWrapper button:hover{
     height: auto !important;
     flex-flow: row nowrap;
     padding: 5px;
+    margin-top: 20px;
 }
 .title *{
     margin-right: 20px;
@@ -276,21 +282,21 @@ form #submitWrapper button:hover{
 .opened hr{
     border: none;
     height: 2px;
-    background-color: greenyellow;
+    background-color: #3e404f;
     margin: none !important;
     overflow: visible;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 .opened hr:after {
-    content: '✓ Ticket Opened';
+    content: 'Ticket Information';
     background-color: #292a34;
     padding: 10px;
     position: relative;
     top: -9px;
     border-radius: 5px;
     color: white;
-    border: greenyellow 2px solid;
+    border: #3e404f 2px solid;
 }
 .important{
         background-color: #cc37c0 !important;
@@ -318,12 +324,12 @@ form #submitWrapper button:hover{
     border: none;
     height: 2px;
     background-color: #3e404f;
-    margin: 40px 0 100px 0 !important;
+    margin: 40px 0 60px 0 !important;
     overflow: visible;
     text-align: center;
 }
 #logs:after {
-    content: 'Logs';
+    content: 'Messages';
     background-color: #292a34;
     padding: 10px;
     position: relative;
@@ -342,6 +348,66 @@ form #submitWrapper button:hover{
 .opened > p{
     margin-top: 25px;
     color: gray;
+}
+.ticketClosed{
+    background: red;
+    color: white;
+    width: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: 0;
+    text-align: center;
+    padding: 4px;
+}
+.messageContent{
+    background-color:#1e1f26;
+    height: auto;
+    display: block;
+    margin-bottom: 40px;
+}
+
+.noMessages{
+    text-align: center;
+    color: gray;
+    margin: 0;
+}
+
+.pageButtons{
+    display: flex;
+    justify-content: end;
+    margin: 20px 0 20px 0;
+}
+
+.pageButtons > *{
+    padding: 10px;
+    color: #cc37c0;
+    outline: none;
+    border: none;
+    background-color:#1e1f26;
+    margin-inline: 2px;
+    cursor: pointer;
+}
+
+.pageButtons > *:disabled{
+    color: #292a34;
+    background-color:#141419;
+    cursor: default;
+}
+.pageButtons > *:disabled:hover{
+    color: #292a34;
+    background-color:#141419;
+}
+
+.dateCreated{
+    margin-top: 8px !important;
+    color: gray !important;
+}
+
+.pageButtons > *:hover{
+    color: #141419;
+    background-color:#cc37c0;
 }
 
 @media screen and (max-width:600px){

@@ -46,11 +46,61 @@
     <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it.ticket.ticket_id%></p>
     <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
     <main>
+        <%if(it.ticket.closed !== 0){%>
+            <h4 class="ticketClosed">This ticket is closed. Press "Open Ticket", send a message or edit the ticket to reopen it.</h4>
+        <%}%>
         <div>
             <div>
                 <h1><%=decodeURI(atob(it.ticket.subject))%></h1>
                 <div class="ticketInfo">
-                <p>Last Edit: <%=it.ticket.editedIn == 0 ? "never" : new Date(it.ticket.editedIn).toDateString()%></p>
+                <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
+                if(opened[2].startsWith(0)){
+                    opened[2] = opened[2].slice(1);
+                }
+                if(opened[2].endsWith(1)){
+                    opened[2] = opened[2]+"st"
+                }else if(opened[2].endsWith(2)){
+                    opened[2] = opened[2]+"nd"
+                }else if(opened[2].endsWith(3)){
+                    opened[2] = opened[2]+"rd"
+                }else{
+                    opened[2] = opened[2]+"th"
+                }
+                opened = [opened[2], opened[1], opened[3]].join(" ");
+                 let edited = new Date(it.ticket.editedIn).toDateString().split(" ");
+                if(edited[2].startsWith(0)){
+                    edited[2] = edited[2].slice(1);
+                }
+                if(edited[2].endsWith(1)){
+                    edited[2] = edited[2]+"st"
+                }else if(edited[2].endsWith(2)){
+                    edited[2] = edited[2]+"nd"
+                }else if(edited[2].endsWith(3)){
+                    edited[2] = edited[2]+"rd"
+                }else{
+                    edited[2] = edited[2]+"th"
+                }
+                edited = [edited[2], edited[1], edited[3]].join(" ");
+                 let closed = new Date(it.ticket.closed).toDateString().split(" ");
+                if(closed[2].startsWith(0)){
+                    closed[2] = closed[2].slice(1);
+                }
+                if(closed[2].endsWith(1)){
+                    closed[2] = closed[2]+"st"
+                }else if(closed[2].endsWith(2)){
+                    closed[2] = closed[2]+"nd"
+                }else if(closed[2].endsWith(3)){
+                    closed[2] = closed[2]+"rd"
+                }else{
+                    closed[2] = closed[2]+"th"
+                }
+                closed = [closed[2], closed[1], closed[3]].join(" ");
+                %>
+                <p>Opened On: <%=opened%></p>
+                <% if(it.ticket.closed != 0){ %>
+                    <p id="closedOn">Closed On: <%=closed%></p>
+                <%}%>
+                <p>Last Edit: <%=it.ticket.editedIn == 0 ? "never" : edited%></p>
                 <p>Ticket ID: <%=it.ticket.ticket_id%></p>
                 </div>
             </div>
@@ -92,32 +142,33 @@
                     <p id="screenshotsStatus">Max. 5 screenshots</p>
                 </fieldset>
                 <fieldset id="submitWrapper">
-                <button type="button" class="buttons" id="closeTicket"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                <%if(it.ticket.closed == 0){%>
+                    <button type="button" class="buttons" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                <%}else{%>
+                    <button type="button" class="buttons" id="closeTicket" onclick="ticketOpen()"><i class="fa fa-check-circle"></i> Open Ticket</button>
+                <%}%>
                 <button type="button" class="buttons" onclick="editMode()"><i class="fa fa-edit"></i> Edit Ticket</button>
-                <input class="buttons" type="submit" value="Send a new message">
+                <button class="buttons highlightButton" type="button" onclick="sendMessage()">Send a new message</button>
                 <button type="reset" form="editTicket" class="editButtons hidden" onclick="editMode()"><i class="fa fa-times-circle"></i> Discard Edits</button>
                 <button type="button" class="editButtons hidden important" onclick="saveEdits()"><i class="fa fa-check-circle"></i> Apply Edits</button>
                 </fieldset>
             </form>
-            <span class="logs">
+            <span class="logs" id="messageWrapper">
                 <hr id="logs">
+                <div class="pageButtons">
+                    <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                    <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+                </div>
+                <div id="actualMessageWrapper">
+                </div>
+                <div class="pageButtons" id="bottomButtons">
+                    <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                    <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+                </div>
+                <div>
+                <span class="messageContent"></span>
                 <span class="opened">
                     <hr>
-                    <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
-                if(opened[2].startsWith(0)){
-                    opened[2] = opened[2].slice(1);
-                }
-                if(opened[2].endsWith(1)){
-                    opened[2] = opened[2]+"st"
-                }else if(opened[2].endsWith(2)){
-                    opened[2] = opened[2]+"nd"
-                }else if(opened[2].endsWith(3)){
-                    opened[2] = opened[2]+"rd"
-                }else{
-                    opened[2] = opened[2]+"th"
-                }
-                opened = [opened[2], opened[1], opened[3]].join(" ");%>
-                <p><%=opened%>:</p>
                     <span class="title">
                         <img src="/billing/public/images/User.svg" height="50" width="50" alt="User">
                             <div>
@@ -127,7 +178,9 @@
                     </span>
                     <span id="content"></span>
                 </span>
+                
             </span>
+            </div>
             <p id="errorText"></p>
         </div>
     </main>
