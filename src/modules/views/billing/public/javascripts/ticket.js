@@ -71,6 +71,11 @@ async function sendMessage(){
         const response = await axios.post(`/api/tickets/${ticketID}`, {
             content: editor.getContents()
         });
+        if(closedOn?.innerHTML != undefined){
+            await axios.put(`/api/tickets/${ticketID}`, {
+                reopen: 1
+            });
+         }
         location.reload();
         console.log(response);
         }catch(e){
