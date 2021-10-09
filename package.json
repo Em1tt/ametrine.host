@@ -14,14 +14,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Em1tt/amethyst.host.git"
+    "url": "git+https://github.com/Em1tt/ametrine.host.git"
   },
-  "author": "Amethyst",
+  "author": "Ametrine",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Em1tt/amethyst.host/issues"
+    "url": "https://github.com/Em1tt/ametrine.host/issues"
   },
-  "homepage": "https://github.com/Em1tt/amethyst.host#readme",
+  "homepage": "https://github.com/Em1tt/ametrine.host#readme",
   "dependencies": {
     "argon2": "^0.28.2",
     "better-sqlite3": "^7.4.3",
@@ -37,7 +37,7 @@
     "mailparser": "^3.3.3",
     "morgan": "^1.10.0",
     "ms": "^2.1.2",
-    "node-fetch": "^3.0.0",
+    "node-fetch": "^2.6.5",
     "nodemailer": "^6.6.3",
     "smtp-server": "^3.9.0",
     "stripe": "^8.178.0"

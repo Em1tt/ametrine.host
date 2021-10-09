@@ -1,67 +1,67 @@
 /**
  * API for the Support Ticket System
  */
- import express                 from 'express';
- import { sql }                 from '../sql';
- import { auth }                from './auth';
- import { permissions }         from '../permissions'
- import ticket_categories       from '../../ticket_categories.json';
- 
- function encode_base64(str) {
-     if (!str.length) return false;
-     return btoa(encodeURIComponent(str));
- }
- function decode_base64(str) {
-     if (!str.length) return false;
-     return decodeURIComponent(atob(str));
- }
- 
- const settings = {
-     maxTitle: 100, // Maximum Length for the title of the ticket.
-     maxBody: 2000, // Maximum Length for messages.
-     maxUploadLimit: 12 // 12 MB limit for files/images.
- }
- 
- /**
-  * Allowed Method
-  * @param req Request
-  * @param res Response
-  * @param type Type of whats allowed (GET, POST, etc)
-  * @param paramName The name of the parameter
-  * @param userData userData
-  * @returns boolean
-  */
- function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: any): boolean {
-     if (!permissions.hasPermission(userData['permission_id'], `/tickets/${paramName}`)) {
-         res.sendStatus(403);
-         return false;
-     }
-     res.set("Allow", type.join(", "));
-     if (!type.includes(req.method)) {
-         res.sendStatus(405);
-         return false;
-     }
-     return true;
- }
- function editContent(content, timestamp, ticket_id) {
-     sql.db.prepare('UPDATE tickets SET content = ?, editedIn = ? WHERE ticket_id = ?').run(content, timestamp, ticket_id);
- }
- 
- export const prop = {
-     name: "tickets",
-     desc: "Support Ticket System",
-     rateLimit: {
-         max: 20,
-         time: 10 * 1000
-     },
-     run: async (req: express.Request, res: express.Response): Promise<any> => {
-         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
-         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
-         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
-         if (!allowedMethods.includes(req.method)) return res.sendStatus(405) // If the request isn't included from allowed methods, then respond with Method not Allowed.
-         let userData = await auth.verifyToken(req, res, false, "both") //true
-         if (userData == 101) {
-             const newAccessToken = await auth.regenAccessToken(req, res);
+import express                 from 'express';
+import { sql }                 from '../sql';
+import { auth }                from './auth';
+import { permissions }         from '../permissions'
+import ticket_categories       from '../../ticket_categories.json';
+
+function encode_base64(str) {
+    if (!str.length) return false;
+    return btoa(encodeURIComponent(str));
+}
+function decode_base64(str) {
+    if (!str.length) return false;
+    return decodeURIComponent(atob(str));
+}
+
+const settings = {
+    maxTitle: 100, // Maximum Length for the title of the ticket.
+    maxBody: 2000, // Maximum Length for messages.
+    maxUploadLimit: 12 // 12 MB limit for files/images.
+}
+
+/**
+ * Allowed Method
+ * @param req Request
+ * @param res Response
+ * @param type Type of whats allowed (GET, POST, etc)
+ * @param paramName The name of the parameter
+ * @param userData userData
+ * @returns boolean
+ */
+function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: any): boolean {
+    if (!permissions.hasPermission(userData['permission_id'], `/tickets/${paramName}`)) {
+        res.sendStatus(403);
+        return false;
+    }
+    res.set("Allow", type.join(", "));
+    if (!type.includes(req.method)) {
+        res.sendStatus(405);
+        return false;
+    }
+    return true;
+}
+function editContent(content, timestamp, ticket_id) {
+    sql.db.prepare('UPDATE tickets SET content = ?, editedIn = ? WHERE ticket_id = ?').run(content, timestamp, ticket_id);
+}
+
+export const prop = {
+    name: "tickets",
+    desc: "Support Ticket System",
+    rateLimit: {
+        max: 20,
+        time: 10 * 1000
+    },
+    run: async (req: express.Request, res: express.Response): Promise<any> => {
+        const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
+        const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
+        res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
+        if (!allowedMethods.includes(req.method)) return res.sendStatus(405) // If the request isn't included from allowed methods, then respond with Method not Allowed.
+        let userData = await auth.verifyToken(req, res, false, "both") //true
+        if (userData == 101) {
+            const newAccessToken = await auth.regenAccessToken(req, res);
              if (typeof newAccessToken != "string") return false;
              userData = await auth.verifyToken(req, res, false, "both")
          }
@@ -135,41 +135,41 @@
              }
              case "list": { // Lists the tickets
                  if (allowedMethod(req, res, ["GET"], paramName, userData)) {
-                     let page = 1;
-                     let status = -1;
-                     const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
-                     let pageLimit = 10;
-                     if (req.query.page) page = parseInt(req.query.page.toString());
-                     if (req.query.status == "closed") status = 1;
-                     if (req.query.status == "opened") status = 0;
-                     if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
-                     let tickets = [];
-                     const elements = [userData["user_id"]]
-                     if (status != -1) elements.push(status)
-                     if (typeof level != 'object') { // fix forbidden bug
-                         if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
-                         elements.push(pageLimit, (page - 1) * pageLimit);
-                         tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE user_id = ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                               .all(elements);
-                     } else {
-                         if (level > 5 || level < 3) return res.sendStatus(403);
-                         if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
-                         elements[0] = (level + 1)
-                         elements.push(pageLimit, (page - 1) * pageLimit);
-                         tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE level < ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                               .all(elements);
-                     }
-                     /*const result = tickets.map(ticket => {
-                         const name = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(ticket.user_id);
-                         if (name && name.length) {
-                             ticket['name'] = name;
-                             if (ticket['content'].length > 100) {
-                                 ticket['content'] = ticket['content'].slice(0, 100);
-                             }
-                             return ticket;
-                         }
-                     });*/
-                     return res.status(200).json(tickets.map(newTicket));
+                    let page = 1;
+                    let status = -1;
+                    const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
+                    let pageLimit = 10;
+                    if (req.query.page) page = parseInt(req.query.page.toString());
+                    if (req.query.status == "closed") status = 1;
+                    if (req.query.status == "opened") status = 0;
+                    if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
+                    let tickets = [];
+                    const elements = [userData["user_id"]]
+                    if (status != -1) elements.push(status)
+                    if (typeof level != 'object') { // fix forbidden bug
+                        if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
+                        elements.push(pageLimit, (page - 1) * pageLimit);
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE user_id = ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
+                                              .all(elements);
+                    } else {
+                        if (level > 5 || level < 3) return res.sendStatus(403);
+                        if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
+                        elements[0] = (level + 1)
+                        elements.push(pageLimit, (page - 1) * pageLimit);
+                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE level < ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
+                                              .all(elements);
+                    }
+                    /*const result = tickets.map(ticket => {
+                        const name = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(ticket.user_id);
+                        if (name && name.length) {
+                            ticket['name'] = name;
+                            if (ticket['content'].length > 100) {
+                                ticket['content'] = ticket['content'].slice(0, 100);
+                            }
+                            return ticket;
+                        }
+                    });*/
+                    return res.status(200).json(tickets.map(newTicket));
                  }
                  break;
              }

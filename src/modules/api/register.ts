@@ -16,10 +16,11 @@ export const prop = {
     run: async (req: express.Request, res: express.Response) => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
-        const { name, email, password } = req.body;
+        const { name, email, password, passwordConfirm } = req.body;
         if ([name, email, password].includes(undefined)) return res.status(406)
                                                                    .send("Please enter in a Name, Email, and Password.");
         
+
         function recaptcha() {
             const key = process.env.RECAPTCHA_SECRET;
             return new Promise((resolve, reject) => { // Promises are great.
@@ -44,6 +45,7 @@ export const prop = {
         if (userExists) return res.status(409)
                                   .send("409 Existing Email Exists (Conflict)."); // User exists
 
+        if (password != passwordConfirm) return res.status(406).send("Both password and confirm password much match!");
         const passResult = await auth.setPassword(password);
         if (passResult.result && passResult.result == 406) return res.status(406)
                                                                      .send("Password must not be less than 6 characters.");
