@@ -39,7 +39,7 @@ const registerUser = async (user) => {
                 errorText = "Password must not be less than 6 characters."
                 break;
             case "Error: Request failed with status code 403":
-                errorText = "Login failed. (Either due to Recaptcha or Login Token invalid)"
+                errorText = "Login failed. (" + e.response.data + ")"
                 break;
             case "Error: Request failed with status code 409":
                 errorText = "The email you provided has already been used!";
@@ -49,7 +49,8 @@ const registerUser = async (user) => {
         setTimeout(function() {
             regError.innerHTML = ''
         }, 10000)
-        console.error(e);
+        console.error();
+        console.log(JSON.stringify(e.response))
     }
 }
 

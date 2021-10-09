@@ -143,6 +143,8 @@ export const prop = {
                     if (req.query.status == "closed") status = 1;
                     if (req.query.status == "opened") status = 0;
                     if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
+                    if (isNaN(pageLimit)) pageLimit = 10;
+                    if (isNaN(page)) page = 1;
                     let tickets = [];
                     const elements = [userData["user_id"]]
                     if (status != -1) elements.push(status)
@@ -224,6 +226,9 @@ export const prop = {
                                  let pageLimit = 10;
                                  if (req.query.page) page = parseInt(req.query.page.toString());
                                  if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
+                                 if (isNaN(pageLimit)) pageLimit = 10;
+                                 if (isNaN(page)) page = 1;
+                                 
                                  let messages = await sql.db.prepare('SELECT msg_id, user_id, content, files, createdIn, editedIn FROM ticket_msgs WHERE ticket_id = ? ORDER BY createdIn DESC LIMIT ? OFFSET ?')
                                                              .all(ticketID, pageLimit, ((page - 1) * pageLimit));
                                  if (messages.length) { // If there are messages
