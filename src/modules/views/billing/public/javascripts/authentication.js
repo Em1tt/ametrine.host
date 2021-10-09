@@ -49,8 +49,7 @@ const registerUser = async (user) => {
         setTimeout(function() {
             regError.innerHTML = ''
         }, 10000)
-        console.error();
-        console.log(JSON.stringify(e.response))
+        console.error(e);
     }
 }
 
