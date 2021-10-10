@@ -426,6 +426,10 @@ form #submitWrapper button:hover{
     padding: 5px;
     font-size: 0.9rem;
 }
+#successText{
+    color: greenyellow;
+    
+}
 
 form input[type="submit"]{
     background-color: #1e1f26;

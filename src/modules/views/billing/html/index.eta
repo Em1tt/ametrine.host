@@ -40,19 +40,28 @@
     <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
     <script src="/billing/public/javascripts/theme.js" async defer></script>
 </head>
- <!--afwegwgwg-->
+
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
     <main>
-        <div>
+        <div class="content">
             <h1><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
             <hr>
-            <% if(!it.userData.email) {%>
+            <% if(!it.userData.name) {%> <!--Displayed only when user is not signed in -->
             <h2>Please sign-in to view your profile details.</h2>
-            <%}%>
-            <% if(it.userData.email){ %>
+            <div class="decorationWrapper">
+                <div class="decoration _0"></div>
+                <div class="decoration _1"></div>
+                <div class="decoration _2"></div>
+                <div class="decoration _3"></div>
+                <div class="decoration _4"></div>
+                <div class="decoration _5"></div>
+                <div class="decoration _6"></div>
+                <div class="decoration _7"></div>
+            </div>
+            <%}else{%> <!--Displayed when a user is signed in -->
                 <div class="cardWrapper">
-                    <div id="account">
+                    <div id="accountCard">
                         <h3><i class="fa fa-user-circle"></i> Account</h3>
                         <form>
                             <fieldset>
@@ -102,20 +111,9 @@
                         <h3><i class="fa fa-file-invoice"></i> Transactions</h3>
                     </div>
                 </div>
-            <% }else{%>
-                <div class="decowrapper">
-                <div class="deco"></div>
-                <div class="deco"></div>
-                <div class="deco"></div>
-                <div class="deco"></div>
-                <div class="deco"></div>
-                <div class="deco"></div>
-                <div class="deco"></div>
-                <div class="deco"></div>
-            </div>
-            <% }%>
+            <%}%>
         </div>
-        <aside class="hideMedium">
+        <aside class="hide medium">
             <a href="#"><div aria-hidden="true"></div></a>
         </aside>
     </main>

@@ -70,6 +70,7 @@
             </form>
             <%}%>
             <p id="errorText"></p>
+            <p id="successText"></p>
         </div>
     </main>
     <%~ E.includeFile('../public/templates/authentication.eta')%>

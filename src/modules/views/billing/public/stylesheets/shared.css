@@ -9,7 +9,7 @@ body > aside{
 body > aside > div{
     margin: 1rem;
 }
-body > aside > div > h3{
+#authentication > div > h3{
     background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
     background-clip: text;
     -webkit-background-clip: text;
@@ -306,6 +306,18 @@ body > aside > div > h3{
 #supportPopup a i{
     font-size: 2rem;
 }
+@media screen and (max-width: 1600px){
+    .hide.large {
+      visibility: hidden !important;
+      display: none !important;
+    }
+  }
+@media screen and (max-width: 1000px){
+    .hide.medium {
+        visibility: hidden !important;
+        display: none !important;
+      }
+}
 
 @media screen and (max-width:780px) {
     #announcements{
@@ -314,6 +326,10 @@ body > aside > div > h3{
     }
 }
 @media screen and (max-width:600px) {
+    .hide.small {
+        visibility: hidden !important;
+        display: none !important;
+      }
     #announcements{
         bottom: -400px;
         width: 280px;
@@ -323,6 +339,10 @@ body > aside > div > h3{
     }
 }
 @media screen and (max-width:400px) {
+    .hide.tiny {
+        visibility: hidden !important;
+        display: none !important;
+      }
     #announcements{
         left: 0px;
         width: 100%;

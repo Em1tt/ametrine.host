@@ -50,9 +50,6 @@ main > aside div {
 main > aside div:hover {
   filter: brightness(1);
 }
-.hideMedium {
-  height: 90vw;
-}
 main h1 {
   background: -webkit-linear-gradient(-200deg, #cc37c0 80%, #e6b530);
   background-clip: text;
@@ -67,14 +64,14 @@ main hr {
   height: 2px;
   background-color: #3e404f;
 }
-
-.decowrapper {
+/**/
+.decorationWrapper {
   display: flex;
   flex-flow: row wrap;
   margin-top: 10vw;
   align-items: baseline;
 }
-.deco {
+.decoration {
   display: block;
   border-radius: 20px;
   margin-right: 1rem;
@@ -83,53 +80,53 @@ main hr {
   filter: brightness(0.9);
   transition: 600ms ease;
 }
-.deco:hover {
+.decoration:hover {
   filter: brightness(1);
   transition: 600ms ease;
 }
-.deco:nth-of-type(1) {
+.decoration._0{
   width: 40%;
   background-color: #3e404f;
   height: 70px;
   min-width: 140px;
 }
-.deco:nth-of-type(2) {
+.decoration._1 {
   width: 50%;
   background-color: #333541;
   height: 70px;
   min-width: 150px;
 }
-.deco:nth-of-type(3) {
+.decoration._2 {
   width: 20%;
   background-color: #3e404f;
   height: 50px;
   min-width: 100px;
 }
-.deco:nth-of-type(4) {
+.decoration._3 {
   width: 35%;
   background-color: #333541;
   height: 50px;
   min-width: 130px;
 }
-.deco:nth-of-type(5) {
+.decoration._4 {
   width: 15%;
   background-color: #3e404f;
   height: 50px;
   min-width: 80px;
 }
-.deco:nth-of-type(6) {
+.decoration._5 {
   width: 60%;
   background-color: #333541;
   height: 30px;
   min-width: 160px;
 }
-.deco:nth-of-type(7) {
+.decoration._6 {
   width: 30%;
   background-color: #3e404f;
   height: 30px;
   min-width: 200px;
 }
-.deco:nth-of-type(8) {
+.decoration._7 {
   width: 35%;
   background-color: #3e404f;
   height: 40px;
@@ -250,7 +247,7 @@ main hr {
   color: #dce0ff;
 }
 
-#account {
+#accountCard {
   grid-area: account;
 }
 #security {
@@ -293,10 +290,7 @@ main hr {
   }
 
 @media screen and (max-width: 1000px) {
-  .hideMedium {
-    visibility: hidden !important;
-    display: none !important;
-  }
+
   main {
     grid-template-areas: "main";
     grid-template-columns: 90%;
@@ -317,6 +311,7 @@ main hr {
   }
 }
 @media screen and (max-width: 600px) {
+
   main {
     margin: 3rem 0 0 1rem;
     grid-template-areas: "main";
@@ -327,6 +322,7 @@ main hr {
   }
 }
 @media screen and (max-width: 427px) {
+
     .cardWrapper form div {
         display: flex;
         flex-flow: row nowrap;

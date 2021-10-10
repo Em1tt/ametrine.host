@@ -39,7 +39,7 @@ const registerUser = async (user) => {
                 errorText = "Password must not be less than 6 characters."
                 break;
             case "Error: Request failed with status code 403":
-                errorText = "Login failed. (" + e.response.data + ")"
+                errorText = "Login failed. (Either due to Recaptcha or Login Token invalid)"
                 break;
             case "Error: Request failed with status code 409":
                 errorText = "The email you provided has already been used!";
@@ -89,12 +89,12 @@ const switcher = async () => {
 }
 
 const toggleEditMode = async () => {
-    const name = document.querySelector("#account #account-fullName"),
-         email = document.querySelector("#account #account-email"),
-       button1 = document.querySelector("#account #button1"),
-       button2 = document.querySelector("#account #button2"),
-       button3 = document.querySelector("#account #button3"),
-       button4 = document.querySelector("#account #button4"),
+    const name = document.querySelector("#accountCard #account-fullName"),
+         email = document.querySelector("#accountCard #account-email"),
+       button1 = document.querySelector("#accountCard #button1"),
+       button2 = document.querySelector("#accountCard #button2"),
+       button3 = document.querySelector("#accountCard #button3"),
+       button4 = document.querySelector("#accountCard #button4"),
        passwordConfirm = document.querySelector("#account-confirm-password"),
        passwordConfirmLabel = document.querySelector("#account-confirm-password-label");
     name.readOnly ? name.readOnly = false : name.readOnly = true;
@@ -117,7 +117,7 @@ const toggleEditMode = async () => {
 };
 
 window.onload = () => {
-    const updateForm = document.querySelector('#account form');
+    const updateForm = document.querySelector('#accountCard form');
     const logOutButton = document.querySelector('#logOutButton');
     switcher();
     loginForm.addEventListener('submit', event => {
@@ -151,8 +151,8 @@ window.onload = () => {
         const name = updateForm.querySelector('#account-fullName').value;
         const email = updateForm.querySelector('#account-email').value;
         const password = updateForm.querySelector('#account-confirm-password').value;
-
-        const userData = await axios.post(`/api/auth`, {email, password});
+        console.log(password);
+        const userData = await axios.put(`/api/user`, {name, email, password});
         console.log(userData);
         //const passwordCheck = axios.post(`/api/auth/verifyPassword`)(password, )
 
