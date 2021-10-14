@@ -13,6 +13,7 @@
     }
     return true;
 }
+let client;
 export const prop = {
     name: "user",
     desc: "API for users.",
@@ -20,6 +21,7 @@ export const prop = {
         max: 2,
         time: 10 * 1000
     },
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response) => {
         // Copy & Paste from tickets.ts hA
         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];

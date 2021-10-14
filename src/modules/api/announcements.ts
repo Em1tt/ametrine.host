@@ -14,6 +14,7 @@ function decode_base64(str) {
     if (!str.length) return false;
         return decodeURIComponent(atob(str));
 }
+let client;
 
 export const prop = {
     name: "announcements",
@@ -22,6 +23,7 @@ export const prop = {
        max: 10,
        time: 30 * 1000
     },
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed

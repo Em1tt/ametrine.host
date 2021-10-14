@@ -6,6 +6,8 @@ import { sql }                 from '../sql';
 import { auth }                from './auth';
 import fetch                   from 'node-fetch';
 
+let client;
+
 export const prop = {
     name: "register",
     desc: "Creates an account (Only on Website)",
@@ -13,6 +15,7 @@ export const prop = {
         max: 3,
         time: 2 * (60 * 1000) // 2 Minutes
     },
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response) => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.

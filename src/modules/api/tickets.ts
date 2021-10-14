@@ -46,7 +46,7 @@ function allowedMethod(req: express.Request, res: express.Response, type: Array<
 function editContent(content, timestamp, ticket_id) {
     sql.db.prepare('UPDATE tickets SET content = ?, editedIn = ? WHERE ticket_id = ?').run(content, timestamp, ticket_id);
 }
-
+let client;
 export const prop = {
     name: "tickets",
     desc: "Support Ticket System",
@@ -54,6 +54,7 @@ export const prop = {
         max: 20,
         time: 10 * 1000
     },
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
