@@ -36,13 +36,12 @@ export const prop = {
             if (typeof newAccessToken != "string") return false;
             userData = await auth.verifyToken(req, res, false, "both")
         }
-        //if (typeof userData != "object" && req.method != "GET") return res.sendStatus(userData);
+        if (typeof userData != "object" && req.method != "GET") return res.sendStatus(userData);
         switch (req.method) {
             case "GET": { // Fetching the latest announcement.
                 let type = req.query.type; // Announcement Type
                 if (!type) type = "null";
                 if (!["outage", "news", "warning", "null"].includes(type.toString().toLowerCase())) return res.sendStatus(406);
-                const params: Array<number> = [Date.now()]; // ESLint wont stop complaining about this.
                 return client.keys("announcement:?", async function (err, result) {
                     if (err) {
                         console.error(err);
@@ -106,7 +105,7 @@ export const prop = {
                 });
             }
             case "DELETE": { // For deleting an announcement.
-                //if (!permissions.hasPermission(userData['permission_id'], `/announcements`)) return res.sendStatus(403);
+                if (!permissions.hasPermission(userData['permission_id'], `/announcements`)) return res.sendStatus(403);
                 const id = req.body.type;
                 console.log(req.body)
                 if (!id) return res.sendStatus(406);
