@@ -22,8 +22,59 @@ import ms           from 'ms';
 const redisClient: redis.Client = redis.createClient({ password: process.env.REDIS_PASSWORD, user: "default" });
 redisClient.on("connect", function() {
     util.log("[Redis] Connected to Database.")
+    redisClient.db = { // Functions to make redis more easier to use than having a bunch of callback functions.
+      get: function(key: string): any {
+        return new Promise((resolve, reject): any => {
+          redisClient.get(key, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
+      hget: function(key: string, field: any): any {
+        return new Promise((resolve, reject) => {
+          redisClient.hget(key, field, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
+      hgetall: function(key: string): any {
+        return new Promise((resolve, reject) => {
+          redisClient.hgetall(key, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
+      hexists: function(key: string, field: any): Promise<any> {
+        return new Promise((resolve, reject) => {
+          redisClient.hexists(key, field, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
+      exists: function(key: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+          redisClient.exists(key, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
+      hset: function(values: Array<string | number>): Promise<any> {
+        return new Promise((resolve, reject) => {
+          redisClient.hset(values, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      }
+      
+    }
 })
-redisClient.options = {
+redisClient.JWToptions = {
   RTOptions: { // Refresh Token Options
     expiresIn: ms('90 days'),
     issuer: "Amethyst Host (1.0)"

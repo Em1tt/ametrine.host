@@ -105,7 +105,7 @@ export const auth = {
             case "refresh": // Refresh Token
                 return jwt.sign(data, process.env.REFRESH_TOKEN, opts);
             case "access": { // Access Token
-                const opts = JSON.parse(JSON.stringify(sql.ATOptions)); // Prevent mutation, because javascript likes to edit the object from sql.ts instead of the actual variable
+                const opts = JSON.parse(JSON.stringify(client.JWToptions.ATOptions)); // Prevent mutation, because javascript likes to edit the object from sql.ts instead of the actual variable
                 const expiryDate = parseInt(opts.expiresIn.toString().slice(0, -3));
                 opts.expiresIn = expiryDate
                 return jwt.sign(data, process.env.ACCESS_TOKEN, opts);
@@ -180,7 +180,7 @@ export const auth = {
         let accessTokenValid;
         if (["access", "both"].includes(type)) {
             try {
-                accessTokenValid = jwt.verify(accessToken, process.env.ACCESS_TOKEN, sql.ATOptions)
+                accessTokenValid = jwt.verify(accessToken, process.env.ACCESS_TOKEN, client.JWToptions.ATOptions)
                 if (!accessTokenValid) return (sendResponse) ? res.sendStatus(403) : 101; // Forbidden, 101 for allowing me to know if it needs to generate an Access Token.
                 user_id = accessTokenValid.id;
             } catch (e) {
