@@ -8,6 +8,8 @@ import { randomBytes, createHash }  from 'crypto';
 import { sql }                      from '../sql';
 import ms                           from 'ms';
 
+let client;
+
 export const auth = {
     /**
      * Logins in the user via amethyst.host
@@ -216,6 +218,7 @@ export const prop = {
         max: 10,
         time: 60 * 1000
     },
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<unknown> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.

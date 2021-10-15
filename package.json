@@ -39,6 +39,7 @@
     "ms": "^2.1.2",
     "node-fetch": "^2.6.5",
     "nodemailer": "^6.6.3",
+    "redis": "^3.1.2",
     "smtp-server": "^3.9.0",
     "stripe": "^8.178.0"
   },

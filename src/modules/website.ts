@@ -15,6 +15,29 @@ import { sql }      from './sql'
 import { Ticket }   from "../types/billing/ticket";
 import { UserData } from "../types/billing/user";
 import rateLimit    from "express-rate-limit";
+
+import redis        from 'redis';
+import ms           from 'ms';
+
+const redisClient: redis.Client = redis.createClient({ password: process.env.REDIS_PASSWORD, user: "default" });
+redisClient.on("connect", function() {
+    util.log("[Redis] Connected to Database.")
+})
+redisClient.options = {
+  RTOptions: { // Refresh Token Options
+    expiresIn: ms('90 days'),
+    issuer: "Amethyst Host (1.0)"
+  },
+  ATOptions: { // Access Token Options
+    expiresIn: ms('1h'),
+    issuer: "Amethyst Host (1.0)"
+  },
+}
+redisClient.on("error", function(error) {
+    util.log("[Redis] ERROR" + "\n" + error)
+})
+
+
 //import cors       from "cors"
 const app : express.Application = express();
 const html: string = path.join(__dirname, "views", "html");
@@ -34,6 +57,9 @@ for (const f of files) {
       message: "You are sending too many API requests! Please try again later.",
     }));
     // There could be another solution for doing this.
+  }
+  if (ep.prop["setClient"]) { // Set redis without having to require redis in all API endpoints
+    ep.prop["setClient"](redisClient);
   }
       
 }

@@ -8,6 +8,8 @@ const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST); 
 
 // stripe listen --forward-to localhost:3000/api/order/webhook
 
+let client;
+
 export const prop = {
     name: "order",
     desc: "API for ordering a service",
@@ -15,6 +17,7 @@ export const prop = {
       max: 1,
       time: 30 * 1000
     },
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed

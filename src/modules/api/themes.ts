@@ -22,9 +22,12 @@ const settings = {
     maxDesc: 2000 // Maximum Length for descriotion.
 }
 
+let client;
+
 export const prop = {
     name: "themes",
     desc: "Theme API",
+    setClient: function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
