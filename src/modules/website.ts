@@ -39,6 +39,14 @@ redisClient.on("connect", function() {
           })
         })
       },
+      incr: function(key: string): any {
+        return new Promise((resolve, reject) => {
+          redisClient.incr(key, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
       hgetall: function(key: string): any {
         return new Promise((resolve, reject) => {
           redisClient.hgetall(key, function(err, res) {

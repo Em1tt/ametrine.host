@@ -5,7 +5,6 @@ import express                      from 'express';
 import jwt                          from 'jsonwebtoken';
 import argon2, { argon2id }         from 'argon2';
 import { randomBytes, createHash }  from 'crypto';
-import { sql }                      from '../sql';
 import ms                           from 'ms';
 
 let client;
@@ -29,8 +28,8 @@ export const auth = {
         const verifiedHash = await auth.verifyPassword(req.body.password, data)
         if (!verifiedHash) return 403;
         
-        const userData = { email: data.email, name: data.name, id: data.user_id, permission_id: data.permission_id }
-        const refreshTokenOpts = JSON.parse(JSON.stringify(sql.RTOptions));
+        const userData = { email: data.email, name: data.name, id: parseInt(data.user_id), permission_id: parseInt(data.permission_id) }
+        const refreshTokenOpts = JSON.parse(JSON.stringify(client.JWToptions.RTOptions));
         let expiresIn = ms('7 days')
         if (rememberMe) {
             expiresIn = ms('90 days')
@@ -41,7 +40,11 @@ export const auth = {
         const accessToken = auth.genToken(userData, null, "access");
         const ip = createHash('sha256').update(ipAddr).digest('hex'); // Convert IP address to SHA256 hash
         expiresIn = expiresIn + createdIn;
-        sql.db.prepare("INSERT INTO sessions (user_id, jwt, createdIn, expiresIn, ip) VALUES (?, ?, ?, ?, ?)").run(userData.id, refreshToken, createdIn, expiresIn, ip) // Adds the token to DB in case the user decides to logout.
+        const sessionID = await client.db.incr("session_id")
+        await client.db.hset([`session:${sessionID}`, "session_id", sessionID, "user_id", userData.id, "jwt", refreshToken, "createdIn", createdIn, "expiresIn", expiresIn, "ip", ip, "rememberMe", 0]);
+        await client.db.hset([`sessions.jwtid`, `${refreshToken}:${userData.id}`, sessionID]);
+
+        client.expire(`session:${sessionID}`, ((rememberMe) ? ms('90 days') : ms('7 days')) / 1000); // Should automatically delete once the date has passed.
         return { email: data.email, refreshToken, accessToken, expiresIn: expiresIn };
     },
     setCookie: async (res: express.Response, name: string, value: string, expiresIn: number): Promise<boolean> => {
@@ -112,13 +115,12 @@ export const auth = {
             }
         }
     },
-    regenAccessToken: (req: express.Request, res: express.Response): string | number => {
-        const verifyToken = auth.verifyToken(req, res, false, "refresh")
+    regenAccessToken: async (req: express.Request, res: express.Response): Promise<string | number> => {
+        const verifyToken = await auth.verifyToken(req, res, false, "refresh")
         if (typeof verifyToken != "object") return verifyToken;
-        const data = sql.db.prepare("SELECT user_id, name, email, password, salt, verified, permission_id FROM users WHERE user_id = ?")
-                           .get(verifyToken["user_id"]);
+        const data = await client.db.hgetall(`user:${verifyToken["user_id"]}`);
         if (!data) return 404;
-        const userData = { email: data.email, name: data.name, id: data.user_id, permission_id: data.permission_id }
+        const userData = { email: data.email, name: data.name, id: parseInt(data.user_id), permission_id: parseInt(data.permission_id) }
         const accessToken = auth.genToken(userData, null, "access");
         const expiresIn = parseInt((ms("1h") + Date.now()).toString().slice(0, -3));
         auth.setCookie(res, "access_token", accessToken, expiresIn);
@@ -127,7 +129,7 @@ export const auth = {
     },
     updateAccessToken: async (req: express.Request, res: express.Response): Promise<Record<string, any> | boolean> => { // This was required because updating user data would require JWT access token to be updated, as it would just remain the same old information
         if (req.cookies.jwt) {
-            const newAccessToken = auth.regenAccessToken(req, res)
+            const newAccessToken = await auth.regenAccessToken(req, res)
             if (typeof newAccessToken != "string") return false;
             const verifyToken = await auth.verifyToken(req, res, false, "access")
             if (typeof verifyToken != "object") return false
@@ -148,7 +150,7 @@ export const auth = {
      * const userData = await <auth>.verifyToken(req, res, false, false); // Request, Response, sendResponse (False), useAuthorization (False).
      * if (typeof userData != "object") return res.sendStatus(userData); // If its not an object. (Could be either undefined or number.)
      */
-    verifyToken: (req: express.Request, res: express.Response, sendResponse: boolean, type: "access" | "refresh" | "both"): express.Response | number | Record<string, unknown> => { // Probably not a good idea to do this, as most people use next()
+    verifyToken: async (req: express.Request, res: express.Response, sendResponse: boolean, type: "access" | "refresh" | "both"): Promise<express.Response | number | Record<string, unknown>> => { // Probably not a good idea to do this, as most people use next()
         const currentDate = parseInt(Date.now().toString().slice(0, -3))
         const accessToken = req.cookies.access_token;
         const refreshToken = req.cookies.jwt;
@@ -159,16 +161,21 @@ export const auth = {
 
         let refreshTokenValid;
 
-        let tokenInDB: Array<number>;
+        //let tokenInDB: Array<number>;
+        let tokenInDB: Object;
 
         if (["refresh", "both"].includes(type)) {
             try {
-                refreshTokenValid = jwt.verify(refreshToken, process.env.REFRESH_TOKEN, sql.RTOptions)
+                refreshTokenValid = jwt.verify(refreshToken, process.env.REFRESH_TOKEN, client.JWToptions.RTOptions)
                 if (!refreshTokenValid) return forbidden() // Forbidden.
                 const ip = createHash('sha256').update(req.ip).digest('hex');
-                tokenInDB = sql.db.prepare('SELECT user_id FROM sessions WHERE user_id = ? AND jwt = ? AND expiresIn > ? AND ip = ?')
-                                .pluck().all(refreshTokenValid.id, refreshToken, currentDate, ip);
-                if (!tokenInDB.length) return forbidden()
+                const sessionID = await client.db.hget("sessions.jwtid", `${refreshToken}:${refreshTokenValid.id}`);
+                if (!sessionID) return forbidden()
+                tokenInDB = await client.db.hgetall(`session:${sessionID}`);
+                if (!tokenInDB) return forbidden();
+                if (tokenInDB["ip"] != ip) return forbidden();
+                if (tokenInDB["expiresIn"] < currentDate) return forbidden();
+                tokenInDB = [tokenInDB["user_id"]];
                 if (refreshTokenValid.exp < currentDate) return forbidden()
                 user_id = refreshTokenValid.id
             } catch (e) {
@@ -191,9 +198,7 @@ export const auth = {
         if (type == "both") {
             if (refreshTokenValid.id != accessTokenValid.id) return forbidden() // Forbidden.
         }
-         
-        const userExists = sql.db.prepare('SELECT count(*) FROM users WHERE user_id = ?')
-                                 .pluck().get(user_id);
+        const userExists = await client.db.exists(`user:${user_id}`);
         if (!userExists) return (sendResponse) ? res.sendStatus(404) : 404;
         let response = {};
         switch (type) {
@@ -225,15 +230,16 @@ export const prop = {
         if (req.cookies.jwt) return res.status(403).send("Already authenticated.")
         const { email, password, rememberMe } = req.body;
         if ([email, password].includes(undefined)) return res.status(406)
-                                                                    .send("Please enter in an Email, and Password.");
-        const account = await sql.db.prepare("SELECT user_id, name, email, password, salt, verified, permission_id FROM users WHERE email = ?")
-                                    .get(email); // Checks if the user exists.
+                                                             .send("Please enter in an Email, and Password.");
+        
+        const userID = await client.db.hexists('users.email', email); // Checks if the user exists.
+        if (!userID) return res.sendStatus(404);
+        const account = await client.db.hgetall(`user:${userID}`);
         if (!account) return res.sendStatus(404); // User doesn't exist.
         const loginToken = await auth.login(req, res, account, rememberMe);
         if (loginToken == 403) return res.sendStatus(403);
         auth.setCookie(res, "jwt", loginToken.refreshToken, loginToken.expiresIn);
         auth.setCookie(res, "access_token", loginToken.accessToken, loginToken.expiresIn);
-        
         res.json(loginToken)
     }
 }

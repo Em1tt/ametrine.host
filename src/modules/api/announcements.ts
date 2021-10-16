@@ -2,7 +2,6 @@
  * API for Showing announcements (or posting)
  */
 import express                 from 'express';
-import { sql }                 from '../sql';
 import { permissions }         from '../permissions'
 import { auth }                from './auth';
 
@@ -48,7 +47,7 @@ export const prop = {
                         return res.status(500).send("Error occured while retrieving keys for announcement. Please report this.")
                     }
                     let announcements = JSON.parse(JSON.stringify(await Promise.all(result.map(async announcementID => {
-                        return {...await client.db.hgetall(announcementID), announcementID}
+                        return await client.db.hgetall(announcementID)
                     })))) // ESLint errors if I do not do this.
                     announcements = announcements.filter(announcement => {
                         if (typeof userData != "object" && announcement["showToCustomersOnly"] == 1) {
@@ -95,7 +94,7 @@ export const prop = {
                         console.error(err);
                         return res.status(500).send("Error occured while incrementing announcement ID. Please report this.")
                     }
-                    await client.db.hset([`announcement:${announcementID}`, "announcementType", type, "announcementText", encode_base64(announcement), "deleteIn", deleteOn, "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
+                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", encode_base64(announcement), "deleteIn", deleteOn, "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
                     return res.status(200).json({announcement_id: announcementID})
                     /*client.sadd(`announcements`, announcementID, function(err) {
                         if (err) return console.error(err);

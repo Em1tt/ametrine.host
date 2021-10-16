@@ -2,7 +2,6 @@
  * API for ordering a service at Ametrine.Host
  */
 import express                 from 'express';
-import { sql }                 from '../sql';
 import { auth }                from './auth';
 const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST); // This looks bad but its required.
 
@@ -61,36 +60,58 @@ export const prop = {
                 }
                 switch (event.type) {
                     case 'checkout.session.completed': {
-                      const session = event.data.object;
-                      console.log("create order");
-                      if (session.payment_status === 'paid') {
-                        console.log("fulfill order (create VPS)");
-                      }
-                      break;
+                        const session = event.data.object;
+                        console.log("create order");
+                        if (session.payment_status === 'paid') {
+                            console.log("fulfill order (create VPS)");
+                        }
+                        break;
                     }
                 
                     case 'checkout.session.async_payment_succeeded': {
-                      const session = event.data.object;
-                      console.log("fulfill order (create VPS)");
-                      break;
+                        const session = event.data.object;
+                        console.log("fulfill order (create VPS)");
+                        break;
                     }
                 
                     case 'checkout.session.async_payment_failed': {
-                      const session = event.data.object;
-                      console.log("email customer saying to retry order");
-                      break;
+                        const session = event.data.object;
+                        console.log("email customer saying to retry order");
+                        break;
                     }
                   }
                 return res.sendStatus(200);
             }
             case "coupon": {
+                // Assuming you do these commands to create coupons
+                /**
+                 * INCR coupon_id 
+                 * HSET coupon:(ID) coupon_id (ID) coupon_name "NAME" value 0.25 forever 0 createdIn TIMESTAMP
+                 * ZADD coupons 0 (Coupon Code):(ID)
+                 * 
+                 */
                 res.set("Allow", "GET");
                 if (req.method != "GET") return res.sendStatus(405);
-                const { code } = req.query;
+                let { code } = req.query;
                 if (!code) return res.sendStatus(406);
-                const coupon = sql.db.prepare('SELECT coupon_name, value, forever FROM coupons WHERE coupon_name = ?').get(escape(code.toString()));
-                if (!coupon) return res.status(403).send("Coupon invalid or expired")
-                return res.status(200).json(coupon)
+                code = code.split(" ")[0]; // Making sure there are no spaces.
+                return client.zmscore(`coupons`, code, async function(err, couponID) {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send("Error occured while searching for index in coupons. Please report this.")
+                    }
+                    if (!couponID) return res.status(404).send("Coupon invalid or expired")
+                    const coupon = await client.db.hgetall(`coupon:${couponID}`)
+                    if (!coupon) return res.status(404).send("Coupon invalid or expired")
+                    
+                    // Fix issues
+                    coupon["coupon_id"] = parseInt(coupon["coupon_id"]);
+                    coupon["forever"] = parseInt(coupon["forever"]);
+                    coupon["value"] = parseInt(coupon["value"]);
+                    coupon["createdIn"] = parseInt(coupon["createdIn"]);
+                    
+                    return res.status(200).json(coupon)
+                })
             }
             default: return res.sendStatus(404);
         }
