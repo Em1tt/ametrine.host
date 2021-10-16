@@ -162,7 +162,7 @@ export const auth = {
         let refreshTokenValid;
 
         //let tokenInDB: Array<number>;
-        let tokenInDB: Object;
+        let tokenInDB: any;
 
         if (["refresh", "both"].includes(type)) {
             try {
