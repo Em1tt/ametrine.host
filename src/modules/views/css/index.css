@@ -1,7 +1,12 @@
 *{
     font-family: "Ubuntu";
-    font-smooth: always;
-    box-sizing:border-box !important;
+    font-smooth: auto;
+    box-sizing:border-box;
+    --light: #e2c5fd;
+    --default: #955bcc;
+    --dark: #604385;
+    --yellow: #ad702f;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -11,6 +16,260 @@ body {
     background-size: 10px 10px;
     background-position: 0 0, 15px 15px;
     background-repeat: repeat;
-    overflow: auto !important;
-    height: 2000px;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0;
+    overflow-x: hidden !important;
   }
+.finishedLoading{
+  opacity: 0;
+  transition: 0.5s ease-in;
+  display: none;
+}
+header{
+  display: grid;
+  place-items: center;
+  margin-top: 100px;
+  height: 500px;
+  width: 100%;
+}
+header h1{
+  color: var(--default);
+}
+header h2{
+  color: rgb(24, 24, 24);
+}
+header div{
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+header img{
+  animation: float 5s ease infinite;
+  pointer-events: none;
+}
+.subtitle{
+  max-width: 400px;
+}
+.divider{
+  display: block;
+  margin-top: 100px;
+  width: 80%;
+  height: 75px;
+  background: white;
+  margin-inline: auto;
+  border-radius: 50px 50px 0 0;
+}
+main{
+  width: 100vw !important;
+  background: white;
+  display: flex;
+  flex-flow: column wrap;
+  padding:  50px 200px 150px 200px;
+  align-content: center;
+}
+main > div{
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  row-gap: 100px;
+  margin-top: 50px;
+}
+.deploy h2{
+  color: var(--default);
+}
+.deploy h2 del{
+  color: var(--dark);
+  opacity: 1;
+}
+.deploy ol{
+  line-height: 3rem;
+  font-size: 1.5rem;
+  color:rgb(24, 24, 24);
+  margin-bottom: 0;
+}
+.deploy ol a{
+  color: var(--yellow);
+  text-decoration: none;
+}
+.deploy ol a:hover, .deploy ol a:focus-visible{
+  color: #e99842;
+}
+.deploy sub{
+  font-size: 0.9rem;
+  color: black;
+}
+.deploy .bWtext{
+  font-size: 18pt;
+}
+.deploy p a{
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--yellow);
+}
+.deploy p a:hover, .deploy p a:focus-visible{
+  color: #e99842;
+}
+.cardDivider{
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row wrap;
+}
+.cardDivider div{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  font-size: 0.9rem;
+  border: solid 2px var(--default);
+  border-radius: 10px;
+  margin-inline: 5px;
+  color: var(--default);
+}
+.cardDivider div *{
+  margin-inline: 2px;
+}
+.divider2{
+  display: block;
+  width: 80%;
+  height: 75px;
+  background: white;
+  margin-inline: auto;
+  border-radius: 0 0 50px 50px;
+}
+.mapSection{
+  background: #362742;
+  height: 1000px;
+}
+.worldMap{
+  width: 60%;
+  margin-inline: auto;
+  margin-top: 100px;
+  position: relative; 
+}
+.worldMap i{
+  font-size: 1.75vw;
+  position: absolute;
+  color: white;
+  text-align: center;
+}
+.worldMap i:hover, .worldMap i:focus-visible{
+  color: var(--light);
+}
+i.FL{
+  top: 10.2%;
+  left: 50.15%;
+}
+i.GE{
+  top: 17.5%;
+  left: 48.1%;
+}
+.mapSection h2{
+  margin-top: 75px;
+  text-align: center;
+  color: white;
+}
+.mapSection h3{
+  text-align: center;
+  color: var(--light);
+}
+.reviewsWrapper{
+  width: 100vw !important;
+  display: flex;
+  flex-flow: column wrap;
+  padding:  0 200px 150px 200px;
+  align-content: center;
+}
+.reviewsWrapper > span{
+  display: flex;
+  flex-flow: row wrap;
+  width: 60%;
+  margin-inline: auto;
+  margin-top: 50px;
+}
+.reviews > h2{
+  color: var(--default);
+}
+.reviews > p{
+  max-width: 300px;
+}
+
+.reviewsWrapper > span > div{
+  margin-inline: auto;
+}
+
+.carousel {
+  margin-inline: auto;
+  width: 400px;
+  position: relative;
+  top: 0px;
+  height: 300px;
+  border-radius: 10px;
+}
+
+.carousel-cell {
+  width: 400px;
+  height: 100%;
+  margin-inline: 10px;
+  padding-inline: 20px;
+  background-color: var(--dark);
+  border-radius: 9px;
+  display: flex;
+  flex-flow: column;
+  color: #dce0ff;
+  overflow: hidden;
+}
+
+.carousel-cell h3 {
+  color: var(--light);
+  margin-bottom: 0;
+}
+
+.carousel-cell sub {
+  margin-top: auto;
+}
+.carousel-cell a {
+  color: var(--light);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.carousel-cell a:hover, .carousel-cell a:focus-visible {
+  color: white;
+}
+.carousel-cell span {
+  margin-bottom: 10px;
+}
+
+.divider3{
+  display: block;
+  width: 80%;
+  height: 75px;
+  background: #362742;
+  margin-inline: auto;
+  border-radius: 0 0 50px 50px;
+}
+
+footer{
+  width: 100vw;
+  height: 150px;
+  background-color: white;
+  border-top:rgb(170, 170, 170) 1px solid;
+  display: grid;
+  place-items: center;
+}
+.trustpilot{
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--default);
+}
+.trustpilot:hover, .trustpilot:focus-visible{
+  color: var(--yellow);
+}
+@keyframes float{  
+  50%{
+    transform: translateY(20px);
+  }
+}

@@ -1,0 +1,3 @@
+<link rel="stylesheet" href="../css/backtotop.css" />
+<button id="backToTop" class="atTop" aria-label="Back To Top" role="button" onclick="backToTop();"><i class="fa fa-arrow-alt-circle-up"></i></button>
+<script src="../js/backtotop.js"></script>

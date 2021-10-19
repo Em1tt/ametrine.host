@@ -21,7 +21,6 @@ const settings = {
     maxBody: 2000, // Maximum Length for messages.
     maxUploadLimit: 12 // 12 MB limit for files/images.
 }
-
 /**
  * Allowed Method
  * @param req Request

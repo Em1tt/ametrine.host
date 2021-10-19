@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="../css/navbar.css" />
+<nav role="navigation">
+      <div>
+        <a href="#" tabindex="0">
+          <img src="../images/webp/AmetrineSmall.webp" alt="Logo" height="50px" width="50px" />
+          Ametrine.host
+        </a>
+      </div>
+      <span>
+        <a href="#header" id="skipNav" role="button">Skip Navigation</a>
+      </span>
+      <div>
+        <div class="dropdown" aria-label="Products dropdown" tabindex="0">
+          <p class="dropdown dropbtn">Products</p>
+          <div class="dropdown content">
+            <span aria-label="Products list">
+              <!--<p class="heading">For Developers</p>-->
+              <!--<hr />-->
+              <!--<div>-->
+                <a href="#"><p>Virtual Private Servers</p><sub>starting @ €0.75/GB</sub></a>
+                <a href="#"><p>Discord Bot Hosting</p><sub>coming soon</sub></a>
+              <!--</div>-->
+            </span>
+          </div>
+        </div>
+        <div class="dropdown" aria-label="Resources dropdown" tabindex="0">
+          <p class="dropdown dropbtn">Resources</p>
+          <div class="dropdown content">
+            <span aria-label="Support subcategory">
+              <p class="heading">Support</p>
+              <hr />
+              <div>
+                  <a href="#"><p>Join our Discord</p><sub>the fastest way to get help</sub></a>
+                  <a href="#"><p>Create a ticket</p><sub>the best way to get help</sub></a>
+                  <a href="#"><p>Browse knowledgebase</p><sub>coming soon...</sub></a>
+              </div>
+            </span>
+            <span aria-label="Legal subcategory">
+                <p class="heading">Legal</p>
+                <hr />
+                <div>
+                  <a href="#"><p>Privacy Policy</p></a>
+                  <a href="#"><p>Terms and Conditions</p></a>
+                  <a href="#"><p>Trademark Usage Guidelines</p></a>
+                </div>
+              </span>
+              <span aria-label="Documentation subcategory">
+                  <p class="heading">Documentation</p>
+                  <hr />
+                  <div>
+                      <a href="#"><p>Billing Panel API</p></a>
+                      <a href="#"><p>Wisp Panel API</p></a>
+                  </div>
+                </span>
+          </div>
+        </div>
+        <div class="dropdown" aria-label="About dropdown" tabindex="0">
+          <p class="dropdown dropbtn">About</p>
+          <div class="dropdown content">
+            <span aria-label="Ametrine.host subcategory">
+              <p class="heading">Ametrine.host</p>
+              <hr />
+              <div>
+                  <a href="#"><p>Our business plan</p></a>
+                  <a href="#"><p>Meet our staff</p></a>
+                  <a href="#"><p>Partners</p><sub>You can be here!</sub></a>
+              </div>
+            </span>
+            <span aria-label="Subcategory of our social media">
+              <p class="heading">Our socials</p>
+              <hr />
+              <div>
+                  <a href="#"><p>GitHub</p><sub>We're fully open-source</sub></a>
+                  <a href="#"><p>Discord</p><sub>Come hangout with us!</sub></a>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button aria-label="Dark mode switch"><i class="far fa-moon"></i></button>
+        <a href="#">Client Area</a>
+      </div>
+    </nav>

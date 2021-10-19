@@ -8,8 +8,27 @@ nav{
     padding: 20px 0 0 0;
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
-    overflow: auto;
+    overflow-y: visible;
+    z-index: 10;
+}
+nav > span{
+    display: flex;
+}
+nav #skipNav{
+    margin-top: 16px;
+    text-decoration: none;
+    cursor: default;
+    position: absolute;
+    top: -200px;
+}
+nav #skipNav:focus-visible{
+    margin-top: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    position: initial;
+    border-bottom: var(--default) 5px solid;
+    color: black;
+    font-weight: 500;
 }
 nav > div:nth-of-type(1) > a{
     text-align: center;
@@ -31,23 +50,17 @@ nav > div:nth-of-type(2){
     flex-flow: row nowrap;
     height: 70px;
 }
-nav > div:nth-of-type(2) > *{
-    font-weight: 500;
-    cursor: pointer;
-    padding-inline: 35px;
-    margin-top: none !important;
-    margin-bottom: 0 !important;
-}
-nav > div:nth-of-type(2) > *:hover{
-    border-bottom: #ca4a80 5px solid;
+nav > div:nth-of-type(2) > *:hover, nav > div:nth-of-type(2) > *:focus-visible{
+    border-bottom: var(--default) 5px solid;
 }
 nav > div:nth-of-type(3){
     display: flex;
     align-items:flex-start;
     padding-top: 5px;
+    margin-left: auto;
 }
 nav > div:nth-of-type(3) > a{
-    background-color: #ca4a80;
+    background-color: var(--default);
     text-align: center;
     margin-inline: 20px;
     padding: 10px 20px;
@@ -59,17 +72,100 @@ nav > div:nth-of-type(3) > a{
     height: auto !important;
     min-width: 150px;
 }
-nav > div:nth-of-type(3) > a:hover{
-    background-color: #db4885;
+nav > div:nth-of-type(3) > a:hover, nav > div:nth-of-type(3) > a:focus-visible{
+    background-color: var(--light);
+    color: black;
 }
 nav > div:nth-of-type(3) > button{
     margin-top: 4px;
     font-size: 1.9rem;
     border: none;
     background: none;
-    color: #ca4a80;
+    color: var(--default);
     cursor: pointer;
 }
-nav > div:nth-of-type(3) > button:hover{
-    color: #db4885;
+nav > div:nth-of-type(3) > button:hover, nav > div:nth-of-type(3) > button:focus-visible{
+    color: var(--dark);
 }
+nav .dropdown{
+    float: left;
+    overflow: hidden;
+}
+nav .dropdown.dropbtn {
+    font-weight: 500;
+    cursor: pointer;
+    padding-inline: 35px;
+    margin-top: none !important;
+    margin-bottom: 0 !important;
+  }
+nav .dropdown.content{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    z-index: 1;
+    top: 90px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid rgb(170, 170, 170);
+    padding: 12px 16px;
+    flex-flow: row wrap;
+}
+nav .dropdown.content span{
+    margin: 10px;
+    display: flex;
+    flex-flow: column wrap;
+}
+nav .dropdown.content span div{
+    margin: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(5, auto);
+}
+.dropdown.content p{
+    z-index: -1;
+}
+.dropdown.content a{
+    color: black;
+    padding: 20px 0px;
+    width: 250px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.dropdown.content p{
+    margin-bottom: 0;
+}
+.dropdown.content sub{
+    color: gray;
+    z-index: -1;
+}
+.dropdown.content a p::after{
+    content: "→";
+    position: relative;
+    left: 0px;
+    opacity: 0;
+}
+.dropdown.content a:hover, .dropdown.content a:hover sub, .dropdown.content a:focus-visible, .dropdown.content a:focus-visible sub{
+    color: var(--default);
+}
+.dropdown.content a:hover p::after, .dropdown.content a:focus-visible p::after{
+    opacity: 1;
+    left: 10px;
+    transition: ease 0.5s;
+}
+.dropdown.content span .heading{
+    margin: 10px 0 5px 0;
+    min-width: 180px;
+    display: flex;
+    flex-flow: column wrap;
+    max-height: 300px;
+    width: 100%;
+    font-weight: bold;
+}
+.dropdown.content hr{
+    background: black;
+    height: 2px;
+    width: 100%;
+}
+nav .dropdown:hover > .dropdown.content, nav .dropdown:focus-within > .dropdown.content {
+    display: flex;
+  }

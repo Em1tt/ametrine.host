@@ -1,11 +1,8 @@
-$(".carousel").flickity({
+var flkty = new Flickity( '.carousel', {
   cellSelector: ".carousel-cell",
   cellAlign: 'center',
   contain: true,
-  groupCells: true,
-  wrapAround: true,
   prevNextButtons: false,
-  pageDots: false,
-  autoPlay: 5000,
-  lazyLoad: true
+  wrapAround: true,
+  autoPlay: 3000
 });

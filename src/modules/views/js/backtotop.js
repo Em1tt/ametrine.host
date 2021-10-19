@@ -1,11 +1,7 @@
-$(document).on("scroll resize", () => {
-    if ($window.scrollTop() != 0) {
-        $(".back-to-top").addClass("back-to-top-display");
-    } else {
-        $(".back-to-top").removeClass("back-to-top-display");
-    }
-});
-
-const topFunction = () => {
-    $window.scrollTop(0);
+const backtotop = document.getElementById("backToTop");
+document.addEventListener("scroll", (event) => {
+    window.scrollY <= 1 ? backtotop.classList.add("atTop") : backtotop.classList.remove("atTop");
+})
+function backToTop(){
+    window.scrollTo(0, 0);
 }

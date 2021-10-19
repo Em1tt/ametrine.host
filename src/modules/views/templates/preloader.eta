@@ -1,0 +1,18 @@
+<!--Preload-->
+<link rel="preload" href="../css/preloader.css" as="style">
+<link rel="stylesheet" href="../css/preloader.css">
+
+<div id="preloader" aria-live="polite" aria-busy="true">
+    <img src="../images/1495.gif" alt="Loading..." height="128px" width="128px">
+</div>
+
+<noscript>
+    <style>
+        #preloader{
+          visibility: hidden;
+          display: none;
+          z-index: -20;
+        }
+    </style>
+</noscript>
+<script src="../js/preloader.js"></script>
