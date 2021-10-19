@@ -78,7 +78,8 @@
         </div>
       </div>
       <div>
-        <button aria-label="Dark mode switch"><i class="far fa-moon"></i></button>
-        <a href="#">Client Area</a>
+        <button aria-label="Dark mode switch" onclick="retheme();"><i class="far fa-moon"></i></button>
+        <a href="/billing">Client Area</a>
       </div>
     </nav>
+    <script src="../js/retheme.js"></script>

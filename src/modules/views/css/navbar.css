@@ -1,10 +1,35 @@
+.dark{
+    --nav-bg: rgb(20, 20, 20);
+    --nav-border: rgb(0, 0, 0);
+    --textcol: rgb(226, 226, 226);
+    --client-button-text: rgb(0, 0, 0);
+    --client-button-text-focus: rgb(255, 255, 255);
+    --dropdown-bg: rgb(15, 15, 15);
+    --dropdown-url: rgb(241, 241, 241);
+    --dropdown-hr: rgb(20,20,20);
+    --dropdown-sub: gray;
+    --heading-color: var(--default);
+}
+body{
+    --nav-bg: white;
+    --nav-border: rgb(170,170,170);
+    --textcol: black;
+    --client-button-text: white;
+    --client-button-text-focus: black;
+    --dropdown-bg: #f9f9f9;
+    --dropdown-url: black;
+    --dropdown-hr: rgb(209, 209, 209);
+    --dropdown-sub: gray;
+    --heading-color: rgb(0, 0, 0);
+}
+
 nav{
     position: fixed;
     left: 0;
     top: 0;
     width: 100vw;
-    background-color: white;
-    border-bottom:rgb(170, 170, 170) 1px solid;
+    background-color: var(--nav-bg);
+    border-bottom:var(--nav-border) 1px solid;
     padding: 20px 0 0 0;
     display: flex;
     flex-flow: row nowrap;
@@ -27,7 +52,7 @@ nav #skipNav:focus-visible{
     cursor: pointer;
     position: initial;
     border-bottom: var(--default) 5px solid;
-    color: black;
+    color: var(--textcol);
     font-weight: 500;
 }
 nav > div:nth-of-type(1) > a{
@@ -37,7 +62,7 @@ nav > div:nth-of-type(1) > a{
     flex-flow: row nowrap;
     align-items: center;
     width: auto;
-    color: black;
+    color: var(--textcol);
     text-decoration: none;
     font-size: 1.5rem;
     margin-left: 10px;
@@ -66,15 +91,14 @@ nav > div:nth-of-type(3) > a{
     padding: 10px 20px;
     border-radius: 5px;
     width: 50%;
-    color: white;
+    color: var(--client-button-text);
     text-decoration: none;
     font-size: 1.2rem;
     height: auto !important;
     min-width: 150px;
 }
 nav > div:nth-of-type(3) > a:hover, nav > div:nth-of-type(3) > a:focus-visible{
-    background-color: var(--light);
-    color: black;
+    color: var(--client-button-text-focus);
 }
 nav > div:nth-of-type(3) > button{
     margin-top: 4px;
@@ -97,16 +121,17 @@ nav .dropdown.dropbtn {
     padding-inline: 35px;
     margin-top: none !important;
     margin-bottom: 0 !important;
+    color: var(--textcol);
   }
 nav .dropdown.content{
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: var(--dropdown-bg);
     z-index: 1;
     top: 90px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border: 1px solid rgb(170, 170, 170);
+    border: 1px solid var(--nav-border);
     padding: 12px 16px;
     flex-flow: row wrap;
 }
@@ -125,7 +150,7 @@ nav .dropdown.content span div{
     z-index: -1;
 }
 .dropdown.content a{
-    color: black;
+    color: var(--dropdown-url);
     padding: 20px 0px;
     width: 250px;
     text-decoration: none;
@@ -135,7 +160,7 @@ nav .dropdown.content span div{
     margin-bottom: 0;
 }
 .dropdown.content sub{
-    color: gray;
+    color: var(--dropdown-sub);
     z-index: -1;
 }
 .dropdown.content a p::after{
@@ -160,9 +185,12 @@ nav .dropdown.content span div{
     max-height: 300px;
     width: 100%;
     font-weight: bold;
+    color: var(--heading-color);
 }
 .dropdown.content hr{
-    background: black;
+    background: var(--dropdown-hr);
+    color: var(--dropdown-hr);
+    border: none;
     height: 2px;
     width: 100%;
 }
