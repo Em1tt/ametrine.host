@@ -1,11 +1,15 @@
 export interface Ticket {
       readonly ticket_id    : number;
       readonly user_id      : number;
-      readonly subject      : string;
-      readonly content      : string;
-      readonly level        : number;
+      subject               : string;
+      content               : string;
+      readonly status       : string | number;
       readonly category_ids : string;
-      readonly opened       : Date;
-      readonly closed       : Date;
-  }
-  
+      readonly level        : number;
+      opened                : number | Date;
+      closed                : number | Date;
+      files                 : string[] | number;
+      createdIn             : number | Date;
+      editedIn              : number | Date;
+      priority              : string;
+}

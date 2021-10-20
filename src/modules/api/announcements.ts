@@ -4,6 +4,7 @@
 import express                 from 'express';
 import { permissions }         from '../permissions'
 import { auth }                from './auth';
+import { Announcement }        from '../../types/billing/announcement';
 
 function encode_base64(str) {
     if (!str.length) return false;
@@ -22,13 +23,13 @@ export const prop = {
        max: 10,
        time: 30 * 1000
     },
-    setClient: function(newClient) { client = newClient; },
+    setClient: function(newClient: unknown): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         if (!client) return res.status(500).send("Redis Client not available.");
         const allowedMethods = ["GET", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405);
-        const params = req.params[0].split("/").slice(1);
+        //const params = req.params[0].split("/").slice(1);
         let userData = await auth.verifyToken(req, res, false, "both");
         if (userData == 101) {
             const newAccessToken = await auth.regenAccessToken(req, res);
@@ -46,11 +47,11 @@ export const prop = {
                         console.error(err);
                         return res.status(500).send("Error occured while retrieving keys for announcement. Please report this.")
                     }
-                    let announcements = JSON.parse(JSON.stringify(await Promise.all(result.map(async announcementID => {
+                    let announcements: Array<Announcement> = await Promise.all(result.map(async announcementID => {
                         return await client.db.hgetall(announcementID)
-                    })))) // ESLint errors if I do not do this.
+                    })) // This is much better
                     announcements = announcements.filter(announcement => {
-                        if (typeof userData != "object" && announcement["showToCustomersOnly"] == 1) {
+                        if (typeof userData != "object" && announcement.showToCustomersOnly == 1) {
                             return null;
                         } else {
                             if (type != "null") {
@@ -65,7 +66,7 @@ export const prop = {
                     if (!announcements.length) return res.json([]);
                     if (!req.query.hasPermission) req.query.hasPermission = 0;
                     announcements = announcements.filter(announcement => announcement.showToCustomersOnly <= req.query.hasPermission);
-                    if (announcements.showToCustomersOnly && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
+                    if (announcements[0].showToCustomersOnly && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
                     return res.status(200).json(announcements.map(announcement => {
                         announcement.announcementText = decode_base64(announcement.announcementText);
                         return announcement;
@@ -106,11 +107,10 @@ export const prop = {
             case "DELETE": { // For deleting an announcement.
                 if (!permissions.hasPermission(userData['permission_id'], `/announcements`)) return res.sendStatus(403);
                 const id = req.body.type;
-                console.log(req.body)
                 if (!id) return res.sendStatus(406);
                 const findAnnouncement = await client.db.exists(`announcement:${id}`)
                 if (!findAnnouncement) return res.sendStatus(404); // Announcement not found.
-                client.del(`announcement:${id}`, function (err, result) {
+                client.del(`announcement:${id}`, function (err) {
                     if (err) {
                         console.error(err);
                         return res.status(500).send("Error occured while deleting the announcement. Please report this.")

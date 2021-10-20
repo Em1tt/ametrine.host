@@ -39,6 +39,14 @@ redisClient.on("connect", function() {
           })
         })
       },
+      hmget: function(key: string, fields: Array<any>): any {
+        return new Promise((resolve, reject) => {
+          redisClient.hmget(key, fields, function(err, res) {
+            if (err) return reject(err);
+            resolve(res);
+          })
+        })
+      },
       incr: function(key: string): any {
         return new Promise((resolve, reject) => {
           redisClient.incr(key, function(err, res) {
@@ -274,8 +282,18 @@ app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Resp
 
 
     // Will add priority to the fields.
-  const getTicket : Ticket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, level, editedIn, priority FROM tickets WHERE ticket_id = ?')
-                                                      .get(ticketID);
+  let getTicket : Ticket = await redisClient.db.hgetall(`ticket:${ticketID}`);
+  if (!getTicket) return s.sendStatus(404); // just in case
+  const newTicketProps = { ...getTicket};
+  newTicketProps["ticket_id"] = parseInt(getTicket.ticket_id.toString());
+  newTicketProps["user_id"] = parseInt(getTicket.user_id.toString());
+  newTicketProps["status"] = parseInt(getTicket.status.toString());
+  newTicketProps["opened"] = parseInt(getTicket.opened.toString());
+  newTicketProps["closed"] = parseInt(getTicket.closed.toString());
+  newTicketProps["createdIn"] = parseInt(getTicket.createdIn.toString());
+  newTicketProps["editedIn"] = parseInt(getTicket.editedIn.toString());
+  
+  getTicket = newTicketProps;
   if (!fs.existsSync(file)) return s.status(404)
                                     .send("if you were searching for a 404.. you found it!!");
   const userData: UserData = s.locals.userData;

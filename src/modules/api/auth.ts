@@ -7,7 +7,7 @@ import argon2, { argon2id }         from 'argon2';
 import { randomBytes, createHash }  from 'crypto';
 import ms                           from 'ms';
 
-let client;
+let client: any;
 
 export const auth = {
     /**
@@ -16,18 +16,17 @@ export const auth = {
      * @param {express.Response} res Express Response
      * @param {Object} data Data based from DB response
      * @param {Boolean} rememberMe If JWT session should be longer or not
-     * @returns {Promise<Object>} Email, Access Token, and Expiration.
+     * @returns {Promise<any>} Email, Access Token, and Expiration.
      * 
      * @example
      * const loginToken = await <auth>.login(req, res, account, rememberMe);
      * if (loginToken == 403) return res.sendStatus(403);
      */
-    login: async (req: express.Request, res: express.Response, data: any, rememberMe: boolean): Promise<any> => { // Logging in via amethyst.host
+    login: async (req: express.Request, res: express.Response, data: any, rememberMe: boolean): Promise<any> => { // Logging in via amethyst.hosti
         const createdIn = parseInt(Date.now().toString().slice(0, -3)) // because for some reason node js decides to use an expanded timestamp
         const ipAddr = req.socket.remoteAddress;
         const verifiedHash = await auth.verifyPassword(req.body.password, data)
         if (!verifiedHash) return 403;
-        
         const userData = { email: data.email, name: data.name, id: parseInt(data.user_id), permission_id: parseInt(data.permission_id) }
         const refreshTokenOpts = JSON.parse(JSON.stringify(client.JWToptions.RTOptions));
         let expiresIn = ms('7 days')
@@ -43,7 +42,6 @@ export const auth = {
         const sessionID = await client.db.incr("session_id")
         await client.db.hset([`session:${sessionID}`, "session_id", sessionID, "user_id", userData.id, "jwt", refreshToken, "createdIn", createdIn, "expiresIn", expiresIn, "ip", ip, "rememberMe", 0]);
         await client.db.hset([`sessions.jwtid`, `${refreshToken}:${userData.id}`, sessionID]);
-
         client.expire(`session:${sessionID}`, ((rememberMe) ? ms('90 days') : ms('7 days')) / 1000); // Should automatically delete once the date has passed.
         return { email: data.email, refreshToken, accessToken, expiresIn: expiresIn };
     },
@@ -72,7 +70,7 @@ export const auth = {
             salt: userSalt.toString('hex')
         }
     },
-    getUserData: async (req: express.Request, res: express.Response): Promise<Record<string, any> | boolean | number> => { // so ESLint can stop complaining
+    getUserData: async (req: express.Request, res: express.Response): Promise<Record<string, unknown> | boolean | number> => { // so ESLint can stop complaining
         if (req.cookies.jwt) {
             let verifyToken = await auth.verifyToken(req, res, false, "both")
             if (verifyToken == 101) {
@@ -127,7 +125,7 @@ export const auth = {
         req.cookies["access_token"] = accessToken;
         return accessToken;
     },
-    updateAccessToken: async (req: express.Request, res: express.Response): Promise<Record<string, any> | boolean> => { // This was required because updating user data would require JWT access token to be updated, as it would just remain the same old information
+    updateAccessToken: async (req: express.Request, res: express.Response): Promise<Record<string, unknown> | boolean> => { // This was required because updating user data would require JWT access token to be updated, as it would just remain the same old information
         if (req.cookies.jwt) {
             const newAccessToken = await auth.regenAccessToken(req, res)
             if (typeof newAccessToken != "string") return false;
@@ -159,7 +157,7 @@ export const auth = {
         if (!accessToken && !refreshToken && type == "both") return forbidden()
         let user_id: string;
 
-        let refreshTokenValid;
+        let refreshTokenValid: any;
 
         //let tokenInDB: Array<number>;
         let tokenInDB: any;
@@ -184,7 +182,7 @@ export const auth = {
             }
             
         }
-        let accessTokenValid;
+        let accessTokenValid: any;
         if (["access", "both"].includes(type)) {
             try {
                 accessTokenValid = jwt.verify(accessToken, process.env.ACCESS_TOKEN, client.JWToptions.ATOptions)
@@ -223,7 +221,7 @@ export const prop = {
         max: 10,
         time: 60 * 1000
     },
-    setClient: function(newClient) { client = newClient; },
+    setClient: function(newClient: unknown): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<unknown> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
@@ -231,7 +229,6 @@ export const prop = {
         const { email, password, rememberMe } = req.body;
         if ([email, password].includes(undefined)) return res.status(406)
                                                              .send("Please enter in an Email, and Password.");
-        
         const userID = await client.db.hexists('users.email', email); // Checks if the user exists.
         if (!userID) return res.sendStatus(404);
         const account = await client.db.hgetall(`user:${userID}`);

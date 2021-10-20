@@ -2,16 +2,16 @@
  * API for the Support Ticket System
  */
 import express                 from 'express';
-import { sql }                 from '../sql';
 import { auth }                from './auth';
 import { permissions }         from '../permissions'
 import ticket_categories       from '../../ticket_categories.json';
+import { Ticket }              from '../../types/billing/ticket';
 
-function encode_base64(str) {
+function encode_base64(str: string) {
     if (!str.length) return false;
     return btoa(encodeURIComponent(str));
 }
-function decode_base64(str) {
+function decode_base64(str: string) {
     if (!str.length) return false;
     return decodeURIComponent(atob(str));
 }
@@ -21,6 +21,7 @@ const settings = {
     maxBody: 2000, // Maximum Length for messages.
     maxUploadLimit: 12 // 12 MB limit for files/images.
 }
+
 /**
  * Allowed Method
  * @param req Request
@@ -42,10 +43,16 @@ function allowedMethod(req: express.Request, res: express.Response, type: Array<
     }
     return true;
 }
-function editContent(content, timestamp, ticket_id) {
-    sql.db.prepare('UPDATE tickets SET content = ?, editedIn = ? WHERE ticket_id = ?').run(content, timestamp, ticket_id);
+function editContent(content: string, timestamp: string | number | Date, ticket_id: string | number): Promise<unknown> {
+    return client.db.hset([`ticket:${ticket_id}`, "content", content, "editedIn", timestamp])
 }
-let client;
+
+function paginate(array: Array<unknown>, page_size: number, page_number: number): Array<unknown> { // https://stackoverflow.com/a/42761393
+    // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
+let client: any;
 export const prop = {
     name: "tickets",
     desc: "Support Ticket System",
@@ -53,7 +60,7 @@ export const prop = {
         max: 20,
         time: 10 * 1000
     },
-    setClient: function(newClient) { client = newClient; },
+    setClient: function(newClient: unknown): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
@@ -63,81 +70,112 @@ export const prop = {
         if (userData == 101) {
             const newAccessToken = await auth.regenAccessToken(req, res);
              if (typeof newAccessToken != "string") return false;
-             userData = await auth.verifyToken(req, res, false, "both")
-         }
-         if (typeof userData != "object") return res.sendStatus(userData);
-         const timestamp = Date.now();
-         let paramName = params[0]
-         if (!isNaN(parseInt(paramName))) {
-             paramName = ":ticketid";
-         }
-         let level = userData['permission_id'];
-         if (typeof level === "string"){
-             level = level.split(":");
-         }
-         if ([3,4].includes(parseInt(level[0]))) { // Developer & Administrator
-             level = 5;
-         }
-         if (level[1]) { // Support Level
-             level = parseInt(level[1])
-         }
- 
-         function newMsg(msg) {
-             //msg["content"] = decode_base64(msg["content"]);
-             msg["createdIn"] = new Date(msg["createdIn"]);
-             msg["editedIn"] = (msg["editedIn"] == 0) ? null : new Date(msg["editedIn"]);
-             return msg;
-         }
-         function newTicket(ticket) {
-             const name = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(ticket.user_id);
-             if (name && name.length) {
-                 ticket['name'] = name;
-                 if (ticket['content'].length > 100) {
-                     ticket['content'] = ticket['content'].slice(0, 100);
-                 }
-                 ticket["subject"] = decode_base64(ticket["subject"]);
-                 //ticket["content"] = decode_base64(ticket["content"]);
-                 ticket["opened"] = new Date(ticket["opened"]);
-                 ticket["editedIn"] = (ticket["editedIn"] == 0) ? null : new Date(ticket["editedIn"]);
-                 ticket["closed"] = (ticket["closed"] == 0) ? null : new Date(ticket["closed"]);
-                 return ticket;
-             }
-             return null;
-         }
- 
-         switch (paramName) {
-             case "create": {// Creates the ticket.
-                 if (allowedMethod(req, res, ["POST"], paramName, userData)) {
-                     const { subject, content, categories } = req.body;
-                     if (!subject || !content) return res.sendStatus(406);
-                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
-                     if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
-                     if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
-                     const category_ids = (categories) ? categories.split(",").map(category => {
-                         const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
-                         if (findCategory) {
-                             category = parseInt(category); // Converting it to Int in case of any strings at the end.
-                             return category;
-                         }
-                     }) : []
-                     await sql.db.prepare('INSERT INTO tickets (user_id, subject, content, category_ids, opened, createdIn) VALUES (?, ?, ?, ?, ?, ?)')
-                                 .run(userData["user_id"], encode_base64(subject), JSON.stringify(content), category_ids.join(","), timestamp, timestamp);
-                     const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, opened FROM tickets WHERE user_id = ? AND subject = ? AND opened = ?').get(userData["user_id"], encode_base64(subject), timestamp);
-                     if (!getTicket) return res.sendStatus(201)
-                     return res.status(201).json(getTicket);
-                 }
-                 break;
-             }
-             case "categories": { // Categories
-                 res.set("Allow", "GET");
-                 if (req.method != "GET") return res.sendStatus(405);
-                 return res.status(200).json(ticket_categories);
-             }
-             case "list": { // Lists the tickets
-                 if (allowedMethod(req, res, ["GET"], paramName, userData)) {
+            userData = await auth.verifyToken(req, res, false, "both")
+        }
+        if (typeof userData != "object") return res.sendStatus(userData);
+        const timestamp = Date.now();
+        let paramName = params[0]
+        if (!isNaN(parseInt(paramName))) {
+            paramName = ":ticketid";
+        }
+        let level = userData['permission_id'];
+        if (typeof level === "string"){
+            level = level.split(":");
+        }
+        if ([3,4].includes(parseInt(level[0]))) { // Developer & Administrator
+            level = 5;
+        }
+        if (level[1]) { // Support Level
+            level = parseInt(level[1])
+        }
+        function newMsg(msg: Ticket) {
+            //msg["content"] = decode_base64(msg["content"]);i
+            msg["createdIn"] = new Date(msg["createdIn"]);
+            msg["editedIn"] = (msg["editedIn"] == 0) ? null : new Date(msg["editedIn"]);
+            return msg;
+        }
+        async function newTicket(ticket: Ticket) {
+            const name = await client.db.hget(`user:${ticket.user_id}`, 'name');
+            if (name && name.length) {
+                const newTicketProps = { ...ticket};
+                newTicketProps["ticket_id"] = parseInt(ticket.ticket_id.toString());
+                newTicketProps["user_id"] = parseInt(ticket.user_id.toString());
+                newTicketProps["status"] = parseInt(ticket.status.toString());
+                newTicketProps["opened"] = parseInt(ticket.opened.toString());
+                newTicketProps["closed"] = parseInt(ticket.closed.toString());
+                newTicketProps["createdIn"] = parseInt(ticket.createdIn.toString());
+                ticket = newTicketProps;
+                ticket['name'] = name;
+                if (ticket['content'].length > 100) {
+                    ticket['content'] = ticket['content'].toString().slice(0, 100);
+                }
+                ticket["subject"] = decode_base64(ticket["subject"]).toString();
+                //ticket["content"] = decode_base64(ticket["content"]);
+                ticket["opened"] = new Date(ticket["opened"]);
+                ticket["editedIn"] = (ticket["editedIn"] == 0) ? null : new Date(ticket["editedIn"]);
+                ticket["closed"] = (ticket["closed"] == 0) ? null : new Date(ticket["closed"]);
+                return ticket;
+            }
+            return null;
+        }
+        switch (paramName) {
+            case "create": {// Creates the ticket.
+                if (allowedMethod(req, res, ["POST"], paramName, userData)) {
+                    const { subject, content, categories } = req.body;
+                    if (!subject || !content) return res.sendStatus(406);
+                    // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
+                    if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
+                    if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
+                    const category_ids = (categories) ? categories.split(",").map((category: any) => {
+                        const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
+                        if (findCategory) {
+                            category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                            return category;
+                        }
+                    }) : []
+                    return client.incr("ticket_id", async function(err, ticketID: number) {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).send("Error occured while incrementing ticket ID. Please report this.")
+                        }
+                        const ticketData = {
+                            ticket_id: ticketID,
+                            user_id: userData["user_id"],
+                            subject: encode_base64(subject),
+                            content: JSON.stringify(content),
+                            category_ids: category_ids.join(","),
+                            opened: timestamp
+                        }
+                        const getTicket = await client.db.hset([`ticket:${ticketID}`,
+                                            "ticket_id", ticketData.ticket_id,
+                                            "user_id", ticketData.user_id,
+                                            "subject", ticketData.subject,
+                                            "content", ticketData.content,
+                                            "category_ids", category_ids.join(","),
+                                            "status", 0,
+                                            "opened", ticketData.opened,
+                                            "closed", 0,
+                                            "files", 0,
+                                            "level", 3,
+                                            "createdIn", ticketData.opened,
+                                            "editedIn", 0,
+                                            "priority", "medium"]); // May need to add priority and level in req.body params
+                        if (!getTicket) return res.sendStatus(201);
+                        return res.status(201).json(ticketData);
+                    });
+                }
+                break;
+            }
+            case "categories": { // Categories
+                res.set("Allow", "GET");
+                if (req.method != "GET") return res.sendStatus(405);
+                return res.status(200).json(ticket_categories);
+            }
+            case "list": { // Lists the tickets
+                if (allowedMethod(req, res, ["GET"], paramName, userData)) {
                     let page = 1;
                     let status = -1;
-                    const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
+                    //const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
                     let pageLimit = 10;
                     if (req.query.page) page = parseInt(req.query.page.toString());
                     if (req.query.status == "closed") status = 1;
@@ -145,23 +183,36 @@ export const prop = {
                     if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                     if (isNaN(pageLimit)) pageLimit = 10;
                     if (isNaN(page)) page = 1;
-                    let tickets = [];
+                    //const tickets = [];
                     const elements = [userData["user_id"]]
                     if (status != -1) elements.push(status)
-                    if (typeof level != 'object') { // fix forbidden bug
-                        if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
-                        elements.push(pageLimit, (page - 1) * pageLimit);
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE user_id = ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                              .all(elements);
-                    } else {
-                        if (level > 5 || level < 3) return res.sendStatus(403);
-                        if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
-                        elements[0] = (level + 1)
-                        elements.push(pageLimit, (page - 1) * pageLimit);
-                        tickets = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, category_ids, status, opened, closed, editedIn, level FROM tickets WHERE level < ?' + statusQuery + ' ORDER BY opened ASC LIMIT ? OFFSET ?')
-                                              .all(elements);
-                    }
-                    /*const result = tickets.map(ticket => {
+                    return client.keys("ticket:?", async function (err, result) {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).send("Error occured while retrieving keys for tickets. Please report this.")
+                        }
+                        let tickets: Array<Ticket> = await Promise.all(result.map(async ticketID => {
+                            const ticket = await client.db.hgetall(ticketID);
+                            return ticket;
+                        }))
+                        let ticketWhere: (ticket: Ticket) => boolean;
+                        if (typeof level != 'object') { // fix forbidden bug
+                            if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
+                            elements.push(pageLimit, (page - 1) * pageLimit);
+                            ticketWhere = (ticket: Ticket) => ticket.user_id == userData["user_id"];
+                        } else {
+                            if (level > 5 || level < 3) return res.sendStatus(403);
+                            if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
+                            elements[0] = (level + 1)
+                            elements.push(pageLimit, (page - 1) * pageLimit);
+                            ticketWhere = (ticket: Ticket) => ticket.level <= level;
+                        }
+                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket) && (["opened","closed"].includes(req.query.status)) ? ticket.status == req.query.status : true)
+                                                      .sort((a,b) => (a.opened as number) - (b.opened as number)), pageLimit, page) as Array<Ticket>; // typescript requires me to declare .opened as number
+                        return res.status(200).json(await Promise.all(tickets.map(await newTicket)));
+                    })
+ 
+                     /*const result = tickets.map(ticket => {
                         const name = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(ticket.user_id);
                         if (name && name.length) {
                             ticket['name'] = name;
@@ -171,172 +222,214 @@ export const prop = {
                             return ticket;
                         }
                     });*/
-                    return res.status(200).json(tickets.map(newTicket));
-                 }
-                 break;
-             }
-             case ":ticketid": { // Ticket ID
-                 const ticketID = parseInt(params[0])
-                 if (params[1]) { // Without api/tickets/:ticketid/:msgid
-                     if (allowedMethod(req, res, ["GET", "PATCH", "DELETE"], paramName, userData)) { // copy paste
-                         if (ticketID < 0) return res.sendStatus(406);
-                         const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, editedIn, level FROM tickets WHERE ticket_id = ?')
-                                                       .get(ticketID);
-                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
-                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
-                         const msgID = parseInt(params[1])
-                         if (msgID < 0) return res.sendStatus(406);
-                         const getMessage = await sql.db.prepare('SELECT msg_id, ticket_id, user_id, content, files, createdIn, editedIn FROM ticket_msgs WHERE ticket_id = ? AND msg_id = ?')
-                                                        .get(ticketID, msgID);
-                         if (!getMessage) return res.status(404).send("Message not found."); // If no message is found.
-                         const { content } = req.body;
-                         switch (req.method) {
-                             case "GET": { // Viewing the contents of a message (Not really sure why you would want to do this but it's there.)
-                                 return res.status(200).json(newMsg(getMessage));
-                             }
-                             case "PATCH": { // Editing the message.
-                                 if (getMessage.user_id != userData["user_id"]) return res.sendStatus(403);
-                                 const newContent = JSON.stringify(content);
-                                 await sql.db.prepare('UPDATE ticket_msgs SET content = ?, editedIn = ? WHERE ticket_id = ? AND msg_id = ?').run(newContent, timestamp, getTicket["ticket_id"], getMessage["msg_id"])
-                                 getMessage["content"] = newContent;
-                                 getMessage["editedIn"] = timestamp;
-                                 return res.status(200).json(newMsg(getMessage));
-                             }
-                             case "DELETE": { // Deleting a message
-                                 await sql.db.prepare('DELETE FROM ticket_msgs WHERE msg_id = ? AND ticket_id = ?').run(getMessage["msg_id"], getTicket["ticket_id"]);
-                                 return res.sendStatus(204);
-                             }
-                             default:
-                                 return res.sendStatus(404); // This should never happen.
-                         }
-                     }
-                 } else {
-                     if (allowedMethod(req, res, ["GET", "POST", "PUT", "DELETE"], paramName, userData)) {
-                         if (ticketID < 0) return res.sendStatus(406);
-                         const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, level, category_ids, opened, closed, editedIn, level FROM tickets WHERE ticket_id = ?')
-                                                         .get(ticketID); // ESLint wants me to use const
-                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
-                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
-                         const { content } = req.body;
-                         // Using {} at switch cases because ESLint is complaining
-                         
-                         switch (req.method) {
-                             case "GET": { // Viewing the Ticket Conversation.
-                                 let page = 1;
-                                 let pageLimit = 10;
-                                 if (req.query.page) page = parseInt(req.query.page.toString());
-                                 if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
-                                 if (isNaN(pageLimit)) pageLimit = 10;
-                                 if (isNaN(page)) page = 1;
-                                 
-                                 let messages = await sql.db.prepare('SELECT msg_id, user_id, content, files, createdIn, editedIn FROM ticket_msgs WHERE ticket_id = ? ORDER BY createdIn DESC LIMIT ? OFFSET ?')
-                                                             .all(ticketID, pageLimit, ((page - 1) * pageLimit));
-                                 if (messages.length) { // If there are messages
-                                     messages = messages.map(newMsg);
-                                     getTicket['msgs'] = messages;
-                                 }
-                                 
-                                 return res.status(200).json(newTicket(getTicket));
-                             }
-                             case "POST": { // Sends a new message to that ticket. (Responds with the message content)
-                                 if (!content) return res.sendStatus(406);
-                                 if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
-                                 
-                                 await sql.db.prepare('INSERT INTO ticket_msgs (ticket_id, user_id, content, createdIn) VALUES (?, ?, ?, ?)')
-                                             .run(getTicket["ticket_id"], userData["user_id"], JSON.stringify(content), timestamp);
-                                 const getMsg = await sql.db.prepare('SELECT msg_id, ticket_id, user_id, content, createdIn FROM ticket_msgs WHERE user_id = ? AND content = ? AND createdIn = ?').get(userData["user_id"], JSON.stringify(content), timestamp);
-                                 if (!getMsg) return res.sendStatus(201);
-                                 return res.status(201).json(getMsg);
-                             }
-                             case "PUT": { // Updates the status on the ticket (Either opening it again after being closed, setting tags, etc)
-                                 const { closed, subject, categories, reopen, priority, content } = req.body;
-                                 let updated = false;
- 
-                                 /**
+                     
+                }
+                break;
+            }
+            case ":ticketid": { // Ticket ID
+                const ticketID = parseInt(params[0])
+                if (params[1]) { // Without api/tickets/:ticketid/:msgid
+                    if (allowedMethod(req, res, ["GET", "PATCH", "DELETE"], paramName, userData)) { // copy paste
+                        if (ticketID < 0) return res.sendStatus(406);
+                        const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
+                        if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
+                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
+                        const msgID = parseInt(params[1])
+                        if (msgID < 0) return res.sendStatus(406);
+                        const getMessage = await client.db.hgetall(`ticket_msg:${ticketID}:${msgID}`);
+                        if (!getMessage) return res.status(404).send("Message not found."); // If no message is found.
+                        const { content } = req.body;
+                        switch (req.method) {
+                            case "GET": { // Viewing the contents of a message (Not really sure why you would want to do this but it's there.)
+                                return res.status(200).json(newMsg(getMessage));
+                            }
+                            case "PATCH": { // Editing the message.
+                                if (getMessage.user_id != userData["user_id"]) return res.sendStatus(403);
+                                const newContent = JSON.stringify(content);
+                                await client.db.hset([`ticket_msg:${getTicket["ticket_id"]}:${getMessage["msg_id"]}`, "content", newContent, "editedIn", timestamp])
+                                getMessage["content"] = newContent;
+                                getMessage["editedIn"] = timestamp;
+                                return res.status(200).json(newMsg(getMessage));
+                            }
+                            case "DELETE": { // Deleting a message
+                                return client.del(`ticket_msg:${getTicket["ticket_id"]}:${getMessage["msg_id"]}`, function (err) {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).send("Error occured while deleting the message. Please report this.")
+                                    }
+                                    return res.sendStatus(204);
+                                })
+                            }
+                            default:
+                                return res.sendStatus(404); // This should never happen.
+                        }
+                    }
+                } else {
+                    if (allowedMethod(req, res, ["GET", "POST", "PUT", "DELETE"], paramName, userData)) {
+                        if (ticketID < 0) return res.sendStatus(406);
+                        const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
+                        if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
+                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
+                        const { content } = req.body;
+                        // Using {} at switch cases because ESLint is complaining
+                        
+                        switch (req.method) {
+                            case "GET": { // Viewing the Ticket Conversation.
+                                let page = 1;
+                                let pageLimit = 10;
+                                if (req.query.page) page = parseInt(req.query.page.toString());
+                                if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
+                                if (isNaN(pageLimit)) pageLimit = 10;
+                                if (isNaN(page)) page = 1;
+                                return client.keys(`ticket_msg:${ticketID}:?`, async function (err, result) {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")
+                                    }
+                                    let messages: Array<any> = await Promise.all(result.map(async messageID => {
+                                        const message = await client.db.hgetall(messageID);
+                                        message["msg_id"] = parseInt(message["msg_id"]);
+                                        message["ticket_id"] = parseInt(message["ticket_id"]);
+                                        message["user_id"] = parseInt(message["user_id"]);
+                                        message["createdIn"] = parseInt(message["createdIn"]);
+                                        message["editedIn"] = parseInt(message["editedIn"]);
+                                        return message;
+                                    }))
+                                    if (messages.length) { // If there are messages
+                                        messages = paginate(messages.sort((a,b) => (a.createdIn) - (b.createdIn)), pageLimit, page);
+                                        messages = messages.map(newMsg);
+                                        getTicket['msgs'] = messages;
+                                    }
+                                    return res.status(200).json(await newTicket(getTicket));
+                                });
+                            }
+                            case "POST": { // Sends a new message to that ticket. (Responds with the message content)
+                                if (!content) return res.sendStatus(406);
+                                if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
+                                return client.incr("ticket_msg_id", async function(err, messageID: number) {
+                                    if (err) {
+                                        console.error(err);
+                                        return res.status(500).send("Error occured while incrementing ticket ID. Please report this.")
+                                    }
+                                    const msgData = {
+                                        msg_id: messageID,
+                                        ticket_id: getTicket["ticket_id"],
+                                        user_id: userData["user_id"],
+                                        content: JSON.stringify(content),
+                                        opened: timestamp
+                                    }
+                                    const getMsg = await client.db.hset([`ticket_msg:${ticketID}:${messageID}`,
+                                                        "msg_id", msgData.msg_id,
+                                                        "ticket_id", msgData.ticket_id,
+                                                        "user_id", msgData.user_id,
+                                                        "content", msgData.content,
+                                                        "files", 0,
+                                                        "createdIn", timestamp,
+                                                        "editedIn", 0]);
+                                    if (!getMsg) return res.sendStatus(201);
+                                    return res.status(201).json(msgData);
+                                });
+                            }
+                            case "PUT": { // Updates the status on the ticket (Either opening it again after being closed, setting tags, etc)
+                                const { closed, subject, categories, reopen, priority, content } = req.body;
+                                let updated = false;
+                                /**
                                   * closed (closed=1) - Close the ticket
                                   * subject (subject=Hello World) - Subject of the Ticket (title)
                                   * content (content=Lorem ipsum dolor...) - Content of the Ticket.
                                   * categories (categories=0,1) - Categories for the ticket.
                                   * reopen (reopen=1) - Reopens the ticket
                                   */
- 
-                                 if (closed && closed == "1" && !reopen) { // If closed is provided, close the ticket.
-                                     if (getTicket["closed"] != 0) return res.sendStatus(204);
-                                     sql.db.prepare('UPDATE tickets SET status = 1, closed = ? WHERE ticket_id = ?').run(timestamp, getTicket["ticket_id"]);
-                                     updated = true;
-                                 }
-                                 if (reopen && reopen == "1") { // If reopen is provided, Open the ticket again.
-                                     if (getTicket["closed"] == 0) return res.sendStatus(406);
-                                     sql.db.prepare('UPDATE tickets SET status = 0, opened = ?, closed = 0 WHERE ticket_id = ?').run(timestamp, getTicket["ticket_id"]);
-                                     updated = true;
-                                 }
- 
-                                 
-                                 //if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
-                                 if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
-                                 if (subject && subject.length) {
-                                     sql.db.prepare('UPDATE tickets SET subject = ?, editedIn = ? WHERE ticket_id = ?').run(encode_base64(subject), timestamp, getTicket["ticket_id"]);
-                                     if (content) {
-                                         editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"])
-                                     }
-                                     updated = true;
-                                 }
-                                 if (content) {
-                                     editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"]);
-                                     updated = true;
-                                 }
-                                 if (categories && categories.length) {
-                                     let category_ids = []
-                                     console.log(typeof categories)
-                                     if (typeof categories == "string") {
-                                         category_ids = (categories) ? categories.split(",").map(category => { // TS is telling me that number cant be converted to string when parseInt on this, but it works on the else statement
-                                             const findCategory = ticket_categories.find(cate => cate.id == category);
-                                             if (findCategory) {
-                                                 //category = parseInt(category); // Converting it to Int in case of any strings at the end.
-                                                 return category;
-                                             }
-                                         }) : []
-                                     } else {
-                                         category_ids = categories.map(category => {
-                                             const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
-                                             if (findCategory) {
-                                                 category = parseInt(category); // Converting it to Int in case of any strings at the end.
-                                                 return category;
-                                             }
-                                         })
-                                     }
-                                     if (!category_ids.length) return res.sendStatus(406);
-                                     sql.db.prepare('UPDATE tickets SET category_ids = ? WHERE ticket_id = ?').run(category_ids.join(","), getTicket["ticket_id"]);
-                                     updated = true;
-                                 }
-                                 if (priority && priority !== null){
-                                     sql.db.prepare('UPDATE tickets SET priority = ? WHERE ticket_id = ?').run(priority, getTicket["ticket_id"]);
-                                     updated = true;
-                                 }
-                                 return (updated) ? res.sendStatus(204) : res.sendStatus(406)
-                             }
-                             case "DELETE": { // Closes the Ticket.
-                                 if (permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`) && req.body.force) { // Force delete a message. (Used for spam tickets)
-                                     await sql.db.prepare('DELETE FROM tickets WHERE ticket_id = ?').run(getTicket["ticket_id"]);
-                                     if (req.body.msgs) {
-                                         await sql.db.prepare('DELETE FROM ticket_msgs WHERE ticket_id = ?').run(getTicket["ticket_id"]);
-                                     }
-                                     return res.sendStatus(204);
-                                 } else { // Closing a ticket. (Not deleting)
-                                     await sql.db.prepare('UPDATE tickets SET status = 1, closed = ? WHERE ticket_id = ?').run(timestamp, getTicket["ticket_id"]);
-                                     return res.sendStatus(204);
-                                 }
-                             }
-                             default:
-                                 return res.sendStatus(404); // This should never happen.
-                         }
-                     }
-                 }
-                 break;
-             }
-             default: // If none of the above are provided.
-                 return res.status(404).send("didnt find owo"); // excuse me what
-         }
-     }
- }
+                                if (closed && closed == "1" && !reopen) { // If closed is provided, close the ticket.
+                                    if (getTicket["closed"] != 0) return res.sendStatus(204);
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 1, "closed", timestamp])
+                                    updated = true;
+                                }
+                                if (reopen && reopen == "1") { // If reopen is provided, Open the ticket again.
+                                    if (getTicket["closed"] == 0) return res.sendStatus(406);
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 0, "opened", timestamp, "closed", 0])
+                                    updated = true;
+                                }
+                                //if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
+                                if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
+                                if (subject && subject.length) {
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "subject", encode_base64(subject), "editedIn", timestamp])
+                                    if (content) {
+                                        editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"])
+                                    }
+                                    updated = true;
+                                }
+                                if (content) {
+                                    editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"]);
+                                    updated = true;
+                                }
+                                if (categories && categories.length) {
+                                    let category_ids = []
+                                    if (typeof categories == "string") {
+                                        category_ids = (categories) ? categories.split(",").map(category => { // TS is telling me that number cant be converted to string when parseInt on this, but it works on the else statement
+                                            const findCategory = ticket_categories.find(cate => cate.id == category);
+                                            if (findCategory) {
+                                                //category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                                                return category;
+                                            }
+                                        }) : []
+                                    } else {
+                                        category_ids = categories.map(category => {
+                                            const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
+                                            if (findCategory) {
+                                                category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                                                return category;
+                                            }
+                                        })
+                                    }
+                                    if (!category_ids.length) return res.sendStatus(406);
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "category_ids", category_ids.join(",")])
+                                    updated = true;
+                                }
+                                if (priority && priority !== null){
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "priority", priority])
+                                    updated = true;
+                                }
+                                return (updated) ? res.sendStatus(204) : res.sendStatus(406)
+                            }
+                            case "DELETE": { // Closes the Ticket.
+                                if (permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`) && req.body.force) { // Force delete a message. (Used for spam tickets)
+                                    return client.del(`ticket:${getTicket["ticket_id"]}`, async function (err0) {
+                                        if (req.body.msgs) {
+                                            return client.keys(`ticket_msg:${ticketID}:?`, function (err, result) {
+                                                if (err) {
+                                                    console.error(err);
+                                                    return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")
+                                                }
+                                                result.map(msgID => {
+                                                    return client.del(`ticket_msg:${getTicket["ticket_id"]}:${msgID}`, function (err2) {
+                                                        if (err2) {
+                                                            console.error(err);
+                                                        }
+                                                    })
+                                                })
+                                                return res.sendStatus(204);
+                                                
+                                            })
+                                        }
+                                        return res.sendStatus(204);
+                                    })
+                                } else { // Closing a ticket. (Not deleting)
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 1, "closed", timestamp])
+                                    return res.sendStatus(204);
+                                }
+                            }
+                            default:
+                                return res.sendStatus(404); // This should never happen.
+                          }
+                      }
+                  }
+                  break;
+              }
+            default: // If none of the above are provided.
+                return res.status(404).send("didnt find owo"); // excuse me what
+        }
+    }
+}
+  
  
