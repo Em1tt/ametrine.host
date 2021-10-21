@@ -29,18 +29,18 @@ Thanks to all collaborators for helping out! **Collaborators get a special Disco
 
 ### Starting up the backend
 Do this in the order specified
-> This backend has scripts built only for Linux machines as of now.
-```powershell
-npm i  #install dependencies
-npm run build #to build backend source
-npm run start #to start the backend up  
+**This backend has scripts built only for Linux machines as of now.**
+```shell
+npm i  # install dependencies
+npm run build # build backend source
+npm run start # start the backend up  
 ```
 
 ### Additional commands
-```powershell
-npm run nstart #Starts in a dev environment, with start traces
-npm run update #Pulls from the GitHub repo, builds and restarts the process
-npm run lint #Lints ts files
+```shell
+npm run nstart # start in a dev environment, with start traces
+npm run update # pull from the GitHub repo, build and restart the process
+npm run lint # lint ts files
 ```
 
 ## Modules
