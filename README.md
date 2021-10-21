@@ -28,7 +28,7 @@ Thanks to all collaborators for helping out! **Collaborators get a special Disco
 ## Code
 
 ### Starting up the backend
-Do this in the order specified
+Do this in the order specified.
 **This backend has scripts built only for Linux machines as of now.**
 ```shell
 npm i  # install dependencies
