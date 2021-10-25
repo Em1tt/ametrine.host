@@ -19,7 +19,7 @@ const loginUser = async (user) => {
                 break;
         }
         loginError.innerHTML = `${exclamationCircle} ${errorText}`;
-        setTimeout(function() {
+        setTimeout(function () {
             loginError.innerHTML = ''
         }, 10000)
         console.error(e);
@@ -39,14 +39,14 @@ const registerUser = async (user) => {
                 errorText = "Password must not be less than 6 characters."
                 break;
             case "Error: Request failed with status code 403":
-                errorText = "Login failed. (Either due to Recaptcha or Login Token invalid)"
+                errorText = "Login failed. (" + e.response.data + ")"
                 break;
             case "Error: Request failed with status code 409":
                 errorText = "The email you provided has already been used!";
                 break;
         }
         regError.innerHTML = `${exclamationCircle} Error: ${errorText}`;
-        setTimeout(function() {
+        setTimeout(function () {
             regError.innerHTML = ''
         }, 10000)
         console.error(e);
@@ -57,7 +57,7 @@ const logOut = async () => {
     try {
         const response = await axios.post("/api/user/logout");
         console.log(response)
-        window.scrollTo(0,0) // So users wont have to scroll back up, you can remove this if you want to.
+        window.scrollTo(0, 0) // So users wont have to scroll back up, you can remove this if you want to.
         location.reload();
     } catch (e) {
         console.log(e);
@@ -68,7 +68,7 @@ const updateUser = async (user) => {
     try {
         const response = await axios.put("/api/user", user);
         console.log(response)
-        if (response.status == 200) location.reload();
+        if ([200,202].includes(response.status)) location.reload(); // You can reset this back to response.status == 200 if you want to handle that differently. 202 means nothing was updated, 200 means something was updated.
     } catch (e) {
         console.log(e);
     }
@@ -77,8 +77,8 @@ const loginForm = document.querySelector("#login");
 const registerForm = document.querySelector('#register');
 const switcher = async () => {
     const switchButton = document.querySelector("#switchAuth"),
-          switchPrompt = document.querySelector("#switchPrompt"),
-          authHeader = document.querySelector("#authHeader");
+        switchPrompt = document.querySelector("#switchPrompt"),
+        authHeader = document.querySelector("#authHeader");
     switchButton.addEventListener("click", () => {
         loginForm.classList.toggle("hide");
         registerForm.classList.toggle("hide");
@@ -90,23 +90,23 @@ const switcher = async () => {
 
 const toggleEditMode = async () => {
     const name = document.querySelector("#accountCard #account-fullName"),
-         email = document.querySelector("#accountCard #account-email"),
-       button1 = document.querySelector("#accountCard #button1"),
-       button2 = document.querySelector("#accountCard #button2"),
-       button3 = document.querySelector("#accountCard #button3"),
-       button4 = document.querySelector("#accountCard #button4"),
-       passwordConfirm = document.querySelector("#account-confirm-password"),
-       passwordConfirmLabel = document.querySelector("#account-confirm-password-label");
+        email = document.querySelector("#accountCard #account-email"),
+        button1 = document.querySelector("#accountCard #button1"),
+        button2 = document.querySelector("#accountCard #button2"),
+        button3 = document.querySelector("#accountCard #button3"),
+        button4 = document.querySelector("#accountCard #button4"),
+        passwordConfirm = document.querySelector("#account-confirm-password"),
+        passwordConfirmLabel = document.querySelector("#account-confirm-password-label");
     name.readOnly ? name.readOnly = false : name.readOnly = true;
     email.readOnly ? email.readOnly = false : email.readOnly = true;
-    if(!name.readOnly){
+    if (!name.readOnly) {
         button1.style = "visibility: hidden; position: absolute;";
         button2.style = "visibility: hidden; position: absolute;";
         button3.style = "visibility: visible; position: block;";
         button4.style = "visibility: visible; position: block;";
         passwordConfirm.style = "visibility: visible; position: block;";
         passwordConfirmLabel.style = "visibility: visible; position: block;";
-    }else{
+    } else {
         button4.style = "visibility: hidden; position: absolute;";
         button3.style = "visibility: hidden; position: absolute;";
         button2.style = "visibility: visible; position: block;";
@@ -145,23 +145,20 @@ window.onload = () => {
             "g-recaptcha-response": grecaptcha.getResponse()
         });
     });
-    try{
-    updateForm.addEventListener('submit', async event => {
-        event.preventDefault();
-        const name = updateForm.querySelector('#account-fullName').value;
-        const email = updateForm.querySelector('#account-email').value;
-        const password = updateForm.querySelector('#account-confirm-password').value;
-        console.log(password);
-        const userData = await axios.put(`/api/user`, {name, email, password});
-        console.log(userData);
-        //const passwordCheck = axios.post(`/api/auth/verifyPassword`)(password, )
-
-        updateUser({
-            name,
-            email
+    try {
+        updateForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            const name = updateForm.querySelector('#account-fullName').value;
+            const email = updateForm.querySelector('#account-email').value;
+            const password = updateForm.querySelector('#account-confirm-password').value;
+            //const passwordCheck = axios.post(`/api/auth/verifyPassword`)(password, )
+            updateUser({
+                name,
+                email,
+                password
+            });
         });
-    });
-    }catch(e){
+    } catch (e) {
         e;
     }
     try {
@@ -172,9 +169,9 @@ window.onload = () => {
     } catch (e) {
         e;
     }
-    try{
+    try {
         prepareOrderButtons();
-    }catch(e){
+    } catch (e) {
         e;
     }
 };
