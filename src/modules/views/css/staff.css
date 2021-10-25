@@ -1,0 +1,224 @@
+*{
+  font-family: "Ubuntu";
+  font-smooth: auto;
+  box-sizing:border-box;
+  scroll-behavior: smooth;
+  
+  /*ACCENT COLORS*/
+  --light: #e2c5fd;
+  --default: #955bcc;
+  --dark: #604385;
+  --yellow: #ad702f;
+  --yellow-light: #e99842;
+}
+.dark{
+  --body-bg: #161616 !important;
+  --body-polka-bg: #111111; 
+  --paragraph-color: #d1d1d1;
+  --main-bg: rgb(14, 14, 14);
+  --map-bg: linear-gradient(to right, rgb(14, 14, 14), #1d1127);
+  --divider2: transparent;
+  --divider3: var(--map-bg);
+  --map-h2: white;
+  --footer-bg: rgb(20, 20, 20);
+  --footer-border: rgb(0, 0, 0);
+  --footer-text: white;
+  --deploy-h2: white;
+  --deploy-h3: var(--light);
+}
+body {
+  background-color: var(--body-bg);
+  background-image: radial-gradient(var(--body-polka-bg) 10%, transparent 11%),
+    radial-gradient(var(--body-polka-bg) 10%, transparent 11%);
+  background-size: 10px 10px;
+  background-position: 0 0, 15px 15px;
+  background-repeat: repeat;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column wrap;
+  margin: 0;
+  overflow-x: hidden !important;
+      /*Constant colors*/
+      --body-bg: rgb(240, 240, 240);
+      --body-polka-bg: #e3e3e3; 
+      --paragraph-color: #181818;
+      --main-bg: white;
+      --map-bg: #362742;
+      --divider2: var(--main-bg);
+      --divider3: var(--map-bg);
+      --map-h2: white;
+      --footer-bg: rgb(255, 255, 255);
+      --footer-text: rgb(0, 0, 0);
+      --footer-border: rgb(170,170,170);
+      --deploy-h2: black;
+      --deploy-h3: gray;
+}
+header{
+display: grid;
+place-items: center;
+margin-top: 100px;
+height: 500px;
+width: 100%;
+}
+header h1{
+color: var(--default);
+}
+header h2{
+color: var(--paragraph-color);
+}
+header div{
+display: flex;
+flex-flow: row wrap;
+width: 100%;
+justify-content: center;
+align-items: center;
+}
+header img{
+animation: float 5s ease infinite;
+pointer-events: none;
+}
+.subtitle{
+max-width: 400px;
+}
+.divider{
+display: block;
+margin-top: 100px;
+width: 80%;
+height: 75px;
+background: var(--main-bg);
+margin-inline: auto;
+border-radius: 50px 50px 0 0;
+}
+main{
+width: 100vw !important;
+background:  var(--main-bg);
+display: flex;
+flex-flow: column wrap;
+padding:  50px 200px 150px 200px;
+align-content: center;
+}
+main > div{
+display: grid;
+grid-template-columns: repeat(2, auto);
+row-gap: 50px;
+margin-top: 50px;
+}
+.deploy{
+  margin-inline: 30px;
+}
+.deploy h2{
+color: var(--deploy-h2);
+margin-bottom: 0;
+}
+.deploy h3{
+  color: var(--deploy-h3);
+  margin-top: 10px;
+  }
+.deploy p{
+  color: var(--paragraph-color);
+  margin-top: 10px;
+  max-width: 450px;
+} 
+.deploy h2 del{
+color: var(--dark);
+opacity: 1;
+}
+.deploy ol{
+line-height: 3rem;
+font-size: 1.5rem;
+color:var(--paragraph-color);
+margin-bottom: 0;
+}
+.deploy ol a{
+color: var(--yellow);
+text-decoration: none;
+}
+.deploy ol a:hover, .deploy ol a:focus-visible{
+color: var(--yellow-light);
+}
+.deploy sub{
+font-size: 0.9rem;
+color: var(--paragraph-color);
+}
+.deploy .bWtext{
+font-size: 18pt;
+color: var(--paragraph-color);
+}
+.deploy p a{
+text-decoration: none;
+font-weight: bold;
+color: var(--yellow);
+}
+.deploy p a:hover, .deploy p a:focus-visible{
+color: var(--yellow-light);
+}
+.cardDivider{
+margin-top: 10px;
+display: flex;
+flex-flow: row wrap;
+}
+.cardDivider div{
+display: flex;
+flex-flow: row nowrap;
+justify-content: center;
+align-items: center;
+padding: 2px;
+font-size: 0.9rem;
+border: solid 2px var(--default);
+border-radius: 10px;
+margin-inline: 5px;
+color: var(--default);
+}
+.cardDivider div *{
+margin-inline: 2px;
+}
+.divider2{
+display: block;
+width: 80%;
+height: 75px;
+background: var(--divider2);
+margin-inline: auto;
+border-radius: 0 0 50px 50px;
+}
+.mapSection{
+background: var(--map-bg);
+padding-bottom: 50px;
+}
+.mapSection h2{
+margin-top: 75px;
+text-align: center;
+color: var(--map-h2);
+}
+.mapSection h3{
+text-align: center;
+color: var(--light);
+}
+.mapSection h3 a{
+  text-align: center;
+  color: var(--yellow-light);
+  text-decoration: none;
+}
+footer{
+width: 100vw;
+height: 150px;
+background-color: var(--footer-bg);
+border-top:var(--footer-border) 1px solid;
+display: grid;
+place-items: center;
+}
+footer *{
+color: var(--footer-text);
+}
+.trustpilot{
+font-size: 1.2rem;
+text-decoration: none;
+color: var(--default);
+}
+.trustpilot:hover, .trustpilot:focus-visible{
+color: var(--yellow);
+}
+@keyframes float{  
+50%{
+  transform: translateY(20px);
+}
+}

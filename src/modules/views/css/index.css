@@ -49,11 +49,6 @@ body {
       --footer-text: rgb(0, 0, 0);
       --footer-border: rgb(170,170,170);
 }
-.finishedLoading{
-opacity: 0;
-transition: 0.5s ease-in;
-display: none;
-}
 header{
 display: grid;
 place-items: center;

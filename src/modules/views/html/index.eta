@@ -57,7 +57,7 @@
   <body>
     <%~ E.includeFile('../templates/preloader.eta') %>
     <%~ E.includeFile('../templates/navbar.eta') %>
-    <header id="header" role="heading">
+    <header id="header">
       <div>
         <span>
           <h1>First fully open-source host</h1>
@@ -119,7 +119,7 @@
       <div class="worldMap">
         <i class="fa fa-map-marker-alt FL poi" tabindex="0"></i><div class="tooltip"></div>
         <i class="fa fa-map-marker-alt GE poi" tabindex="0"></i><div class="tooltip"></div>
-        <img src="../images/svg/World Map.svg">
+        <img src="../images/svg/World Map.svg" alt="World Map">
       </div>
     </section>
     <div class="divider3"></div>

@@ -12,3 +12,8 @@
 .dark #preloader{
 background-color: rgb(20,20,20);
 }
+.finishedLoading{
+  opacity: 0;
+  transition: 0.5s ease-in;
+  display: none;
+  }

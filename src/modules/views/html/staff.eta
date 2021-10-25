@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Set the title of the html -->
+    <title>Ametrine.host</title>
+    <!-- Set the favicon -->
+    <link rel="icon" type="image/png" href="../images/favicon.png" />
+    <!-- Meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support."
+    />
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png" />
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml" />
+    <!--STYLESHEETS-->
+    <!--Asynchronous load-->
+    <link 
+      rel="stylesheet" 
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" 
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" 
+      crossorigin="anonymous"
+      media="print" 
+      onload="this.media='all'">
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      />
+    </noscript>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <!--Synchronous load-->
+    <link rel="stylesheet" href="../css/staff.css" />
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/flickity@2/dist/flickity.min.css"
+    />
+  </head>
+
+  <body>
+    <%~ E.includeFile('../templates/preloader.eta') %>
+    <%~ E.includeFile('../templates/navbar.eta') %>
+    <header id="header">
+      <div>
+        <span>
+          <h1>Meet our staff</h1>
+          <h2 class="subtitle">Learn about our diverse staff and their roles.</h2>
+        </span>
+        <span>
+            <img alt="staff" src="../images/svg/staff.svg" height="400px" width="400px">
+        </span>
+      </div>
+    </header>
+    <div class="divider"></div>
+    <main role="main" id="main">
+      <div>
+         <img alt="em1t" src="../images/staff/Em1t.png" height="200px" width="200px">
+         <div class="deploy">
+           <h2>Em1t</h2>
+           <h3>Owner, full-stack dev, graphic design</h3>
+           <p>Hello, my name is Richard and I started Ametrine.host.</p>
+         </div>
+                  <img alt="panel" src="../images/staff/Firee.png" height="200px" width="200px">
+         <div class="deploy">
+          <h2>Firee</h2>
+          <h3>Back-end dev</h3>
+          <p>Hello everyone, I'm Firee and I am one of the backend developers for ametrine.host. I like programming and I am also a Discord bot developer.</p>
+        </div>
+      </div>
+    </main>
+    <section class="mapSection">
+      <h2>Want to be here one day?</h2>
+      <h3>Join our <a href="#">Discord Server</a>, as we'll post staff applications there.</h3>
+    </section>
+    <footer>
+      <p>© 2021 Ametrine.host</p>
+    </footer>
+    <%~ E.includeFile('../templates/backtotop.eta') %>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="../js/tooltips.js"></script>
+    <script src="../js/flickity.js"></script>
+  </body>
+</html>

@@ -1,0 +1,362 @@
+*{
+    font-family: "Ubuntu";
+    font-smooth: auto;
+    box-sizing:border-box;
+    scroll-behavior: smooth;
+    
+    /*ACCENT COLORS*/
+    --light: #e2c5fd;
+    --default: #955bcc;
+    --dark: #604385;
+    --yellow: #ad702f;
+    --yellow-light: #e99842;
+  }
+  .dark{
+    --body-bg: #161616 !important;
+    --body-polka-bg: #111111; 
+    --paragraph-color: #d1d1d1;
+    --main-bg: rgb(14, 14, 14);
+    --map-bg: linear-gradient(to right, rgb(14, 14, 14), #1d1127);
+    --divider2: transparent;
+    --divider3: var(--map-bg);
+    --map-h2: white;
+    --footer-bg: rgb(20, 20, 20);
+    --footer-border: rgb(0, 0, 0);
+    --footer-text: white;
+    --about-border: rgb(20, 20, 20);
+    --card-about-border: white;
+    --card-about-p: white;
+    --summary-h2: var(--default);
+    --summary-h3: var(--light);
+    --summary-p: white;
+  }
+  body {
+    background-color: var(--body-bg);
+    background-image: radial-gradient(var(--body-polka-bg) 10%, transparent 11%),
+      radial-gradient(var(--body-polka-bg) 10%, transparent 11%);
+    background-size: 10px 10px;
+    background-position: 0 0, 15px 15px;
+    background-repeat: repeat;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column wrap;
+    margin: 0;
+    overflow-x: hidden !important;
+        /*Constant colors*/
+        --body-bg: rgb(240, 240, 240);
+        --body-polka-bg: #e3e3e3; 
+        --paragraph-color: #181818;
+        --main-bg: white;
+        --map-bg: #362742;
+        --divider2: var(--main-bg);
+        --divider3: var(--map-bg);
+        --map-h2: white;
+        --footer-bg: rgb(255, 255, 255);
+        --footer-text: rgb(0, 0, 0);
+        --footer-border: rgb(170,170,170);
+        --about-border: rgb(177, 177, 177);
+        --card-about-border: white;
+        --card-about-p: white;
+        --summary-h2: var(--default);
+        --summary-h3: var(--yellow);
+        --summary-p: black;
+  }
+  header{
+  display: grid;
+  place-items: center;
+  margin-top: 100px;
+  height: 500px;
+  width: 100%;
+  }
+  header h1{
+  color: var(--default);
+  }
+  header h2{
+  color: var(--paragraph-color);
+  }
+  header div{
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  }
+  header img{
+  animation: float 5s ease infinite;
+  pointer-events: none;
+  }
+  .subtitle{
+  max-width: 400px;
+  }
+  .divider{
+  display: block;
+  margin-top: 100px;
+  width: 80%;
+  height: 75px;
+  background: var(--main-bg);
+  margin-inline: auto;
+  border-radius: 50px 50px 0 0;
+  }
+  main{
+  width: 100vw !important;
+  background:  var(--main-bg);
+  display: flex;
+  flex-flow: column wrap;
+  padding:  50px 400px 150px 400px;
+  }
+  main > h2{
+      color: var(--default);
+      text-align: center;
+  }
+  main > div{
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  row-gap: 100px;
+  margin-top: 50px;
+  }
+  .cardWrapper{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    row-gap: 20px;
+    margin-top: 50px;
+    padding:  50px 400px 150px 400px;
+  }
+  .about{
+      text-align: center;
+      border: 1px solid var(--about-border);
+      padding: 20px;
+      margin-inline: 10px;
+      border-radius: 20px;
+  }
+  .cardWrapper .about{
+    border: 1px solid var(--card-about-border);
+  }
+  .about p{
+     color: var(--paragraph-color);
+  }
+  .cardWrapper .about p{
+    color: var(--card-about-p);
+  }
+  .about h3{
+  color: var(--default);
+  }
+  .about h2 del{
+  color: var(--dark);
+  opacity: 1;
+  }
+  .about ol{
+  line-height: 3rem;
+  font-size: 1.5rem;
+  color:var(--paragraph-color);
+  margin-bottom: 0;
+  }
+  .about ol a{
+  color: var(--yellow);
+  text-decoration: none;
+  }
+  .about ol a:hover, .about ol a:focus-visible{
+  color: var(--yellow-light);
+  }
+  .about sub{
+  font-size: 0.9rem;
+  color: var(--paragraph-color);
+  }
+  .about .bWtext{
+  font-size: 18pt;
+  color: var(--paragraph-color);
+  }
+  .about p a{
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--yellow);
+  }
+  .about p a:hover, .about p a:focus-visible{
+  color: var(--yellow-light);
+  }
+  .cardDivider{
+  margin-top: 10px;
+  display: flex;
+  flex-flow: row wrap;
+  }
+  .cardDivider div{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  font-size: 0.9rem;
+  border: solid 2px var(--default);
+  border-radius: 10px;
+  margin-inline: 5px;
+  color: var(--default);
+  }
+  .cardDivider div *{
+  margin-inline: 2px;
+  }
+  .divider2{
+  display: block;
+  width: 80%;
+  height: 75px;
+  background: var(--divider2);
+  margin-inline: auto;
+  border-radius: 0 0 50px 50px;
+  }
+  .mapSection{
+  background: var(--map-bg);
+  }
+  .worldMap{
+  width: 60%;
+  margin-inline: auto;
+  margin-top: 100px;
+  position: relative; 
+  }
+  .worldMap i{
+  font-size: 1.75vw;
+  position: absolute;
+  color: white;
+  text-align: center;
+  }
+  .worldMap i:hover, .worldMap i:focus-visible{
+  color: var(--light);
+  }
+  i.FL{
+  top: 10.2%;
+  left: 50.15%;
+  }
+  i.GE{
+  top: 17.5%;
+  left: 48.1%;
+  }
+  .mapSection h2{
+  margin-top: 75px;
+  text-align: center;
+  color: var(--map-h2);
+  }
+  .mapSection h3{
+  text-align: center;
+  color: var(--light);
+  }
+  .plansWrapper{
+  width: 100vw !important;
+  display: flex;
+  flex-flow: column wrap;
+  padding:  0 400px 150px 400px;
+  }
+  .plansWrapper > span{
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 50px;
+  text-align: left;
+  }
+  .plans{
+    margin-inline: 0 !important;
+  }
+  .plans > h2{
+  color: var(--default);
+  }
+  .plans > h3{
+    color: var(--yellow);
+    margin-left: 10px;
+    }
+  .plans > p{
+  color: var(--paragraph-color);
+  margin-left: 10px;
+  }
+  .skipMargin{
+    margin: 0 !important;
+  }
+  
+  .plansWrapper > span > div{
+  margin-inline: auto;
+  }
+  
+  .carousel {
+  margin-inline: auto;
+  width: 400px;
+  position: relative;
+  top: 0px;
+  height: 300px;
+  border-radius: 10px;
+  }
+  
+  .carousel-cell {
+  width: 400px;
+  height: 100%;
+  margin-inline: 10px;
+  padding-inline: 20px;
+  background-color: var(--dark);
+  border-radius: 9px;
+  display: flex;
+  flex-flow: column;
+  color: #dce0ff;
+  overflow: hidden;
+  }
+  
+  .carousel-cell h3 {
+  color: var(--light);
+  margin-bottom: 0;
+  }
+  
+  .carousel-cell sub {
+  margin-top: auto;
+  }
+  .carousel-cell a {
+  color: var(--light);
+  text-decoration: none;
+  white-space: nowrap;
+  }
+  .carousel-cell a:hover, .carousel-cell a:focus-visible {
+  color: white;
+  }
+  .carousel-cell span {
+  margin-bottom: 10px;
+  }
+  
+  .divider3{
+  display: block;
+  width: 80%;
+  height: 75px;
+  background: var(--divider3);
+  margin-inline: auto;
+  border-radius: 0 0 50px 50px;
+  }
+  
+  footer{
+  width: 100vw;
+  height: 150px;
+  background-color: var(--footer-bg);
+  border-top:var(--footer-border) 1px solid;
+  display: grid;
+  place-items: center;
+  }
+  footer *{
+  color: var(--footer-text);
+  }
+
+  summary{
+    width: 100vw !important;
+    background:  var(--main-bg);
+    display: flex;
+    flex-flow: column wrap;
+    padding:  50px 400px 150px 400px;
+    }
+  summary > h2{
+        color: var(--summary-h2);
+        text-align: center;
+    }
+    summary > h3{
+      color: var(--summary-h3);
+      margin-top: 0;
+      text-align: center;
+  }
+  summary > p{
+    color: var(--summary-p);
+  }
+  .trustpilot:hover, .trustpilot:focus-visible{
+  color: var(--yellow);
+  }
+  @keyframes float{  
+  50%{
+    transform: translateY(20px);
+  }
+  }

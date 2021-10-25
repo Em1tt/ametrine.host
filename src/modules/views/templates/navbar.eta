@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../css/navbar.css" />
 <nav role="navigation">
       <div>
-        <a href="#" tabindex="0">
+        <a href="/" tabindex="0">
           <img src="../images/webp/AmetrineSmall.webp" alt="Logo" height="50px" width="50px" />
           Ametrine.host
         </a>
@@ -30,8 +30,8 @@
               <p class="heading">Support</p>
               <hr />
               <div>
-                  <a href="#"><p>Join our Discord</p><sub>the fastest way to get help</sub></a>
-                  <a href="#"><p>Create a ticket</p><sub>the best way to get help</sub></a>
+                  <a href="https://discord.gg/HCSqx9xxZk"><p>Join our Discord</p><sub>the fastest way to get help</sub></a>
+                  <a href="/billing/tickets"><p>Create a ticket</p><sub>the best way to get help</sub></a>
                   <a href="#"><p>Browse knowledgebase</p><sub>coming soon...</sub></a>
               </div>
             </span>
@@ -48,8 +48,8 @@
                   <p class="heading">Documentation</p>
                   <hr />
                   <div>
-                      <a href="#"><p>Billing Panel API</p></a>
-                      <a href="#"><p>Wisp Panel API</p></a>
+                      <a href="#"><p>Billing Panel API</p><sub>Coming soon...</sub></a>
+                      <a href="https://docs.panel.gg" rel="noopener"><p>Wisp Panel API</p><sub>https://docs.panel.gg</sub></a>
                   </div>
                 </span>
           </div>
@@ -61,24 +61,24 @@
               <p class="heading">Ametrine.host</p>
               <hr />
               <div>
-                  <a href="#"><p>Our business plan</p></a>
-                  <a href="#"><p>Meet our staff</p></a>
-                  <a href="#"><p>Partners</p><sub>You can be here!</sub></a>
+                  <a href="/business"><p>Our business plan</p></a>
+                  <a href="/staff"><p>Meet our staff</p></a>
+                  <a href="/partners"><p>Partners</p><sub>Coming soon...</sub></a>
               </div>
             </span>
             <span aria-label="Subcategory of our social media">
               <p class="heading">Our socials</p>
               <hr />
               <div>
-                  <a href="#"><p>GitHub</p><sub>We're fully open-source</sub></a>
-                  <a href="#"><p>Discord</p><sub>Come hangout with us!</sub></a>
+                  <a href="https://github.com/Em1tt/ametrine.host" rel="noopener"><p>GitHub</p><sub>We're fully open-source</sub></a>
+                  <a href="https://discord.gg/Uw8vhXUw8U" rel="noopener"><p>Discord</p><sub>Come hangout with us!</sub></a>
               </div>
             </span>
           </div>
         </div>
       </div>
       <div>
-        <button aria-label="Dark mode switch" onclick="retheme();"><i class="far fa-moon"></i></button>
+        <button aria-label="Dark mode switch" onclick="retheme();"><i id="iconSwitch" class="far fa-moon"></i></button>
         <a href="/billing">Client Area</a>
       </div>
     </nav>
