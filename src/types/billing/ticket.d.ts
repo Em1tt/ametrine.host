@@ -8,7 +8,7 @@ export interface Ticket {
       readonly level        : number;
       opened                : number | Date;
       closed                : number | Date;
-      files                 : string[] | number;
+      files                 : Array<string> | number;
       createdIn             : number | Date;
       editedIn              : number | Date;
       priority              : string;
