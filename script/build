@@ -5,12 +5,12 @@ mkdir dist
 cp -r src/* dist
 
 # compile
-echo '[amethyst-build] compiling'
+echo '[ametrine-build] compiling'
 tsc -p ./
 
 # remove leftover typescript files
-echo '[amethyst-build] cleaning'
+echo '[ametrine-build] cleaning'
 cd dist
 find . -name '*.js.map' -type f -delete
 
-echo '[amethyst-build] done'
+echo '[ametrine-build] done'
