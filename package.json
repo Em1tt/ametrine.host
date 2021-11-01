@@ -41,7 +41,7 @@
     "nodemailer": "^6.6.3",
     "redis": "^3.1.2",
     "smtp-server": "^3.9.0",
-    "stripe": "^8.182.0"
+    "stripe": "^8.185.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.0",
