@@ -44,7 +44,7 @@
     "stripe": "^8.182.0"
   },
   "devDependencies": {
-    "@types/node": "^16.11.0",
+    "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^4.22.1",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "^7.32.0",
