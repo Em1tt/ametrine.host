@@ -11,7 +11,6 @@ import helmet       from "helmet"
 import cookieParser from "cookie-parser"
 import { auth }     from "./api/auth"
 import * as plans   from "../plans.json"
-import { sql }      from './sql'
 import { Ticket }   from "../types/billing/ticket";
 import { UserData } from "../types/billing/user";
 import rateLimit    from "express-rate-limit";
