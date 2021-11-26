@@ -2,7 +2,6 @@
  * API for Themes on Ametrine.host
  */
 import express                 from 'express';
-import { sql }                 from '../sql';
 import { permissions }         from '../permissions'
 import { auth }                from './auth';
 
@@ -24,10 +23,15 @@ const settings = {
 
 let client;
 
+function paginate(array: Array<unknown>, page_size: number, page_number: number): Array<unknown> { // https://stackoverflow.com/a/42761393
+    // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
 export const prop = {
     name: "themes",
     desc: "Theme API",
-    setClient: function(newClient) { client = newClient; },
+    setClient: async function(newClient) { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         const allowedMethods = ["GET", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
@@ -53,47 +57,52 @@ export const prop = {
                 if (!author) author = "null";
                 if (req.query.page) page = parseInt(req.query.page.toString());
                 if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
-                const themes = sql.db.prepare('SELECT * FROM tickets ORDER BY dateCreated DESC LIMIT ? OFFSET ?').all(pageLimit, ((page - 1) * pageLimit));
-                if (!themes.length) return res.sendStatus(404); // no themes?
-                return res.json(themes.map(theme => {
-                    const userName = sql.db.prepare('SELECT name FROM users WHERE user_id = ?').pluck().get(theme.themeAuthor); // Change to Username later when adding usernames to auth.ts
-                    if (userName && userName.length) {
-                        theme['userName'] = userName;
-                        theme["themeName"] = decode_base64(theme["themeName"]);
-                        theme["themeDesc"] = decode_base64(theme["themeDesc"]);
-                        if (theme['themeDesc'].theme > 100) {
-                            theme['themeDesc'] = theme['themeDesc'].slice(0, 100) + "...";
-                        }
-                        theme["dateCreated"] = new Date(theme["dateCreated"]);
-                        return theme;
+                return client.keys(`theme:?`, async function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send("Error occured while retrieving keys for themes. Please report this.")
                     }
-                }))
+                    let themes: Array<unknown> = await Promise.all(result.map(async themeID => {
+                        const theme = await client.db.hgetall(themeID);
+                        return theme;
+                    }));
+                    if (!themes.length) return res.sendStatus(404);
+                    themes = paginate(themes.sort((a,b) => (a["dateCreated"] as number) - (b["dateCreated"] as number)), pageLimit, page);
+                    return res.status(200).json(await Promise.all(themes.map(async theme => {
+                        const userName = await client.db.hget(`user:${theme["themeAuthor"]}`, 'name');
+                        if (userName && userName.length) {
+                            theme['userName'] = userName;
+                            theme["themeName"] = decode_base64(theme["themeName"]);
+                            theme["themeDesc"] = decode_base64(theme["themeDesc"]);
+                            if (theme['themeDesc'].theme > 100) {
+                                theme['themeDesc'] = theme['themeDesc'].slice(0, 100) + "...";
+                            }
+                            theme["dateCreated"] = new Date(theme["dateCreated"]);
+                            return theme;
+                        }
+                    })));
+                })
             }
             case "create": {
-                const timestamp = Date.now();
-                res.set("Allow", "POST");
-                if (req.method != "POST") return res.sendStatus(405);
-                const { name, description } = req.body;
-                if (!name || !description) return res.sendStatus(406);
-                if (name.length > settings.maxTitle) return res.status(403).send(`Title is too long. Max Length is ${settings.maxTitle}`);
-                if (description.length > settings.maxDesc) return res.status(403).send(`Description is too long. Max Length is ${settings.maxDesc}`);
-                await sql.db.prepare('INSERT INTO tickets (user_id, subject, content, category_ids, opened, createdIn) VALUES (?, ?, ?, ?, ?, ?)')
-                            .run(userData["user_id"], encode_base64(name), encode_base64(description), timestamp);
-                const getTicket = await sql.db.prepare('SELECT ticket_id, user_id, subject, content, opened FROM tickets WHERE user_id = ? AND subject = ? AND opened = ?').get(userData["user_id"], encode_base64(name), timestamp);
-                if (!getTicket) return res.sendStatus(201)
-                return res.status(201).json(getTicket);
+                // Themes are currently not planned
+                return res.sendStatus(404);
             }
             case "delete": {
                 res.set("Allow", "DELETE");
                 if (req.method != "DELETE") return res.sendStatus(405);
-                 let id = req.query.id;
-                 if (!id) return res.sendStatus(406);
-                 id = parseInt(id);
-                 const findTheme = sql.db.prepare('SELECT themeAuthor FROM tickets WHERE theme_id = ?').get(id);
-                 if (!findTheme) return res.sendStatus(404);
-                 if (findTheme.themeAuthor != userData["user_id"]) return res.sendStatus(403);
-                 await sql.db.prepare('DELETE FROM tickets WHERE theme_id = ?').run(id);
-                 return res.sendStatus(204);
+                let id = req.query.id;
+                if (!id) return res.sendStatus(406);
+                id = parseInt(id);
+                const findTheme = await client.db.hgetall(`theme:${id}`);
+                if (!findTheme) return res.sendStatus(404);
+                if (findTheme["themeAuthor"] != userData["user_id"]) return res.sendStatus(403);
+                return client.del(`theme:${findTheme["theme_id"]}`, function (err) {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send("Error occured while deleting the theme. Please report this.")
+                    }
+                    return res.sendStatus(204);
+                })
             }
          }
      }
