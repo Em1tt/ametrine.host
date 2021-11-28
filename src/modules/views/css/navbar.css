@@ -326,7 +326,7 @@ nav .dropdown:focus-within > .dropdown.content {
     overflow: auto;
     z-index: -10;
   }
-  .navopen .dropdown:focus {
+  .navopen .dropdown:focus-within {
     max-height: 500px;
     height: auto;
     min-height: 250px;
