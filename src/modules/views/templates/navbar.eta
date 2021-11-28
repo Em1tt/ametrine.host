@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="../css/navbar.css" />
-<nav role="navigation">
+<nav role="navigation" id="navbar">
       <div>
         <a href="/" tabindex="0">
           <img src="../images/webp/AmetrineSmall.webp" alt="Logo" height="50px" width="50px" />
@@ -76,10 +76,14 @@
             </span>
           </div>
         </div>
+                <a id="responsiveClientArea" href="/billing">Client Area</a>
+        <button aria-label="Dark mode switch" id="responsiveTheme" onclick="retheme();"><i class="iconSwitch far fa-moon"></i></button>
       </div>
       <div>
-        <button aria-label="Dark mode switch" onclick="retheme();"><i id="iconSwitch" class="far fa-moon"></i></button>
+        <button aria-label="Dark mode switch" onclick="retheme();"><i class="iconSwitch far fa-moon"></i></button>
         <a href="/billing">Client Area</a>
+              <button id="openNav" aria-label="Open Navbar" onclick="openNav();"><i id="openNavIcon" class="fa fa-bars"></i></button>
       </div>
     </nav>
     <script src="../js/retheme.js"></script>
+    <script src="../js/openNav.js"></script>

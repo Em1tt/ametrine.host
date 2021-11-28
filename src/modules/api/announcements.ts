@@ -41,11 +41,11 @@ export const prop = {
             case "GET": { // Fetching the latest announcement.
                 let type = req.query.type; // Announcement Type
                 if (!type) type = "null";
-                if (!["outage", "news", "warning", "null"].includes(type.toString().toLowerCase())) return res.sendStatus(406);
+                if (!["outage", "news", "warning", "null"].includes(type.toString().toLowerCase())) return res.status(406).send('Query "type" has an invalid value.');
                 return client.keys("announcement:?", async function (err, result) {
                     if (err) {
                         console.error(err);
-                        return res.status(500).send("Error occured while retrieving keys for announcement. Please report this.")
+                        return res.status(500).send("An error occurred while retrieving the announcements. Please report this.")
                     }
                     let announcements: Array<Announcement> = await Promise.all(result.map(async announcementID => {
                         return await client.db.hgetall(announcementID)
@@ -63,7 +63,7 @@ export const prop = {
                     }).sort((a, b) => {
                         return parseInt(b.dateCreated) - parseInt(a.dateCreated)
                     }).filter(a => a != null);
-                    if (!announcements.length) return res.json([]);
+                    if (!announcements.length) return res.sendStatus(404);
                     if (!req.query.hasPermission) req.query.hasPermission = 0;
                     announcements = announcements.filter(announcement => announcement.showToCustomersOnly <= req.query.hasPermission);
                     if (announcements[0].showToCustomersOnly && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
@@ -77,13 +77,12 @@ export const prop = {
                 if (!permissions.hasPermission(userData['permission_id'], `/announcements`)) return res.sendStatus(403);
                 const announcement = req.body.text; // Announcement Text
                 const type = req.body.type; // Announcement Type
-                let deleteOn = req.body.deleteOn; // When to delete the announcement
-                let showCustomers = req.body.showToCustomersOnly; // If it should only show to customers
-                deleteOn = parseInt(deleteOn);
-                if (!announcement && !type && !deleteOn && !showCustomers) return res.sendStatus(406);
-                if (!["outage", "news", "warning"].includes(type.toString())) return res.status(406).send("Invalid type");
+                const deleteOn = parseInt(req.body.deleteOn); // When to delete the announcement
                 const currentDate = Date.now();
-                if (deleteOn < currentDate) return res.status(406).send(`Invalid Timestamp (Cannot be higher than ${currentDate})`);
+                if (deleteOn && (isNaN(deleteOn) || (deleteOn < currentDate))) return res.status(406).send(`Invalid Timestamp. Timestamps cannot be in the past and must be a numeric value.`);
+                let showCustomers = req.body.showToCustomersOnly; // If it should only show to customers
+                if (!announcement || !type || !deleteOn || !showCustomers) return res.status(406).send('Body is missing the required values (announcement, type, deleteOn)');
+                if (!["outage", "news", "warning"].includes(type.toString())) return res.status(406).send('Query "type" has an invalid value.');
                 if (isNaN(deleteOn)) return res.status(406).send("Invalid Timestamp")
                 if (!["0","1","true","false"].includes(showCustomers.toString())) return res.status(406).send("Show Customers must be true or false.")
                 switch (showCustomers.toString()) {

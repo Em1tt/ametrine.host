@@ -53,7 +53,7 @@ header{
 display: grid;
 place-items: center;
 margin-top: 100px;
-height: 500px;
+height: 550px;
 width: 100%;
 }
 header h1{
@@ -68,6 +68,11 @@ flex-flow: row wrap;
 width: 100%;
 justify-content: center;
 align-items: center;
+}
+header div span{
+  margin-inline: 10px;
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 header img{
 animation: float 5s ease infinite;
@@ -203,14 +208,15 @@ color: var(--light);
 width: 100vw !important;
 display: flex;
 flex-flow: column wrap;
-padding:  0 200px 150px 200px;
+padding:  0 80px 150px 80px;
 align-content: center;
 }
 .reviewsWrapper > span{
 display: flex;
 flex-flow: row wrap;
-width: 60%;
+width: 100%;
 margin-inline: auto;
+justify-content: center;
 margin-top: 50px;
 }
 .reviews > h2{
@@ -222,7 +228,8 @@ color: var(--paragraph-color);
 }
 
 .reviewsWrapper > span > div{
-margin-inline: auto;
+margin-inline: 20px;
+margin-top: 20px;
 }
 
 .carousel {
@@ -299,4 +306,62 @@ color: var(--yellow);
 50%{
   transform: translateY(20px);
 }
+}
+@media screen and (max-width: 850px) {
+  header div span{
+    margin-top: 0;
+  }
+  header div span img{
+    width: 50vw;
+    aspect-ratio: 1/1;
+    min-width: 200px;
+  }
+  main > div{
+    grid-template-columns: repeat(1, auto);
+    }
+  main{
+    text-align: center !important;
+    list-style-position: inside;
+  }
+  main .cardDivider{
+    margin-top: 20px;
+    justify-content: center;
+  }
+  main ol{
+    padding: 0;
+  }
+  main > div .deploy:nth-of-type(1){
+    grid-row: 1;
+  }
+  .worldMap{
+    width: 90%;
+  }
+  .mapSection h2{
+    margin-inline: 20px;
+    line-break:normal;
+  }
+  .carousel {
+    margin-inline: auto;
+    width: 100%;
+    position: relative;
+    top: 0px;
+    height: 300px;
+    border-radius: 10px;
+    }
+    
+    .carousel-cell {
+    width: 50vw;
+    height: 100%;
+    margin-inline: 10px;
+    padding-inline: 20px;
+    background-color: var(--dark);
+    border-radius: 9px;
+    display: flex;
+    flex-flow: column;
+    color: #dce0ff;
+    overflow: hidden;
+    }
+    .divider{
+      height: 25px;
+    }
 }
