@@ -143,7 +143,7 @@ color: var(--yellow-light);
 .cardDivider{
 margin-top: 10px;
 display: flex;
-flex-flow: row wrap;
+flex-flow: row nowrap;
 }
 .cardDivider div{
 display: flex;
@@ -170,7 +170,8 @@ border-radius: 0 0 50px 50px;
 }
 .mapSection{
 background: var(--map-bg);
-height: 1000px;
+height: auto;
+padding: 0 0 30vw 0;
 }
 .worldMap{
 width: 60%;
@@ -322,6 +323,7 @@ color: var(--yellow);
   main{
     text-align: center !important;
     list-style-position: inside;
+    padding:  50px 0px 150px 0px;
   }
   main .cardDivider{
     margin-top: 20px;
@@ -335,10 +337,18 @@ color: var(--yellow);
   }
   .worldMap{
     width: 90%;
+    margin-bottom: 50px !important;
+  }
+  .mapSection{
+    height: 100vw;
   }
   .mapSection h2{
     margin-inline: 20px;
     line-break:normal;
+  }
+  .reviewsWrapper{
+    padding: 0 10px 150px 0;
+    text-align: center;
   }
   .carousel {
     margin-inline: auto;
@@ -347,10 +357,11 @@ color: var(--yellow);
     top: 0px;
     height: 300px;
     border-radius: 10px;
+    max-width: 500px;
     }
     
     .carousel-cell {
-    width: 50vw;
+    width: 100%;
     height: 100%;
     margin-inline: 10px;
     padding-inline: 20px;
@@ -359,9 +370,101 @@ color: var(--yellow);
     display: flex;
     flex-flow: column;
     color: #dce0ff;
-    overflow: hidden;
+    overflow: auto;
     }
     .divider{
       height: 25px;
+    }
+    .divider2{
+      height: 25px;
+    }
+    .divider3{
+      height: 25px;
+    }
+}
+@media screen and (max-width: 400px) {
+  header span{
+    margin-inline: 0 !important;
+  }
+  header h1{
+    margin-inline: 10px;
+    text-align: center;
+  }
+  header h2{
+    margin-inline: 10px;
+    text-align: center;
+  }
+  header img{
+    height: 200px;
+  }
+  .cardDivider{
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 280px;
+    }
+    .cardDivider div{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    font-size: 0.9rem;
+    border: solid 2px var(--default);
+    border-radius: 10px;
+    margin-inline: auto;
+    color: var(--default);
+    width: 80%;
+    margin-top: 10px;
+    }
+    main h2{
+      word-break:keep-all;
+      line-break:strict;
+      margin-inline: 10px;
+    }
+    main > div{
+width: 100%;
+      }
+    main .deploy{
+      width: 100% !important;
+    }
+    .deploy ol{
+      font-size: 1.2rem;
+    }
+    main img{
+      width: 200px;
+      aspect-ratio: 1/1;
+      margin-inline: auto;
+      height: 200px;
+    }
+    .deploy .bWtext{
+      font-size: 12pt;
+      margin-inline: 10px;
+    }
+    .mapSection h2{
+      margin-inline: 10px;
+      }
+      .mapSection h3{
+        margin-inline: 10px;
+      }
+      .worldMap i{
+        font-size: 6vw;
+        }
+        i.FL{
+          top: -1% !important;
+          left: 49% !important;
+          }
+          i.GE{
+          top: 8%;
+          left: 47%;
+          }
+}
+@media screen and (max-width: 520px){
+  .mapSection{
+    padding: 0 0 50vw 0;
+    height: 600px;
+    }
+    .worldMap{
+      width: 90%;
     }
 }

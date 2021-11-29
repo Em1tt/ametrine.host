@@ -262,8 +262,8 @@ nav .dropdown:focus-within > .dropdown.content {
   }
   #openNav {
     display: block !important;
-    margin-left: auto;
-    margin-right: 3rem;
+    margin-inline: auto;
+    margin-right: 20px;
   }
   nav > div:nth-of-type(2) {
     display: none;
@@ -280,10 +280,6 @@ nav .dropdown:focus-within > .dropdown.content {
     height: calc(100vh - 90px);
     background-color: var(--responsive-bg);
     z-index: 9;
-    transition: ease-in-out 2s;
-  }
-  .navopen > div:nth-of-type(2){
-    animation: 0s linear 0s slide !important;
   }
   .navopen > div:nth-of-type(2)::before {
     content: "";
@@ -373,11 +369,7 @@ nav .dropdown:focus-within > .dropdown.content {
   #responsiveClientArea:focus-visible {
     color: var(--client-button-text-focus);
   }
-}
-@keyframes slide {
-  from { left: -280px;}
-  to {
-    left: 0;
-    transform: translateX(-100%);
+  nav > div:nth-of-type(1) > a {
+    font-size: 1.2rem;
   }
 }
