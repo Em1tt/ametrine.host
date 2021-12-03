@@ -222,3 +222,247 @@ color: var(--yellow);
   transform: translateY(20px);
 }
 }
+@media screen and (max-width: 850px) {
+  header div span{
+    margin-top: 0;
+  }
+  .deploy{
+    margin: 0;
+  }
+  header div span img{
+    width: 50vw;
+    aspect-ratio: 1/1;
+    min-width: 200px;
+  }
+  main > div{
+    grid-template-columns: repeat(1, auto);
+    }
+  main{
+    text-align: center !important;
+    list-style-position: inside;
+    padding:  50px 0px 150px 0px !important;
+  }
+  main .cardDivider{
+    margin-top: 20px;
+    justify-content: center;
+  }
+  main ol{
+    padding: 0;
+  }
+  main > div .deploy:nth-of-type(1){
+    grid-row: 1;
+  }
+  .worldMap{
+    width: 90%;
+    margin-bottom: 50px !important;
+  }
+  .mapSection h2{
+    margin-inline: 20px;
+    line-break:normal;
+  }
+  .reviewsWrapper{
+    padding: 0 10px 150px 0;
+    text-align: center;
+  }
+  .carousel {
+    margin-inline: auto;
+    width: 100%;
+    position: relative;
+    top: 0px;
+    height: 300px;
+    border-radius: 10px;
+    max-width: 500px;
+    }
+    
+    .carousel-cell {
+    width: 100%;
+    height: 100%;
+    margin-inline: 10px;
+    padding-inline: 20px;
+    background-color: var(--dark);
+    border-radius: 9px;
+    display: flex;
+    flex-flow: column;
+    color: #dce0ff;
+    overflow: auto;
+    }
+    .divider{
+      height: 25px;
+    }
+    .divider2{
+      height: 25px;
+    }
+    .divider3{
+      height: 25px;
+    }
+    main > div img{
+      margin-inline: auto;
+            }
+}
+@media screen and (max-width: 400px) {
+  header span{
+    margin-inline: 0 !important;
+  }
+  header h1{
+    margin-inline: 10px;
+    text-align: center;
+  }
+  header h2{
+    margin-inline: 10px;
+    text-align: center;
+  }
+  header img{
+    height: 200px;
+  }
+  .cardDivider{
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 280px;
+    }
+    .cardDivider div{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    font-size: 0.9rem;
+    border: solid 2px var(--default);
+    border-radius: 10px;
+    margin-inline: auto;
+    color: var(--default);
+    width: 80%;
+    margin-top: 10px;
+    }
+    main h2{
+      word-break:keep-all;
+      line-break:strict;
+      margin-inline: 10px;
+    }
+    main > div{
+width: 100%;
+      }
+    main .deploy{
+      width: 100% !important;
+    }
+    .deploy ol{
+      font-size: 1.2rem;
+    }
+    main img{
+      width: 200px;
+      aspect-ratio: 1/1;
+      margin-inline: auto;
+      height: 200px;
+    }
+    .deploy .bWtext{
+      font-size: 12pt;
+      margin-inline: 10px;
+    }
+    .mapSection h2{
+      margin-inline: 10px;
+      }
+      .mapSection h3{
+        margin-inline: 10px;
+      }
+      .worldMap i{
+        font-size: 6vw;
+        }
+        i.FL{
+          top: -1% !important;
+          left: 49% !important;
+          }
+          i.GE{
+          top: 8%;
+          left: 47%;
+          }
+}
+@media screen and (max-width: 400px) {
+  header span{
+    margin-inline: 0 !important;
+  }
+  header h1{
+    margin-inline: 10px;
+    text-align: center;
+  }
+  header h2{
+    margin-inline: 10px;
+    text-align: center;
+  }
+  header img{
+    height: 200px;
+  }
+  .cardDivider{
+    margin-top: 10px;
+    display: flex;
+    flex-flow: row wrap;
+    min-width: 280px;
+    }
+    .cardDivider div{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 2px;
+    font-size: 0.9rem;
+    border: solid 2px var(--default);
+    border-radius: 10px;
+    margin-inline: auto;
+    color: var(--default);
+    width: 80%;
+    margin-top: 10px;
+    }
+    main h2{
+      word-break:keep-all;
+      line-break:strict;
+      margin-inline: 10px;
+    }
+    main > div{
+width: 100%;
+      }
+    main .deploy{
+      width: 100% !important;
+    }
+    .deploy ol{
+      font-size: 1.2rem;
+    }
+    main img{
+      width: 200px;
+      aspect-ratio: 1/1;
+      margin-inline: auto;
+      height: 200px;
+    }
+    .deploy .bWtext{
+      font-size: 12pt;
+      margin-inline: 10px;
+    }
+    .mapSection h2{
+      margin-inline: 10px;
+      }
+      .mapSection h3{
+        margin-inline: 10px;
+      }
+      .worldMap i{
+        font-size: 6vw;
+        }
+        i.FL{
+          top: -1% !important;
+          left: 49% !important;
+          }
+          i.GE{
+          top: 8%;
+          left: 47%;
+          }
+}
+@media screen and (max-width: 520px){
+    .cardWrapper{
+      width: 90%;
+    }
+    main{
+      text-align: center !important;
+      list-style-position: inside;
+      padding:  50px 20px 150px 20px;
+    }
+    .plansWrapper{
+      padding:  50px 20px 150px 20px;
+    }
+}

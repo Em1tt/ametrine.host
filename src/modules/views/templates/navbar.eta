@@ -39,8 +39,8 @@
                 <p class="heading">Legal</p>
                 <hr />
                 <div>
-                  <a href="#"><p>Privacy Policy</p></a>
-                  <a href="#"><p>Terms and Conditions</p></a>
+                  <a href="/privacy"><p>Privacy Policy</p></a>
+                  <a href="/terms"><p>Terms and Conditions</p></a>
                   <a href="#"><p>Trademark Usage Guidelines</p></a>
                 </div>
               </span>
