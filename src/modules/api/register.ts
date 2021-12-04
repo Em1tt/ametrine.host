@@ -25,7 +25,7 @@ export const prop = {
             const key = process.env.RECAPTCHA_SECRET;
             return new Promise((resolve, reject) => { // Promises are great.
                 const response = req.body["g-recaptcha-response"];
-                fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${key}&response=${response}`, {
+                fetch(`https://hcaptcha.com/siteverify?secret=${key}&response=${response}`, {
                     method: 'POST',
                 }).then(resp => resp.json())
                   .then(json => resolve(json))

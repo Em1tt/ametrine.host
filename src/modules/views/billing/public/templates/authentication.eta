@@ -51,7 +51,7 @@
                     <div>
                         <p>By registering you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
                     </div>
-                    <button class="h-captcha" data-sitekey="6630c4db-ee74-4264-baac-1eac7e682294"></button>
+                    <div class="h-captcha" data-sitekey="6630c4db-ee74-4264-baac-1eac7e682294"></div>
                     <div>
                         <input type="submit">
                     </div>
