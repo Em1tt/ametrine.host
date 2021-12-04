@@ -51,8 +51,7 @@
                     <div>
                         <p>By registering you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
                     </div>
-                    <div id="recaptcha" class="g-recaptcha" data-size="compact" data-theme="dark" data-sitekey="6Lec7uUbAAAAAHyQtVXjSccy6h00rzvTYyqA2Kox"></div>
-                    <span id="captcha" style="color:red"></span>
+                    <button class="h-captcha" data-sitekey="6630c4db-ee74-4264-baac-1eac7e682294"></button>
                     <div>
                         <input type="submit">
                     </div>

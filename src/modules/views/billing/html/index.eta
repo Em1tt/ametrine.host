@@ -37,7 +37,7 @@
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/index.css" rel="stylesheet">
-    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script src="/billing/public/javascripts/theme.js" async defer></script>
 </head>
 
