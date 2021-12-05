@@ -39,20 +39,24 @@ const logOut = async () => {
     }
 }
 
-const updateUser = async (user) => {
+const updateUser = async (user, errorT) => {
     try {
         const response = await axios.put("/api/user", user);
         console.log(response)
         if ([200,202].includes(response.status)) location.reload(); // You can reset this back to response.status == 200 if you want to handle that differently. 202 means nothing was updated, 200 means something was updated.
     } catch (e) {
         errorText = e.response.data;
-        const updateError = document.getElementById('update-error');
+        const updateError = document.getElementById(errorT);
         updateError.innerHTML = `${exclamationCircle} ${errorText}`;
         console.error(e.response);
     }
 }
 const loginForm = document.querySelector("#login");
 const registerForm = document.querySelector('#register');
+const editPassButton = document.getElementById("change-pass-button");
+const twoFaButton = document.getElementById("2fa-button");
+const discordButton = document.getElementById("discord-button");
+const editPassForm = document.getElementById("change-password-form");
 const switcher = async () => {
     const switchButton = document.querySelector("#switchAuth"),
         switchPrompt = document.querySelector("#switchPrompt"),
@@ -93,7 +97,44 @@ const toggleEditMode = async () => {
         passwordConfirmLabel.style = "visibility: hidden; position: absolute;";
     };
 };
+let switchBool;
+const button5 = document.querySelector("#button5"),
+button6 = document.querySelector("#button6");
+const editPassword = () => {
+    if(switchBool){
+        switchBool = !switchBool;
+        editPassForm.style = "display: none";
+        editPassButton.style = "display: block;";
+        twoFaButton.style = "display: block;";
+        discordButton.style = "display: block;";
+        button5.style = "visibility: hidden; position: absolute;";
+        button6.style = "visibility: hidden; position: absolute;";
+    }else{
+        switchBool = !switchBool;
+        editPassForm.style = "display: flex";
+        editPassButton.style = "display: none;";
+        twoFaButton.style = "display: none;";
+        discordButton.style = "display: none;";
+        button5.style = "visibility: visible; position: block;";
+        button6.style = "visibility: visible; position: block;";
+    }
 
+}
+try{
+editPassForm.addEventListener("submit", event => {
+    event.preventDefault();
+    const password = editPassForm.querySelector('#changepass-current').value;
+    const passwordNew = editPassForm.querySelector('#changepass-new').value;
+    const passwordConfirm = editPassForm.querySelector('#changepass-confirm').value;
+    updateUser({
+        password,
+        passwordNew,
+        passwordConfirm
+    },"changepass-error");
+})
+}catch(e){
+    e;
+}
 window.onload = () => {
     const updateForm = document.querySelector('#accountCard form');
     const logOutButton = document.querySelector('#logOutButton');
@@ -134,7 +175,7 @@ window.onload = () => {
                 name,
                 email,
                 password
-            });
+            },"update-error");
         });
     } catch (e) {
         e;

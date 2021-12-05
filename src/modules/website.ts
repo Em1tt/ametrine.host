@@ -159,12 +159,12 @@ app.use(
       useDefaults: true, // nonce when
       directives: {
         defaultSrc: ["'self'"],
-        "script-src": ["'self'", "'unsafe-inline'", "https://hcaptcha.com", "https://*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
-        "style-src": ["'self'", "'unsafe-inline'", "https://hcaptcha.com", "https://*.hcaptcha.com", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
+        "script-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
+        "style-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "https: data:"],
-        "frame-src": ["'self'", "https://hcaptcha.com", "https://*.hcaptcha.com"],
-        "connect-src": ["'self'", "https://hcaptcha.com", "https://*.hcaptcha.com"]
+        "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"],
+        "connect-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"]
       }
     },
     xssFilter: true

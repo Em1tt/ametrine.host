@@ -164,6 +164,14 @@ main hr {
   justify-content: space-between;
 }
 
+.cardWrapper form {
+  padding: 0px 10px 10px;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
 .cardWrapper form div {
   display: flex;
   flex-flow: column nowrap;
@@ -260,7 +268,7 @@ main hr {
   grid-area: transactions;
 }
 
-#security div{
+#security > div{
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
