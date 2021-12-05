@@ -81,7 +81,7 @@ export const prop = {
                 const currentDate = Date.now();
                 if (deleteOn && (isNaN(deleteOn) || (deleteOn < currentDate))) return res.status(406).send(`Invalid Timestamp. Timestamps cannot be in the past and must be a numeric value.`);
                 let showCustomers = req.body.showToCustomersOnly; // If it should only show to customers
-                if (!announcement || !type || !deleteOn || !showCustomers) return res.status(406).send('Body is missing the required values (announcement, type, deleteOn)');
+                if (!announcement || !type || !deleteOn || !showCustomers) return res.status(406).send('Body is missing the required values (announcement, type, deleteOn, showCustomers)');
                 if (!["outage", "news", "warning"].includes(type.toString())) return res.status(406).send('Query "type" has an invalid value.');
                 if (isNaN(deleteOn)) return res.status(406).send("Invalid Timestamp")
                 if (!["0","1","true","false"].includes(showCustomers.toString())) return res.status(406).send("Show Customers must be true or false.")
@@ -112,7 +112,7 @@ export const prop = {
                 client.del(`announcement:${id}`, function (err) {
                     if (err) {
                         console.error(err);
-                        return res.status(500).send("Error occured while deleting the announcement. Please report this.")
+                        return res.status(500).send("Error occurred while deleting the announcement. Please report this.")
                     }
                     return res.sendStatus(204);
                 })

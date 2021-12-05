@@ -34,14 +34,9 @@
         console.log(response);
         window.location.href = `/billing/tickets/${response.data.ticket_id}`;
         } catch(e) {
-            let errorText = "Unknown Error (Look in Console for more details)";
-            switch(e.toString()){
-                case "Error: Request failed with status code 403":
-                    errorText = "Subject or content is too long. Content is max. 2000 characters."
-                    break;
-            }
-            errorP.innerHTML = `${exclamationCircle} ${errorText}`;
+            errorText = e.response.data;
             console.error(e);
+            errorP.innerHTML = `${exclamationCircle} ${errorText}`;
         }
     });
 

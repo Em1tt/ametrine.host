@@ -37,7 +37,6 @@
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/index.css" rel="stylesheet">
-    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <script src="/billing/public/javascripts/theme.js" async defer></script>
 </head>
 
@@ -71,6 +70,7 @@
                                 <input type="email" required readonly id="account-email" value="<%=it.userData.email%>"><br>
                                 <label style="visibility: hidden; position: absolute;" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
                                 <input style="visibility: hidden; position: absolute;" type="password" required id="account-confirm-password"><br>
+                                <p style="color: white;" id="update-error"></p>
                                 <p>User ID: <%=it.userData.user_id%></p>
                                 <p>Permission ID: <%=it.userData.permission_id%></p>
                             </fieldset>

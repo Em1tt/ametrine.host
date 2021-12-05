@@ -1,3 +1,4 @@
+
 function dateFormatter(data) {
     console.log(data);
   let date = new Date(data).toDateString().split(" ");
@@ -34,6 +35,7 @@ function dateFormatter(data) {
       return ticketsWrapper.appendChild(header2);
     } else {
       tickets.reverse().forEach((ticket) => {
+        if(ticket == null) return;
         let opened = dateFormatter(ticket.opened);
         let edited = dateFormatter(ticket.editedIn);
         const clickable = document.createElement("a");

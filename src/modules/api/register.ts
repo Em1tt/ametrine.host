@@ -42,7 +42,7 @@ export const prop = {
         if (!recaptcha_response || (recaptcha_response && !recaptcha_response["success"])) return res.status(403).send("Recaptcha failed!");
         const userExists = await client.db.hexists('users.email', email); // Checks if the user exists.
         if (userExists) return res.status(409)
-                                  .send("409 Existing Email Exists (Conflict)."); // User exists
+                                  .send("E-Mail already registered."); // User exists
 
         if (password != passwordConfirm) return res.status(406).send("Both password and confirm password much match!");
         const passResult = await auth.setPassword(password);

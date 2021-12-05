@@ -33,7 +33,7 @@ export const prop = {
             userData = await auth.verifyToken(req, res, false, "both")
         }
         if (typeof userData != "object") return res.sendStatus(userData);
-        if (!permissions.hasPermission(userData['permission_id'], `/mail`)) return res.sendStatus(403); // If you want anyone to be able to use the mail, comment this out.
+        //if (!permissions.hasPermission(userData['permission_id'], `/mail`)) return res.sendStatus(403); // If you want anyone to be able to use the mail, comment this out.
         const { subject, content, email } = req.body;
         if ([subject, content, email].includes(undefined)) return res.status(406)
                                                                      .send("Please enter in an Email, Subject, and Content");

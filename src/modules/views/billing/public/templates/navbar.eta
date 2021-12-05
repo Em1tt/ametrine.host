@@ -3,7 +3,7 @@
     <ul class="navbar-nav">
 
         <li class="header">
-            <a href="/" class="nav-link">
+            <a href="/billing" class="nav-link">
                 <span aria-hidden="true" class="link-text header-text">Ametrine.host</span>
                 <i class="fa fa-angle-double-right"></i>
             </a>

@@ -18,7 +18,7 @@ async function saveEdits(){
     location.reload()
     console.log(response);
     }catch(e){
-        console.log(e);
+        console.error(e);
     }
 }
 function dateFormatter(data) {

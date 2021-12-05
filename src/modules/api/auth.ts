@@ -230,11 +230,11 @@ export const prop = {
         if ([email, password].includes(undefined)) return res.status(406)
                                                              .send("Please enter in an Email, and Password.");
         const userID = await client.db.hexists('users.email', email); // Checks if the user exists.
-        if (!userID) return res.sendStatus(404);
+        if (!userID) return res.status(404).send("Couldn't find email.");
         const account = await client.db.hgetall(`user:${userID}`);
-        if (!account) return res.sendStatus(404); // User doesn't exist.
+        if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.
         const loginToken = await auth.login(req, res, account, rememberMe);
-        if (loginToken == 403) return res.sendStatus(403);
+        if (loginToken == 403) return res.status(403).send("Email or password incorrect");
         auth.setCookie(res, "jwt", loginToken.refreshToken, loginToken.expiresIn);
         auth.setCookie(res, "access_token", loginToken.accessToken, loginToken.expiresIn);
         res.json(loginToken)

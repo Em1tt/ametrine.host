@@ -122,7 +122,7 @@ export const prop = {
             case "create": {// Creates the ticket.
                 if (allowedMethod(req, res, ["POST"], paramName, userData)) {
                     const { subject, content, categories } = req.body;
-                    if (!subject || !content) return res.sendStatus(406);
+                    if (!subject || !content) return res.status(406).send("Missing subject or content.");
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
                     if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);

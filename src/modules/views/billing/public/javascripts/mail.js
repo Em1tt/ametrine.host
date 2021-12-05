@@ -20,11 +20,8 @@ mailForm.addEventListener("submit", async(event) => {
         window.location = "/billing/";
     }, 2000)
     }catch(e){
-        switch(e.toString()){
-            case "Error: Request failed with status code 403": errorText.innerText = "You are not allowed to send mail."; break;
-            case "Error: Request failed with status code 405": errorText.innerText = "E-Mail you have provided is invalid."; break;
-            case "Error: Request failed with status code 406": errorText.innerText = "Please enter in an Email, Subject, and Content"; break;
-            case "Error: Request failed with status code 500": errorText.innerText = "There was an error on our side. Please try again later."; break;
-        }
+        errorText = e.response.data;
+        console.error(e);
+        errorText.innerText = errorText;
     }
 });

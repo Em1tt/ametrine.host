@@ -9,20 +9,9 @@ const loginUser = async (user) => {
         console.log(response)
         location.reload()
     } catch (e) {
-        let errorText = "Unknown Error (Look in Console for more details)";
-        switch (e.toString()) {
-            case "Error: Request failed with status code 403":
-                errorText = "Email or Password is incorrect."
-                break;
-            case "Error: Request failed with status code 404":
-                errorText = "Email not found.";
-                break;
-        }
-        loginError.innerHTML = `${exclamationCircle} ${errorText}`;
-        setTimeout(function () {
-            loginError.innerHTML = ''
-        }, 10000)
+        errorText = e.response.data;
         console.error(e);
+        loginError.innerHTML = `${exclamationCircle} ${errorText}`;
     }
 }
 
@@ -33,22 +22,8 @@ const registerUser = async (user) => {
         console.log(response)
         location.reload()
     } catch (e) {
-        let errorText = "Unknown Error (Look in Console for more details)";
-        switch (e.toString()) {
-            case "Error: Request failed with status code 406":
-                errorText = "Password must not be less than 6 characters."
-                break;
-            case "Error: Request failed with status code 403":
-                errorText = "Login failed. (" + e.response.data + ")"
-                break;
-            case "Error: Request failed with status code 409":
-                errorText = "The email you provided has already been used!";
-                break;
-        }
-        regError.innerHTML = `${exclamationCircle} Error: ${errorText}`;
-        setTimeout(function () {
-            regError.innerHTML = ''
-        }, 10000)
+        errorText = e.response.data;
+        regError.innerHTML = `${exclamationCircle} ${errorText}`;
         console.error(e);
     }
 }
@@ -60,7 +35,7 @@ const logOut = async () => {
         window.scrollTo(0, 0) // So users wont have to scroll back up, you can remove this if you want to.
         location.reload();
     } catch (e) {
-        console.log(e);
+            console.log(e);
     }
 }
 
@@ -70,7 +45,10 @@ const updateUser = async (user) => {
         console.log(response)
         if ([200,202].includes(response.status)) location.reload(); // You can reset this back to response.status == 200 if you want to handle that differently. 202 means nothing was updated, 200 means something was updated.
     } catch (e) {
-        console.log(e);
+        errorText = e.response.data;
+        const updateError = document.getElementById('update-error');
+        updateError.innerHTML = `${exclamationCircle} ${errorText}`;
+        console.error(e.response);
     }
 }
 const loginForm = document.querySelector("#login");
