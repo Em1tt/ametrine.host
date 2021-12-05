@@ -123,10 +123,14 @@ const editPassword = () => {
 try{
 editPassForm.addEventListener("submit", event => {
     event.preventDefault();
+    const name = registerForm.querySelector('fieldset #register-name').value;
+    const email = registerForm.querySelector('fieldset #register-email').value;
     const password = editPassForm.querySelector('#changepass-current').value;
     const passwordNew = editPassForm.querySelector('#changepass-new').value;
     const passwordConfirm = editPassForm.querySelector('#changepass-confirm').value;
     updateUser({
+        name,
+        email,
         password,
         passwordNew,
         passwordConfirm
