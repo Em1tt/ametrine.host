@@ -120,28 +120,30 @@ export const prop = {
                                 if (verifyNewHash) return res.status(403).send("You can't change it to the same password.");
                                 const passwordRes = await client.db.hset([`user:${userData["user_id"]}`, "password", passResult.password, "salt", passResult.salt])
                                 if (passwordRes != 0) return res.status(500).send("Error occured while changing the password. Please report this.");
-                                
                                 const getAllSessions: Record<string, unknown> = await client.db.hgetall(`sessions.jwtid`); // May find another solution to this, as this could cost performance.
                                 if (!getAllSessions) return res.status(500).send("Sessions not found.");
                                 const userSessions = Object.keys(getAllSessions).filter(session => session.split(":")[1] == userData["user_id"] && session != `${refreshToken}:${userData["user_id"]}`); // Get all sessions besides user
-                                if (!userSessions.length) return res.status(404).send("User sessions not found.")
+                                if (!userSessions.length) return res.sendStatus(200) // No other sessions found besides the users.
+                                let errorMsg = null;
                                 userSessions.map(session => {
                                     client.del(`session:${getAllSessions[session]}`, function(err) {
                                         if (err) {
                                             console.error(err);
-                                            return res.status(500).send("Error occurred while deleting the sessions. Please report this.")
+                                            errorMsg = "Error occurred while deleting the sessions. Please report this.";
+                                            return;
                                         }
                                         return client.hdel(`sessions.jwtid`, `${session}:${userData["user_id"]}`, function (err2) {
                                             if (err2) {
                                                 console.error(err2);
-                                                return res.status(500).send("Error occured while deleting the session. Please report this.")
+                                                errorMsg = "Error occured while deleting the session. Please report this."
+                                                return;
                                             }
-                                            return res.sendStatus(200); // OK
                                         })
                                     })
                                 })
+                                if (errorMsg != null) return res.status(500).send(errorMsg);
+                                return res.sendStatus(200); // OK
                             }
-                            break;
                         }
                         case "DELETE": // Deletes the account.
 
