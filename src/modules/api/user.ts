@@ -112,12 +112,12 @@ export const prop = {
                                 if (!password || !passwordNew || !passwordConfirm) return res.status(406).send("Please insert the passwords in the password fields!")
                                 const verifyHash = await auth.verifyPassword(password, user);
                                 if (!verifyHash) return res.status(403).send("Incorrect Password.");
-                                if (passwordNew != passwordConfirm) return res.status(406).send("The new password doesn't match the confirm password field!") // Could do this instead in client side.
+                                if (passwordNew != passwordConfirm) return res.status(406).send("The new passwords don't match.") // Could do this instead in client side.
                                 const passResult = await auth.setPassword(passwordNew);
                                 if (passResult.result && passResult.result == 406) return res.status(406)
-                                                                                             .send("Password must not be less than 6 characters.");
+                                                                                             .send("New password must not be less than 6 characters.");
                                 const verifyNewHash = await auth.verifyPassword(passwordNew, user);
-                                if (verifyNewHash) return res.status(403).send("You can't change it to the same password.");
+                                if (verifyNewHash) return res.status(403).send("You can't change your password to the current password.");
                                 const passwordRes = await client.db.hset([`user:${userData["user_id"]}`, "password", passResult.password, "salt", passResult.salt])
                                 if (passwordRes != 0) return res.status(500).send("Error occured while changing the password. Please report this.");
                                 const getAllSessions: Record<string, unknown> = await client.db.hgetall(`sessions.jwtid`); // May find another solution to this, as this could cost performance.

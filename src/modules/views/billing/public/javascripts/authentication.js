@@ -1,6 +1,38 @@
 // No bloat allowed! No JQuery allowed! //
 
 const exclamationCircle = `<i class="fa fa-exclamation-circle"></i>`
+const checkmark = `<i class="fas fa-check"></i>`
+
+const twofa = () => {
+    Swal.fire({
+        title: '2-Factor authentication',
+        text: "Helps secure your account by requiring a physical key available in either Google authenticator, or other 2FA client.",
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: "Secure my account",
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Scan the QR Code with your 2FA Client.",
+            text: `Or use this code: pkogkeogkepe-ehútkebúoekbú-bpkbopebs`,
+            input: "text",
+            imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png",
+            imageWidth: 200,
+            imageHeight: 200,
+            inputAttributes: {
+                autocapitalize: 'off'
+              },
+              showCancelButton: true,
+              confirmButtonText: "Secure my account",
+              showLoaderOnConfirm: true,
+          })
+        }
+      })
+}
+
 const loginUser = async (user) => {
     const loginError = document.getElementById('login-error');
     user.rememberMe = (user.rememberMe == "on")
@@ -35,15 +67,28 @@ const logOut = async () => {
         window.scrollTo(0, 0) // So users wont have to scroll back up, you can remove this if you want to.
         location.reload();
     } catch (e) {
-            console.log(e);
+        console.log(e);
     }
 }
-
+const updateForm = document.querySelector('#accountCard form');
 const updateUser = async (user, errorT) => {
     try {
         const response = await axios.put("/api/user", user);
         console.log(response)
-        if ([200,202].includes(response.status)) location.reload(); // You can reset this back to response.status == 200 if you want to handle that differently. 202 means nothing was updated, 200 means something was updated.
+        if ([200, 202].includes(response.status)){
+            toggleEditMode();
+            const div = document.createElement("div");
+            const h2 = document.createElement("h3");
+            h2.innerHTML = `${checkmark} User info changed successfully! Reloading page...`
+            div.appendChild(h2);
+            div.style = "display: grid;place-items: center; width: 100%; height: 30px; background-color: limegreen; position: fixed; left: 0; top: -30px; text-align: center; transition: ease 1s;";
+            h2.style = "margin: 0;color: white;"
+            document.body.appendChild(div);
+            div.style="display: grid;place-items: center; width: 100%; height: 30px; background-color: limegreen; position: fixed; left: 0; top: 0; text-align: center; transition: ease 1s;"
+        setTimeout(()=>{
+            location.reload()
+        },1500);
+        } // You can reset this back to response.status == 200 if you want to handle that differently. 202 means nothing was updated, 200 means something was updated.
     } catch (e) {
         errorText = e.response.data;
         const updateError = document.getElementById(errorT);
@@ -51,12 +96,12 @@ const updateUser = async (user, errorT) => {
         console.error(e.response);
     }
 }
+const editPassForm = document.getElementById("change-password-form");
 const loginForm = document.querySelector("#login");
 const registerForm = document.querySelector('#register');
 const editPassButton = document.getElementById("change-pass-button");
 const twoFaButton = document.getElementById("2fa-button");
 const discordButton = document.getElementById("discord-button");
-const editPassForm = document.getElementById("change-password-form");
 const switcher = async () => {
     const switchButton = document.querySelector("#switchAuth"),
         switchPrompt = document.querySelector("#switchPrompt"),
@@ -99,48 +144,67 @@ const toggleEditMode = async () => {
 };
 let switchBool;
 const button5 = document.querySelector("#button5"),
-button6 = document.querySelector("#button6");
+    button6 = document.querySelector("#button6");
 const editPassword = () => {
-    if(switchBool){
-        switchBool = !switchBool;
-        editPassForm.style = "display: none";
-        editPassButton.style = "display: block;";
-        twoFaButton.style = "display: block;";
-        discordButton.style = "display: block;";
-        button5.style = "visibility: hidden; position: absolute;";
-        button6.style = "visibility: hidden; position: absolute;";
-    }else{
-        switchBool = !switchBool;
-        editPassForm.style = "display: flex";
-        editPassButton.style = "display: none;";
-        twoFaButton.style = "display: none;";
-        discordButton.style = "display: none;";
-        button5.style = "visibility: visible; position: block;";
-        button6.style = "visibility: visible; position: block;";
-    }
-
+    Swal.fire({
+        title: 'Change Password',
+        html: '<input type="password" class="swal2-input" placeholder="Current Password" required id="changepass-current"><br>\
+        <input type="password" class="swal2-input" placeholder="New Password" required id="changepass-new"><br>\
+        <input type="password" class="swal2-input" placeholder="Confirm New Password" required id="changepass-confirm"><br>',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: "Change Password",
+        allowOutsideClick: () => !Swal.isLoading(),
+        preConfirm: async () => {
+            const oldPass = Swal.getPopup().querySelector('#changepass-current').value
+            const newPass = Swal.getPopup().querySelector('#changepass-new').value
+            const newPassConfirm = Swal.getPopup().querySelector('#changepass-confirm').value
+            if (!oldPass || !newPass || !newPassConfirm) {
+              Swal.showValidationMessage(`Please fill all input fields.`)
+            }else{
+                try {
+                    const response = await axios.put("/api/user", {name: null, email: null, password: oldPass, passwordNew: newPass, passwordConfirm: newPassConfirm});
+                    console.log(response)
+                    if ([200, 202].includes(response.status)) {
+                        return { password: oldPass, new_password: newPass, new_password_confirm: newPassConfirm }
+                    }
+                } catch (e) {
+                    Swal.showValidationMessage(e.response.data)
+                }
+            }
+          }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Successfully changed password",
+            icon: "success"
+          })
+        }
+      })
 }
-try{
-editPassForm.addEventListener("submit", event => {
-    event.preventDefault();
-    const name = registerForm.querySelector('fieldset #register-name').value;
-    const email = registerForm.querySelector('fieldset #register-email').value;
-    const password = editPassForm.querySelector('#changepass-current').value;
-    const passwordNew = editPassForm.querySelector('#changepass-new').value;
-    const passwordConfirm = editPassForm.querySelector('#changepass-confirm').value;
-    updateUser({
-        name,
-        email,
-        password,
-        passwordNew,
-        passwordConfirm
-    },"changepass-error");
-})
-}catch(e){
+try {
+    editPassForm.addEventListener("submit", event => {
+        event.preventDefault();
+        const name = registerForm.querySelector('fieldset #register-name').value;
+        const email = registerForm.querySelector('fieldset #register-email').value;
+        const password = editPassForm.querySelector('#changepass-current').value;
+        const passwordNew = editPassForm.querySelector('#changepass-new').value;
+        const passwordConfirm = editPassForm.querySelector('#changepass-confirm').value;
+        updatePassword({
+            name,
+            email,
+            password,
+            passwordNew,
+            passwordConfirm
+        }, "changepass-error");
+
+    })
+} catch (e) {
     e;
 }
 window.onload = () => {
-    const updateForm = document.querySelector('#accountCard form');
     const logOutButton = document.querySelector('#logOutButton');
     switcher();
     loginForm.addEventListener('submit', event => {
@@ -179,7 +243,7 @@ window.onload = () => {
                 name,
                 email,
                 password
-            },"update-error");
+            }, "update-error");
         });
     } catch (e) {
         e;

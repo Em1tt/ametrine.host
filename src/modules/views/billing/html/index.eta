@@ -38,6 +38,7 @@
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/index.css" rel="stylesheet">
     <script src="/billing/public/javascripts/theme.js" async defer></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
@@ -123,7 +124,7 @@
                             </form>
                         <div id="buttonWrapper">
                             <button id="change-pass-button" onclick="editPassword()">Change Password</button>
-                            <button id="2fa-button">Enable 2FA</button>
+                            <button onclick="twofa()" id="2fa-button">Enable 2FA</button>
                             <button id="discord-button">Link With Discord (Coming Soon)</button>
                         </div>
                     </div>
