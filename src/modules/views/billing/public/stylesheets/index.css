@@ -289,6 +289,16 @@ main hr {
 #security div button:hover{
     background-color: #292a34;
 }
+#delete-button{
+  color:red !important;
+
+}
+#delete-button:hover{
+  color:black !important;
+  font-weight: bold;
+  background-color: red !important;
+  box-shadow: none;
+}
 
 @media screen and (max-width: 1084px) {
     .cardWrapper form div {

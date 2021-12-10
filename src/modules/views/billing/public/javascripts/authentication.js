@@ -142,9 +142,6 @@ const toggleEditMode = async () => {
         passwordConfirmLabel.style = "visibility: hidden; position: absolute;";
     };
 };
-let switchBool;
-const button5 = document.querySelector("#button5"),
-    button6 = document.querySelector("#button6");
 const editPassword = () => {
     Swal.fire({
         title: 'Change Password',
@@ -184,25 +181,40 @@ const editPassword = () => {
         }
       })
 }
-try {
-    editPassForm.addEventListener("submit", event => {
-        event.preventDefault();
-        const name = registerForm.querySelector('fieldset #register-name').value;
-        const email = registerForm.querySelector('fieldset #register-email').value;
-        const password = editPassForm.querySelector('#changepass-current').value;
-        const passwordNew = editPassForm.querySelector('#changepass-new').value;
-        const passwordConfirm = editPassForm.querySelector('#changepass-confirm').value;
-        updatePassword({
-            name,
-            email,
-            password,
-            passwordNew,
-            passwordConfirm
-        }, "changepass-error");
-
-    })
-} catch (e) {
-    e;
+const deleteAccount = () => {
+    Swal.fire({
+        title: 'Delete Account',
+        icon: "warning",
+        html: "<p>By deleting your account all your services will be stopped immediately without refundation.<br><br>You will be signed out immediately,\
+        your account will be locked and it will enter a redemption period for 7 days.<br><br>You can message us at support@ametrine.host or open\
+        a ticket on our Discord server to retrieve your account. <br><br>After 7 days, all your data will be deleted from all our databases.</p>",
+        input: 'checkbox',
+        inputPlaceholder: 'I understand the consequences of deleting my account.',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: "Continue",
+        allowOutsideClick: () => !Swal.isLoading(),
+        preConfirm: async (checkbox) => {
+            if(!checkbox) return Swal.showValidationMessage("You must agree to have read this disclaimer before continuing.")
+          }
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Delete account",
+            text: "By proceeding, your account will be locked and you will be signed out. Your services will be terminated shortly after.",
+            input: "password",
+            inputPlaceholder: "password",
+            showCancelButton: true,
+            confirmButtonText: "Delete Account",
+            allowOutsideClick: () => !Swal.isLoading(),
+            preConfirm: async (password) => {
+                if(!password) return Swal.showValidationMessage("You must write your password into the input.");
+              }
+          })
+        }
+      })
 }
 window.onload = () => {
     const logOutButton = document.querySelector('#logOutButton');

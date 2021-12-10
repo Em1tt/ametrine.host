@@ -99,33 +99,11 @@
                     </div>
                     <div id="security">
                         <h3><i class="fa fa-shield-alt"></i> Security</h3>
-                                                    <form style="display:none;" id="change-password-form">
-                            <fieldset>
-                                <label for="changepass-current">Current Password</label><br>
-                                <input type="password" required id="changepass-current"><br>
-                                <label for="changepass-new">New Password</label><br>
-                                <input type="password" required id="changepass-new"><br>
-                                <label for="changepass-confirm">Confirm New Password</label><br>
-                                <input type="password" required id="changepass-confirm"><br>
-                                <p style="color: white;" id="changepass-error"></p>
-                            </fieldset>
-                            <div>
-                                <div style="visibility: hidden;position: absolute;" class="popup" id="button5">
-                                    <label onclick="editPassword()" for="button5-in" class="labelButton"><i class="fa fa-times"></i></label>
-                                    <input type="reset" id="button5-in" name="button5-in" aria-label="Discard Changes">
-                                    <p class="popupText" id="button1-tooltip">Discard changes</p>
-                                </div>
-                                <div style="visibility: hidden;position: absolute;" class="popup" id="button6">
-                                    <label for="button6-in" class="labelButton"><i class="fa fa-check"></i></label>
-                                    <input type="submit" name="button6-in" id="button6-in" aria-label="Save Changes">
-                                    <p class="popupText" id="button1-tooltip">Save changes</p>
-                                </div>
-                            </div>
-                            </form>
                         <div id="buttonWrapper">
                             <button id="change-pass-button" onclick="editPassword()">Change Password</button>
                             <button onclick="twofa()" id="2fa-button">Enable 2FA</button>
                             <button id="discord-button">Link With Discord (Coming Soon)</button>
+                            <button id="delete-button" onclick="deleteAccount()">Delete Account</button>
                         </div>
                     </div>
                     <div id="services">
