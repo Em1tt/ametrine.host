@@ -10,6 +10,19 @@ import ms                           from 'ms';
 let client: any;
 
 export const auth = {
+    version: 1,
+    updateHashVersion: async (userID: string | number): Promise<boolean> => {
+        const data = await client.db.hgetall(`user:${userID}`);
+        if (!data) return false;
+        if (data["version"] == auth.version) return false;
+        switch (parseInt(data["version"])) {
+            default:
+            case 1: // OTP_Secret for 2FA, and version.
+                await client.db.hset([`user:${userID}`, "version", auth.version, "2fa", 0, "otp_secret", '-1', "backup_codes", '[]']);
+        }
+        console.log("[Auth] Updated Hash Version from " + data["version"] + " to " + auth.version + ".")
+        return true;
+    },
     /**
      * Logins in the user via amethyst.host
      * @param {express.Request} req Express Request
@@ -175,7 +188,7 @@ export const auth = {
                 if (tokenInDB["expiresIn"] < currentDate) return forbidden();
                 tokenInDB = [tokenInDB["user_id"]];
                 if (refreshTokenValid.exp < currentDate) return forbidden()
-                user_id = refreshTokenValid.id
+                user_id = refreshTokenValid.id;
             } catch (e) {
                 console.error(e)
                 return (sendResponse) ? res.sendStatus(401) : 401;
@@ -210,7 +223,7 @@ export const auth = {
                 response = { accessToken, user_id: user_id, name: accessTokenValid.name, email: accessTokenValid.email, permission_id: accessTokenValid.permission_id }
                 break;
         }
-
+        auth.updateHashVersion(user_id);
         return (sendResponse) ? res.status(200).json(response) : response;
     }
 }

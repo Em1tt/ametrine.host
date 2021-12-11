@@ -25,6 +25,7 @@
   "dependencies": {
     "argon2": "^0.28.2",
     "body-parser": "^1.19.0",
+    "canvas": "^2.8.0",
     "cookie-parser": "^1.4.5",
     "discord.js": "^13.2.0",
     "dotenv": "^10.0.0",
@@ -36,8 +37,10 @@
     "mailparser": "^3.4.0",
     "morgan": "^1.10.0",
     "ms": "^2.1.2",
+    "node-2fa": "^2.0.3",
     "node-fetch": "^2.6.5",
     "nodemailer": "^6.6.3",
+    "qrcode": "^1.5.0",
     "redis": "^3.1.2",
     "smtp-server": "^3.9.0",
     "stripe": "^8.182.0"

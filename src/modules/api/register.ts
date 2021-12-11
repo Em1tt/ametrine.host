@@ -55,7 +55,9 @@ export const prop = {
                 return res.status(500).send("Error occured while incrementing user ID. Please report this.")
             }
             // Encrypt data such as email, name, etc in AES256 later.
-            await client.db.hset([`user:${userID}`, "user_id", userID, "name", name, "email", email, "password", passResult.password, "salt", passResult.salt, "registered", registeredAt, "permission_id", 0]);
+            await client.db.hset([`user:${userID}`, "user_id", userID, "name", name, "email", email, "password", passResult.password, "salt", passResult.salt, "registered", registeredAt, "permission_id", 0, "version", auth.version, "otp_secret", '-1']);
+            // Version determines the version of rows. If a version is different, it'll update the row.
+            
             const account = await client.db.hgetall(`user:${userID}`)
             if (!account) return res.status(500).send("Error occured while trying to find user account. Please report this.");
             await client.db.hset([`users.email`, email, userID]);

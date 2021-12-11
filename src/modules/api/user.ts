@@ -1,16 +1,16 @@
 /**
  * API for Users on Ametrine.host
  */
- import express                 from 'express';
- import { auth }                from './auth';
- 
- function allowedMethod(req: express.Request, res: express.Response, type: Array<string>): boolean { // I should probably turn this into a global function instead of copying & pasting all over the place.
-    res.set("Allow", type.join(", "));
-    if (!type.includes(req.method)) {
-        res.sendStatus(405);
-        return false;
-    }
-    return true;
+import express                 from 'express';
+import { auth }                from './auth';
+import { otp, OTPStruct }      from '../otp'
+function allowedMethod(req: express.Request, res: express.Response, type: Array<string>): boolean { // I should probably turn this into a global function instead of copying & pasting all over the place.
+   res.set("Allow", type.join(", "));
+   if (!type.includes(req.method)) {
+       res.sendStatus(405);
+       return false;
+   }
+   return true;
 }
 let client: any;
 export const prop = {
@@ -67,8 +67,44 @@ export const prop = {
                 }
                 break;
             }
-            case "2fa": { // Enables 2FA (currently not made yet)
-                break;
+            case "2fa": { // Enables 2FA
+                if (allowedMethod(req, res, ["DELETE", "POST"])) {
+                    const OTPEnabled = await client.db.hget(`user:${userData["user_id"]}`, "2fa");
+                    switch (req.method) {
+                        case "POST": {
+                            if (OTPEnabled == 1) return res.status(406).send("2FA is already enabled!")
+                            let { code } = req.query;
+                            if (!code) {
+                                return otp.generate2FA(userData["email"], "ametrine.host").then(async genOTP => {
+                                    if (!genOTP || typeof genOTP != 'object') return res.status(500).send("An error occured while generating 2FA. Please report this.");
+                                    const secretRes = await client.db.hset([`user:${userData["user_id"]}`, "otp_secret", genOTP.secret, "backup_codes", JSON.stringify(genOTP.backupCodes)])
+                                    if (secretRes != 0) return res.status(500).send("Error occured while changing the OTP Secret and/or Backup Codes. Please report this.");
+                                    return res.status(200).json(genOTP);
+                                }).catch(err => {
+                                    console.error(err);
+                                    return res.status(500).send("An error occured while generating 2FA. Please report this.");
+                                });
+                            } else {
+                                if (isNaN(parseInt(code))) return res.status(406).send("Please type in a valid code.");
+                                const secret = await client.db.hget(`user:${userData["user_id"]}`, "otp_secret");
+                                if (!secret || secret == "-1") return res.status(404).send("Unknown Secret.");
+                                code = parseInt(code);
+                                const verifyCode = otp.verify2FA(code, secret);
+                                if (!verifyCode) return res.status(403).send("Invalid code.");
+                                const OTPres = await client.db.hset([`user:${userData["user_id"]}`, "2fa", 1]);
+                                if (OTPres != 0) return res.status(500).send("Error occured while changing the 2FA status. Please report this.");
+                                return res.sendStatus(204);
+                            }
+                        }
+                        case "DELETE": {
+                            if (OTPEnabled != 1) return res.status(403).send("2FA isn't enabled.")
+                            const OTPres = await client.db.hset([`user:${userData["user_id"]}`, "2fa", 0, "otp_secret", -1, "backup_codes", '[]']);
+                            if (OTPres != 0) return res.status(500).send("Error occured while changing the 2FA status. Please report this.");
+                            return res.sendStatus(204);
+                        }
+                    }
+                }
+                break; // TS errors without this.
             }
             case "": {
                 if (allowedMethod(req, res, ["DELETE", "PUT"])) {

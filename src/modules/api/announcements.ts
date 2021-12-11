@@ -66,7 +66,6 @@ export const prop = {
                     if (!announcements.length) return res.sendStatus(404);
                     if (!req.query.hasPermission || req.query.hasPermission == undefined) req.query.hasPermission = 0;
                     announcements = announcements.filter(announcement => announcement.showToCustomersOnly <= req.query.hasPermission);
-                    console.log(announcements, userData);
                     if (announcements[0].showToCustomersOnly == 1 && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
                     return res.status(200).json(announcements.map(announcement => {
                         announcement.announcementText = decode_base64(announcement.announcementText);
