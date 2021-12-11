@@ -3,7 +3,7 @@ import { generateSecret, verifyToken }  from 'node-2fa';
 import fs                               from 'fs';
 import { createCanvas, Image }          from 'canvas';
 
-const logo = fs.readFileSync(__dirname + '/views/images/Ametrine23.png');
+const logo = fs.readFileSync(__dirname + '/views/images/qrcodelogo.png');
 
 export interface OTPStruct {
     readonly qr        : string;
