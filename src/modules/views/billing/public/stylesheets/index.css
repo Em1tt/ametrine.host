@@ -1,0 +1,351 @@
+:root {
+  font-size: 16px;
+  font-family: "Ubuntu", Arial, Helvetica, sans-serif;
+}
+* {
+  box-sizing: border-box;
+}
+html {
+  background-color: var(--main-bg);
+}
+body {
+  overflow-x: hidden;
+  height: auto;
+  overflow-y: auto;
+  width: 100vw;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+main {
+  margin: 3rem 0 0 7rem;
+  display: grid;
+  grid-template-areas: "main banner";
+  grid-template-columns: 70% 250px;
+  grid-template-rows: auto;
+  justify-content: space-between;
+  height: 100%;
+}
+main > div {
+  grid-area: main;
+}
+main > aside {
+  margin-right: 1rem;
+  height: 100% !important;
+}
+main > aside div {
+  grid-area: banner;
+  object-fit: cover;
+  width: 100%;
+  max-height: 100%;
+  border: 2px solid #3e404f;
+  filter: brightness(0.9);
+  aspect-ratio: 1/3;
+  background-size: cover;
+  background-image: url(/billing/public/images/Banner.png);
+  outline: none;
+  margin-bottom: 50px;
+}
+main > aside div:hover {
+  filter: brightness(1);
+}
+main h1 {
+  background: -webkit-linear-gradient(-200deg, #cc37c0 80%, #e6b530);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+main h2 {
+  color: #dce0ff;
+}
+main hr {
+  border: none;
+  height: 2px;
+  background-color: #3e404f;
+}
+/**/
+.decorationWrapper {
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 10vw;
+  align-items: baseline;
+}
+.decoration {
+  display: block;
+  border-radius: 20px;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  filter: brightness(0.9);
+  transition: 600ms ease;
+}
+.decoration:hover {
+  filter: brightness(1);
+  transition: 600ms ease;
+}
+.decoration._0{
+  width: 40%;
+  background-color: #3e404f;
+  height: 70px;
+  min-width: 140px;
+}
+.decoration._1 {
+  width: 50%;
+  background-color: #333541;
+  height: 70px;
+  min-width: 150px;
+}
+.decoration._2 {
+  width: 20%;
+  background-color: #3e404f;
+  height: 50px;
+  min-width: 100px;
+}
+.decoration._3 {
+  width: 35%;
+  background-color: #333541;
+  height: 50px;
+  min-width: 130px;
+}
+.decoration._4 {
+  width: 15%;
+  background-color: #3e404f;
+  height: 50px;
+  min-width: 80px;
+}
+.decoration._5 {
+  width: 60%;
+  background-color: #333541;
+  height: 30px;
+  min-width: 160px;
+}
+.decoration._6 {
+  width: 30%;
+  background-color: #3e404f;
+  height: 30px;
+  min-width: 200px;
+}
+.decoration._7 {
+  width: 35%;
+  background-color: #3e404f;
+  height: 40px;
+  min-width: 90px;
+}
+
+.cardWrapper {
+  display: grid;
+  grid-template-areas:
+    "account security"
+    "services services"
+    "transactions transactions";
+  column-gap: 5%;
+  row-gap: 50px;
+}
+
+.cardWrapper div {
+  color: #dce0ff;
+  background-color: #1e1f26;
+  height: auto;
+}
+.cardWrapper div h3 {
+  color: #dce0ff;
+  background-color: #141419;
+  padding: 5px 10px;
+  margin-top: 0;
+  width: 100%;
+}
+
+.cardWrapper form {
+  padding: 0px 10px 10px;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.cardWrapper form {
+  padding: 0px 10px 10px;
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.cardWrapper form div {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.cardWrapper form fieldset {
+  padding: 10px;
+  width: 75%;
+  border: none;
+  line-height: 25px;
+}
+
+.cardWrapper form fieldset label {
+  color: #dce0ff;
+}
+
+.cardWrapper form input {
+  margin-top: 10px;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.cardWrapper form input[type="reset"] {
+  visibility: hidden;
+  position: absolute;
+}
+
+.cardWrapper form input[type="submit"] {
+  visibility: hidden;
+  position: absolute;
+}
+
+.cardWrapper form input:read-only {
+  color: #3e404f;
+}
+.cardWrapper form input {
+  color: #dce0ff;
+  background-color: #141419;
+  padding: 5px 10px;
+  margin-top: 0;
+  border: none;
+}
+
+.cardWrapper form p {
+  color: #3e404f;
+}
+
+.cardWrapper .labelButton {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  background-color: #141419;
+  border: none;
+  color: #dce0ff;
+  font-size: 2rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+
+.cardWrapper .labelButton:hover {
+  background-color: #292a34;
+  color: #dce0ff;
+}
+
+.cardWrapper form button {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+  background-color: #141419;
+  border: none;
+  color: #dce0ff;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.cardWrapper form button:hover {
+  background-color: #292a34;
+  color: #dce0ff;
+}
+
+#accountCard {
+  grid-area: account;
+}
+#security {
+  grid-area: security;
+}
+#services {
+  grid-area: services;
+}
+#transactions {
+  grid-area: transactions;
+}
+
+#security > div{
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+#security div button{
+    width: 70%;
+    padding: 10px;
+    background-color: #141419;
+    color: white;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+#security div button:last-of-type{
+    margin-bottom: 30px;
+}
+#security div button:hover{
+    background-color: #292a34;
+}
+#delete-button{
+  color:red !important;
+
+}
+#delete-button:hover{
+  color:black !important;
+  font-weight: bold;
+  background-color: red !important;
+  box-shadow: none;
+}
+
+@media screen and (max-width: 1084px) {
+    .cardWrapper form div {
+        display: flex;
+        flex-flow: row nowrap;
+      }
+  }
+
+@media screen and (max-width: 1000px) {
+
+  main {
+    grid-template-areas: "main";
+    grid-template-columns: 90%;
+  }
+  .cardWrapper {
+    display: grid;
+    grid-template-areas:
+      "account account"
+      "security security"
+      "services services"
+      "transactions transactions";
+    column-gap: 5%;
+    row-gap: 50px;
+  }
+  .cardWrapper form div {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+}
+@media screen and (max-width: 600px) {
+
+  main {
+    margin: 3rem 0 0 1rem;
+    grid-template-areas: "main";
+    grid-template-columns: 90%;
+  }
+  .deco:nth-of-type(8) {
+    margin-bottom: 100px;
+  }
+}
+@media screen and (max-width: 427px) {
+
+    .cardWrapper form div {
+        display: flex;
+        flex-flow: row nowrap;
+      }
+      body{
+        margin: 0;
+    }
+  }

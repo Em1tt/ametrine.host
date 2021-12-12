@@ -1,0 +1,208 @@
+:root {
+    font-size: 16px;
+    font-family: "Ubuntu", Arial, Helvetica, sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    background-color: var(--main-bg);
+  }
+  body {
+    overflow-x: hidden;
+    height: auto;
+    overflow-y: auto;
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+  }
+  main {
+    margin: 3rem 0 0 7rem;
+    display: grid;
+    height: 100%;
+  }
+  main > div{
+      width: 90%;
+  }
+  main > div > div{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    margin-bottom: 20px;
+}
+main > div > div > h1 {
+    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+main > div > hr {
+    border: none;
+    height: 2px;
+    background-color: #3e404f;
+    margin: none !important;
+  }
+main > form > fieldset {
+    display: flex;
+    flex-flow: row wrap;
+    padding: 0;
+    margin-bottom: 10px;
+    border: none;
+    width: auto;
+  }
+  main > div > form > fieldset{
+      border: none;
+  }
+main form fieldset > div:not(#editor, .ql-toolbar, .editorWrapper, .top){
+    display: flex;
+    flex-flow: row nowrap;
+    width: 75vw;
+  }
+  .editorWrapper{
+      width: 100%;
+      min-width: unset;
+      margin-right: none !important;
+  }
+
+  form #subject {
+    color: #dce0ff;
+    background-color: #141419;
+    padding: 5px 10px;
+    margin-top: 0;
+    border: none;
+    margin: 5px 10px 5px 0;
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 300px;
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+  form select{
+      background-color: #141419;
+      color: white;
+      outline: none;
+      border: none;
+      margin: 5px 10px 5px 0;
+      padding: 5px;
+  }
+#editor{
+    border: none;
+    overflow-y: auto;
+    max-height: 300px;
+}
+form label{
+    background-color: #1e1f26;
+    color: #cc37c0;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+form label:hover{
+    background-color: #141419;
+}
+
+.screenshotsWrapper{
+    display: flex;
+    flex-flow: row wrap;
+    align-items:baseline;
+    padding: 0 0 0 10px;
+}
+
+.screenshotsWrapper p{
+    color: white;
+}
+
+form input[type="file"]{
+    display: none;
+    position: absolute;
+    top: 0;
+}
+
+form input[type="submit"]{
+    background-color: #1e1f26;
+    color: #cc37c0;
+    padding: 10px;
+    cursor: pointer;
+    margin-right: 10px;
+    width: 165px;
+    outline: none;
+    border: none;
+
+}
+
+form input[type="submit"]:hover{
+    background-color: #141419;
+}
+
+#submitWrapper{
+    display: flex;
+    justify-content: end;
+}
+
+#errorText{
+    color: red;
+}
+
+.ql-toolbar .ql-stroke {
+    fill: none !important;
+    stroke: #fff !important;
+}
+.ql-toolbar button:hover .ql-stroke, .ql-toolbar button:hover .ql-fill {
+    fill: none !important;
+    stroke: #cc37c0 !important;
+}
+.ql-toolbar .ql-fill {
+    fill: #fff !important;
+    stroke: none !important;
+}
+.ql-toolbar .ql-active .ql-stroke, .ql-toolbar .ql-active .ql-fill{
+    fill:none !important;
+    stroke: #e6b530 !important;
+}
+.ql-toolbar{
+    background-color:#141419;
+    border: none !important;
+}
+.ql-editor{
+    background-color: #1e1f26;
+    color: white;
+    border: none;
+    outline: none;
+    min-height: 300px;
+    word-break: break-word;
+}
+.ql-toolbar .ql-picker {
+    color: rgb(255, 255, 255) !important;
+    outline: none !important;
+    border: none !important;
+}
+.ql-picker-options{
+    background-color: #141419 !important;
+    border: none !important;
+}
+.ql-expanded .ql-picker {
+    color: rgb(235, 90, 90) !important;
+}
+
+@media screen and (max-width:600px){
+    main{
+        margin-left: 0.5rem;
+        overflow-y: auto;
+        display: block;
+    }
+    form #subject {
+        width: 200px;
+        padding: 5px;
+        font-size: 0.9rem;
+      }
+    form{
+        margin-bottom: 100px;
+    }
+}

@@ -1,0 +1,85 @@
+:root {
+    font-size: 16px;
+    font-family: "Ubuntu", Arial, Helvetica, sans-serif;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  html {
+    background-color: var(--main-bg);
+  }
+  body {
+    overflow-x: hidden;
+    height: auto;
+    overflow-y: auto;
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+  }
+  main {
+    margin: 3rem 0 0 7rem;
+    display: grid;
+    grid-template-areas: "main banner";
+    grid-template-columns: 70% 250px;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    height: 100%;
+  }
+  main > div {
+    grid-area: main;
+  }
+  main h1 {
+    background: -webkit-linear-gradient(-200deg, #cc37c0 80%, #e6b530);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 0;
+  }
+  main h2 {
+    color: #dce0ff;
+    margin: 0;
+  }
+  main hr {
+    border: none;
+    height: 2px;
+    background-color: #3e404f;
+  }
+  main div a{
+    text-decoration: none;
+    background-color: #1e1f26;
+    padding: 30px;
+    display: flex;
+    margin-bottom: 10px;
+  }
+  main div a:after{
+      margin-left: auto;
+      display: block;
+      position: relative;
+      content: "➜";
+      font-size: 3rem;
+      right: 30px;
+      color:#dce0ff;
+      opacity: 0;
+  }
+  main div a:hover{
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: 1s ease;
+  }
+  main div a:hover:after{
+    margin-left: auto;
+    display: block;
+    right: 0;
+    transition: 1s ease;
+    opacity: 1;
+}
+  main div a div{
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: center;
+  }
+  main div a p{
+      margin: 0;
+      color: gray;
+  }
