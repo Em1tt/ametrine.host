@@ -15,7 +15,7 @@ export const prop = {
         time: 2 * (60 * 1000) // 2 Minutes
     },
     setClient: function(newClient: unknown): void { client = newClient; },
-    run: async (req: express.Request, res: express.Response) => {
+    run: async (req: express.Request, res: express.Response): Promise<express.Response | unknown> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
         const { name, email, password, passwordConfirm } = req.body;
@@ -63,8 +63,8 @@ export const prop = {
             await client.db.hset([`users.email`, email, userID]);
             const loginToken = await auth.login(req, res, account, false);
             if (loginToken == 403) return res.sendStatus(403);
-            auth.setCookie(res, "jwt", loginToken.refreshToken, loginToken.expiresIn);
-            auth.setCookie(res, "access_token", loginToken.accessToken, loginToken.expiresIn);
+            auth.setCookie(res, "jwt", loginToken["refreshToken"], loginToken["expiresIn"]);
+            auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
             res.json(loginToken)
         })
     }

@@ -3,7 +3,7 @@
  */
 import express                 from 'express';
 import { auth }                from './auth';
-import { otp, OTPStruct }      from '../otp'
+import { otp }                 from '../otp';
 function allowedMethod(req: express.Request, res: express.Response, type: Array<string>): boolean { // I should probably turn this into a global function instead of copying & pasting all over the place.
    res.set("Allow", type.join(", "));
    if (!type.includes(req.method)) {
@@ -85,15 +85,23 @@ export const prop = {
                                     return res.status(500).send("An error occured while generating 2FA. Please report this.");
                                 });
                             } else {
-                                if (isNaN(parseInt(code))) return res.status(406).send("Please type in a valid code.");
-                                const secret = await client.db.hget(`user:${userData["user_id"]}`, "otp_secret");
-                                if (!secret || secret == "-1") return res.status(404).send("Unknown Secret.");
-                                code = parseInt(code);
-                                const verifyCode = otp.verify2FA(code, secret);
-                                if (!verifyCode) return res.status(403).send("Invalid code.");
-                                const OTPres = await client.db.hset([`user:${userData["user_id"]}`, "2fa", 1]);
-                                if (OTPres != 0) return res.status(500).send("Error occured while changing the 2FA status. Please report this.");
-                                return res.sendStatus(204);
+                                try {
+                                    if (isNaN(parseInt(code))) return res.status(406).send("Please type in a valid code.");
+                                    const secret = await client.db.hget(`user:${userData["user_id"]}`, "otp_secret");
+                                    const backupCodes = JSON.parse(await client.db.hget(`user:${userData["user_id"]}`, "backup_codes"));
+                                    
+                                    if (!secret || secret == "-1") return res.status(404).send("Unknown Secret.");
+                                    code = parseInt(code);
+                                    const verifyCode = otp.verify2FA(code, secret);
+                                    if (!verifyCode) return res.status(403).send("Invalid code.");
+                                    const OTPres = await client.db.hset([`user:${userData["user_id"]}`, "2fa", 1]);
+                                    if (OTPres != 0) return res.status(500).send("Error occured while changing the 2FA status. Please report this.");
+                                    return res.status(200).json({backupCodes});
+                                } catch (e) {
+                                    console.error(e);
+                                    res.sendStatus(500);
+                                }
+                                break;
                             }
                         }
                         case "DELETE": {

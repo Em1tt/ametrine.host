@@ -1,8 +1,8 @@
 export interface UserData {
     readonly refreshToken   : string;
     readonly accessToken    : string;
-    readonly user_id        : number;
+    readonly user_id        : string | number;
     readonly name           : string;
     readonly email          : string;
-    readonly permission_id  : unknown;
+    readonly permission_id  : string | number;
 }

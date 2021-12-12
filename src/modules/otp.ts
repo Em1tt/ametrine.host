@@ -83,6 +83,7 @@ export const otp = {
         })
     },
     verify2FA: (token: number, secret: string): boolean => {
-        return (verifyToken(secret, token.toString()) != null);
+        const verifyCode = verifyToken(secret, token.toString())
+        return (verifyCode != null && verifyCode["delta"] == 0);
     }
 };

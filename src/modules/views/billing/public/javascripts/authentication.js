@@ -52,8 +52,12 @@ const twofa = () => {
                     .join("<br>")}</p>`,
                   showCancelButton: false,
                   confirmButtonText: "Done",
+                  preConfirm: () => {
+                    location.reload();
+                  }
                 });
               } catch (e) {
+                console.error(e)
                 Swal.showValidationMessage(e.response.data);
               }
             }

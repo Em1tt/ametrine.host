@@ -101,8 +101,7 @@
                         <h3><i class="fa fa-shield-alt"></i> Security</h3>
                         <div id="buttonWrapper">
                             <button id="change-pass-button" onclick="editPassword()">Change Password</button>
-                            <% //if(it.userData.2fa){ %> <!--REMOVE COMMENT ON FIX @firee-->
-                            <% if(it.userData){ %> <!--REMOVE LINE ON FIX @firee-->
+                            <% if(it.userData['2fa']){ %>
                             <button id="2fa-button">Disable 2FA</button>
                             <% }else{ %>
                             <button onclick="twofa()" id="2fa-button">Enable 2FA</button>
