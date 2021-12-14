@@ -73,7 +73,7 @@ export const prop = {
                     switch (req.method) {
                         case "POST": {
                             if (OTPEnabled == 1) return res.status(406).send("2FA is already enabled!")
-                            let { code } = req.query;
+                            let { code } = req.body;
                             if (!code) {
                                 return otp.generate2FA(userData["email"], "ametrine.host").then(async genOTP => {
                                     if (!genOTP || typeof genOTP != 'object') return res.status(500).send("An error occured while generating 2FA. Please report this.");
