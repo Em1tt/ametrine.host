@@ -4,14 +4,7 @@
 import express                 from 'express';
 import { auth }                from './auth';
 import { otp }                 from '../otp';
-function allowedMethod(req: express.Request, res: express.Response, type: Array<string>): boolean { // I should probably turn this into a global function instead of copying & pasting all over the place.
-   res.set("Allow", type.join(", "));
-   if (!type.includes(req.method)) {
-       res.sendStatus(405);
-       return false;
-   }
-   return true;
-}
+import { utils }               from '../utils';
 let client: any;
 export const prop = {
     name: "user",
@@ -42,7 +35,7 @@ export const prop = {
         }
         switch (paramName) {
             case "logout": { // Logs out a user.
-                if (allowedMethod(req, res, ["POST"])) {
+                if (utils.allowedMethod(req, res, ["POST"])) {
                     // Not sure why I tried using Access Tokens to log out, or even sure if it worked.
                     const { refreshToken } = await auth.verifyToken(req, res, false, "refresh");
                     if (!refreshToken) return res.sendStatus(403);
@@ -68,7 +61,7 @@ export const prop = {
                 break;
             }
             case "2fa": { // Enables 2FA
-                if (allowedMethod(req, res, ["DELETE", "POST"])) {
+                if (utils.allowedMethod(req, res, ["DELETE", "POST"])) {
                     const OTPEnabled = await client.db.hget(`user:${userData["user_id"]}`, "2fa");
                     switch (req.method) {
                         case "POST": {
@@ -105,17 +98,29 @@ export const prop = {
                             }
                         }
                         case "DELETE": {
-                            if (OTPEnabled != 1) return res.status(403).send("2FA isn't enabled.")
-                            const OTPres = await client.db.hset([`user:${userData["user_id"]}`, "2fa", 0, "otp_secret", -1, "backup_codes", '[]']);
-                            if (OTPres != 0) return res.status(500).send("Error occured while changing the 2FA status. Please report this.");
-                            return res.sendStatus(204);
+                            if (OTPEnabled != 1) return res.status(403).send("2FA isn't enabled.");
+                            try {
+                                let { code } = req.body;
+                                if (isNaN(parseInt(code))) return res.status(406).send("Please type in a valid code.");
+                                const secret = await client.db.hget(`user:${userData["user_id"]}`, "otp_secret");
+                                if (!secret || secret == "-1") return res.status(404).send("Unknown Secret.");
+                                code = parseInt(code);
+                                const verifyCode = otp.verify2FA(code, secret);
+                                if (!verifyCode) return res.status(403).send("Invalid code.");
+                                const OTPres = await client.db.hset([`user:${userData["user_id"]}`, "2fa", 0, "otp_secret", -1, "backup_codes", '[]']);
+                                if (OTPres != 0) return res.status(500).send("Error occured while changing the 2FA status. Please report this.");
+                                return res.sendStatus(204);
+                            } catch (e) {
+                                console.error(e);
+                                res.sendStatus(500);
+                            }
                         }
                     }
                 }
                 break; // TS errors without this.
             }
             case "": {
-                if (allowedMethod(req, res, ["DELETE", "PUT"])) {
+                if (utils.allowedMethod(req, res, ["DELETE", "PUT"])) {
                     switch (req.method) {
                         case "PUT": { // Updating user data, such as first name, email, etc
                             let user = await client.db.hmget(`user:${userData["user_id"]}`, ["password", "salt"])

@@ -6,15 +6,7 @@ import { auth }                from './auth';
 import { permissions }         from '../permissions'
 import ticket_categories       from '../../ticket_categories.json';
 import { Ticket }              from '../../types/billing/ticket';
-
-function encode_base64(str: string) {
-    if (!str.length) return false;
-    return btoa(encodeURIComponent(str));
-}
-function decode_base64(str: string) {
-    if (!str.length) return false;
-    return decodeURIComponent(atob(str));
-}
+import { utils }               from '../utils'
 
 const settings = {
     maxTitle: 100, // Maximum Length for the title of the ticket.
@@ -109,7 +101,7 @@ export const prop = {
                 if (ticket['content'].length > 100) {
                     ticket['content'] = ticket['content'].toString().slice(0, 100);
                 }
-                ticket["subject"] = decode_base64(ticket["subject"]).toString();
+                ticket["subject"] = utils.decode_base64(ticket["subject"]).toString();
                 //ticket["content"] = decode_base64(ticket["content"]);
                 ticket["opened"] = new Date(ticket["opened"]);
                 ticket["editedIn"] = (ticket["editedIn"] == 0) ? null : new Date(ticket["editedIn"]);
@@ -141,7 +133,7 @@ export const prop = {
                         const ticketData = {
                             ticket_id: ticketID,
                             user_id: userData["user_id"],
-                            subject: encode_base64(subject),
+                            subject: utils.encode_base64(subject),
                             content: JSON.stringify(content),
                             category_ids: category_ids.join(","),
                             opened: timestamp
@@ -353,7 +345,7 @@ export const prop = {
                                 //if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
                                 if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
                                 if (subject && subject.length) {
-                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "subject", encode_base64(subject), "editedIn", timestamp])
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "subject", utils.encode_base64(subject), "editedIn", timestamp])
                                     if (content) {
                                         editContent(JSON.stringify(content), timestamp, getTicket["ticket_id"])
                                     }

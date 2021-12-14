@@ -61,9 +61,15 @@ export const auth = {
         const { code, type } = req.body;
         if (data["2fa"] == 1) {
             if (type == "2fa") {
-                if (isNaN(parseInt(code))) return res.status(406).send("Please type in a valid code.");
+                if (isNaN(parseInt(code))) {
+                    res.status(406).send("Please type in a valid code.");
+                    return { "2fa": true };
+                }
                 const secret = data["otp_secret"];
-                if (!secret || secret == "-1") return res.status(404).send("Unknown Secret.");
+                if (!secret || secret == "-1") {
+                    res.status(404).send("Unknown Secret.");
+                    return { "2fa": true };
+                }
                 const verifyCode = otp.verify2FA(parseInt(code), secret);
                 if (!verifyCode) {
                     res.status(403).send("Incorrect Code.");
@@ -285,7 +291,6 @@ export const prop = {
         const loginToken = await auth.login(req, res, account, rememberMe);
         if (loginToken == 403) return res.status(403).send("Email or password incorrect");
         if (loginToken["2fa"]) return;
-        console.log(loginToken)
         auth.setCookie(res, "jwt", loginToken["refreshToken"], loginToken["expiresIn"]);
         auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
         return res.json(loginToken);

@@ -5,15 +5,7 @@ import express                 from 'express';
 import { permissions }         from '../permissions'
 import { auth }                from './auth';
 import { Announcement }        from '../../types/billing/announcement';
-
-function encode_base64(str) {
-    if (!str.length) return false;
-        return btoa(encodeURIComponent(str));
-}
-function decode_base64(str) {
-    if (!str.length) return false;
-        return decodeURIComponent(atob(str));
-}
+import { utils }               from '../utils'
 let client;
 
 export const prop = {
@@ -68,7 +60,7 @@ export const prop = {
                     announcements = announcements.filter(announcement => announcement.showToCustomersOnly <= req.query.hasPermission);
                     if (announcements[0].showToCustomersOnly == 1 && typeof userData != "object") return res.sendStatus(403); // Forbidden from viewing announcement.
                     return res.status(200).json(announcements.map(announcement => {
-                        announcement.announcementText = decode_base64(announcement.announcementText);
+                        announcement.announcementText = utils.decode_base64(announcement.announcementText as string);
                         return announcement;
                     }));
                 })
@@ -94,7 +86,7 @@ export const prop = {
                         console.error(err);
                         return res.status(500).send("Error occured while incrementing announcement ID. Please report this.")
                     }
-                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", encode_base64(announcement), "deleteIn", deleteOn, "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
+                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", utils.encode_base64(announcement), "deleteIn", deleteOn, "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
                     return res.status(200).json({announcement_id: announcementID})
                     /*client.sadd(`announcements`, announcementID, function(err) {
                         if (err) return console.error(err);
