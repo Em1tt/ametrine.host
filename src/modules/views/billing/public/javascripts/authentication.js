@@ -54,10 +54,10 @@ const twofa = () => {
                   confirmButtonText: "Done",
                   preConfirm: () => {
                     location.reload();
-                  }
+                  },
                 });
               } catch (e) {
-                console.error(e)
+                console.error(e);
                 Swal.showValidationMessage(e.response.data);
               }
             }
@@ -76,7 +76,33 @@ const loginUser = async (user) => {
   try {
     const response = await axios.post("/api/auth", user);
     console.log(response);
-    location.reload();
+    if (response.data["2fa"]) {
+      Swal.fire({
+        title: "2 Factor Authentication",
+        html: `<p><b>This account is secured by 2 factor authentication.</b></p>`,
+        input: "text",
+        inputPlaceholder: "2FA code",
+        showCancelButton: false,
+        confirmButtonText: "Done",
+        preConfirm: async (twofa) => {
+          try {
+            user.code = twofa;
+            user.type = "2fa";
+            console.log(user);
+            const response = await axios.post("/api/auth", user);
+            console.log(response);
+            if(response.data.email){
+              location.reload();
+            }
+          } catch (e) {
+            Swal.showValidationMessage(e.response.data);
+            console.log(e);
+          }
+        },
+      })
+    } else {
+      location.reload();
+    }
   } catch (e) {
     errorText = e.response.data;
     console.error(e);
