@@ -193,8 +193,7 @@ const apiMethod = function (r: express.Request, s: express.Response) {
   if (ep) { // Prevent site from sending errors when the :method is not defined.
     ep.prop.run(r, s);
   } else {
-    return s.status(404)
-            .send("if you were searching for a 404.. you found it!!");
+    return s.render(`/404.eta`);
   }
 }
 /* amethyst.host/api/bill
@@ -218,8 +217,7 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
   //console.log(r);
   const file = `${billing}/order.eta`;
 
-  if (!fs.existsSync(file)) return s.status(404)
-                                    .send("if you were searching for a 404.. you found it!!");
+  if (!fs.existsSync(file)) return s.render(`/404.eta`);
   let id = r.query?.id?.toString(); //Optional chaining. Thank you ECMA!
   let item = r.query?.type?.toString();
   if(!id){
@@ -252,8 +250,7 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
 app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   const file = `${billing}/${r.params.name}.eta`;
 
-  if (!fs.existsSync(file)) return s.status(404)
-                                    .send("if you were searching for a 404.. you found it!!");
+  if (!fs.existsSync(file)) return s.render(`/404.eta`);
   const userData = s.locals.userData;
   s.render(file, {
     userData: userData,
@@ -264,8 +261,7 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
 app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => {
   const file = `${billing}/tickets/create.eta`;
 
-  if (!fs.existsSync(file)) return s.status(404)
-                                    .send("if you were searching for a 404.. you found it!!");
+  if (!fs.existsSync(file)) return s.render(`/404.eta`);
   const userData = s.locals.userData;
   if(!userData) return s.status(403).send("Must be logged in to do this");
   const ticketCats = require("../../src/ticket_categories.json");
@@ -295,8 +291,7 @@ app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Resp
   newTicketProps["editedIn"] = parseInt(getTicket.editedIn.toString());
   
   getTicket = newTicketProps;
-  if (!fs.existsSync(file)) return s.status(404)
-                                    .send("if you were searching for a 404.. you found it!!");
+  if (!fs.existsSync(file)) return s.render(`/404.eta`);
   const userData: UserData = s.locals.userData;
   if(!userData) return s.status(403).send("Must be logged in to do this");
   if(userData.user_id != getTicket.user_id) return s.status(403).send("No permission");
@@ -316,8 +311,7 @@ app.get("/.env", (r: express.Request, s: express.Response) => {
 app.get("/:name", (r: express.Request, s: express.Response) => {
   const file = `${html}/${r.params.name}.eta`;
 
-  if (!fs.existsSync(file)) return s.status(404)
-                                    .send("if you were searching for a 404.. you found it!!");
+  if (!fs.existsSync(file)) return s.render(`/404.eta`);
   s.render(file);
 
 });
