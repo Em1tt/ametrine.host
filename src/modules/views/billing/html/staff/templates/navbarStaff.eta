@@ -1,0 +1,53 @@
+<nav class="navbar">
+    
+    <ul class="navbar-nav">
+
+        <li class="header">
+            <a href="/billing" class="nav-link">
+                <span aria-hidden="true" class="link-text header-text">Ametrine.host</span>
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" aria-label="Announcements" class="nav-link">
+                <i class="fa fa-bell"></i>
+                <span aria-hidden="true" class="link-text">Announcements</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a aria-label="Support" id="support" class="nav-link">
+                <i class="fa fa-ticket-alt"></i>
+                <span aria-hidden="true" class="link-text">Support</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" aria-label="Referral" class="nav-link">
+                <i class="fa fa-user-plus"></i>
+                <span aria-hidden="true" class="link-text">Referral</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a aria-label="Order" id="order" class="nav-link">
+                <i class="fa fa-shopping-cart"></i>
+                <span aria-hidden="true" class="link-text">Manage Packages</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a aria-label="Order" id="order" class="nav-link">
+                <i class="fa fa-tools"></i>
+                <span aria-hidden="true" class="link-text">Settings</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href=/billing class="nav-link" aria-label="Log-In" id="login-button">
+                <i class="fa fa-cogs"></i>
+                <span aria-hidden="true" class="link-text">
+                    Manage Account
+                </span>
+            </a>
+        </li>
+
+    </ul>
+    
+</nav>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ametrine.host | Staff Area</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!--STYLESHEETS-->
+    <!--Asynchronous load-->
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous"
+        media="">
+    <noscript>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    </noscript>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+        <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
+    <link href="/billing/html/staff/css/overview.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+</head>
+
+<body class="dark">
+    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta') %>
+    <main>
+        <div class="content">
+            <h1><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
+            <hr>
+                <div class="cardWrapper">
+                    <div id="accountCard">
+                        <h3><i class="fa fa-user-circle"></i> Users</h3>
+                        <div>
+                        <canvas id="userChart"></canvas>
+                        </div>
+                        
+                    </div>
+                    <div id="security">
+                        <h3><i class="fa fa-shield-alt"></i> Security</h3>
+                        <div>
+                        <canvas id="serviceChart"></canvas>
+                        </div>
+                    </div>
+                    <div id="services">
+                        <h3><i class="fa fa-box"></i> Services</h3>
+                    </div>
+                    <div id="transactions">
+                        <h3><i class="fa fa-file-invoice"></i> Transactions</h3>
+                    </div>
+                </div>
+        </div>
+    </main>
+<script>
+(async () => {
+const ctx = document.getElementById('userChart').getContext('2d');
+let dates = [];
+for(i=0; i < 7; i++){
+    dates.push(dayjs().subtract(i, "day").toString());
+}
+dates = dates.map(date => {
+    return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
+}).reverse();
+let registeredUsers = "<%=JSON.stringify(it.users)%>".replace(/&quot;/g, '"');
+registeredUsers = JSON.parse(registeredUsers.slice(1, registeredUsers.length-1));
+registeredUsers = registeredUsers.map(user => {
+    user.registered = dayjs(user.registered).toString().split(",")[1].trim().split(" ").slice(0, 3).join(" ");
+    return user;
+});
+console.log(registeredUsers);
+const data = new Array(dates.length).fill(0);
+console.log(dates);
+registeredUsers.forEach((user) => {
+    if(user.registered){
+    
+    }
+});
+const myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: [{
+            tension: "0.2",
+            borderColor: 'rgb(75, 192, 192)',
+            label: 'Registrations',
+            data: [12, 19, 3, 5, 2, 3],
+   borderColor: "#cc37c0",
+   backgroundColor: "rgba(0,0,0,0.2)",
+   pointBackgroundColor: "#e6b530",
+   pointBorderColor: "#e6b530",
+   pointHoverBackgroundColor: "#55bae7",
+   pointHoverBorderColor: "#55bae7",
+            borderWidth: 1,
+            fill: true
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        },
+        responsive: true
+    }
+});
+})()
+</script>
+</body>

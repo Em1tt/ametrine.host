@@ -1,24 +1,24 @@
 {
     "0": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list"]
     },
     "1": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/overview"]
     },
     "2": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/overview"]
     },
     "2:3": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/overview"]
     },
     "2:4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/overview"]
     },
     "2:5": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/overview"]
     },
     "4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/overview"]
     }
     
 }

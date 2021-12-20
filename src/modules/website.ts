@@ -13,6 +13,7 @@ import { auth }     from "./api/auth"
 import * as plans   from "../plans.json"
 import { Ticket }   from "../types/billing/ticket";
 import { UserData } from "../types/billing/user";
+import { permissions } from "./permissions";
 import rateLimit    from "express-rate-limit";
 
 import redis        from 'redis';
@@ -256,6 +257,29 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
     userData: userData,
     config: config.billing
   });
+});
+
+app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) => {
+  const userData: UserData = s.locals.userData;
+  const file = `${billing}/staff/${r.params.name}.eta`;
+  console.log(r.params.name)
+  return redisClient.keys("user:?", async function (err, result) {
+      if (err) {
+        console.error(err);
+        return s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
+      }
+      const users: Array<UserData> = await Promise.all(result.map(async userID => {
+        const user: UserData = await redisClient.db.hgetall(userID);
+        return {id: user.user_id, registered: user.registered, permission: user.permission_id};
+    }))
+    if(!userData) return s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
+    if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/${r.params.name}`)) return s.status(403).send("Insufficient permissions.");
+    s.render(file, {
+      userData: userData,
+      config: config.billing,
+      users: JSON.stringify(users)
+    });
+  })
 });
 
 app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => {
