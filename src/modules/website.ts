@@ -246,19 +246,6 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
   });
 });
 
-
-
-app.get("/billing/:name", (r: express.Request, s: express.Response) => {
-  const file = `${billing}/${r.params.name}.eta`;
-
-  if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
-  const userData = s.locals.userData;
-  s.render(file, {
-    userData: userData,
-    config: config.billing
-  });
-});
-
 app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
   const userData: UserData = s.locals.userData;
   const file = `${billing}/staff/overview.eta`;
@@ -272,13 +259,24 @@ app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
         return {id: user.user_id, registered: user.registered, permission: user.permission_id};
     }))
     if(!userData) return s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
-    if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/${r.params.name}`)) return s.status(403).send("Insufficient permissions.");
+    if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/`)) return s.status(403).send("Insufficient permissions.");
     s.render(file, {
       userData: userData,
       config: config.billing,
       users: JSON.stringify(users)
     });
   })
+});
+
+app.get("/billing/:name", (r: express.Request, s: express.Response) => {
+  const file = `${billing}/${r.params.name}.eta`;
+
+  if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
+  const userData = s.locals.userData;
+  s.render(file, {
+    userData: userData,
+    config: config.billing
+  });
 });
 
 app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) => {
