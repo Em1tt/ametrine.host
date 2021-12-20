@@ -81,20 +81,25 @@ for(i=0; i < 7; i++){
 dates = dates.map(date => {
     return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
 }).reverse();
+let curYear = dayjs().year();
+console.log(curYear);
 let registeredUsers = "<%=JSON.stringify(it.users)%>".replace(/&quot;/g, '"');
 registeredUsers = JSON.parse(registeredUsers.slice(1, registeredUsers.length-1));
 registeredUsers = registeredUsers.map(user => {
-    user.registered = dayjs(user.registered).toString().split(",")[1].trim().split(" ").slice(0, 3).join(" ");
+    user.registered = dayjs(parseInt(user.registered)).toString().split(",")[1].trim().split(" ").slice(0, 3).join(" ");
     return user;
 });
+registeredUsers = registeredUsers.filter(user => user.registered.split(" ")[2] == curYear);
 console.log(registeredUsers);
 const data = new Array(dates.length).fill(0);
 console.log(dates);
-registeredUsers.forEach((user) => {
-    if(user.registered){
-    
+for(i = 0; i < registeredUsers.length; i++){
+    let match = dates.find(date => registeredUsers[i].registered.includes(date));
+    console.log(match);
+    if(match){
+        data[dates.indexOf(match)]++;
     }
-});
+}
 const myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -103,7 +108,7 @@ const myChart = new Chart(ctx, {
             tension: "0.2",
             borderColor: 'rgb(75, 192, 192)',
             label: 'Registrations',
-            data: [12, 19, 3, 5, 2, 3],
+            data: data,
    borderColor: "#cc37c0",
    backgroundColor: "rgba(0,0,0,0.2)",
    pointBackgroundColor: "#e6b530",
@@ -117,7 +122,10 @@ const myChart = new Chart(ctx, {
     options: {
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
             }
         },
         responsive: true
