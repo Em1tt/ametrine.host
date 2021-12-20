@@ -59,6 +59,7 @@ export const auth = {
 
         // --2FA--
         const { code, type } = req.body;
+        console.log(data)
         if (data["2fa"] == 1) {
             if (type == "2fa") {
                 if (isNaN(parseInt(code))) {
@@ -284,7 +285,7 @@ export const prop = {
         const { email, password, rememberMe } = req.body;
         if ([email, password].includes(undefined)) return res.status(406)
                                                              .send("Please enter in an Email, and Password.");
-        const userID = await client.db.hexists('users.email', email); // Checks if the user exists.
+        const userID = await client.db.hget('users.email', email); // Checks if the user exists.
         if (!userID) return res.status(404).send("Couldn't find email.");
         const account = await client.db.hgetall(`user:${userID}`);
         if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.

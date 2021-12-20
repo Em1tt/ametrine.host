@@ -6,4 +6,5 @@ export interface UserData {
     readonly name           : string;
     readonly email          : string;
     readonly permission_id  : string | number;
+    readonly "2fa"          : number;
 }
