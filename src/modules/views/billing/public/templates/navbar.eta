@@ -39,7 +39,7 @@
 
         <% if(parseFloat(it.permission_id) >= it.config.staffMinLevel) { %>
                 <li class="nav-item">
-                    <a class="nav-link" aria-label="staff-panel" id="staff-panel">
+                    <a href="/billing/staff" class="nav-link" aria-label="staff-panel" id="staff-panel">
                 <i class="fa fa-tools"></i>
                 <span aria-hidden="true" class="link-text">
                     Staff Area
