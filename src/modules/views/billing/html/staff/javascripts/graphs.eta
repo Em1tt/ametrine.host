@@ -1,0 +1,141 @@
+<script>
+function instantiateUserGraph(type) {
+    if (type == "monthly") {
+        if (Chart.getChart("userChart")) {
+            Chart.getChart("userChart").destroy();
+        }
+        createUserGraph("month");
+        document.getElementById("weekly").classList.remove("selected");
+        document.getElementById("monthly").classList.add("selected");
+        document.getElementById("yearly").classList.remove("selected");
+    } else if (type == "yearly") {
+        if (Chart.getChart("userChart")) {
+            Chart.getChart("userChart").destroy();
+        }
+        createUserGraph("year");
+        document.getElementById("weekly").classList.remove("selected");
+        document.getElementById("monthly").classList.remove("selected");
+        document.getElementById("yearly").classList.add("selected");
+    } else {
+        if (Chart.getChart("userChart")) {
+            Chart.getChart("userChart").destroy();
+        }
+        createUserGraph("week");
+        document.getElementById("weekly").classList.add("selected");
+        document.getElementById("monthly").classList.remove("selected");
+        document.getElementById("yearly").classList.remove("selected");
+    }
+}
+instantiateUserGraph("weekly");
+
+function renderGraph(ctx, type, labels, data) {
+    new Chart(ctx, {
+        type: type,
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    tension: "0.2",
+                    label: "Registrations",
+                    data: data,
+                    borderColor: "#cc37c0",
+                    backgroundColor: "rgba(0,0,0,0.2)",
+                    pointBackgroundColor: "#e6b530",
+                    pointBorderColor: "#e6b530",
+                    pointHoverBackgroundColor: "#55bae7",
+                    pointHoverBorderColor: "#55bae7",
+                    borderWidth: 1,
+                    fill: true,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1,
+                    },
+                },
+            },
+            responsive: true,
+        },
+    });
+}
+
+function createUserGraph(period) {
+    const ctx = document.getElementById("userChart").getContext("2d");
+    let dates = [],
+        curYear = dayjs().year(),
+        lastYear = dayjs().subtract(1, "year").year(),
+        registeredUsers = "<%=JSON.stringify(it.users)%>".replace(/&quot;/g, '"');
+    registeredUsers = JSON.parse(registeredUsers.slice(1, registeredUsers.length - 1));
+    registeredUsers = registeredUsers.map((user) => {
+        user.registered = dayjs(parseInt(user.registered)).toString().split(",")[1].trim().split(" ").slice(0, 3).join(" ");
+        return user;
+    });
+    switch (period) {
+        case "week": {
+            for (let i = 0; i < 7; i++) {
+                dates.push(dayjs().subtract(i, "day").toString());
+            }
+            dates = dates.map((date) => {
+                return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
+            }).reverse();
+            if(dayjs().subtract(1, "week").year() == lastYear){
+                registeredUsers = registeredUsers.filter((user) => [curYear, lastYear].includes(user.registered.split(" ")[2]));
+            }else{
+                registeredUsers = registeredUsers.filter((user) => user.registered.split(" ")[2] == curYear);
+            }
+            const data = new Array(dates.length).fill(0);
+            for (let i = 0; i < registeredUsers.length; i++) {
+                let match = dates.find((date) =>
+                    registeredUsers[i].registered.includes(date)
+                );
+                if (match) data[dates.indexOf(match)]++;
+            }
+            renderGraph(ctx, "line", dates, data);
+        } break;
+        case "year": {
+            for (let i = 0; i < 12; i++) {
+                dates.push(dayjs().add(10, "day").subtract(i, "month").toString());
+            }
+            dates = dates.map((date) => {
+                return date.split(",")[1].trim().split(" ").slice(1, 2).join(" ");
+            }).reverse();
+            registeredUsers.forEach((user) => {
+                registeredUsers = registeredUsers.filter((user) => [curYear, lastYear].includes(parseInt(user.registered.split(" ")[2])));
+            });
+            const data = new Array(dates.length).fill(0);
+            for (let i = 0; i < registeredUsers.length; i++) {
+                let match = dates.find((date) =>
+                    registeredUsers[i].registered.includes(date)
+                );
+                if (match) data[dates.indexOf(match)]++;
+            }
+            renderGraph(ctx, "line", dates, data);
+        } break;
+        case "month": {
+            for (let i = 0; i < dayjs().daysInMonth(); i++) {
+                dates.push(dayjs().subtract(i, "day").toString());
+              }
+              dates = dates.map((date) => {
+                  return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
+              }).reverse();
+                          if(dayjs().subtract(1, "month").year() == lastYear){
+                registeredUsers = registeredUsers.filter((user) => [curYear, lastYear].includes(user.registered.split(" ")[2]));
+            }else{
+                registeredUsers = registeredUsers.filter((user) => user.registered.split(" ")[2] == curYear);
+            }
+              const data = new Array(dates.length).fill(0);
+              for (let i = 0; i < registeredUsers.length; i++) {
+                let match = dates.find((date) =>
+                  registeredUsers[i].registered.includes(date)
+                );
+                if (match) data[dates.indexOf(match)]++;
+              }
+              renderGraph(ctx, "line", dates, data);
+        } break;
+    }
+}
+</script>

@@ -46,20 +46,22 @@
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta') %>
     <main>
         <div class="content">
-            <h1><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
+            <h1>Staff panel - Overview</h1>
             <hr>
                 <div class="cardWrapper">
                     <div id="accountCard">
                         <h3><i class="fa fa-user-circle"></i> Users</h3>
+                        <button id="weekly" class="selected" onclick="instantiateUserGraph('weekly');">Weekly</button>
+                        <button id="monthly" onclick="instantiateUserGraph('monthly');">Monthly</button>
+                        <button id="yearly" onclick="instantiateUserGraph('yearly');">Yearly</button>
                         <div>
                         <canvas id="userChart"></canvas>
                         </div>
-                        
                     </div>
                     <div id="security">
-                        <h3><i class="fa fa-shield-alt"></i> Security</h3>
+                        <h3><i class="fa fa-shield-alt"></i> Permission Overview</h3>
                         <div>
-                        <canvas id="serviceChart"></canvas>
+                        <canvas id="permissionChart"></canvas>
                         </div>
                     </div>
                     <div id="services">
@@ -71,66 +73,5 @@
                 </div>
         </div>
     </main>
-<script>
-(async () => {
-const ctx = document.getElementById('userChart').getContext('2d');
-let dates = [];
-for(i=0; i < 7; i++){
-    dates.push(dayjs().subtract(i, "day").toString());
-}
-dates = dates.map(date => {
-    return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
-}).reverse();
-let curYear = dayjs().year();
-console.log(curYear);
-let registeredUsers = "<%=JSON.stringify(it.users)%>".replace(/&quot;/g, '"');
-registeredUsers = JSON.parse(registeredUsers.slice(1, registeredUsers.length-1));
-registeredUsers = registeredUsers.map(user => {
-    user.registered = dayjs(parseInt(user.registered)).toString().split(",")[1].trim().split(" ").slice(0, 3).join(" ");
-    return user;
-});
-registeredUsers = registeredUsers.filter(user => user.registered.split(" ")[2] == curYear);
-console.log(registeredUsers);
-const data = new Array(dates.length).fill(0);
-console.log(dates);
-for(i = 0; i < registeredUsers.length; i++){
-    let match = dates.find(date => registeredUsers[i].registered.includes(date));
-    console.log(match);
-    if(match){
-        data[dates.indexOf(match)]++;
-    }
-}
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: dates,
-        datasets: [{
-            tension: "0.2",
-            borderColor: 'rgb(75, 192, 192)',
-            label: 'Registrations',
-            data: data,
-   borderColor: "#cc37c0",
-   backgroundColor: "rgba(0,0,0,0.2)",
-   pointBackgroundColor: "#e6b530",
-   pointBorderColor: "#e6b530",
-   pointHoverBackgroundColor: "#55bae7",
-   pointHoverBorderColor: "#55bae7",
-            borderWidth: 1,
-            fill: true
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true,
-                ticks: {
-                    stepSize: 1
-                }
-            }
-        },
-        responsive: true
-    }
-});
-})()
-</script>
+<%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it.users}) %>
 </body>
