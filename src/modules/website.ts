@@ -1,24 +1,25 @@
 // imports
-import express      from "express";
-import morgan       from "morgan";
-import path         from "path";
-import fs           from "fs";
-import * as eta     from "eta";
-import config       from "../config.json";
-import { util }     from "../util";
-import { Endpoint } from "../types/endpoint";
-import helmet       from "helmet"
-import cookieParser from "cookie-parser"
-import { auth }     from "./api/auth"
-import * as plans   from "../plans.json"
-import { Ticket }   from "../types/billing/ticket";
-import { UserData } from "../types/billing/user";
+import express         from "express";
+import morgan          from "morgan";
+import path            from "path";
+import fs              from "fs";
+import * as eta        from "eta";
+import config          from "../config.json";
+import { util }        from "../util";
+import { Endpoint }    from "../types/endpoint";
+import helmet          from "helmet"
+import cookieParser    from "cookie-parser"
+import { auth }        from "./api/auth"
+import * as plans      from "../plans.json"
+import { Ticket }      from "../types/billing/ticket";
+import { UserData }    from "../types/billing/user";
 import { permissions } from "./permissions";
-import permIDs from "../permissions.json";
-import rateLimit    from "express-rate-limit";
+import permIDs         from "../permissions.json";
+import rateLimit       from "express-rate-limit";
+import { cdn }         from "./cdn"
 
-import redis        from 'redis';
-import ms           from 'ms';
+import redis           from 'redis';
+import ms              from 'ms';
 
 const redisClient: redis.Client = redis.createClient({ password: process.env.REDIS_PASSWORD, user: "default" });
 redisClient.on("connect", function() {
@@ -93,13 +94,17 @@ redisClient.on("connect", function() {
 })
 redisClient.JWToptions = {
   RTOptions: { // Refresh Token Options
-    expiresIn: ms('90 days'),
-    issuer: "Amethyst Host (1.0)"
+    expiresIn: ms('7 days'),
+    issuer: "Ametrine Host (1.0)"
   },
   ATOptions: { // Access Token Options
     expiresIn: ms('1h'),
-    issuer: "Amethyst Host (1.0)"
+    issuer: "Ametrine Host (1.0)"
   },
+  RTOptionsRemember: {
+    expiresIn: ms('90 days'),
+    issuer: "Ametrine Host (1.0)"
+  }
 }
 redisClient.on("error", function(error) {
     util.log("[Redis] ERROR" + "\n" + error)
@@ -129,7 +134,6 @@ for (const f of files) {
   if (ep.prop["setClient"]) { // Set redis without having to require redis in all API endpoints
     ep.prop["setClient"](redisClient);
   }
-      
 }
 util.expressLog(`${endpoints.size} api endpoints loaded`);
 
@@ -364,4 +368,5 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
 // start up the website
 app.listen(config.website.port, () => {
   util.expressLog(`started website @${config.website.port}`);
+  cdn.host();
 });

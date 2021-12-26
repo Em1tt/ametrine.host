@@ -72,7 +72,6 @@ const twofa = () => {
 
 const loginUser = async (user) => {
   const loginError = document.getElementById("login-error");
-  user.rememberMe = user.rememberMe == "on";
   try {
     const response = await axios.post("/api/auth", user);
     console.log(response);
@@ -320,7 +319,7 @@ window.onload = () => {
     const password = loginForm.querySelector("fieldset #login-password").value;
     const remember = loginForm.querySelector(
       "fieldset #login-rememberSession"
-    ).value;
+    ).checked;
     loginUser({
       email,
       password,

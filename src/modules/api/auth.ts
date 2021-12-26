@@ -59,7 +59,6 @@ export const auth = {
 
         // --2FA--
         const { code, type } = req.body;
-        console.log(data)
         if (data["2fa"] == 1) {
             if (type == "2fa") {
                 if (isNaN(parseInt(code))) {
@@ -84,12 +83,12 @@ export const auth = {
         // --2FA--
 
         const refreshTokenOpts = JSON.parse(JSON.stringify(client.JWToptions.RTOptions));
-        let expiresIn = ms('7 days')
+        let expiresIn = parseInt(client.JWToptions.RTOptions.expiresIn.toString().slice(0, -3))
         if (rememberMe) {
-            expiresIn = ms('90 days')
+            expiresIn = parseInt(client.JWToptions.RTOptionsRemember.expiresIn.toString().slice(0, -3))
         }
-        expiresIn = parseInt(expiresIn.toString().slice(0, -3))
-        refreshTokenOpts.expiresIn = expiresIn
+        //expiresIn = parseInt(expiresIn.toString().slice(0, -3))
+        refreshTokenOpts.expiresIn = expiresIn;
         const refreshToken = auth.genToken({ id: userData.id }, refreshTokenOpts, "refresh");
         const accessToken = auth.genToken(userData, null, "access");
         const ip = createHash('sha256').update(ipAddr).digest('hex'); // Convert IP address to SHA256 hash
@@ -97,7 +96,7 @@ export const auth = {
         const sessionID = await client.db.incr("session_id")
         await client.db.hset([`session:${sessionID}`, "session_id", sessionID, "user_id", userData.id, "jwt", refreshToken, "createdIn", createdIn, "expiresIn", expiresIn, "ip", ip, "rememberMe", 0]);
         await client.db.hset([`sessions.jwtid`, `${refreshToken}:${userData.id}`, sessionID]);
-        client.expire(`session:${sessionID}`, ((rememberMe) ? ms('90 days') : ms('7 days')) / 1000); // Should automatically delete once the date has passed.
+        client.expire(`session:${sessionID}`, ((rememberMe) ? client.JWToptions.RTOptionsRemember.expiresIn : client.JWToptions.RTOptions.expiresIn) / 1000); // Should automatically delete once the date has passed.
         return { email: data.email, refreshToken, accessToken, expiresIn };
     },
     setCookie: async (res: express.Response, name: string, value: string, expiresIn: number): Promise<boolean> => {
@@ -281,7 +280,6 @@ export const prop = {
     run: async (req: express.Request, res: express.Response): Promise<express.Response | void> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
-        if (req.cookies.jwt) return res.status(403).send("Already authenticated.")
         const { email, password, rememberMe } = req.body;
         if ([email, password].includes(undefined)) return res.status(406)
                                                              .send("Please enter in an Email, and Password.");
@@ -289,6 +287,11 @@ export const prop = {
         if (!userID) return res.status(404).send("Couldn't find email.");
         const account = await client.db.hgetall(`user:${userID}`);
         if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.
+        if (req.cookies.jwt) {
+            //return res.status(403).send("Already authenticated.")
+            await res.clearCookie('jwt');
+            await res.clearCookie('access_token')
+        }
         const loginToken = await auth.login(req, res, account, rememberMe);
         if (loginToken == 403) return res.status(403).send("Email or password incorrect");
         if (loginToken["2fa"]) return;

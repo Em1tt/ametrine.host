@@ -4,6 +4,9 @@
   "website": {
     "port": 3000
   },
+  "cdn": {
+    "port": 3001
+  },
   
   "billing": {
     "staffMinLevel": 2
