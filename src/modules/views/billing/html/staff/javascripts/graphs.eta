@@ -1,25 +1,16 @@
 <script>
 function instantiateUserGraph(type) {
     if (type == "monthly") {
-        if (Chart.getChart("userChart")) {
-            Chart.getChart("userChart").destroy();
-        }
         createUserGraph("month");
         document.getElementById("weekly").classList.remove("selected");
         document.getElementById("monthly").classList.add("selected");
         document.getElementById("yearly").classList.remove("selected");
     } else if (type == "yearly") {
-        if (Chart.getChart("userChart")) {
-            Chart.getChart("userChart").destroy();
-        }
         createUserGraph("year");
         document.getElementById("weekly").classList.remove("selected");
         document.getElementById("monthly").classList.remove("selected");
         document.getElementById("yearly").classList.add("selected");
     } else {
-        if (Chart.getChart("userChart")) {
-            Chart.getChart("userChart").destroy();
-        }
         createUserGraph("week");
         document.getElementById("weekly").classList.add("selected");
         document.getElementById("monthly").classList.remove("selected");
@@ -28,7 +19,7 @@ function instantiateUserGraph(type) {
 }
 instantiateUserGraph("weekly");
 
-function renderGraph(ctx, type, labels, data) {
+function renderGraph(ctx, type, labels, data, label) {
     new Chart(ctx, {
         type: type,
         data: {
@@ -36,7 +27,7 @@ function renderGraph(ctx, type, labels, data) {
             datasets: [
                 {
                     tension: "0.2",
-                    label: "Registrations",
+                    label: label,
                     data: data,
                     borderColor: "#cc37c0",
                     backgroundColor: "rgba(0,0,0,0.2)",
@@ -59,6 +50,9 @@ function renderGraph(ctx, type, labels, data) {
                 },
             },
             responsive: true,
+            animation: {
+                duration: 0
+            }
         },
     });
 }
@@ -94,11 +88,18 @@ function createUserGraph(period) {
                 );
                 if (match) data[dates.indexOf(match)]++;
             }
-            renderGraph(ctx, "line", dates, data);
+            if (Chart.getChart("userChart")){
+                let chart = Chart.getChart("userChart");
+                chart.data.labels = dates;
+                chart.data.datasets[0].data = data;
+                chart.update();
+            }else{
+                renderGraph(ctx, "line", dates, data, "Registrations");
+            }
         } break;
         case "year": {
             for (let i = 0; i < 12; i++) {
-                dates.push(dayjs().add(10, "day").subtract(i, "month").toString());
+                dates.push(dayjs().subtract(i, "month").toString());
             }
             dates = dates.map((date) => {
                 return date.split(",")[1].trim().split(" ").slice(1, 2).join(" ");
@@ -113,7 +114,14 @@ function createUserGraph(period) {
                 );
                 if (match) data[dates.indexOf(match)]++;
             }
-            renderGraph(ctx, "line", dates, data);
+            if (Chart.getChart("userChart")){
+                let chart = Chart.getChart("userChart");
+                chart.data.labels = dates;
+                chart.data.datasets[0].data = data;
+                chart.update();
+            }else{
+                renderGraph(ctx, "line", dates, data, "Registrations");
+            }
         } break;
         case "month": {
             for (let i = 0; i < dayjs().daysInMonth(); i++) {
@@ -134,8 +142,52 @@ function createUserGraph(period) {
                 );
                 if (match) data[dates.indexOf(match)]++;
               }
-              renderGraph(ctx, "line", dates, data);
+                          if (Chart.getChart("userChart")){
+                let chart = Chart.getChart("userChart");
+                chart.data.labels = dates;   
+                chart.data.datasets[0].data = data;
+                chart.update();
+            }else{
+                renderGraph(ctx, "line", dates, data, "Registrations");
+            }
         } break;
     }
 }
+
+function createPermissionGraph() {
+        if (Chart.getChart("permissionChart")) {
+            Chart.getChart("permissionChart").destroy();
+        }
+    const ctx = document.getElementById("permissionChart").getContext("2d");
+    let registeredUsers = "<%=JSON.stringify(it.users)%>".replace(/&quot;/g, '"');
+    let permissionIDs = JSON.parse("<%=JSON.stringify(it.permissions)%>".replace(/&quot;/g, '"')).sort();
+    let data = Array(permissionIDs.length).fill(0);
+    console.log(permissionIDs);
+    registeredUsers = JSON.parse(registeredUsers.slice(1, registeredUsers.length - 1));
+    console.log(registeredUsers);
+
+    registeredUsers.forEach((user) => {
+        console.log(user);
+        permissionIDs.forEach((id) => {
+            if(id == user.permission){
+                data[permissionIDs.indexOf(id)]++;
+            }
+        });
+    });
+
+    renderGraph(ctx, "bar", permissionIDs, data, "Users");
+}
+createPermissionGraph();
+function resizedw(){
+    createPermissionGraph();
+    instantiateUserGraph("weekly");
+
+}
+
+var doit;
+window.onresize = function(){
+  clearTimeout(doit);
+  doit = setTimeout(resizedw, 100);
+};
+
 </script>

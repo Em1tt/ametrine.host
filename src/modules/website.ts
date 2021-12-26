@@ -14,6 +14,7 @@ import * as plans   from "../plans.json"
 import { Ticket }   from "../types/billing/ticket";
 import { UserData } from "../types/billing/user";
 import { permissions } from "./permissions";
+import permIDs from "../permissions.json";
 import rateLimit    from "express-rate-limit";
 
 import redis        from 'redis';
@@ -263,7 +264,8 @@ app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
     s.render(file, {
       userData: userData,
       config: config.billing,
-      users: JSON.stringify(users)
+      users: JSON.stringify(users),
+      permissions: Object.keys(permIDs)
     });
   })
 });

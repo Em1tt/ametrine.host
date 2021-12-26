@@ -42,30 +42,40 @@
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 </head>
 
-<body class="dark">
+<body class="dark" onresize="updateGraphs()">
+    <% console.log(it.permissions)%>
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta') %>
     <main>
         <div class="content">
             <h1>Staff panel - Overview</h1>
             <hr>
                 <div class="cardWrapper">
-                    <div id="accountCard">
+                    <div id="users">
                         <h3><i class="fa fa-user-circle"></i> Users</h3>
                         <button id="weekly" class="selected" onclick="instantiateUserGraph('weekly');">Weekly</button>
                         <button id="monthly" onclick="instantiateUserGraph('monthly');">Monthly</button>
                         <button id="yearly" onclick="instantiateUserGraph('yearly');">Yearly</button>
                         <div>
-                        <canvas id="userChart"></canvas>
+                        <canvas id="userChart" height="300px"></canvas>
                         </div>
                     </div>
-                    <div id="security">
+                    <div id="staffannouncements">
+                        <h3><i class="fa fa-bell"></i> Notification centre</h3>
+                        <span class="announcement">
+                            <i class="fa fa-bell"></i><p>Look at me!</p>
+                        </span>
+                        <span class="ticket">
+                            <i class="fa fa-ticket-alt"></i><p>5 tickets awaiting staff response</p>
+                        </span>
+                        <span class="ticketsOpen">
+                            <i class="fa fa-ticket-alt"></i><p>5 tickets open in total</p>
+                        </span>
+                    </div>
+                    <div id="permissions">
                         <h3><i class="fa fa-shield-alt"></i> Permission Overview</h3>
                         <div>
-                        <canvas id="permissionChart"></canvas>
+                            <canvas id="permissionChart" height="300px"></canvas>
                         </div>
-                    </div>
-                    <div id="services">
-                        <h3><i class="fa fa-box"></i> Services</h3>
                     </div>
                     <div id="transactions">
                         <h3><i class="fa fa-file-invoice"></i> Transactions</h3>
@@ -73,5 +83,12 @@
                 </div>
         </div>
     </main>
-<%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it.users}) %>
+    <script>
+    (async() => {
+                const response = await axios.get("/api/tickets/categories");
+            console.log(response);
+    })()
+
+    </script>
+<%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it.users, permissions: it.permissions}) %>
 </body>
