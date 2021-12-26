@@ -265,7 +265,7 @@ app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
       userData: userData,
       config: config.billing,
       users: JSON.stringify(users),
-      permissions: Object.keys(permIDs)
+      permissions: permIDs
     });
   })
 });

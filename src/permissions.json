@@ -1,24 +1,45 @@
 {
     "0": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list"],
+        "accessPages": [],
+        "staffPanel": false,
+        "accessStaffPages": []
     },
     "1": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessPages": [],
+        "staffPanel": false,
+        "accessStaffPages": []
     },
     "2": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessPages": [],
+        "staffPanel": true,
+        "accessStaffPages": ["support"]
     },
     "2:3": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessPages": [],
+        "staffPanel": true,
+        "accessStaffPages": ["support"]
     },
     "2:4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessPages": [],
+        "staffPanel": true,
+        "accessStaffPages": ["support"]
     },
     "2:5": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessPages": [],
+        "staffPanel": true,
+        "accessStaffPages": ["support", "announcements", "packages"]
     },
     "4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/"],
+        "accessPages": [],
+        "staffPanel": true,
+        "accessStaffPages": ["support", "announcements", "packages"]
     }
     
 }
