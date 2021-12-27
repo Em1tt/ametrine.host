@@ -97,7 +97,7 @@ export const prop = {
             }
             case "DELETE": { // For deleting an announcement.
                 if (!permissions.hasPermission(userData['permission_id'], `/announcements`)) return res.sendStatus(403);
-                const id = req.body.type;
+                const id = req.body.id;
                 if (!id) return res.sendStatus(406);
                 const findAnnouncement = await client.db.exists(`announcement:${id}`)
                 if (!findAnnouncement) return res.sendStatus(404); // Announcement not found.

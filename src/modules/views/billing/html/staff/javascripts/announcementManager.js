@@ -25,6 +25,19 @@ async function createAnnouncement(text, type, end, customersOnly, staffOnly, bro
     })
 }
 
+async function removeAnnouncement(id){
+    console.log("hi", id);
+    await axios.delete("/api/announcements",{
+        data: {
+            id: id
+        }
+    }).then(response => {
+        location.reload();
+    }).catch(error => {
+        console.log(error.response.data);
+    })
+}
+
 async function loadAnnouncements() {
     const announcements = document.getElementById("announcementsWrapper");
     await axios.get("/api/announcements", {
@@ -46,7 +59,9 @@ async function loadAnnouncements() {
                 const announcementDeleteButton = document.createElement('button');
                 announcementDeleteButton.style = "font-weight: bold; color: blue; cursor: pointer; background: transparent; border: none; padding: 0; margin-bottom: 10px;";
                 announcementDeleteButton.innerText = "Delete Announcement";
-                //announcementDeleteButton.onclick = deleteAnnouncement(announcement.id);
+                announcementDeleteButton.addEventListener("click", () => {
+                    removeAnnouncement(announcement.announcement_id);
+                });
                 wrapper.appendChild(announcementDate);
                 wrapper.appendChild(announcementDeleteButton);
                 announcements.appendChild(wrapper);
