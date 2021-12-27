@@ -40,7 +40,7 @@ export const prop = {
                         return res.status(500).send("An error occurred while retrieving the announcements. Please report this.")
                     }
                     let announcements: Array<Announcement> = await Promise.all(result.map(async announcementID => {
-                        return await client.db.hgetall(announcementID)
+                        return { announcement_id: parseInt(announcementID.split(":")[1]), ...await client.db.hgetall(announcementID) }
                     })) // This is much better
                     announcements = announcements.filter(announcement => {
                         if (typeof userData != "object" && announcement.showToCustomersOnly == 1) {
