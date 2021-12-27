@@ -30,7 +30,7 @@
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
     "eta": "^1.12.3",
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "express-rate-limit": "^5.5.1",
     "hastily": "^0.5.0",
     "helmet": "^4.6.0",
