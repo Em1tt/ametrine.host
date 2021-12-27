@@ -178,7 +178,7 @@ export const prop = {
                     //const tickets = [];
                     const elements = [userData["user_id"]]
                     if (status != -1) elements.push(status)
-                    return client.keys("ticket:?", async function (err, result) {
+                    return client.keys("ticket:*", async function (err, result) {
                         if (err) {
                             console.error(err);
                             return res.status(500).send("Error occured while retrieving keys for tickets. Please report this.")
@@ -273,7 +273,7 @@ export const prop = {
                                 if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                                 if (isNaN(pageLimit)) pageLimit = 10;
                                 if (isNaN(page)) page = 1;
-                                return client.keys(`ticket_msg:${ticketID}:?`, async function (err, result) {
+                                return client.keys(`ticket_msg:${ticketID}:*`, async function (err, result) {
                                     if (err) {
                                         console.error(err);
                                         return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")
@@ -388,7 +388,7 @@ export const prop = {
                                 if (permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`) && req.body.force) { // Force delete a message. (Used for spam tickets)
                                     return client.del(`ticket:${getTicket["ticket_id"]}`, async function (err0) {
                                         if (req.body.msgs) {
-                                            return client.keys(`ticket_msg:${ticketID}:?`, function (err, result) {
+                                            return client.keys(`ticket_msg:${ticketID}:*`, function (err, result) {
                                                 if (err) {
                                                     console.error(err);
                                                     return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")

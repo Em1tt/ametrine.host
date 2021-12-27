@@ -34,7 +34,7 @@ export const prop = {
                 let type = req.query.type; // Announcement Type
                 if (!type) type = "null";
                 if (!["outage", "news", "warning", "null"].includes(type.toString().toLowerCase())) return res.status(406).send('Query "type" has an invalid value.');
-                return client.keys("announcement:?", async function (err, result) {
+                return client.keys("announcement:*", async function (err, result) {
                     if (err) {
                         console.error(err);
                         return res.status(500).send("An error occurred while retrieving the announcements. Please report this.")
