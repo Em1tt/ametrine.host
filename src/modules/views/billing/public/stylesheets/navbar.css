@@ -27,8 +27,11 @@
   cursor: pointer;
 }
 
-.nav-item:nth-child(6) {
+.pushDown {
   margin-top: auto;
+}
+.pushDown ~ .pushDown {
+  margin-top: 0;
 }
 
 .nav-link {

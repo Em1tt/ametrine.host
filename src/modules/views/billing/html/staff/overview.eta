@@ -43,8 +43,7 @@
 </head>
 
 <body class="dark" onresize="updateGraphs()">
-    <% console.log(it.permissions)%>
-    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta') %>
+    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it.permissions).filter((i) => i[0] == it.userData.permission_id)}) %>
     <main>
         <div class="content">
             <h1>Staff panel - Overview</h1>
@@ -56,13 +55,13 @@
                         <button id="monthly" onclick="instantiateUserGraph('monthly');">Monthly</button>
                         <button id="yearly" onclick="instantiateUserGraph('yearly');">Yearly</button>
                         <div>
-                        <canvas id="userChart" height="300px"></canvas>
+                            <canvas id="userChart" height="300px"></canvas>
                         </div>
                     </div>
                     <div id="staffannouncements">
                         <h3><i class="fa fa-bell"></i> Notification centre</h3>
                         <span class="announcement">
-                            <i class="fa fa-bell"></i><p>Look at me!</p>
+                            <i class="fa fa-bell"></i><p>Lookatme!Lookatme! Lookatme!Lookatme! Lookatme!Lookatme!Lookatme!</p>
                         </span>
                         <span class="ticket">
                             <i class="fa fa-ticket-alt"></i><p>5 tickets awaiting staff response</p>
@@ -85,7 +84,7 @@
     </main>
     <script>
     (async() => {
-                const response = await axios.get("/api/tickets/categories");
+            const response = await axios.get("/api/tickets/categories");
             console.log(response);
     })()
 

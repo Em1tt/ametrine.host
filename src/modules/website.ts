@@ -302,7 +302,8 @@ app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) 
     s.render(file, {
       userData: userData,
       config: config.billing,
-      users: JSON.stringify(users)
+      users: JSON.stringify(users),
+      permissions: permIDs
     });
   })
 });

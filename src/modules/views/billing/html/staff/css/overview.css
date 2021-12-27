@@ -59,6 +59,7 @@ main hr {
     "lol permissions";
   column-gap: 5%;
   row-gap: 50px;
+  margin-bottom: 100px;
 }
 
 .cardWrapper div {
@@ -205,6 +206,7 @@ main hr {
 }
 #staffannouncements {
   grid-area: staffannouncements;
+  max-width: 500px;
 }
 
 #staffannouncements h4{
@@ -224,6 +226,7 @@ main hr {
   display: flex;
   flex-flow: row nowrap;
   opacity: 0.9;
+  word-break:break-all;
 }
 
 #staffannouncements span:hover{

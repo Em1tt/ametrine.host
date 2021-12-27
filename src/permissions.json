@@ -36,10 +36,10 @@
         "accessStaffPages": ["support", "announcements", "packages"]
     },
     "4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/", "/staff/announcements"],
         "accessPages": [],
         "staffPanel": true,
-        "accessStaffPages": ["support", "announcements", "packages"]
+        "accessStaffPages": ["support", "announcements", "packages", "referral"]
     }
     
 }

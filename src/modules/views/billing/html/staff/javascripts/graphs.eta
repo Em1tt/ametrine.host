@@ -49,10 +49,7 @@ function renderGraph(ctx, type, labels, data, label) {
                     },
                 },
             },
-            responsive: true,
-            animation: {
-                duration: 0
-            }
+            responsive: true
         },
     });
 }

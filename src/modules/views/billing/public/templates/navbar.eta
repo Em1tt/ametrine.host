@@ -38,7 +38,7 @@
         </li>
 
         <% if(parseFloat(it.permission_id) >= it.config.staffMinLevel) { %>
-                <li class="nav-item">
+                <li class="nav-item pushDown">
                     <a href="/billing/staff" class="nav-link" aria-label="staff-panel" id="staff-panel">
                 <i class="fa fa-tools"></i>
                 <span aria-hidden="true" class="link-text">
@@ -47,8 +47,7 @@
             </a>
         </li>
         <% }%>
-
-        <li class="nav-item" aria-label="Change the theme">
+        <li class="nav-item pushDown" aria-label="Change the theme">
             <a class="nav-link" aria-label="Theme-Changer" id="theme-button">
                 <i class="fa fa-paint-roller"></i>
                 <span aria-hidden="true" class="link-text">Re-Theme</span>

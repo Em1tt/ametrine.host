@@ -13,7 +13,7 @@
             const wrapper = document.createElement('div');
             wrapper.classList.add(announcement.announcementType);
             const announcementText = document.createElement('p');
-            announcementText.innerText = announcement.announcementText;
+            announcementText.innerText = `${announcement.announcementText}`;
             wrapper.appendChild(announcementText);
             announcements.appendChild(wrapper);
         });

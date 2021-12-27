@@ -1,3 +1,5 @@
+<% let staffPages = it.permissions[0][1].accessStaffPages %>
+
 <nav class="navbar">
     
     <ul class="navbar-nav">
@@ -8,29 +10,44 @@
                 <i class="fa fa-angle-double-right"></i>
             </a>
         </li>
-
+        <% if(staffPages.includes("announcements")){ %>
         <li class="nav-item">
-            <a href="#" aria-label="Announcements" class="nav-link">
+            <a href="/billing/staff/announcements" aria-label="Announcements" class="nav-link">
                 <i class="fa fa-bell"></i>
                 <span aria-hidden="true" class="link-text">Announcements</span>
             </a>
         </li>
+        <%}%>
+        <% if(staffPages.includes("support")){ %>
         <li class="nav-item">
             <a aria-label="Support" id="support" class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
                 <span aria-hidden="true" class="link-text">Support</span>
             </a>
         </li>
+        <%}%>
+        <% if(staffPages.includes("referral")){ %>
         <li class="nav-item">
             <a href="#" aria-label="Referral" class="nav-link">
                 <i class="fa fa-user-plus"></i>
                 <span aria-hidden="true" class="link-text">Referral</span>
             </a>
         </li>
+        <%}%>
+        <% if(staffPages.includes("packages")){ %>
         <li class="nav-item">
             <a aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-shopping-cart"></i>
                 <span aria-hidden="true" class="link-text">Manage Packages</span>
+            </a>
+        </li>
+        <%}%>
+        <li class="nav-item pushDown">
+            <a href=/billing class="nav-link" aria-label="Log-In" id="login-button">
+                <i class="fa fa-cogs"></i>
+                <span aria-hidden="true" class="link-text">
+                    Manage Account
+                </span>
             </a>
         </li>
         <li class="nav-item">
@@ -39,15 +56,14 @@
                 <span aria-hidden="true" class="link-text">Settings</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a href=/billing class="nav-link" aria-label="Log-In" id="login-button">
-                <i class="fa fa-cogs"></i>
+                <li class="nav-item">
+            <a href="/billing/staff" class="nav-link" aria-label="staff-panel" id="staff-panel">
+                <i class="fa fa-bars"></i>
                 <span aria-hidden="true" class="link-text">
-                    Manage Account
+                    Staff Area
                 </span>
             </a>
         </li>
-
     </ul>
     
 </nav>
