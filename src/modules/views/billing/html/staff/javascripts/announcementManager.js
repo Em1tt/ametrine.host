@@ -18,6 +18,7 @@ async function createAnnouncement(text, type, end, customersOnly, staffOnly, bro
         deleteOn: end,
         showToCustomersOnly: `${customersOnly.toString()}`
     }).then(response => {
+        console.log(response);
         location.reload();
     }).catch(error => {
         console.log(error.response.data);
@@ -91,7 +92,7 @@ announcementForm.addEventListener("submit", (event) => {
     const announcementEnd = dayjs(document.getElementById("announcementEnd").value).valueOf();
     const customersOnly = document.getElementById("customersOnly").checked;
     const broadcast = document.getElementById("broadcast").checked;
-    const staffOnly = document.getElementById("staffAnnouncement").checked;
+    const staffOnly = document.getElementById("staffAnnouncement")?.checked;
     let announcementType = document.getElementById("announcementType");
     announcementType = announcementType.options[announcementType.selectedIndex].value;
 

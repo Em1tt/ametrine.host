@@ -1,17 +1,47 @@
 <script>
-( async () => {
+async function getAnnouncements(firstTime){
     const announcements = document.getElementById("announcementsWrapper");
+    if(!firstTime){
+    announcements.textContent = "";
+    }
         const response = axios.get("/api/announcements", {
             params: {
                 hasPermission: "<%=it.userData.permission_id%>"
             }
         }).then(response => {
-        console.log(response);
+        let localAnnouncements = JSON.parse(localStorage.getItem("announcements"));
+        let difference = []
+        response.data.forEach(x => {
+          let match = localAnnouncements.find(y => x.announcement_id == y.announcement_id);
+          if(!match) difference.push(x);
+        });
+        console.log(response, localAnnouncements, difference);
+        if(localAnnouncements){
+          if(difference.length > 0){
+          if(!document.hasFocus()){
+            try{
+            new Audio("/billing/public/sounds/announcement.wav").play();
+            }catch(e){
+              e;
+            }
+          }
+          if(![...document.getElementById("announcements").classList].includes("showAnnouncements")){
+            const announcementButton = document.getElementById("announcementButton");
+            announcementButton.style = "filter: none;";
+            announcementButton.addEventListener("click", () => {
+              announcementButton.style = "";
+            });
+          }
+          }
+        }
+        localStorage.setItem("announcements", JSON.stringify(response.data));
         if(response.data.length > 0){
         response.data.forEach((announcement) => {
-        console.log(announcement);
             const wrapper = document.createElement('div');
             wrapper.classList.add(announcement.announcementType);
+            const announcementDate = document.createElement('p');
+            announcementDate.innerText = `${dayjs(parseInt(announcement.dateCreated)).toString().split(",")[1].trim().split(" ").slice(0, 3).join(" ")}:`;
+            wrapper.appendChild(announcementDate);
             const announcementText = document.createElement('p');
             announcementText.innerText = `${announcement.announcementText}`;
             wrapper.appendChild(announcementText);
@@ -41,9 +71,15 @@
       console.log(error);
     }
     });
-    console.log("%c IF SOMEBODY TOLD YOU TO PASTE ANYTHING HERE, DON'T TRUST THEM AND REPORT THEM TO US. IF YOU PASTE ANYTHING HERE, YOU RISK YOUR ACCOUNT'S SAFETY.", 'background-color: yellow;font-size:2rem;color:black;')
+}
+(async () => {
+ getAnnouncements(true);
+ setInterval(() => {
+    getAnnouncements(false);
+}, 60000);
+ console.log("%c IF SOMEBODY TOLD YOU TO PASTE ANYTHING HERE, DON'T TRUST THEM AND REPORT THEM TO US. IF YOU PASTE ANYTHING HERE, YOU RISK YOUR ACCOUNT'S SAFETY.", 'background-color: yellow;font-size:2rem;color:black;')
     setInterval(() => {
     console.log("%c IF SOMEBODY TOLD YOU TO PASTE ANYTHING HERE, DON'T TRUST THEM AND REPORT THEM TO US. IF YOU PASTE ANYTHING HERE, YOU RISK YOUR ACCOUNT'S SAFETY.", 'background-color: yellow;font-size:2rem;color:black;'); //Kinda an announcement
     }, 120000);
-})()
+ })();
 </script>
