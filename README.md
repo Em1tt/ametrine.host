@@ -21,7 +21,7 @@ If you're a maintainer of any packages we have used in our code and wish to have
 * @FireMario211 - Backend Developer <3
 
 ### Collaborators
-Thanks to all collaborators for helping out! **Collaborators get a special Discord role** and get access to extra channels!
+Thanks to all collaborators for helping out! **Collaborators get a special Discord role** and get access to extra channels! **Special thanks to sakura#6969 for making some neat sound effects for us!**
 
 <p align="center"><img src="./src/modules/views/images/AmethystGHCode.png?raw=true" alt="About"/></p> 
 
