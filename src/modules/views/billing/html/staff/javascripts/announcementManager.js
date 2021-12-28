@@ -58,7 +58,7 @@ async function loadAnnouncements() {
                 announcementDate.style = "font-weight: bold;";
                 announcementDate.innerText = `Automatic delete on: ${dayjs(parseInt(announcement.deleteIn)).toString().split(" ").slice(0, 4).join(" ")}`;
                 const announcementDeleteButton = document.createElement('button');
-                announcementDeleteButton.style = "font-weight: bold; color: blue; cursor: pointer; background: transparent; border: none; padding: 0; margin-bottom: 10px;";
+                announcementDeleteButton.style = "font-weight: bold; color: #ff4141; cursor: pointer; background: transparent; text-shadow: 0 0 5px rgba(0,0,0,1); padding: 0px; border: none; margin-bottom: 10px;";
                 announcementDeleteButton.innerText = "Delete Announcement";
                 announcementDeleteButton.addEventListener("click", () => {
                     removeAnnouncement(announcement.announcement_id);
