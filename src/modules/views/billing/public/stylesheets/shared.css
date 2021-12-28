@@ -255,6 +255,9 @@ body > aside > div{
     margin-inline: 3px;
     filter: brightness(0.9);
 }
+#announcementsWrapper > div > p{
+    word-break: break-all;
+}
 #announcementsWrapper > div:hover{
     filter: brightness(1);
 }
