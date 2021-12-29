@@ -1,6 +1,6 @@
 {
     "0": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"],
         "accessPages": [],
         "staffPanel": false,
         "accessStaffPages": []

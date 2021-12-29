@@ -37,7 +37,6 @@
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/tickets.css" rel="stylesheet">
-    <script src="https://www.recaptcha.net/recaptcha/api.js" async defer></script>
     <script src="/billing/public/javascripts/theme.js" async defer></script>
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>

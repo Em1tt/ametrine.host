@@ -165,7 +165,7 @@ app.use(
       useDefaults: true, // nonce when
       directives: {
         defaultSrc: ["'self'"],
-        "script-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "www.recaptcha.net", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download", "'unsafe-eval'"], // unsafe eval worst idea, pixijs why do you have this
+        "script-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download"],
         "style-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "https: data:"],

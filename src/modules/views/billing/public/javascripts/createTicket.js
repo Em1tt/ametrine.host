@@ -10,26 +10,79 @@
     const ticketForm = document.querySelector("#ticketCreate");
     const errorP = document.querySelector("#errorText");
 
-    screenshots.onchange = function(event) {
+    screenshots.onchange = async event => {
+        const imageManager = document.querySelector("#imageManager");
         var fileList = [...screenshots.files];
-        if(fileList.length > 5){
-            fileList = fileList.slice(0, 5);
-        }
-        screenshotsStatus.innerText = "";
-        console.log(fileList);
-
-        screenshotsStatus.innerText = fileList.map(f => `${f.name}`).join(", ");
+        for(let i=0; i < fileList.length; i++){
+            if (imageManager.children.length >= 5) {
+                Swal.fire({
+                    title: "You hit the screenshot limit",
+                    icon: "error",
+                    text: `In order to help secure our servers, we limit each ticket to 5 screenshots max.`,
+                    showCancelButton: false,
+                    confirmButtonText: "Understood"
+                });
+            } else {
+                if (fileList[i].size > 8388608) {
+                    function waitForSwal(){
+                        return new Promise(resolve => {
+                            Swal.fire({
+                                title: "Screenshot too big",
+                                icon: "error",
+                                html: `<p>The file <code style="color:#7066e0;">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
+                                showCancelButton: false,
+                                confirmButtonText: "Understood",
+                                preConfirm: resolve
+                            })
+                        });
+                    }
+                    await waitForSwal();
+                } else {
+                    let div = document.createElement("div");
+                    let div2 = document.createElement("div");
+                    let img = document.createElement("img");
+                    let name = document.createElement("p");
+                    let button = document.createElement("button");
+                    button.type = "button";
+                    button.innerText = "Delete Image";
+                    button.addEventListener("click", (event) => {
+                        [...imageManager.children][[...imageManager.children].indexOf(div)].remove();
+                        console.log(imageManager.children);
+                    });
+                    img.src = URL.createObjectURL(fileList[i]);
+                    img.setAttribute("blob", JSON.stringify(fileList[i]));
+                    img.classList.add("ticketImage");
+                    name.innerText = fileList[i].name;
+                    Intense(img);
+                    div.appendChild(img);
+                    div2.appendChild(name);
+                    div2.appendChild(button);
+                    div.appendChild(div2);
+                    imageManager.appendChild(div);
+                }
+            }
+        };
     }
+
     ticketForm.addEventListener("submit", async (event) => {
+        const imageManager = document.querySelector("#imageManager");
+        console.log([...imageManager]);
         event.preventDefault();
         deltaFormat = editor.getContents(); // Bug fix, this updates deltaFormat, because without it, it'll just show { insert: '\n' } in ops
         try {
+            const imageManager = document.querySelector("#imageManager");
+            let images = [];
+            [...imageManager.children].forEach((div) => {
+                let image = [...div.children][0];
+                images.push(image.src);
+            });
         const response = await axios.post("/api/tickets/create", {
             subject: subject.value,
             content: deltaFormat,
             categories: category.options[category.selectedIndex].value,
             service: null, //for now
-            priority: priority.options[priority.selectedIndex].value
+            priority: priority.options[priority.selectedIndex].value,
+            files: images
         });
         console.log(response);
         window.location.href = `/billing/tickets/${response.data.ticket_id}`;
