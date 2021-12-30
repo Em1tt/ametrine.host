@@ -70,9 +70,10 @@ async function sendMessage() {
     try {
         const imageManager = document.querySelector("#imageManager");
         let images = [];
-        [...imageManager.children].forEach((div) => {
+        [...imageManager.children].forEach(async (div) => {
             let image = [...div.children][0];
-            images.push(image.src);
+            const blob = await (await fetch(image.src)).blob();
+            images.push(blob);
         });
         const response = await axios.post(`/api/tickets/${ticketID}`, {
             content: editor.getContents(),

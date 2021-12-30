@@ -77,9 +77,9 @@ async function getAnnouncements(firstTime){
  setInterval(() => {
     getAnnouncements(false);
 }, 60000);
- console.log("%c IF SOMEBODY TOLD YOU TO PASTE ANYTHING HERE, DON'T TRUST THEM AND REPORT THEM TO US. IF YOU PASTE ANYTHING HERE, YOU RISK YOUR ACCOUNT'S SAFETY.", 'background-color: yellow;font-size:2rem;color:black;')
+ console.log("%c BEWARE OF WHAT YOU'RE PASTING HERE.", 'background-color: yellow;font-size:2rem;color:black;')
     setInterval(() => {
-    console.log("%c IF SOMEBODY TOLD YOU TO PASTE ANYTHING HERE, DON'T TRUST THEM AND REPORT THEM TO US. IF YOU PASTE ANYTHING HERE, YOU RISK YOUR ACCOUNT'S SAFETY.", 'background-color: yellow;font-size:2rem;color:black;'); //Kinda an announcement
-    }, 120000);
+    console.log("%c BEWARE OF WHAT YOU'RE PASTING HERE.", 'background-color: yellow;font-size:2rem;color:black;'); //Kinda an announcement
+    }, 300000);
  })();
 </script>

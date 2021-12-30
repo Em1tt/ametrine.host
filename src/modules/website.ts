@@ -165,12 +165,12 @@ app.use(
       useDefaults: true, // nonce when
       directives: {
         defaultSrc: ["'self'"],
-        "script-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com", "pixijs.download"],
+        "script-src": ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com"],
         "style-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"],
-        "img-src": ["'self'", "https: data:"],
+        "img-src": ["'self'", "https: data:", "blob: http:"],
         "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"],
-        "connect-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"]
+        "connect-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "blob: http:"]
       }
     },
     xssFilter: true

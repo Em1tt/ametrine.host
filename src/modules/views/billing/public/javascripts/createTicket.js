@@ -65,16 +65,16 @@
     }
 
     ticketForm.addEventListener("submit", async (event) => {
-        const imageManager = document.querySelector("#imageManager");
-        console.log([...imageManager]);
         event.preventDefault();
+        const imageManager = document.querySelector("#imageManager");
         deltaFormat = editor.getContents(); // Bug fix, this updates deltaFormat, because without it, it'll just show { insert: '\n' } in ops
         try {
             const imageManager = document.querySelector("#imageManager");
             let images = [];
-            [...imageManager.children].forEach((div) => {
+            [...imageManager.children].forEach(async (div) => {
                 let image = [...div.children][0];
-                images.push(image.src);
+                const blob = await (await fetch(image.src)).blob();
+                images.push(blob);
             });
         const response = await axios.post("/api/tickets/create", {
             subject: subject.value,
