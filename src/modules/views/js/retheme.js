@@ -1,6 +1,6 @@
 let theme = window.localStorage.getItem("theme");
 const iconSwitch = [...document.getElementsByClassName("iconSwitch")];
-if(theme){
+if(theme || window.matchMedia("(prefers-color-scheme: dark)").matches){
     document.body.classList.add("dark");
     iconSwitch.forEach(icon => {
         icon.classList.remove("fa-moon");
