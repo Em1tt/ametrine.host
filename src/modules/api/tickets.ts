@@ -7,11 +7,12 @@ import { permissions }         from '../permissions'
 import ticket_categories       from '../../ticket_categories.json';
 import { Ticket }              from '../../types/billing/ticket';
 import { utils }               from '../utils'
-
+import { cdn }                 from '../cdn'
+import crypto                  from 'crypto'
 const settings = {
     maxTitle: 100, // Maximum Length for the title of the ticket.
     maxBody: 2000, // Maximum Length for messages.
-    maxUploadLimit: 12 // 12 MB limit for files/images.
+    maxUploadLimit: 8 // 8 MB limit for files/images.
 }
 
 /**
@@ -54,6 +55,35 @@ export const prop = {
     },
     setClient: function(newClient: unknown): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
+        async function fileURIs(ticketID: string | number, files: Array<any>, key?: string) {
+            let randomKey;
+            if (key && key != null) {
+                randomKey = key;
+            } else {
+                randomKey = crypto.randomBytes(32).toString('hex');
+            }
+            let URIS = []
+            if (files.length) {
+                URIS = (await Promise.all(files.map(async file => {
+                    try {
+                        const extensions = file.name.split(".")
+                        const fileName = crypto.createHash('md5').update(extensions.slice(0, extensions.length - 1).join(".")).digest("hex") + "." + extensions[extensions.length - 1]
+                        const cdnResponse = await cdn.upload("screenshots/tickets", `${ticketID}-${fileName}`, file.data, true, randomKey);
+                        if (cdnResponse) {
+                            const hostURI = (req.get('host') == "ametrine.host") ? "cdn.ametrine.host" : "localhost:3001"
+                            return `${req.protocol + '://' + hostURI}/screenshots/tickets/${ticketID}-${fileName}`
+                        } else {
+                            return null;
+                        }
+                    } catch (e) {
+                        console.error(e)
+                        return null;
+                    }
+                })) as Array<any>).filter(x => x != null);
+            }
+            return { URIS, randomKey }
+        }
+
         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
@@ -113,7 +143,7 @@ export const prop = {
         switch (paramName) {
             case "create": {// Creates the ticket.
                 if (allowedMethod(req, res, ["POST"], paramName, userData)) {
-                    const { subject, content, categories } = req.body;
+                    const { subject, content, categories, priority, files } = req.body;
                     if (!subject || !content) return res.status(406).send("Missing subject or content.");
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
@@ -125,18 +155,25 @@ export const prop = {
                             return category;
                         }
                     }) : []
+                    if (files.length) {
+                        const maxUploadFiles = files.filter(file => (file.size / 1024) > settings.maxUploadLimit)
+                        if (maxUploadFiles.length) return res.status(403).send(`Files: ${files.map(file => file.name).join(", ")} are too large! Max file limit is ${settings.maxUploadLimit}MB.`)
+                    }
                     return client.incr("ticket_id", async function(err, ticketID: number) {
                         if (err) {
                             console.error(err);
                             return res.status(500).send("Error occured while incrementing ticket ID. Please report this.")
                         }
+                        const cdnURIs = await fileURIs(ticketID, files);
                         const ticketData = {
                             ticket_id: ticketID,
                             user_id: userData["user_id"],
                             subject: utils.encode_base64(subject),
                             content: JSON.stringify(content),
                             category_ids: category_ids.join(","),
-                            opened: timestamp
+                            opened: timestamp,
+                            priority: (priority) ? priority.toLowerCase() : 'medium',
+                            files: (cdnURIs.URIS.length) ? JSON.stringify(cdnURIs.URIS) : '[]'
                         }
                         const getTicket = await client.db.hset([`ticket:${ticketID}`,
                                             "ticket_id", ticketData.ticket_id,
@@ -147,11 +184,12 @@ export const prop = {
                                             "status", 0,
                                             "opened", ticketData.opened,
                                             "closed", 0,
-                                            "files", 0,
+                                            "files", ticketData.files,
                                             "level", 3,
                                             "createdIn", ticketData.opened,
                                             "editedIn", 0,
-                                            "priority", "medium"]); // May need to add priority and level in req.body params
+                                            "priority", ticketData.priority,
+                                            "key", cdnURIs.randomKey]); // May need to add priority and level in req.body params
                         if (!getTicket) return res.sendStatus(201);
                         return res.status(201).json(ticketData);
                     });
@@ -188,7 +226,7 @@ export const prop = {
                             return ticket;
                         }))
                         let ticketWhere: (ticket: Ticket) => boolean;
-                        if (typeof level != 'object') { // fix forbidden bug
+                        if (typeof level != 'object' && !req.query.owned) { // fix forbidden bug
                             if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.user_id == userData["user_id"];
@@ -298,24 +336,38 @@ export const prop = {
                             case "POST": { // Sends a new message to that ticket. (Responds with the message content)
                                 if (!content) return res.sendStatus(406);
                                 if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
+                                const { files } = req.body;
+                                if (files.length) {
+                                    const maxUploadFiles = files.filter(file => (file.size / 1024) > settings.maxUploadLimit)
+                                    if (maxUploadFiles.length) return res.status(403).send(`Files: ${files.map(file => file.name).join(", ")} are too large! Max file limit is ${settings.maxUploadLimit}MB.`)
+                                }
                                 return client.incr("ticket_msg_id", async function(err, messageID: number) {
                                     if (err) {
                                         console.error(err);
                                         return res.status(500).send("Error occured while incrementing ticket ID. Please report this.")
+                                    }
+                                    let key = null;
+                                    if (getTicket.key) {
+                                        key = getTicket.key
+                                    }
+                                    const cdnURIs = await fileURIs(ticketID + "-" + messageID, files, key);
+                                    if (key == null) {
+                                        await client.db.hset([`ticket:${ticketID}`, "key", cdnURIs.randomKey]);
                                     }
                                     const msgData = {
                                         msg_id: messageID,
                                         ticket_id: getTicket["ticket_id"],
                                         user_id: userData["user_id"],
                                         content: JSON.stringify(content),
-                                        opened: timestamp
+                                        opened: timestamp,
+                                        files: (cdnURIs.URIS.length) ? JSON.stringify(cdnURIs.URIS) : '[]'
                                     }
                                     const getMsg = await client.db.hset([`ticket_msg:${ticketID}:${messageID}`,
                                                         "msg_id", msgData.msg_id,
                                                         "ticket_id", msgData.ticket_id,
                                                         "user_id", msgData.user_id,
                                                         "content", msgData.content,
-                                                        "files", 0,
+                                                        "files", msgData.files,
                                                         "createdIn", timestamp,
                                                         "editedIn", 0]);
                                     if (!getMsg) return res.sendStatus(201);

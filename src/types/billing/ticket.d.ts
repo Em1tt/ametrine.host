@@ -12,4 +12,5 @@ export interface Ticket {
       createdIn             : number | Date;
       editedIn              : number | Date;
       priority              : string;
+      key                   : string;
 }

@@ -65,16 +65,32 @@ async function ticketOpen() {
         console.log(e);
     }
 }
-
+function arrayBufferToBase64(buffer, type) {  // https://stackoverflow.com/a/9458996
+    var binary = '';
+    var bytes = new Uint8Array(buffer);
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    const b64 = window.btoa(binary);
+    return (b64.length && type) ? `data:${type};base64,${b64}` : b64;
+}
 async function sendMessage() {
     try {
         const imageManager = document.querySelector("#imageManager");
-        let images = [];
-        [...imageManager.children].forEach(async (div) => {
+        let images = await Promise.all([...imageManager.children].map(async (div) => {
             let image = [...div.children][0];
             const blob = await (await fetch(image.src)).blob();
-            images.push(blob);
-        });
+            if (blob) {
+                return {
+                    name: blob.name,
+                    data: arrayBufferToBase64(await blob.arrayBuffer(), blob.type),
+                    lastModified: blob.lastModified,
+                    size: blob.size,
+                    type: blob.type
+                }
+            }
+        }));
         const response = await axios.post(`/api/tickets/${ticketID}`, {
             content: editor.getContents(),
             files: images

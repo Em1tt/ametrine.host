@@ -369,5 +369,5 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
 // start up the website
 app.listen(config.website.port, () => {
   util.expressLog(`started website @${config.website.port}`);
-  cdn.host();
+  cdn.host(redisClient);
 });
