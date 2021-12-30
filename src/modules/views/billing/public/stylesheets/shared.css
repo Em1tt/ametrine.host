@@ -1,4 +1,4 @@
-body > aside{
+body > aside{ /**/
     position: fixed;
     height: 100%;
     width: 340px;
@@ -308,6 +308,7 @@ body > aside > div{
 #supportPopup a i{
     font-size: 2rem;
 }
+
 @media screen and (max-width: 1600px){
     .hide.large {
       visibility: hidden !important;
@@ -354,4 +355,80 @@ body > aside > div{
     .showAnnouncements{
         bottom: 0px !important;
     }
+}
+
+/*? CSS TEMPLATES START */
+/* Small comment as to what these are: */
+/* Instead of writing the same style in different files over and over, */
+/* I will put common styles in as templates. That way the file-sizes get */
+/* lowered overall, and the loading speeds are slightly faster.*/
+/* ALSO IMPROVES STABILITY WITH THEMES API.*/
+
+input{
+    background-color: #141419;
+    border: none;
+    outline: none;
+}
+input:read-only{
+    color: #3e404f !important;
+}
+input::placeholder{
+    color: #dce0ff;
+}
+
+input.text1{
+    padding: 5px 10px;
+    margin-top: 0;
+    color: white;
+}
+
+input.text2, input.submit{
+    width: 100%;
+    padding: 10px 5% 10px 0;
+    color: #e6b530;
+    height: 36px;
+}
+input.submit:hover{
+    cursor: pointer;
+    background-color: #17171d;
+    color: #cc37c0;
+}
+
+.checkbox{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.checkbox input{
+    display: none;
+}
+.checkbox label:first-of-type{
+    display: none;
+    width: 35px;
+    height: 35px;
+    background-color: #141419;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.checkbox input:checked ~ label:first-of-type {
+    padding: 5px 5px 5px 6px;
+    background-color: #e6b530;
+    border: 4px solid #141419;
+}
+.invisible{
+    display: none;
+}
+
+.button1{
+    width: 70%;
+    padding: 10px;
+    background-color: #141419;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.button1:hover{
+    background-color: #292a34;
 }

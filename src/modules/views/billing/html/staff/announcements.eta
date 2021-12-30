@@ -55,7 +55,7 @@
                         <input required type="text" maxlength="500" placeholder="Announcement Text" id="announcementText"/>
                         <fieldset>
                         <select required id="announcementType" name="announcementType">
-                            <option value=undefined selected disabled hidden>Choose Type</option>
+                            <option value='' selected disabled hidden>Choose Type</option>
                             <option value="news">news</option>
                             <option value="outage">outage</option>
                             <option value="warning">warning</option>

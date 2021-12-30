@@ -66,35 +66,21 @@
                         <form>
                             <fieldset>
                                 <label for="account-fullName">Full Name</label><br>
-                                <input type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"><br>
+                                <input class="text1" type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"><br>
                                 <label for="account-email">E-Mail</label><br>
-                                <input type="email" required readonly id="account-email" value="<%=it.userData.email%>"><br>
-                                <label style="visibility: hidden; position: absolute;" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
-                                <input style="visibility: hidden; position: absolute;" type="password" required id="account-confirm-password"><br>
+                                <input class="text1" type="email" required readonly id="account-email" value="<%=it.userData.email%>"><br>
+                                <label class="invisible" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
+                                <input class="invisible text1" type="password" required id="account-confirm-password"><br>
                                 <p style="color: white;" id="update-error"></p>
-                                <p>User ID: <%=it.userData.user_id%></p>
-                                <p>Permission ID: <%=it.userData.permission_id%></p>
+                                <div>
+                                    <button type="reset" class="button1" onclick="toggleEditMode()">Edit Account</button>
+                                    <button type="button" id="multiButton" onclick="logOut()" class="button1">Sign Out</button>
+                                </div>
+                                <div>
+                                    <p>User ID: <%=it.userData.user_id%></p>
+                                    <p>Permission ID: <%=it.userData.permission_id%></p>
+                                </div>
                             </fieldset>
-                            <div>
-                                <div class="popup" id="button1">
-                                    <button onclick="toggleEditMode()" aria-label="Edit Account"><i class="fa fa-wrench"></i></button>
-                                    <p class="popupText" id="button1-tooltip">Edit Account Information</p>
-                                </div>
-                                <div class="popup" id="button2">
-                                    <button id="logOutButton" aria-label="Log Out"><i class="fa fa-sign-out-alt"></i></button>
-                                    <p class="popupText" id="button2-tooltip">Sign-Out</p>
-                                </div>
-                                <div style="visibility: hidden;position: absolute;" class="popup" id="button3">
-                                    <label onclick="toggleEditMode()" for="button3-in" class="labelButton"><i class="fa fa-times"></i></label>
-                                    <input type="reset" id="button3-in" name="button3-in" aria-label="Discard Changes">
-                                    <p class="popupText" id="button1-tooltip">Discard changes</p>
-                                </div>
-                                <div style="visibility: hidden;position: absolute;" class="popup" id="button4">
-                                    <label for="button4-in" class="labelButton"><i class="fa fa-check"></i></label>
-                                    <input type="submit" name="button4-in" id="button4-in" aria-label="Save Changes">
-                                    <p class="popupText" id="button1-tooltip">Save changes</p>
-                                </div>
-                            </div>
                         </form>
                     </div>
                     <div id="security">

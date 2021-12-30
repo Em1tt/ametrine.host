@@ -127,7 +127,17 @@ const logOut = async () => {
     const response = await axios.post("/api/user/logout");
     console.log(response);
     window.scrollTo(0, 0); // So users wont have to scroll back up, you can remove this if you want to.
-    location.reload();
+    Swal.fire({
+      title: "Sign out successful",
+      text: "See you next time!",
+      icon: "success",
+      timer: 2000,
+      timerProgressBar: true,
+      showCancelButton: false,
+      confirmButtonText: "Alright",
+    }).then(() => {
+      location.reload();
+    });
   } catch (e) {
     console.log(e);
   }
@@ -139,19 +149,17 @@ const updateUser = async (user, errorT) => {
     console.log(response);
     if ([200, 202].includes(response.status)) {
       toggleEditMode();
-      const div = document.createElement("div");
-      const h2 = document.createElement("h3");
-      h2.innerHTML = `${checkmark} User info changed successfully! Reloading page...`;
-      div.appendChild(h2);
-      div.style =
-        "display: grid;place-items: center; width: 100%; height: 30px; background-color: limegreen; position: fixed; left: 0; top: -30px; text-align: center; transition: ease 1s;";
-      h2.style = "margin: 0;color: white;";
-      document.body.appendChild(div);
-      div.style =
-        "display: grid;place-items: center; width: 100%; height: 30px; background-color: limegreen; position: fixed; left: 0; top: 0; text-align: center; transition: ease 1s;";
-      setTimeout(() => {
+      Swal.fire({
+        title: "Account edit successful",
+        icon: "success",
+        timer: 2000,
+        timerProgressBar: true,
+        text: `You have successfully updated your account.`,
+        showCancelButton: false,
+        confirmButtonText: "Alright",
+      }).then(() => {
         location.reload();
-      }, 1500);
+      });
     } // You can reset this back to response.status == 200 if you want to handle that differently. 202 means nothing was updated, 200 means something was updated.
   } catch (e) {
     errorText = e.response.data;
@@ -189,30 +197,33 @@ const switcher = async () => {
 const toggleEditMode = async () => {
   const name = document.querySelector("#accountCard #account-fullName"),
     email = document.querySelector("#accountCard #account-email"),
-    button1 = document.querySelector("#accountCard #button1"),
-    button2 = document.querySelector("#accountCard #button2"),
+    resetButton = document.querySelector("#accountCard button[type='reset']"),
+    confirmButton = document.querySelector("#accountCard #multiButton"),
     button3 = document.querySelector("#accountCard #button3"),
-    button4 = document.querySelector("#accountCard #button4"),
+    errorParagraph = document.querySelector("#update-error"),
     passwordConfirm = document.querySelector("#account-confirm-password"),
     passwordConfirmLabel = document.querySelector(
       "#account-confirm-password-label"
     );
-  name.readOnly ? (name.readOnly = false) : (name.readOnly = true);
-  email.readOnly ? (email.readOnly = false) : (email.readOnly = true);
+  name.readOnly = !name.readOnly;
+  email.readOnly = !email.readOnly;
   if (!name.readOnly) {
-    button1.style = "visibility: hidden; position: absolute;";
-    button2.style = "visibility: hidden; position: absolute;";
-    button3.style = "visibility: visible; position: block;";
-    button4.style = "visibility: visible; position: block;";
-    passwordConfirm.style = "visibility: visible; position: block;";
-    passwordConfirmLabel.style = "visibility: visible; position: block;";
+    resetButton.innerText = "Discard Changes";
+    resetButton.style = "color: red;";
+    confirmButton.innerText = "Submit Changes";
+    confirmButton.type = "submit";
+    confirmButton.removeAttribute("onclick");
+    passwordConfirm.classList.remove("invisible");
+    passwordConfirmLabel.classList.remove("invisible");
   } else {
-    button4.style = "visibility: hidden; position: absolute;";
-    button3.style = "visibility: hidden; position: absolute;";
-    button2.style = "visibility: visible; position: block;";
-    button1.style = "visibility: visible; position: block;";
-    passwordConfirm.style = "visibility: hidden; position: absolute;";
-    passwordConfirmLabel.style = "visibility: hidden; position: absolute;";
+    resetButton.innerText = "Edit Account";
+    resetButton.style = "";
+    confirmButton.innerText = "Sign Out";
+    confirmButton.type = "button";
+    confirmButton.setAttribute("onclick", "logOut()");
+    errorParagraph.innerText = "";
+    passwordConfirm.classList.add("invisible");
+    passwordConfirmLabel.classList.add("invisible");
   }
 };
 const editPassword = () => {
@@ -311,7 +322,6 @@ const deleteAccount = () => {
 };
 
 window.onload = () => {
-  const logOutButton = document.querySelector("#logOutButton");
   switcher();
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -361,14 +371,6 @@ window.onload = () => {
         },
         "update-error"
       );
-    });
-  } catch (e) {
-    e;
-  }
-  try {
-    logOutButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      logOut();
     });
   } catch (e) {
     e;

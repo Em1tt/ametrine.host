@@ -179,21 +179,20 @@ main hr {
 
 .cardWrapper form fieldset {
   padding: 10px;
-  width: 75%;
+  width: 100%;
   border: none;
   line-height: 25px;
+}
+.cardWrapper form fieldset div {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.cardWrapper form fieldset div > *{
+  margin-right: 10px;
 }
 
 .cardWrapper form fieldset label {
   color: #dce0ff;
-}
-
-.cardWrapper form input {
-  margin-top: 10px;
-  outline: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
 }
 
 .cardWrapper form input[type="reset"] {
@@ -204,17 +203,6 @@ main hr {
 .cardWrapper form input[type="submit"] {
   visibility: hidden;
   position: absolute;
-}
-
-.cardWrapper form input:read-only {
-  color: #3e404f;
-}
-.cardWrapper form input {
-  color: #dce0ff;
-  background-color: #141419;
-  padding: 5px 10px;
-  margin-top: 0;
-  border: none;
 }
 
 .cardWrapper form p {
@@ -235,22 +223,6 @@ main hr {
 }
 
 .cardWrapper .labelButton:hover {
-  background-color: #292a34;
-  color: #dce0ff;
-}
-
-.cardWrapper form button {
-  width: 60px;
-  height: 60px;
-  margin: 10px;
-  background-color: #141419;
-  border: none;
-  color: #dce0ff;
-  font-size: 2rem;
-  cursor: pointer;
-}
-
-.cardWrapper form button:hover {
   background-color: #292a34;
   color: #dce0ff;
 }
