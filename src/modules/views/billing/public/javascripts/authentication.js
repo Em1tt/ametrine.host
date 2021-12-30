@@ -275,6 +275,8 @@ const editPassword = () => {
       Swal.fire({
         title: "Successfully changed password",
         icon: "success",
+        timer: 2000,
+        timerProgressBar: true,
       });
     }
   });
