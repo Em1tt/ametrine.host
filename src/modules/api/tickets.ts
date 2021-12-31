@@ -66,6 +66,9 @@ export const prop = {
             if (files.length) {
                 URIS = (await Promise.all(files.map(async file => {
                     try {
+                        if (!file.name) {
+                            file.name = crypto.randomBytes(8).toString("hex")
+                        }
                         const extensions = file.name.split(".")
                         const fileName = crypto.createHash('md5').update(extensions.slice(0, extensions.length - 1).join(".")).digest("hex") + "." + extensions[extensions.length - 1]
                         const cdnResponse = await cdn.upload("screenshots/tickets", `${ticketID}-${fileName}`, file.data, true, randomKey);
@@ -157,7 +160,7 @@ export const prop = {
                     }) : []
                     if (files.length) {
                         const maxUploadFiles = files.filter(file => {
-                            if (!file.data) return false;
+                            if (!file.data) return true;
                             const buffer = Buffer.from(file.data.split(",")[1]);
                             return Math.floor((buffer.length / 1024) / 1024) > settings.maxUploadLimit
                         })
@@ -342,7 +345,11 @@ export const prop = {
                                 if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
                                 const { files } = req.body;
                                 if (files.length) {
-                                    const maxUploadFiles = files.filter(file => (file.size / 1024) > settings.maxUploadLimit)
+                                    const maxUploadFiles = files.filter(file => {
+                                        if (!file.data) return true;
+                                        const buffer = Buffer.from(file.data.split(",")[1]);
+                                        return Math.floor((buffer.length / 1024) / 1024) > settings.maxUploadLimit
+                                    })
                                     if (maxUploadFiles.length) return res.status(403).send(`Files: ${files.map(file => file.name).join(", ")} are too large! Max file limit is ${settings.maxUploadLimit}MB.`)
                                 }
                                 return client.incr("ticket_msg_id", async function(err, messageID: number) {
