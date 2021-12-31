@@ -67,10 +67,10 @@ export const prop = {
                 URIS = (await Promise.all(files.map(async file => {
                     try {
                         if (!file.name) {
-                            file.name = crypto.randomBytes(8).toString("hex")
+                            file.name = crypto.randomBytes(8).toString("hex") + ".png"
                         }
                         const extensions = file.name.split(".")
-                        const fileName = crypto.createHash('md5').update(extensions.slice(0, extensions.length - 1).join(".")).digest("hex") + "." + extensions[extensions.length - 1]
+                        const fileName = crypto.createHash('md5').update(extensions.slice(0, extensions.length - 1).join(".") + crypto.randomBytes(4).toString("hex")).digest("hex") + "." + extensions[extensions.length - 1]
                         const cdnResponse = await cdn.upload("screenshots/tickets", `${ticketID}-${fileName}`, file.data, true, randomKey);
                         if (cdnResponse) {
                             const hostURI = (req.get('host') == "ametrine.host") ? "cdn.ametrine.host" : "localhost:3001"
