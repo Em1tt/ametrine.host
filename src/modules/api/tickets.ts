@@ -233,7 +233,7 @@ export const prop = {
                             return ticket;
                         }))
                         let ticketWhere: (ticket: Ticket) => boolean;
-                        if (typeof level != 'object' && !req.query.owned) { // fix forbidden bug
+                        if (typeof level == 'object' || req.query.owned) { // fix forbidden bug
                             if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.user_id == userData["user_id"];
@@ -244,7 +244,7 @@ export const prop = {
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.level <= level;
                         }
-                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket) && (["opened","closed"].includes(req.query.status)) ? ticket.status == req.query.status : true)
+                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket)).filter(ticket => ["opened","closed"].includes(req.query.status) ? ticket.status == req.query.status : "opened")
                                                       .sort((a,b) => (b.opened as number) - (a.opened as number)), pageLimit, page) as Array<Ticket>; // typescript requires me to declare .opened as number
                         return res.status(200).json(await Promise.all(tickets.map(await newTicket)));
                     })
