@@ -70,8 +70,12 @@ export const prop = {
             case "DELETE": {
                 const { category, name } = req.body;
                 if (!category || !name) return res.status(406).send("Missing category or name.");
-                //cdn.delete("f", "d");
-                break;
+                return cdn.delete("assets/" + category, name).then(() => {
+                    res.sendStatus(204);
+                }).catch(e => {
+                    console.error(e);
+                    res.status(500).send("There was an error while trying to upload the file!")
+                });
             }
             default:
                 return res.sendStatus(404);
