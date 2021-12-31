@@ -39,12 +39,42 @@ export const prop = {
                     res.status(500).send("There was an error while trying to upload the file!")
                 });
             }
+            case "PATCH": {
+                const { category, name, data, newName } = req.body;
+                if (newName.length) {
+                    return cdn.rename("assets/" + category, name, newName).then(() => {
+                        res.sendStatus(200);
+                    }).catch(e => {
+                        console.error(e);
+                        res.status(500).send("There was an error while trying to upload the file!")
+                    });
+                }
+                if (data.length) {
+                    return cdn.delete("assets/" + category, name).then(() => {
+                        return cdn.upload("assets/" + category, name, data, false).then(() => {
+                            const hostURI = (req.get('host') == "ametrine.host") ? "cdn.ametrine.host" : "localhost:3001"
+                            res.status(200).json({
+                                link: `${req.protocol + '://' + hostURI}/assets/${category}/${name}`
+                            })
+                        }).catch(e => {
+                            console.error(e);
+                            res.status(500).send("There was an error while trying to upload the file!")
+                        });
+                    }).catch(e => {
+                        console.error(e);
+                        res.status(500).send("There was an error while trying to upload the file!")
+                    });
+                }
+                break;
+            }
             case "DELETE": {
                 const { category, name } = req.body;
                 if (!category || !name) return res.status(406).send("Missing category or name.");
                 //cdn.delete("f", "d");
                 break;
             }
+            default:
+                return res.sendStatus(404);
         }
     }
 }

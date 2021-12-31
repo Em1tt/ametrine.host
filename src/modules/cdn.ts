@@ -150,6 +150,16 @@ export const cdn = {
             }
         })
     },
+    rename: (dir: string, file: string, renameTo: string): Promise<void> => {
+        return new Promise((resolve, reject) => {
+            if (!fs.existsSync(cdnPath + "/" + dir)) return reject();
+            if (!fs.existsSync(cdnPath + "/" + dir + "/" + file)) reject();
+            fs.rename(cdnPath + "/" + dir + "/" + file, renameTo, function(err) {
+                if (err) reject(err);
+                resolve();
+            });
+        })
+    },
     encrypt: (data: string, key: string): Buffer => {
         const cipherKey = crypto.createHash('sha256').update(key).digest();
         const iv = crypto.randomBytes(16);
