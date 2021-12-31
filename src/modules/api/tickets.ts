@@ -245,7 +245,7 @@ export const prop = {
                             ticketWhere = (ticket: Ticket) => ticket.level <= level;
                         }
                         tickets = paginate(tickets.filter(ticket => ticketWhere(ticket) && (["opened","closed"].includes(req.query.status)) ? ticket.status == req.query.status : true)
-                                                      .sort((a,b) => (a.opened as number) - (b.opened as number)), pageLimit, page) as Array<Ticket>; // typescript requires me to declare .opened as number
+                                                      .sort((a,b) => (b.opened as number) - (a.opened as number)), pageLimit, page) as Array<Ticket>; // typescript requires me to declare .opened as number
                         return res.status(200).json(await Promise.all(tickets.map(await newTicket)));
                     })
  

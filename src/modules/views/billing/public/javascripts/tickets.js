@@ -1,6 +1,5 @@
 
 function dateFormatter(data) {
-  console.log(data);
   let date = new Date(data).toDateString().split(" ");
   if (data == 0 || typeof data == undefined || data == null) {
     let date = "never";
