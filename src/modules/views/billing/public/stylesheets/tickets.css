@@ -92,6 +92,37 @@ main > div > div button:disabled{
     margin-inline: 2px;
 }
 
+.pageButtons {
+    display: flex;
+    justify-content: end;
+    margin: 20px 0 20px 0;
+  }
+  
+  .pageButtons > * {
+    padding: 10px;
+    color: #cc37c0;
+    outline: none;
+    border: none;
+    background-color: #1e1f26;
+    margin-inline: 2px;
+    cursor: pointer;
+  }
+  
+  .pageButtons > *:disabled {
+    color: #292a34;
+    background-color: #141419;
+    cursor: default;
+  }
+  .pageButtons > *:disabled:hover {
+    color: #292a34;
+    background-color: #141419;
+  }
+  
+  .pageButtons > *:hover {
+    color: #141419;
+    background-color: #cc37c0;
+  }
+
 @media screen and (max-width:600px){
     main{
         margin-left: 0.5rem;

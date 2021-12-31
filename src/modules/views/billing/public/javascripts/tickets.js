@@ -24,7 +24,22 @@ function dateFormatter(data) {
 (async () => {
   const ticketsWrapper = document.getElementById("ticketWrapper");
   try {
-    const response = await axios.get("/api/tickets/list");
+    const urlParams = new URLSearchParams(window.location.search);
+    let page = urlParams.get("page");
+    if (!page || page == undefined || page == null) page = 1;
+    const leftButtons = [...document.getElementsByClassName("pageLeft")],
+    rightButtons = [...document.getElementsByClassName("pageRight")];
+    leftButtons.forEach(button => {
+      button.addEventListener("click", () => {
+          window.location = `${window.location.pathname}?page=${parseInt(page) - 1}`
+      });
+  });
+  rightButtons.forEach(button => {
+      button.addEventListener("click", () => {
+          window.location = `${window.location.pathname}?page=${parseInt(page) + 1}`
+      });
+  })
+    const response = await axios.get(`/api/tickets/list?page=${page}&owned=1`);
     console.log(response);
     const tickets = response.data;
     if (tickets.length == 0) {
@@ -32,7 +47,23 @@ function dateFormatter(data) {
       header2.innerText = "Nothing here... Yet...";
       return ticketsWrapper.appendChild(header2);
     } else {
-      tickets.reverse().forEach((ticket) => {
+      if (page == 1 && tickets.length == 10) {
+        rightButtons.forEach(button => {
+            button.removeAttribute("disabled");
+        })
+    } else if (page != 1 && page > 0 && tickets.length == 10) {
+        rightButtons.forEach(button => {
+            button.removeAttribute("disabled");
+        })
+        leftButtons.forEach(button => {
+            button.removeAttribute("disabled");
+        })
+    } else if (page != 1 && page > 0 && tickets.length < 10) {
+        leftButtons.forEach(button => {
+            button.removeAttribute("disabled");
+        })
+    }
+      tickets.forEach((ticket) => {
         if (ticket == null) return;
         let opened = dateFormatter(ticket.opened);
         let edited = dateFormatter(ticket.editedIn);
