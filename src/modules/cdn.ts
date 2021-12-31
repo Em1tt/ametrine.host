@@ -27,6 +27,8 @@ export const cdn = {
             console.error("Redis Client not initialized");
             return false;
         }
+        const debug = true; // CHANGE TO FALSE WHEN IN PRODUCTION
+
         const app    : express.Application = express();
         //express.static(path.join(__dirname, "/../../data/cdn"))
 
@@ -67,10 +69,11 @@ export const cdn = {
                             userData = await auth.verifyToken(r, s, false, "both")
                         }
                         if (typeof userData != "object") return s.sendStatus(userData);
+                        console.log("Passed User Data")
                         switch (type) {
                             case "tickets": {
                                 const getTicket = await redis.db.hgetall(`ticket:${name.split("-")[0]}`);
-                                if (!getTicket) return s.sendStatus(403);
+                                if (!getTicket) return (debug) ? s.status(404).send("Ticket not found") : s.sendStatus(403);
                                 if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return s.sendStatus(403);
                                 const decrypted = await cdn.decrypt(Buffer.from(data, 'binary'), getTicket["key"]);
                                 const b64 = Buffer.from(decrypted.toString('utf-8'), 'base64');
@@ -82,7 +85,7 @@ export const cdn = {
                                 //return s.send(utils.decode_base64(decrypted.toString()));
                             }
                             default:
-                                return s.sendStatus(403);
+                                return (debug) ? s.status(404).send("Type not found") : s.sendStatus(403);
                         }
                     })
                 } else {
@@ -90,7 +93,7 @@ export const cdn = {
                     return next();
                 }
             } else {
-                s.sendStatus(403)
+                (debug) ? s.sendStatus(404) : s.sendStatus(403)
             }
         });
         app.use("/", imageopto({
