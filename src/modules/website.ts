@@ -152,10 +152,10 @@ app.use(morgan("[express]\t:method :url :status :res[content-length] - :response
 app.use(express.static(path.join(__dirname, "views")));
 
 // Create Parse for application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: false })) // Required for req.body
+app.use(express.urlencoded({ limit: '50mb', extended: false })) // Required for req.body
 app.use('/api/order/webhook', express.raw({type: 'application/json'}));
 // Create Parse for application/json
-app.use(express.json())
+app.use(express.json({ limit: '50mb' }))
 // Create Parse for Cookies
 
 // Using Helmet to mitigate common security issues via setting HTTP Headers, such as XSS Protect and setting X-Frame-Options to sameorigin, meaning it'll prevent iframe attacks
