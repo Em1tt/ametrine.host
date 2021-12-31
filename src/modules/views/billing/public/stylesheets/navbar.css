@@ -133,6 +133,27 @@
   #register-button {
     margin-bottom: 150px;
   }
+}@media only screen and (max-width: 600px) {
+  .navbar {
+    bottom: 0;
+    width: 100%;
+    height: 5rem;
+    overflow-y: hidden;
+    overflow-x: auto;
+    border-top: var(--nav-border);
+  }
+  .header {
+    display: none;
+  }
+  .navbar-nav {
+    flex-direction: row;
+  }
+  .nav-link {
+    justify-content: center;
+  }
+  #register-button {
+    margin-bottom: 150px;
+  }
 }
 
 /* Large screens */

@@ -48,9 +48,9 @@
     <main>
         <div>
             <div>
-                <h1>Create a Ticket</h1>
+                <h1 class="header1">Create a Ticket</h1>
             </div>
-            <hr>
+            <hr class="semanticLine">
             <h2><%= (it.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>
             <form id="ticketCreate">
                 <fieldset>
@@ -86,7 +86,7 @@
                     <span id="imageManager"></span>
                 </fieldset>
                 <fieldset id="submitWrapper">
-                    <input type="submit">
+                    <input class="submit" type="submit">
                 </fieldset>
             </form>
             <p id="errorText"></p>

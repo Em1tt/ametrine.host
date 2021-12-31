@@ -45,10 +45,10 @@
     <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
     <main>
         <div class="content">
-            <h1><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
-            <hr>
+            <h1 class="header1"><%= (it.userData.name) ? `Welcome back, ${it.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
+            <hr class="semanticLine">
             <% if(!it.userData.name) {%> <!--Displayed only when user is not signed in -->
-            <h2>Please sign-in to view your profile details.</h2>
+            <h2 class="header2">Please sign-in to view your profile details.</h2>
             <div class="decorationWrapper">
                 <div class="decoration _0"></div>
                 <div class="decoration _1"></div>
@@ -65,20 +65,20 @@
                         <h3><i class="fa fa-user-circle"></i> Account</h3>
                         <form>
                             <fieldset>
-                                <label for="account-fullName">Full Name</label><br>
-                                <input class="text1" type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"><br>
-                                <label for="account-email">E-Mail</label><br>
-                                <input class="text1" type="email" required readonly id="account-email" value="<%=it.userData.email%>"><br>
-                                <label class="invisible" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
-                                <input class="invisible text1" type="password" required id="account-confirm-password"><br>
+                                <label class="header2" for="account-fullName">Full Name</label><br>
+                                <input class="text1" type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"/><br>
+                                <label class="header2" for="account-email">E-Mail</label><br>
+                                <input class="text1" type="email" required readonly id="account-email" value="<%=it.userData.email%>"/><br>
+                                <label class="invisible header2" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
+                                <input class="invisible text1" type="password" required id="account-confirm-password"/><br>
                                 <p style="color: white;" id="update-error"></p>
                                 <div>
                                     <button type="reset" class="button1" onclick="toggleEditMode()">Edit Account</button>
                                     <button type="button" id="multiButton" onclick="logOut()" class="button1">Sign Out</button>
                                 </div>
                                 <div>
-                                    <p>User ID: <%=it.userData.user_id%></p>
-                                    <p>Permission ID: <%=it.userData.permission_id%></p>
+                                    <p class="text2">User ID: <%=it.userData.user_id%></p>
+                                    <p class="text2">Permission ID: <%=it.userData.permission_id%></p>
                                 </div>
                             </fieldset>
                         </form>
@@ -86,14 +86,14 @@
                     <div id="security">
                         <h3><i class="fa fa-shield-alt"></i> Security</h3>
                         <div id="buttonWrapper">
-                            <button id="change-pass-button" onclick="editPassword()">Change Password</button>
+                            <button class="button1" id="change-pass-button" onclick="editPassword()">Change Password</button>
                             <% if(it.userData['2fa']){ %>
-                            <button id="2fa-button">Disable 2FA</button>
+                            <button class="button1" id="2fa-button">Disable 2FA</button>
                             <% }else{ %>
-                            <button onclick="twofa()" id="2fa-button">Enable 2FA</button>
+                            <button class="button1" onclick="twofa()" id="2fa-button">Enable 2FA</button>
                             <% } %>
-                            <button id="discord-button">Link With Discord (Coming Soon)</button>
-                            <button id="delete-button" onclick="deleteAccount()">Delete Account</button>
+                            <button class="button1" id="discord-button">Link With Discord (Coming Soon)</button>
+                            <button class="button1" id="delete-button" onclick="deleteAccount()">Delete Account</button>
                         </div>
                     </div>
                     <div id="services">
@@ -105,7 +105,7 @@
                 </div>
             <%}%>
         </div>
-        <aside class="hide medium">
+        <aside class="hide banner">
             <a href="#"><div aria-hidden="true"></div></a>
         </aside>
     </main>

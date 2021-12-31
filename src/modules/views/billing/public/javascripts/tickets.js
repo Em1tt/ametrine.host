@@ -1,6 +1,6 @@
 
 function dateFormatter(data) {
-    console.log(data);
+  console.log(data);
   let date = new Date(data).toDateString().split(" ");
   if (data == 0 || typeof data == undefined || data == null) {
     let date = "never";
@@ -29,17 +29,18 @@ function dateFormatter(data) {
     console.log(response);
     const tickets = response.data;
     if (tickets.length == 0) {
-      console.log("a");
       const header2 = document.createElement("h2");
       header2.innerText = "Nothing here... Yet...";
       return ticketsWrapper.appendChild(header2);
     } else {
       tickets.reverse().forEach((ticket) => {
-        if(ticket == null) return;
+        if (ticket == null) return;
         let opened = dateFormatter(ticket.opened);
         let edited = dateFormatter(ticket.editedIn);
         const clickable = document.createElement("a");
         const header = document.createElement("h2");
+        header.classList.add("header1");
+        header.style = "margin-inline: auto;";
         header.innerText = `#${ticket.ticket_id}`;
         clickable.href = `./tickets/${ticket.ticket_id}`;
         ticketsWrapper.appendChild(clickable);
@@ -53,6 +54,7 @@ function dateFormatter(data) {
         h3.appendChild(abbr);
         div.appendChild(h3);
         const hr = document.createElement("hr");
+        hr.classList.add("semanticLine");
         div.appendChild(hr);
         const p1 = document.createElement("p");
         p1.innerText = "Created on: ";
@@ -77,10 +79,10 @@ function dateFormatter(data) {
           ticket.status == 0
             ? "awaitingStaff"
             : ticket.status == 1
-            ? "closed"
-            : ticket.status == 2
-            ? "awaitingClient"
-            : "answered"
+              ? "closed"
+              : ticket.status == 2
+                ? "awaitingClient"
+                : "answered"
         );
         const i = document.createElement("i");
         i.classList.add("fa");
@@ -88,10 +90,10 @@ function dateFormatter(data) {
           ticket.status == 0
             ? "fa-clock"
             : ticket.status == 1
-            ? "fa-times-circle"
-            : ticket.status == 2
-            ? "fa-exclamation-circle"
-            : "fa-check-circle"
+              ? "fa-times-circle"
+              : ticket.status == 2
+                ? "fa-exclamation-circle"
+                : "fa-check-circle"
         );
         footer.appendChild(i);
         const p3 = document.createElement("p");
@@ -99,10 +101,10 @@ function dateFormatter(data) {
           ticket.status == 0
             ? "Awaiting Staff Reply"
             : ticket.status == 1
-            ? "Closed"
-            : ticket.status == 2
-            ? "Awaiting Client Reply"
-            : "Answered";
+              ? "Closed"
+              : ticket.status == 2
+                ? "Awaiting Client Reply"
+                : "Answered";
         footer.appendChild(p3);
         clickable.appendChild(footer);
       });

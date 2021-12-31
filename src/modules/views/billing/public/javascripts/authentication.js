@@ -199,7 +199,6 @@ const toggleEditMode = async () => {
     email = document.querySelector("#accountCard #account-email"),
     resetButton = document.querySelector("#accountCard button[type='reset']"),
     confirmButton = document.querySelector("#accountCard #multiButton"),
-    button3 = document.querySelector("#accountCard #button3"),
     errorParagraph = document.querySelector("#update-error"),
     passwordConfirm = document.querySelector("#account-confirm-password"),
     passwordConfirmLabel = document.querySelector(

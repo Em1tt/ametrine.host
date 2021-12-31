@@ -1,25 +1,25 @@
     <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <aside id="authentication">
         <div>
-            <h3 id="authHeader"><i class="fa fa-lock"></i> Secure Sign-In</h3>
+            <h3 id="authHeader" style="margin:20px auto 0 auto;text-align:center" class="header1"><i class="fa fa-lock"></i> Secure Sign-In</h3>
             <form id="login">
                 <fieldset>
-                <p id="login-error"></p>
+                <p style="color: #fff;" id="login-error"></p>
                     <div>
-                        <input required type="email" id="login-email" placeholder="E-Mail">
+                        <input class="text2" required type="email" id="login-email" placeholder="E-Mail">
                         <i class="authIcon fa fa-at"></i>
                     </div>
                     <div>
-                        <input required type="password" id="login-password" placeholder="Password">
+                        <input class="text2"  required type="password" id="login-password" placeholder="Password">
                         <i class="authIcon fa fa-lock"></i>
                     </div>
-                    <div>
-                        <input type="checkbox" id="login-rememberSession" name="login-rememberSession">
+                    <div class="checkbox">
+                        <input type="checkbox" id="login-rememberSession" name="login-rememberSession"/>
                         <label for="login-rememberSession" id="login-rememberSessionButton"><i class="fa fa-check"></i></label>
                         <label for="login-rememberSession" id="login-rememberSessionLabel"> Remember Me</label>
                     </div>
                     <div>
-                        <input type="submit">
+                        <input class="submit" type="submit">
                     </div>
                 </fieldset>
             </form>
@@ -27,34 +27,27 @@
                 <fieldset>
                 <p id="register-error"></p>
                     <div>
-                        <input required type="text" id="register-name" placeholder="Full Name">
-                        <div class="popup">
-                            <i class="authIcon fa fa-user"></i>
-                            <p class="popupText">Used for applying your name to invoices</p>
-                        </div>
+                        <input class="text2"  required type="text" id="register-name" placeholder="Full Name">
+                        <i class="authIcon fa fa-user"></i>
                     </div>
                     <div>
-                        <input required type="email" id="register-email" placeholder="E-Mail">
-                        <div class="popup">
-                            <i class="authIcon fa fa-at"></i>
-                            <p class="popupText">Used for logging-in and sending invoices/checks</p>
-                        </div>
+                        <input class="text2"  required type="email" id="register-email" placeholder="E-Mail">
+                        <i class="authIcon fa fa-at"></i>
                     </div>
                     <div>
-                        <input required type="password" id="register-password" placeholder="Password">
-                        <span></span><span></span><span></span>
+                        <input class="text2"  required type="password" id="register-password" placeholder="Password">
                         <i class="authIcon fa fa-lock"></i>
                     </div>
                     <div>
-                        <input required type="password" id="register-password-confirm" placeholder="Confirm Password">
+                        <input class="text2"  required type="password" id="register-password-confirm" placeholder="Confirm Password">
                         <i class="authIcon fa fa-lock"></i>
                     </div>
                     <div>
-                        <p>By registering you agree to our <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></p>
+                        <p>By registering you agree to our <a class="anchor1" href="#">Terms & Conditions</a> and <a class="anchor1" href="#">Privacy Policy</a></p>
                     </div>
                     <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001"></div>
                     <div>
-                        <input type="submit">
+                        <input class="submit" type="submit">
                     </div>
                 </fieldset>
             </form>

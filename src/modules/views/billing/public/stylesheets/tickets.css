@@ -1,30 +1,10 @@
-:root {
-  font-size: 16px;
-  font-family: "Ubuntu", Arial, Helvetica, sans-serif;
-}
-* {
-  box-sizing: border-box;
-}
-html {
-  background-color: var(--main-bg);
-}
-body {
-  overflow-x: hidden;
-  height: auto;
-  overflow-y: auto;
-  width: 100vw;
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin: 0;
-}
 main {
   margin: 3rem 0 0 7rem;
   display: grid;
   height: 100%;
 }
 main > div{
-    width: 90%;
+    width: 95%;
 }
 main > div > div{
     display: flex;
@@ -41,10 +21,6 @@ main > div > div > span:hover{
     background: #141419;
 }
 main > div > div button{
-    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     padding: 15px;
     outline: none;
     border: none;
@@ -52,35 +28,14 @@ main > div > div button{
     font-size: 0.95rem;
 }
 main > div > div button:disabled{
-    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     opacity: 0.5;
     cursor:default;
 }
-main h1 {
-  background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-main h2 {
-  color: #dce0ff;
-}
-main hr {
-  border: none;
-  height: 2px;
-  background-color: #3e404f;
-  margin: none !important;
-}
 #ticketWrapper{
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    height: auto;
+    flex-flow: row wrap;
     justify-content: left;
-    margin-bottom: 100px;
+    margin-bottom: 120px;
 }
 #ticketWrapper a{
     background-color: #1e1f26;
@@ -96,10 +51,6 @@ main hr {
 }
 #ticketWrapper a > h2{
     font-size: 1.2rem;
-    background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 #ticketWrapper a h3{
     word-break: break-word;
@@ -146,6 +97,9 @@ main hr {
         margin-left: 0.5rem;
         overflow-y: auto;
         display: block;
+    }
+    main div{
+        width: 98%;
     }
     form #subject {
         width: 200px;

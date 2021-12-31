@@ -52,7 +52,7 @@
         <%}%>
         <div>
             <div>
-                <h1><%=decodeURI(atob(it.ticket.subject))%></h1>
+                <h1 class="header1"><%=decodeURI(atob(it.ticket.subject))%></h1>
                 <div class="ticketInfo">
                 <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
                 if(opened[2].startsWith(0)){
@@ -105,7 +105,7 @@
                 <p>Ticket ID: <%=it.ticket.ticket_id%></p>
                 </div>
             </div>
-            <hr>
+            <hr class="semanticLine">
             <form id="editTicket">
                 <fieldset id="subjectWrapper" class="hidden">
                     <label for="subject">New Subject:</label>

@@ -63,44 +63,28 @@
             }
         };
     }
-    function arrayBufferToBase64(buffer, type) {  // https://stackoverflow.com/a/9458996
-        var binary = '';
-        var bytes = new Uint8Array(buffer);
-        var len = bytes.byteLength;
-        for (var i = 0; i < len; i++) {
-            binary += String.fromCharCode(bytes[i]);
-        }
-        const b64 = window.btoa(binary);
-        return (b64.length && type) ? `data:${type};base64,${b64}` : b64;
-    }
+
     ticketForm.addEventListener("submit", async (event) => {
         event.preventDefault();
         deltaFormat = editor.getContents(); // Bug fix, this updates deltaFormat, because without it, it'll just show { insert: '\n' } in ops
         try {
             const imageManager = document.querySelector("#imageManager");
-            let images = await Promise.all([...imageManager.children].map(async (div) => {
+            let images = [];
+            [...imageManager.children].forEach(async (div) => {
                 let image = [...div.children][0];
                 const blob = await (await fetch(image.src)).blob();
-                if (blob) {
-                    return {
-                        name: blob.name,
-                        data: arrayBufferToBase64(await blob.arrayBuffer(), blob.type),
-                        lastModified: blob.lastModified,
-                        size: blob.size,
-                        type: blob.type
-                    }
-                }
-            }));
-            const response = await axios.post("/api/tickets/create", {
-                subject: subject.value,
-                content: deltaFormat,
-                categories: category.options[category.selectedIndex].value,
-                service: null, //for now
-                priority: priority.options[priority.selectedIndex].value,
-                files: images,
+                images.push(blob);
             });
-            console.log(response);
-            window.location.href = `/billing/tickets/${response.data.ticket_id}`;
+        const response = await axios.post("/api/tickets/create", {
+            subject: subject.value,
+            content: deltaFormat,
+            categories: category.options[category.selectedIndex].value,
+            service: null, //for now
+            priority: priority.options[priority.selectedIndex].value,
+            files: images
+        });
+        console.log(response);
+        window.location.href = `/billing/tickets/${response.data.ticket_id}`;
         } catch(e) {
             errorText = e.response.data;
             console.error(e);
