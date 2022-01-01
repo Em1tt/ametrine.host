@@ -145,14 +145,14 @@
                 </fieldset>
                 <fieldset id="submitWrapper">
                 <%if(it.ticket.closed == 0){%>
-                    <button type="button" class="buttons" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                    <button type="button" class="buttons button1" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
                 <%}else{%>
-                    <button type="button" class="buttons" id="closeTicket" onclick="ticketOpen()"><i class="fa fa-check-circle"></i> Open Ticket</button>
+                    <button type="button" class="buttons button1" id="closeTicket" onclick="ticketOpen()"><i class="fa fa-check-circle"></i> Open Ticket</button>
                 <%}%>
-                <button type="button" class="buttons" onclick="editMode()"><i class="fa fa-edit"></i> Edit Ticket</button>
-                <button class="buttons highlightButton" type="button" onclick="sendMessage()">Send a new message</button>
-                <button type="reset" form="editTicket" class="editButtons hidden" onclick="editMode()"><i class="fa fa-times-circle"></i> Discard Edits</button>
-                <button type="button" class="editButtons hidden important" onclick="saveEdits()"><i class="fa fa-check-circle"></i> Apply Edits</button>
+                <button type="button" class="buttons button1" onclick="editMode()"><i class="fa fa-edit"></i> Edit Ticket</button>
+                <button class="buttons highlightButton button1" type="button" onclick="sendMessage()">Send a new message</button>
+                <button type="reset" form="editTicket" class="editButtons button1 hidden" onclick="editMode()"><i class="fa fa-times-circle"></i> Discard Edits</button>
+                <button type="button" class="editButtons button1 hidden highlightButton" onclick="saveEdits()"><i class="fa fa-check-circle"></i> Apply Edits</button>
                 </fieldset>
             </form>
             <span class="logs" id="messageWrapper">
@@ -179,6 +179,9 @@
                             </div>
                     </span>
                     <span id="content"></span>
+                    <div class="screenshotsWrapper">
+                        <span id="imageManagerInitial" class="imageManager"></span>
+                    </div>
                 </span>
                 
             </span>
@@ -216,6 +219,63 @@
     priority.hasAttribute("disabled") ? priority.removeAttribute("disabled") : priority.setAttribute("disabled", true);
     category.hasAttribute("disabled") ? category.removeAttribute("disabled") : category.setAttribute("disabled", true);
     category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~it.ticket.content%>, "api")
+    category.hasAttribute("disabled") ? imageManager.innerText = "" : transferScreenshots();
+    async function transferScreenshots(){
+    const imageManager = document.querySelector("#imageManager");
+    const screenshots = document.querySelector("#screenshots");
+    let initialScreens = [...document.querySelector("#imageManagerInitial").children].map(i => [...i.children].map(o => o.src)).map(p => p[0]);
+        var fileList = initialScreens.concat([...screenshots.files]);
+        for(let i=0; i < fileList.length; i++){
+            if (imageManager.children.length >= 5) {
+                Swal.fire({
+                    title: "You hit the screenshot limit",
+                    icon: "error",
+                    text: `In order to help secure our servers, we limit each ticket to 5 screenshots max.`,
+                    showCancelButton: false,
+                    confirmButtonText: "Understood"
+                });
+            } else {
+                if (fileList[i].size > 8388608) {
+                    function waitForSwal(){
+                        return new Promise(resolve => {
+                            Swal.fire({
+                                title: "Screenshot too big",
+                                icon: "error",
+                                html: `<p>The file <code style="color:#7066e0;">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
+                                showCancelButton: false,
+                                confirmButtonText: "Understood",
+                                preConfirm: resolve
+                            })
+                        });
+                    }
+                    await waitForSwal();
+                } else {
+                    let div = document.createElement("div");
+                    let div2 = document.createElement("div");
+                    let img = document.createElement("img");
+                    let name = document.createElement("p");
+                    let button = document.createElement("button");
+                    button.type = "button";
+                    button.innerText = "Delete Image";
+                    button.addEventListener("click", (event) => {
+                        [...imageManager.children][[...imageManager.children].indexOf(div)].remove();
+                        console.log(imageManager.children);
+                    });
+                    if(!fileList[i]?.startsWith("http://")){
+                    img.src = URL.createObjectURL(fileList[i]);
+                    }else{
+                    img.src = fileList[i];
+                    }
+                    img.classList.add("ticketImage");
+                    Intense(img);
+                    div.appendChild(img);
+                    div2.appendChild(button);
+                    div.appendChild(div2);
+                    imageManager.appendChild(div);
+                }
+                }
+            }
+        };
 }
     </script>
 </body>

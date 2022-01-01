@@ -8,12 +8,28 @@ const buttons = document.getElementsByClassName("buttons"),
 const ticketID = document.getElementById("ticketID").innerHTML;
 async function saveEdits() {
     try {
+        const imageManager = document.querySelector("#imageManager");
+        let images = await Promise.all([...imageManager.children].map(async (div) => {
+            let image = [...div.children][0];
+            if(!image.src.startsWith("blob:")) return image.src;
+            const blob = await (await fetch(image.src)).blob();
+            if (blob) {
+                return {
+                    name: blob.name,
+                    data: arrayBufferToBase64(await blob.arrayBuffer(), blob.type),
+                    lastModified: blob.lastModified,
+                    size: blob.size,
+                    type: blob.type
+                }
+            }
+        }));
         const response = await axios.put(`/api/tickets/${ticketID}`, {
             subject: subject.value,
             content: editor.getContents(),
             categories: [category.value],
             priority: priority.value,
-            reopen: closedOn?.innerHTML == undefined ? 0 : 1
+            reopen: closedOn?.innerHTML == undefined ? 0 : 1,
+            files: images
         });
         location.reload()
         console.log(response);
@@ -183,6 +199,18 @@ async function sendMessage() {
                 window.location = `${window.location.pathname}?page=${parseInt(page) + 1}`
             });
         })
+        ticket.files = JSON.parse(ticket.files);
+        if(ticket.files.length){
+            ticket.files.forEach((file) => {
+                let div = document.createElement("div");
+                    let img = document.createElement("img");
+                    img.src = file;
+                    img.classList.add("ticketImage");
+                    Intense(img);
+                    div.appendChild(img);
+                    document.getElementById("imageManagerInitial").appendChild(div);
+            })
+        }
         if (!ticket.msgs || !ticket.msgs.length) {
             let h2 = document.createElement("h2")
             h2.innerText = "No messages yet."
@@ -234,7 +262,7 @@ async function sendMessage() {
                     clientName = document.createElement("p");
                     clientName.innerText = ticket.name;
                     role = document.createElement("p");
-                    role.innerText = "Customer";
+                    role.innerText = "Staff Member";
                     role.classList.add("role");
                 }
                 actualWrapper.appendChild(title);
@@ -256,6 +284,18 @@ async function sendMessage() {
                 });
                 messageEditorrr.setContents(JSON.parse(msg.content), "api")
                 actualWrapper.appendChild(spanContent);
+                let imageManager = document.createElement("div");
+                JSON.parse(msg.files).forEach((file) => {
+                    let div = document.createElement("div");
+                    let img = document.createElement("img");
+                    img.src = file;
+                    img.classList.add("ticketImage");
+                    Intense(img);
+                    div.appendChild(img);
+                    imageManager.appendChild(div);
+                    imageManager.classList.add("imageManager");
+                    actualWrapper.appendChild(imageManager);
+                })
                 spanContent.classList.add("message");
             });
         }

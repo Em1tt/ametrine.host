@@ -110,10 +110,12 @@ form label:hover {
   display: flex;
   flex-flow: row wrap;
   align-items: baseline;
-  padding: 0 10px 0 10px;
 }
 
 .screenshotsWrapper p {
+  color: white;
+}
+.screenshotsWrapper div {
   color: white;
 }
 
@@ -129,13 +131,24 @@ form input[type="file"] {
   width: 100%;
   background: #1e1f26;
 }
-#imageManager > div {
+.imageManager {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  width: 100%;
+  background: #1e1f26;
+}
+#imageManager > div{
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
   align-items: center;
 }
-#imageManager > div > div {
+.imageManager > div{
+  display: flex;
+  align-items: center;
+}
+#imageManager > div > div, .imageManager > div > div {
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-around;
@@ -152,38 +165,23 @@ form input[type="file"] {
   background: #101014;
   color: red;
 }
-#imageManager img {
+#imageManager img, .imageManager img {
   aspect-ratio: 16/9;
   max-width: 200px;
   margin: 10px;
   cursor: url("/billing/public/images/plus_cursor.png") 25 25, auto;
 }
 
-.highlightButton {
-  background-color: #cc37c0 !important;
-  color: #1e1f26 !important;
-  padding: 10px;
-  cursor: pointer;
-  margin-inline: 10px;
-  width: 165px;
-  outline: none;
-  border: none;
-  font-weight: bold;
-}
-
 form #submitWrapper button {
-  background-color: #1e1f26;
-  color: #cc37c0;
   padding: 10px;
-  cursor: pointer;
   margin-inline: 10px;
   width: 165px;
-  outline: none;
-  border: none;
+}
+form #submitWrapper button:hover {
+  background-color: #18181f;
 }
 
-.highlightButton:hover {
-  background-color: #141419 !important;
+.highlightButton {
   color: #cc37c0 !important;
 }
 
@@ -295,16 +293,6 @@ form #submitWrapper button {
   border-radius: 5px;
   color: white;
   border: #3e404f 2px solid;
-}
-.important {
-  background-color: #cc37c0 !important;
-  color: #1e1f26 !important;
-  font-weight: bold;
-}
-.important:hover {
-  background-color: #141419 !important;
-  color: #cc37c0 !important;
-  font-weight: bold;
 }
 .ticketInfo {
   display: flex;
@@ -422,8 +410,7 @@ form #submitWrapper button {
   form {
     margin-bottom: 100px;
   }
-  #content .ql-editor {
-    height: 100px !important;
+  #imageManagerInitial {
     margin-bottom: 100px;
   }
   #submitWrapper {
