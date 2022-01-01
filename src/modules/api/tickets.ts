@@ -333,7 +333,7 @@ export const prop = {
                                         return message;
                                     }))
                                     if (messages.length) { // If there are messages
-                                        messages = paginate(messages.sort((a,b) => (a.createdIn) - (b.createdIn)), pageLimit, page);
+                                        messages = paginate(messages.sort((a,b) => (b.createdIn) - (a.createdIn)), pageLimit, page);
                                         messages = messages.map(newMsg);
                                         getTicket['msgs'] = messages;
                                     }
