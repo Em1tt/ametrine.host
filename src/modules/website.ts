@@ -254,7 +254,7 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
 app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
   const userData: UserData = s.locals.userData;
   const file = `${billing}/staff/overview.eta`;
-  return redisClient.keys("user:?", async function (err, result) {
+  return redisClient.keys("user:*", async function (err, result) {
       if (err) {
         console.error(err);
         return s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
@@ -288,7 +288,7 @@ app.get("/billing/:name", (r: express.Request, s: express.Response) => {
 app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) => {
   const userData: UserData = s.locals.userData;
   const file = `${billing}/staff/${r.params.name}.eta`;
-  return redisClient.keys("user:?", async function (err, result) {
+  return redisClient.keys("user:*", async function (err, result) {
       if (err) {
         console.error(err);
         return s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
