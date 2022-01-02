@@ -1,9 +1,32 @@
 #!/bin/bash
-# get all system packages
-sudo apt-get install nodejs nginx
+# check if the program is installed on system
+packages=("nodejs" "nginx")
+ah_check() {
+  [ -x "$(which $1)" ]
+}
+
+ah_install() {
+  for package in ${packages[@]}; do
+    $1 $package
+  done
+}
+
+echo "[ametrine-install] installing"
+# get needed packages if they are not installed
+if ah_check apt-get ; then ah_install "apt-get install "
+elif ah_check pacman; then ah_install "pacman -S "
+elif ah_check yum   ; then ah_install "yum install "
+elif ah_check apk   ; then ah_install "apk add "
+elif ah_check apt   ; then ah_install "apt install "
+elif ah_check pkg   ; then ah_install "pkg install "
+else
+  echo "[ametrine-install] no supported package manager found"
+  exit 1
+fi
+
+# make scripts executable, in case they aren't
+chmod +x build lint start
 
 # get all npm packages
 npm ci
 
-# build
-npm run build

@@ -1,6 +1,0 @@
-#!/bin/bash
-# install all dependencies
-npm ci && npm prune
-
-# build the website source
-npm run lint && npm run build
