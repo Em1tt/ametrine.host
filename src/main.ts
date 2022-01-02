@@ -21,6 +21,13 @@ const strings   : any    = require(`./lang/${config.lang}.json`),
 for (const file of moduleList) {
   modules.set(file.name,
               child_process.spawn(`node ${file.file}`));
+
+  const m = modules.get(file.name);
+  // set stdout listeners
+  m.stdout.setEncoding("utf8");
+  m.stdout.on("data", (data) => {
+    console.log(`\u001b[38;5;${file.colour}m[${file.name}] ${data}`);
+  });
 }
 
 util.log(util.sreplace(strings.start, [modules.size]));
@@ -40,5 +47,7 @@ CLI.on("line", (input) => {
 
 process.once("SIGINT", () => {
   modules.forEach((m) => m.kill());
+  console.log("\u001b[0m"); // reset colour
   process.exit(0); // close nodejs
 });
+
