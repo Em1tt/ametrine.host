@@ -45,7 +45,7 @@
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it.ticket.ticket_id%></p>
-    <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
+    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it.permissions).filter((i) => i[0] == it.userData.permission_id)}) %>
     <main>
         <%if(it.ticket.closed !== 0){%>
             <h4 class="ticketClosed">This ticket is closed. Press "Open Ticket", send a message or edit the ticket to reopen it.</h4>
@@ -54,7 +54,7 @@
             <div>
                 <h1 class="header1"><%=decodeURI(atob(it.ticket.subject))%></h1>
                 <div class="ticketInfo">
-                <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
+                <% let opened = new Date(JSON.parse(it.ticket.opened)).toDateString().split(" ");
                 if(opened[2].startsWith(0)){
                     opened[2] = opened[2].slice(1);
                 }
@@ -68,7 +68,7 @@
                     opened[2] = opened[2]+"th"
                 }
                 opened = [opened[2], opened[1], opened[3]].join(" ");
-                 let edited = new Date(it.ticket.editedIn).toDateString().split(" ");
+                 let edited = new Date(JSON.parse(it.ticket.editedIn)).toDateString().split(" ");
                 if(edited[2].startsWith(0)){
                     edited[2] = edited[2].slice(1);
                 }
@@ -82,7 +82,7 @@
                     edited[2] = edited[2]+"th"
                 }
                 edited = [edited[2], edited[1], edited[3]].join(" ");
-                 let closed = new Date(it.ticket.closed).toDateString().split(" ");
+                 let closed = new Date(JSON.parse(it.ticket.closed)).toDateString().split(" ");
                 if(closed[2].startsWith(0)){
                     closed[2] = closed[2].slice(1);
                 }
@@ -172,7 +172,7 @@
                 <span class="opened">
                     <hr>
                     <span class="title">
-                        <img src="/billing/public/images/User.svg" height="50" width="50" alt="User">
+                        <img src="/billing/public/images/User.svg" class="user" height="50" width="50" alt="User">
                             <div>
                                 <p><%=it.userData.name%></p>
                                 <p class="role">Customer</p>
@@ -194,7 +194,7 @@
     <%~ E.includeFile('../../public/templates/announcements.eta') %>
     <%~ E.includeFile('../../public/javascripts/announcements.eta', {userData: it.userData}) %>
     <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
-    <script src="/billing/public/javascripts/ticket.js" async defer></script>
+    <script src="/billing/html/staff/javascripts/ticket.js" async defer></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
     <script>

@@ -387,7 +387,7 @@ export const prop = {
                                 });
                             }
                             case "PUT": { // Updates the status on the ticket (Either opening it again after being closed, setting tags, etc)
-                                const { closed, subject, categories, reopen, priority, content } = req.body;
+                                const { closed, subject, categories, reopen, priority, content, status } = req.body;
                                 let updated = false;
                                 /**
                                   * closed (closed=1) - Close the ticket
@@ -396,6 +396,11 @@ export const prop = {
                                   * categories (categories=0,1) - Categories for the ticket.
                                   * reopen (reopen=1) - Reopens the ticket
                                   */
+                                if(parseInt(status)){
+                                    if(parseInt(status) < 0 || parseInt(status) > 4) return res.sendStatus(406);
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", parseInt(status)])
+                                    updated = true;
+                                }
                                 if (closed && closed == "1" && !reopen) { // If closed is provided, close the ticket.
                                     if (getTicket["closed"] != 0) return res.sendStatus(204);
                                     await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 1, "closed", timestamp])

@@ -333,6 +333,7 @@ s.render(file, {
   config: config.billing,
   ticket_categories: ticketCats,
   ticket: getTicket,
+  permissions: permIDs
 });
 });
 
@@ -378,7 +379,7 @@ app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Resp
     userData: userData,
     config: config.billing,
     ticket_categories: ticketCats,
-    ticket: getTicket,
+    ticket: getTicket
   });
 });
 app.get("/.env", (r: express.Request, s: express.Response) => {

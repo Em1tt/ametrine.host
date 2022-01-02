@@ -203,9 +203,14 @@ form #submitWrapper button:hover {
   margin-right: 20px;
 }
 .title img {
-  background-image: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
   padding: 10px;
   border-radius: 50%;
+}
+.title img.user{
+  background-image: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
+}
+.title img.staff{
+  background-image: -webkit-linear-gradient(-200deg, #e69130 25%, #e6b530);
 }
 .title div {
   display: flex;
