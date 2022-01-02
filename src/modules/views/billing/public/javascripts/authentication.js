@@ -40,7 +40,7 @@ const twofa = () => {
               );
             } else {
               try {
-                const response = await axios.post(`/api/user/2fa?code=${code}`);
+                const response = await axios.post(`/api/user/2fa`, {code: code});
                 console.log(response);
                 Swal.fire({
                   title: "Save these backup codes",
