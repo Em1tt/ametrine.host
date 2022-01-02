@@ -21,6 +21,7 @@ for (const file of moduleList) {
               child_process.fork(file.file));
 
   const m = modules.get(file.name);
+  console.log(m);
   // handle module stdout
   m.stdout.setEncoding("utf8");
   m.stdout.on("data", (d) => {
