@@ -1,42 +1,42 @@
 [
   {
     "name": "CDN",
-    "colour": "",
+    "colour": "1",
     "file": "dist/modules/cdn.js"
   },
   {
     "name": "Discord",
-    "colour": "",
+    "colour": "2",
     "file": "dist/modules/discord.js"
   },
   {
     "name": "Mail: box",
-    "colour": "",
+    "colour": "3",
     "file": "dist/modules/mailbox.js"
   },
   {
     "name": "Mail: server",
-    "colour": "",
+    "colour": "4",
     "file": "dist/modules/mailserver.js"
   },
   {
     "name": "OTP",
-    "colour": "",
+    "colour": "5",
     "file": "dist/modules/otp.js"
   },
   {
     "name": "Permissions",
-    "colour": "",
+    "colour": "6",
     "file": "dist/modules/permissions.js"
   },
   {
     "name": "Util",
-    "colour": "",
+    "colour": "20",
     "file": "dist/modules/utils.js"
   },
   {
     "name": "Website",
-    "colour": "",
+    "colour": "125",
     "file": "dist/modules/website.js"
   }
 ]
