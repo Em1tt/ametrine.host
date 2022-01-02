@@ -1,4 +1,4 @@
-name: Lint
+name: Lint & build
 on: 
   pull_request: 
     branches: [main]
@@ -17,5 +17,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: bash script/install
     - run: eslint
     - run: tsc -p tsconfig.json
