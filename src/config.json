@@ -1,5 +1,6 @@
 {
   "lang": "en",
+  "folder": "modules",
 
   "website": {
     "port": 3000
