@@ -311,7 +311,7 @@ app.get("/billing/staff/tickets/:ticketid", async (r: express.Request, s: expres
   const userData: UserData = s.locals.userData;
   const file = `${billing}/staff/ticket.eta`;
   if(!parseInt(r.params.ticketid)) return s.status(404).send("ticket IDs are always numeric values.");
-  let getTicket : Ticket = await redisClient.db.hgetall(`ticket:${r.params.ticketid}`);
+  const getTicket : Ticket = await redisClient.db.hgetall(`ticket:${r.params.ticketid}`);
   if (!getTicket) return s.sendStatus(404); // just in case
   const newTicketProps = { ...getTicket};
   newTicketProps["ticket_id"] = parseInt(getTicket.ticket_id.toString());
