@@ -74,7 +74,7 @@ export const cdn = {
                             case "tickets": {
                                 const getTicket = await redis.db.hgetall(`ticket:${name.split("-")[0]}`);
                                 if (!getTicket) return (debug) ? s.status(404).send("Ticket not found") : s.sendStatus(403);
-                                if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return s.sendStatus(403);
+                                if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}` && ![3,4].includes(parseInt(userData["permission_id"]))) return s.sendStatus(403);
                                 const decrypted = await cdn.decrypt(Buffer.from(data, 'binary'), getTicket["key"]);
                                 const b64 = Buffer.from(decrypted.toString('utf-8'), 'base64');
                                 s.writeHead(200, {

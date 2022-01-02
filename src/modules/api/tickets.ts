@@ -271,7 +271,7 @@ export const prop = {
                         if (ticketID < 0) return res.sendStatus(406);
                         const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
-                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
+                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}` && ![3,4].includes(parseInt(userData["permission_id"]))) return res.sendStatus(403);
                         const msgID = parseInt(params[1])
                         if (msgID < 0) return res.sendStatus(406);
                         const getMessage = await client.db.hgetall(`ticket_msg:${ticketID}:${msgID}`);
@@ -307,7 +307,7 @@ export const prop = {
                         if (ticketID < 0) return res.sendStatus(406);
                         const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
-                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}`) return res.sendStatus(403);
+                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}` && ![3,4].includes(parseInt(userData["permission_id"]))) return res.sendStatus(403);
                         const { content } = req.body;
                         // Using {} at switch cases because ESLint is complaining
                         
