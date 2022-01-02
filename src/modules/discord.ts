@@ -11,7 +11,7 @@ const cmds: Discord.Collection<string, Command>
                            = new Discord.Collection();
 
 bot.once("ready", () => {
-  util.discordLog("logged in");
+  console.log("logged in");
 
   const files = fs.readdirSync(`./dist/modules/discord/cmd`)
                   .filter((f) => f.endsWith(".js"));
@@ -19,7 +19,7 @@ bot.once("ready", () => {
       const cmd: Command = require(`./discord/cmd/${f.replace(".js", "")}`);
       cmds.set(cmd.prop.name, cmd);
   }
-  util.discordLog(`${[...cmds.values()].length} command(s) loaded`);
+  console.log(`${[...cmds.values()].length} command(s) loaded`);
 
   bot.user.setActivity("on amethyst.host", {type: "PLAYING"});
 });
@@ -36,9 +36,9 @@ bot.on("message", async (msg: Discord.Message) => {
 
   try {
     cmds.get(cmd).prop.run(bot, msg, args, cmds);
-    util.discordLog(`executed ${cmd} [${args}]`);
+    console.log(`executed ${cmd} [${args}]`);
   } catch (e) {
-    util.discordLog(`not executed (${e})`);
+    console.log(`not executed (${e})`);
   }
 });
 

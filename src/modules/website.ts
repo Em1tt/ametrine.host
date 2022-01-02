@@ -23,7 +23,7 @@ import ms              from 'ms';
 
 const redisClient: redis.Client = redis.createClient({ password: process.env.REDIS_PASSWORD, user: "default" });
 redisClient.on("connect", function() {
-    util.log("[Redis] Connected to Database.")
+    console.log("[Redis] Connected to Database.")
     redisClient.db = { // Functions to make redis more easier to use than having a bunch of callback functions.
       get: function(key: string): any {
         return new Promise((resolve, reject): any => {
@@ -107,7 +107,7 @@ redisClient.JWToptions = {
   }
 }
 redisClient.on("error", function(error) {
-    util.log("[Redis] ERROR" + "\n" + error)
+    console.log("[Redis] ERROR" + "\n" + error)
 })
 
 
@@ -135,7 +135,7 @@ for (const f of files) {
     ep.prop["setClient"](redisClient);
   }
 }
-util.expressLog(`${endpoints.size} api endpoints loaded`);
+console.log(`${endpoints.size} api endpoints loaded`);
 
 app.use(cookieParser())
 
@@ -392,11 +392,10 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
 
   if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
   s.render(file);
-
 });
 
 // start up the website
 app.listen(config.website.port, () => {
-  util.expressLog(`started website @${config.website.port}`);
+  console.log(`started website @${config.website.port}`);
   cdn.host(redisClient);
 });

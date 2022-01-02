@@ -7,8 +7,5 @@ export const util = {
     return text;
   },
 
-  log       : (text: string): void => console.log(`[backend] ${text}`),
-  expressLog: (text: string): void => console.log(`[website] ${text}` ),
-  discordLog: (text: string): void => console.log(`[discord] ${text}` ),
-  mailLog   : (text: string): void => console.log(`[mailbox] ${text}` )
+  log: (text: string): void => console.log(`[ametrine] ${text}`),
 };

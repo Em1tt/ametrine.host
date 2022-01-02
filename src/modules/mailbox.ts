@@ -10,7 +10,7 @@ const limit = 200;
 export const mailbox = {
   receiveMail: (p, session, callback) => {
     if (!config.mail.mails.includes(p.to.text.trim())) return errorHandler(510, callback);
-    util.mailLog(`Received E-Mail from "${p.from.text}"`);
+    console.log(`Received E-Mail from "${p.from.text}"`);
     const mail = `${p.from.text} wrote:\n\n---------------------\nSubject: ${p.subject}\n\nText: ${p.text}\n\n${p.attachments.map(a => a.content)}\n`;
     fs.mkdir(`./data/mail/${p.to.text}`, (err): void => {
       if (err && !fs.existsSync(`./data/mail/${p.to.text}`)) return console.error(err);
