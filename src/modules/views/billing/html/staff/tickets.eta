@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ametrine.host | Billing</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!--STYLESHEETS-->
+    <!--Asynchronous load-->
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous"
+        media="">
+    <noscript>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    </noscript>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/tickets.css" rel="stylesheet">
+</head>
+<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it.permissions).filter((i) => i[0] == it.userData.permission_id)}) %>
+    <main>
+        <div>
+            <div>
+                <h1 class="header1">Your tickets</h1>
+                <span><button class="header1" onclick="window.location.href = './tickets/create'" <%=(it.userData.email) ? "" : "disabled"%>><i class="fa fa-plus"></i> Create a ticket</button></span>
+            </div>
+            <hr class="semanticLine">
+            <h2 class="header2"><%= (it.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>
+            <span class="pageButtons">
+                <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+            </span>
+            <div id="ticketWrapper">
+                
+            </div>
+        </div>
+    </main>
+    <script src="/billing/html/staff/javascripts/tickets.js" async defer></script>
+</body>

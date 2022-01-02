@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ametrine.host | Billing</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!--STYLESHEETS-->
+    <!--Asynchronous load-->
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
+        href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+        integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous"
+        media="">
+    <noscript>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    </noscript>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="/billing/public/stylesheets/ticket.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
+    <script src="/billing/public/javascripts/theme.js" async defer></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/intense-images/1.0.7/intense.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+    <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it.ticket.ticket_id%></p>
+    <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
+    <main>
+        <%if(it.ticket.closed !== 0){%>
+            <h4 class="ticketClosed">This ticket is closed. Press "Open Ticket", send a message or edit the ticket to reopen it.</h4>
+        <%}%>
+        <div>
+            <div>
+                <h1 class="header1"><%=decodeURI(atob(it.ticket.subject))%></h1>
+                <div class="ticketInfo">
+                <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
+                if(opened[2].startsWith(0)){
+                    opened[2] = opened[2].slice(1);
+                }
+                if(opened[2].endsWith(1)){
+                    opened[2] = opened[2]+"st"
+                }else if(opened[2].endsWith(2)){
+                    opened[2] = opened[2]+"nd"
+                }else if(opened[2].endsWith(3)){
+                    opened[2] = opened[2]+"rd"
+                }else{
+                    opened[2] = opened[2]+"th"
+                }
+                opened = [opened[2], opened[1], opened[3]].join(" ");
+                 let edited = new Date(it.ticket.editedIn).toDateString().split(" ");
+                if(edited[2].startsWith(0)){
+                    edited[2] = edited[2].slice(1);
+                }
+                if(edited[2].endsWith(1)){
+                    edited[2] = edited[2]+"st"
+                }else if(edited[2].endsWith(2)){
+                    edited[2] = edited[2]+"nd"
+                }else if(edited[2].endsWith(3)){
+                    edited[2] = edited[2]+"rd"
+                }else{
+                    edited[2] = edited[2]+"th"
+                }
+                edited = [edited[2], edited[1], edited[3]].join(" ");
+                 let closed = new Date(it.ticket.closed).toDateString().split(" ");
+                if(closed[2].startsWith(0)){
+                    closed[2] = closed[2].slice(1);
+                }
+                if(closed[2].endsWith(1)){
+                    closed[2] = closed[2]+"st"
+                }else if(closed[2].endsWith(2)){
+                    closed[2] = closed[2]+"nd"
+                }else if(closed[2].endsWith(3)){
+                    closed[2] = closed[2]+"rd"
+                }else{
+                    closed[2] = closed[2]+"th"
+                }
+                closed = [closed[2], closed[1], closed[3]].join(" ");
+                %>
+                <p>Opened On: <%=opened%></p>
+                <% if(it.ticket.closed != 0){ %>
+                    <p id="closedOn">Closed On: <%=closed%></p>
+                <%}%>
+                <p>Last Edit: <%=it.ticket.editedIn == 0 ? "never" : edited%></p>
+                <p>Ticket ID: <%=it.ticket.ticket_id%></p>
+                </div>
+            </div>
+            <hr class="semanticLine">
+            <form id="editTicket">
+                <fieldset id="subjectWrapper" class="hidden">
+                    <label for="subject">New Subject:</label>
+                    <input type="text" id="subject" name="subject" value=<%=atob(it.ticket.subject)%>>
+                </fieldset>
+                <fieldset>
+                    <label for="priority">Priority:</label>
+                    <select disabled name="ticket_priority" id="priority">
+                        <option <%=it.ticket.priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
+                        <option <%=it.ticket.priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
+                        <option <%=it.ticket.priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
+                        <option <%=it.ticket.priority.toLowerCase() == "low" ? "selected" : ""%> value="Low">Low</option>
+                    </select>
+                </fieldset>
+                                <fieldset>
+                    <label for="category">Category:</label>
+                    <select disabled name="category" id="category">
+                                                <% it.ticket_categories.forEach(category => { %>
+                            <option <%=category.id == it.ticket.category_ids ? "selected" : ""%> value="<%=category.id%>"><%=category.name%></option>
+                        <% }) %>
+                    </select>
+                </fieldset>
+            </form>
+<form id="ticketCreate">
+                <fieldset>
+                    <!--PUT TEXTAREA HERE-->
+                    <div class="editorWrapper">
+                        <div id="editor"></div>
+                        <input type="hidden" name="quill-html" id="quill-html">
+                    </div>
+                </fieldset>
+                <fieldset class="screenshotsWrapper">
+                    <label for="screenshots">Upload Screenshots</label>
+                    <input type="file" id="screenshots" multiple="multiple" accept="image/png, image/jpeg">
+                    <p id="screenshotsStatus">Max. 5 screenshots, each max. 8MB in size.</p>
+                    <span id="imageManager"></span>
+                </fieldset>
+                <fieldset id="submitWrapper">
+                <%if(it.ticket.closed == 0){%>
+                    <button type="button" class="buttons button1" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                <%}else{%>
+                    <button type="button" class="buttons button1" id="closeTicket" onclick="ticketOpen()"><i class="fa fa-check-circle"></i> Open Ticket</button>
+                <%}%>
+                <button type="button" class="buttons button1" onclick="editMode()"><i class="fa fa-edit"></i> Edit Ticket</button>
+                <button class="buttons highlightButton button1" type="button" onclick="sendMessage()">Send a new message</button>
+                <button type="reset" form="editTicket" class="editButtons button1 hidden" onclick="editMode()"><i class="fa fa-times-circle"></i> Discard Edits</button>
+                <button type="button" class="editButtons button1 hidden highlightButton" onclick="saveEdits()"><i class="fa fa-check-circle"></i> Apply Edits</button>
+                </fieldset>
+            </form>
+            <span class="logs" id="messageWrapper">
+                <hr id="logs">
+                <div class="pageButtons">
+                    <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                    <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+                </div>
+                <div id="actualMessageWrapper">
+                </div>
+                <div class="pageButtons" id="bottomButtons">
+                    <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                    <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+                </div>
+                <div>
+                <span class="messageContent"></span>
+                <span class="opened">
+                    <hr>
+                    <span class="title">
+                        <img src="/billing/public/images/User.svg" height="50" width="50" alt="User">
+                            <div>
+                                <p><%=it.userData.name%></p>
+                                <p class="role">Customer</p>
+                            </div>
+                    </span>
+                    <span id="content"></span>
+                    <div class="screenshotsWrapper">
+                        <span id="imageManagerInitial" class="imageManager"></span>
+                    </div>
+                </span>
+                
+            </span>
+            </div>
+            <p id="errorText"></p>
+        </div>
+    </main>
+    <%~ E.includeFile('../../public/templates/authentication.eta')%>
+    <%~ E.includeFile('../../public/templates/support.eta')%>
+    <%~ E.includeFile('../../public/templates/announcements.eta') %>
+    <%~ E.includeFile('../../public/javascripts/announcements.eta', {userData: it.userData}) %>
+    <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
+    <script src="/billing/public/javascripts/ticket.js" async defer></script>
+    <script src="/billing/public/javascripts/authentication.js" async defer></script>
+    <script src="/billing/public/javascripts/popups.js" async defer></script>
+    <script>
+        var container = document.getElementById('editor');
+        var editor = new Quill(container, {
+            theme: "snow"
+        });
+        var container2 = document.getElementById('content');
+        var editor2 = new Quill(container2, {
+            theme: "snow",
+            readOnly: true,
+            modules: {
+                toolbar: false
+            }
+        });
+        editor2.setContents(<%~it.ticket.content%>, "api")
+        function editMode(){
+    [...editButtons, ...buttons].forEach(btn => {
+        btn.classList.toggle("hidden");
+    });
+    subjectWrapper.classList.toggle("hidden");
+    priority.hasAttribute("disabled") ? priority.removeAttribute("disabled") : priority.setAttribute("disabled", true);
+    category.hasAttribute("disabled") ? category.removeAttribute("disabled") : category.setAttribute("disabled", true);
+    category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~it.ticket.content%>, "api")
+    category.hasAttribute("disabled") ? imageManager.innerText = "" : transferScreenshots();
+    async function transferScreenshots(){
+    const imageManager = document.querySelector("#imageManager");
+    const screenshots = document.querySelector("#screenshots");
+    let initialScreens = [...document.querySelector("#imageManagerInitial").children].map(i => [...i.children].map(o => o.src)).map(p => p[0]);
+        var fileList = initialScreens.concat([...screenshots.files]);
+        for(let i=0; i < fileList.length; i++){
+            if (imageManager.children.length >= 5) {
+                Swal.fire({
+                    title: "You hit the screenshot limit",
+                    icon: "error",
+                    text: `In order to help secure our servers, we limit each ticket to 5 screenshots max.`,
+                    showCancelButton: false,
+                    confirmButtonText: "Understood"
+                });
+            } else {
+                if (fileList[i].size > 8388608) {
+                    function waitForSwal(){
+                        return new Promise(resolve => {
+                            Swal.fire({
+                                title: "Screenshot too big",
+                                icon: "error",
+                                html: `<p>The file <code style="color:#7066e0;">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
+                                showCancelButton: false,
+                                confirmButtonText: "Understood",
+                                preConfirm: resolve
+                            })
+                        });
+                    }
+                    await waitForSwal();
+                } else {
+                    let div = document.createElement("div");
+                    let div2 = document.createElement("div");
+                    let img = document.createElement("img");
+                    let name = document.createElement("p");
+                    let button = document.createElement("button");
+                    button.type = "button";
+                    button.innerText = "Delete Image";
+                    button.addEventListener("click", (event) => {
+                        [...imageManager.children][[...imageManager.children].indexOf(div)].remove();
+                        console.log(imageManager.children);
+                    });
+                    if(fileList[i].startsWith("blob:")){
+                    img.src = URL.createObjectURL(fileList[i]);
+                    }else{
+                    img.src = fileList[i];
+                    }
+                    img.classList.add("ticketImage");
+                    Intense(img);
+                    div.appendChild(img);
+                    div2.appendChild(button);
+                    div.appendChild(div2);
+                    imageManager.appendChild(div);
+                }
+                }
+            }
+        };
+}
+    </script>
+</body>

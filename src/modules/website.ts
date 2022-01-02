@@ -307,6 +307,34 @@ app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) 
     });
   })
 });
+app.get("/billing/staff/tickets/:ticketid", async (r: express.Request, s: express.Response) => {
+  const userData: UserData = s.locals.userData;
+  const file = `${billing}/staff/ticket.eta`;
+  if(!parseInt(r.params.ticketid)) return s.status(404).send("ticket IDs are always numeric values.");
+  let getTicket : Ticket = await redisClient.db.hgetall(`ticket:${r.params.ticketid}`);
+  if (!getTicket) return s.sendStatus(404); // just in case
+  const newTicketProps = { ...getTicket};
+  newTicketProps["ticket_id"] = parseInt(getTicket.ticket_id.toString());
+  newTicketProps["user_id"] = parseInt(getTicket.user_id.toString());
+  newTicketProps["status"] = parseInt(getTicket.status.toString());
+  newTicketProps["opened"] = parseInt(getTicket.opened.toString());
+  newTicketProps["closed"] = parseInt(getTicket.closed.toString());
+  newTicketProps["createdIn"] = parseInt(getTicket.createdIn.toString());
+  newTicketProps["editedIn"] = parseInt(getTicket.editedIn.toString());
+  newTicketProps["level"] = parseInt(getTicket.level.toString());
+
+  console.log(getTicket);
+if(!userData) return s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
+if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/tickets/`)) return s.status(403).send("Insufficient permissions.");
+if(newTicketProps.level > userData.permission_id) return s.status(403).send("Insufficient Permissions.");
+const ticketCats = require("../../src/ticket_categories.json");
+s.render(file, {
+  userData: userData,
+  config: config.billing,
+  ticket_categories: ticketCats,
+  ticket: getTicket,
+});
+});
 
 app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => {
   const file = `${billing}/tickets/create.eta`;
