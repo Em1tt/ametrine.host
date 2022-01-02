@@ -244,7 +244,7 @@ export const prop = {
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.level <= level;
                         }
-                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket)).filter(ticket => [0,1,2,3].includes(req.query.status) ? ticket.status == req.query.status : ticket)
+                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket)).filter(ticket => [0,1,2,3].includes(parseInt(req.query.status)) ? ticket.status == parseInt(req.query.status) : ticket)
                                                       .sort((a,b) => (b.opened as number) - (a.opened as number)), pageLimit, page) as Array<Ticket>; // typescript requires me to declare .opened as number
                         return res.status(200).json(await Promise.all(tickets.map(await newTicket)));
                     })
