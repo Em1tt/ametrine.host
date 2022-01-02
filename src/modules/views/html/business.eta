@@ -152,9 +152,7 @@
       hosting company.
       While we can't guarantee all our plans will come true, we'll do our best to at least <i>try as hard as we can</i>.</p>
     </summary>
-    <footer>
-      <p>© 2021 Ametrine.host</p>
-    </footer>
+    <%~ E.includeFile('../templates/footer.eta') %>
     <%~ E.includeFile('../templates/backtotop.eta') %>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>

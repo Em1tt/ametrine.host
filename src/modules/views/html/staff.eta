@@ -83,15 +83,15 @@
           <h3>Back-end dev</h3>
           <p>Hello everyone, I'm Firee and I am one of the backend developers for ametrine.host. I like programming and I am also a Discord bot developer.</p>
         </div>
+        <!-- WHERE AM I???? >:( -->
+        <!-- ~ b1tt -->
       </div>
     </main>
     <section class="mapSection">
       <h2>Want to be here one day?</h2>
       <h3>Join our <a href="#">Discord Server</a>, as we'll post staff applications there.</h3>
     </section>
-    <footer>
-      <p>© 2021 Ametrine.host</p>
-    </footer>
+    <%~ E.includeFile('../templates/footer.eta') %>
     <%~ E.includeFile('../templates/backtotop.eta') %>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>

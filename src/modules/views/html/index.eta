@@ -149,9 +149,7 @@
       </div>
       </span>
     </section>
-    <footer>
-      <p>© 2021 Ametrine.host</p>
-    </footer>
+    <%~ E.includeFile('../templates/footer.eta') %>
     <%~ E.includeFile('../templates/backtotop.eta') %>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>

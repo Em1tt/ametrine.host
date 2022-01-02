@@ -100,9 +100,7 @@
       <h3>We reserve the right to end a partnership or change your benefits at any time for any reason</h3>
       <h3>You can end your partnership with us at any time for any reason aswell.</h3>
     </section>
-    <footer>
-      <p>© 2021 Ametrine.host</p>
-    </footer>
+    <%~ E.includeFile('../templates/footer.eta') %>
     <%~ E.includeFile('../templates/backtotop.eta') %>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
