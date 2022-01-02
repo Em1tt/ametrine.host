@@ -67,7 +67,8 @@ export const prop = {
                 URIS = (await Promise.all(files.map(async file => {
                     try {
                         if (!file.name) {
-                            file.name = crypto.randomBytes(8).toString("hex") + ".png"
+                            //.png - data:image/png;base64,(DATA)
+                            file.name = crypto.randomBytes(8).toString("hex") + "." + (file.data.length) ? file.data.slice(5,20).split("/")[1].split(";")[0] : "png"
                         }
                         const extensions = file.name.split(".")
                         const fileName = crypto.createHash('md5').update(extensions.slice(0, extensions.length - 1).join(".") + crypto.randomBytes(4).toString("hex")).digest("hex") + "." + extensions[extensions.length - 1]
