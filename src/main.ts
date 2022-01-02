@@ -13,18 +13,16 @@ import { cmds } from "./cli";
 import config   from "./config.json";
 
 // variables
-const strings    : any    = require(`./lang/${config.lang}.json`),
-      MODULE_PATH: string = path.join(__dirname, "modules"),
-      modules    : Map<string, child_process.ChildProcess> = new Map(),
+const strings   : any    = require(`./lang/${config.lang}.json`),
+      modulePath: string = path.join(__dirname, config.folder),
+      modules   : Map<string, child_process.ChildProcess> = new Map(),
+      moduleList: any    = require(`./${config.folder}/modules.json`);
 
-// preload & start all modules
-      mfiles: Array<string> = fs.readdirSync(MODULE_PATH)
-                                .filter((f) => f.endsWith(".js"));
-
-for (const file of mfiles) {
-  modules.set(file.replace(".js", ""),
-              child_process.fork(`dist/modules/${file}`));
+for (const file of moduleList) {
+  modules.set(file.name,
+              child_process.fork(file.file));
 }
+
 util.log(util.sreplace(strings.start, [modules.size]));
 
 // "CLI"
@@ -38,7 +36,7 @@ CLI.on("line", (input) => {
   args.shift();
 
   cmds[cmd](modules, args);
-})
+});
 
 process.once("SIGINT", () => {
   modules.forEach((m) => m.kill());
