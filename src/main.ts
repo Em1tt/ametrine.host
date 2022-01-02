@@ -3,7 +3,6 @@
 // imports
 import "dotenv/config";
 import path          from "path";
-import fs            from "fs";
 import child_process from "child_process";
 import readline      from "readline";
 
@@ -23,10 +22,16 @@ for (const file of moduleList) {
               child_process.spawn(`node ${file.file}`));
 
   const m = modules.get(file.name);
-  // set stdout listeners
+  // handle module stdout
   m.stdout.setEncoding("utf8");
-  m.stdout.on("data", (data) => {
-    console.log(`\u001b[38;5;${file.colour}m[${file.name}] ${data}`);
+  m.stdout.on("data", (d) => {
+    console.log(`\u001b[38;5;${file.colour}m[${file.name}] ${d}`);
+  });
+
+  // handle module stderr
+  m.stderr.setEncoding("utf8");
+  m.stderr.on("data", (d) => {
+    console.error(`!!! [${file.name}] ${d}`);
   });
 }
 
