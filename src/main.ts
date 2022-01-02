@@ -12,8 +12,7 @@ import { cmds } from "./cli";
 import config   from "./config.json";
 
 // variables
-const strings   : any    = require(`./lang/${config.lang}.json`),
-      modulePath: string = path.join(__dirname, config.folder),
+const modulePath: string = path.join(__dirname, config.folder),
       modules   : Map<string, child_process.ChildProcess> = new Map(),
       moduleList: any    = require(`./${config.folder}/modules.json`);
 
@@ -35,7 +34,7 @@ for (const file of moduleList) {
   });
 }
 
-util.log(util.sreplace(strings.start, [modules.size]));
+util.log(util.sreplace("%0% modules started", [modules.size]));
 
 // "CLI"
 const CLI = readline.createInterface({
