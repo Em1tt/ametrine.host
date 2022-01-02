@@ -8,7 +8,7 @@ import { mailbox } from "./mailbox"
 const server: SMTPServer = new SMTPServer({
     onData(stream, session, callback) {
       simpleParser(stream, {}, (e, p) => {
-        if (e) return util.mailLog(`err: ${e}`);
+        if (e) return console.log(`err: ${e}`);
         return mailbox.receiveMail(p, session, callback);
       })
     },
@@ -17,4 +17,4 @@ const server: SMTPServer = new SMTPServer({
   
 // server.listen keeps crashing with my firewall saying I cant run port 25, if you're facing the same issue, comment out server.listen
   
-server.listen(config.mail.port, "0.0.0.0", () => util.mailLog("server started"));
+server.listen(config.mail.port, "0.0.0.0", () => console.log("server started"));

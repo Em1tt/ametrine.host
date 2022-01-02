@@ -115,7 +115,7 @@ export const cdn = {
         });
         */
         app.listen(config.cdn.port, () => {
-            util.expressLog(`started CDN @${config.cdn.port}`);
+            console.log(`started CDN @${config.cdn.port}`);
         });
         return true;
     },
