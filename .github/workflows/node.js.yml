@@ -18,5 +18,5 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: bash script/install
-    - run: npx eslint
-    - run: tsc -p tsconfig.json
+    - run: npm run lint
+    - run: npm run build
