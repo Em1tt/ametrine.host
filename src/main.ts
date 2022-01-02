@@ -18,10 +18,12 @@ const modulePath: string = path.join(__dirname, config.folder),
 
 for (const file of moduleList) {
   modules.set(file.name,
-              child_process.fork(file.file));
+              child_process.fork(file.file, {
+                stdio: ["ignore", "pipe", "pipe", "ipc"]
+              }));
 
   const m = modules.get(file.name);
-  console.log(m);
+
   // handle module stdout
   m.stdout.setEncoding("utf8");
   m.stdout.on("data", (d) => {
