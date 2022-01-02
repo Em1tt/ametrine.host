@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "target"                : "ES2019",
+    "target"                : "ES2021",
     "module"                : "commonjs",
+    "incremental"           : true,
     "removeComments"        : true,
     "esModuleInterop"       : true,
     "noEmitOnError"         : true,
@@ -19,3 +20,4 @@
     "node_modules"
   ]
 }
+
