@@ -25,7 +25,7 @@ else
 fi
 
 # make scripts executable, in case they aren't
-chmod +x build lint start
+chmod +x build
 
 # get all npm packages
 npm ci
