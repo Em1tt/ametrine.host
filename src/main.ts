@@ -25,13 +25,13 @@ for (const file of moduleList) {
   // handle module stdout
   m.stdout.setEncoding("utf8");
   m.stdout.on("data", (d) => {
-    console.log(`\u001b[38;5;${file.colour}m[${file.name}] ${d}`);
+    console.log(`\u001b[38;5;${file.colour}m[${file.name}] ${d.toString()}`);
   });
 
   // handle module stderr
   m.stderr.setEncoding("utf8");
   m.stderr.on("data", (d) => {
-    console.error(`!!! [${file.name}] ${d}`);
+    console.error(`!!! [${file.name}] ${d.toString()}`);
   });
 }
 
