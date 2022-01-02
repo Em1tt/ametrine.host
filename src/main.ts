@@ -20,7 +20,7 @@ const strings   : any    = require(`./lang/${config.lang}.json`),
 
 for (const file of moduleList) {
   modules.set(file.name,
-              child_process.fork(file.file));
+              child_process.spawn(`node ${file.file}`));
 }
 
 util.log(util.sreplace(strings.start, [modules.size]));
