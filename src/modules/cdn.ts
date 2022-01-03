@@ -1,17 +1,17 @@
 // imports
-import express       from "express";
-import morgan        from "morgan";
-import path          from "path";
-import config        from '../config.json';
-import { util }      from '../util';
-import helmet        from "helmet"
-import rateLimit     from "express-rate-limit";
-import cookieParser  from "cookie-parser"
-import fs            from "fs"
+import express      from "express";
+import morgan       from "morgan";
+import path         from "path";
+import config       from '../config.json';
+import util         from '../util';
+import helmet       from "helmet"
+import rateLimit    from "express-rate-limit";
+import cookieParser from "cookie-parser"
+import fs           from "fs"
 import { imageopto, hasSupportedExtension } from 'hastily';
-import crypto        from "crypto";
-import mime          from "mime";
-import { auth }      from './api/auth';
+import crypto       from "crypto";
+import mime         from "mime";
+import { auth }     from './api/auth';
 
 const formats = ['gif', 'png', 'png8', 'jpg', 'pjpg', 'webp', 'webpll', 'webply']
 

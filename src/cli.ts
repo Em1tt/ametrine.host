@@ -2,9 +2,9 @@
 import child_process    from "child_process";
 import config           from "./config.json";
 import { readFileSync } from "fs";
-import { util }         from "./util";
+import util             from "./util";
 
-export const cmds = {
+export default {
   disable: (modules: Map<string, child_process.ChildProcess>, args: Array<string>): void => {
       if (args[0] == "*") {
         modules.forEach((m) => {

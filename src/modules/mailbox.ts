@@ -1,8 +1,8 @@
 // mail box
-import { SMTPServer } from "smtp-server";
+import { SMTPServer }   from "smtp-server";
 import { simpleParser } from "mailparser";
-import { util } from "../util";
-import fs from "fs";
+import util   from "../util";
+import fs     from "fs";
 import config from "../config.json";
 
 const limit = 200;

@@ -5,7 +5,7 @@ import path            from "path";
 import fs              from "fs";
 import * as eta        from "eta";
 import config          from "../config.json";
-import { util }        from "../util";
+import util            from "../util";
 import { Endpoint }    from "../types/endpoint";
 import helmet          from "helmet"
 import cookieParser    from "cookie-parser"
@@ -17,7 +17,6 @@ import { permissions } from "./permissions";
 import permIDs         from "../permissions.json";
 import rateLimit       from "express-rate-limit";
 import { cdn }         from "./cdn"
-
 import redis           from 'redis';
 import ms              from 'ms';
 

@@ -7,9 +7,9 @@ import cp       from "child_process";
 import readline from "readline";
 
 // files
-import { util } from "./util";
-import { cmds } from "./cli";
-import config   from "./config.json";
+import util   from "./util";
+import cmds   from "./cli";
+import config from "./config.json";
 
 // variables
 const modulePath: string = path.join(__dirname, config.folder),
