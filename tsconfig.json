@@ -6,7 +6,7 @@
     "incremental"           : true,
     "removeComments"        : true,
     "esModuleInterop"       : true,
-    "noEmitOnError"         : false,
+    "noEmitOnError"         : true,
     "experimentalDecorators": true,
     "preserveConstEnums"    : true,
     "outDir"                : "./dist/",
