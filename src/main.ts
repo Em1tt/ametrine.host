@@ -12,14 +12,14 @@ import cmds   from "./cli";
 import config from "./config.json";
 
 // variables
-const modulePath: string = path.join(__dirname, config.folder),
+const modulePath: string = path.join(__dirname, config.modules),
       modules   : Map<string, cp.ChildProcess> = new Map(),
-      moduleList: any    = require(`./${config.folder}/modules.json`);
+      moduleList: any    = require(`./${config.modules}/modules.json`);
 
 for (const file of moduleList) {
   modules.set(file.name,
     cp.spawn(
-      `${file.kind === "bin" ? "./" : "node "}${file.file}`,
+      `${file.kind === "bin" ? "./" : "node"}`, [file.file],
       {
         stdio: ["ignore", "pipe", "pipe", "ipc"]
       }
