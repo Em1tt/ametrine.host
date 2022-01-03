@@ -2,41 +2,41 @@
   {
     "name": "CDN",
     "colour": "1",
-    "file": "/modules/cdn.js"
+    "file": "./modules/cdn.js"
   },
   {
     "name": "Discord",
     "colour": "2",
-    "file": "/modules/discord.js"
+    "file": "./modules/discord.js"
   },
   {
     "name": "Mail: box",
     "colour": "3",
-    "file": "/modules/mailbox.js"
+    "file": "./modules/mailbox.js"
   },
   {
     "name": "Mail: server",
     "colour": "4",
-    "file": "/modules/mailserver.js"
+    "file": "./modules/mailserver.js"
   },
   {
     "name": "OTP",
     "colour": "5",
-    "file": "/modules/otp.js"
+    "file": "./modules/otp.js"
   },
   {
     "name": "Permissions",
     "colour": "6",
-    "file": "/modules/permissions.js"
+    "file": "./modules/permissions.js"
   },
   {
     "name": "Util",
     "colour": "20",
-    "file": "/modules/utils.js"
+    "file": "./modules/utils.js"
   },
   {
     "name": "Website",
     "colour": "125", 
-    "file": "/modules/website.js"
+    "file": "./modules/website.js"
   }
 ]
