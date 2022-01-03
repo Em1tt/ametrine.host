@@ -116,7 +116,7 @@ const html: string = path.join(__dirname, "views", "html");
 const billing: string = path.join(__dirname, "views", "billing", "html");
 
 const endpoints: Map<string, Endpoint> = new Map();
-const files    : Array<string>         = fs.readdirSync(`./dist/modules/api`)
+const files    : Array<string>         = fs.readdirSync(`./modules/api`)
                                            .filter((f) => f.endsWith(".js"));
 
 for (const f of files) {

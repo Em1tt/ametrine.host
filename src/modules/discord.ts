@@ -13,7 +13,7 @@ const cmds: Discord.Collection<string, Command>
 bot.once("ready", () => {
   console.log("logged in");
 
-  const files = fs.readdirSync(`./dist/modules/discord/cmd`)
+  const files = fs.readdirSync(`./modules/discord/cmd`)
                   .filter((f) => f.endsWith(".js"));
   for (const f of files) {
       const cmd: Command = require(`./discord/cmd/${f.replace(".js", "")}`);
