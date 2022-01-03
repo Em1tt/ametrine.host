@@ -2,9 +2,9 @@
 // NOTE: to run with args, use `npm run start -- --arg`
 // imports
 import "dotenv/config";
-import path          from "path";
-import child_process from "child_process";
-import readline      from "readline";
+import path     from "path";
+import cp       from "child_process";
+import readline from "readline";
 
 // files
 import { util } from "./util";
@@ -13,14 +13,18 @@ import config   from "./config.json";
 
 // variables
 const modulePath: string = path.join(__dirname, config.folder),
-      modules   : Map<string, child_process.ChildProcess> = new Map(),
+      modules   : Map<string, cp.ChildProcess> = new Map(),
       moduleList: any    = require(`./${config.folder}/modules.json`);
 
 for (const file of moduleList) {
   modules.set(file.name,
-              child_process.fork(file.file, {
-                stdio: ["ignore", "pipe", "pipe", "ipc"]
-              }));
+    cp.spawn(
+      `${file.kind === "bin" ? "./" : "node "}${file.file}`,
+      {
+        stdio: ["ignore", "pipe", "pipe", "ipc"]
+      }
+    )
+  );
 
   const m = modules.get(file.name);
 

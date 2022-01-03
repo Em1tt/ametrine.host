@@ -1,7 +1,8 @@
 // all cli commands
-import child_process from "child_process";
-import config        from "./config.json";
-import { util }      from "./util";
+import child_process    from "child_process";
+import config           from "./config.json";
+import { readFileSync } from "fs";
+import { util }         from "./util";
 
 export const cmds = {
   disable: (modules: Map<string, child_process.ChildProcess>, args: Array<string>): void => {
@@ -29,5 +30,8 @@ export const cmds = {
       util.log(util.sreplace("loaded module %0%", [args[0]]));
   },
 
-  usage: (): void => util.log(util.sreplace("%0%MB", [(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)]))
+  usage: (): void => util.log(util.sreplace("%0%MB", [(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)])),
+
+  // TODO
+  exec: (filename: string) => {}
 };

@@ -1,18 +1,19 @@
 #!/bin/bash
 # check if the package is installed on system
 packages=("nodejs" "nginx")
+prefix="sudo"
 ah_check() {
-  [ -x "$(which $1)" ]
+  [ -x "$(command -v $1)" ]
 }
 
 # install packages with provided package manager
 ah_install() {
   for package in ${packages[@]}; do
-    sudo $1 $package
+    $prefix $1 $package
   done
 }
 
-echo "[ametrine-install] installing"
+echo "[ametrine] installing"
 # get needed packages if they are not installed
 if ah_check apt-get ; then ah_install "apt-get install"
 elif ah_check pacman; then ah_install "pacman -S"
@@ -21,10 +22,13 @@ elif ah_check apk   ; then ah_install "apk add"
 elif ah_check apt   ; then ah_install "apt install"
 elif ah_check pkg   ; then ah_install "pkg install"
 else
-  echo "[ametrine-install] no supported package manager found"
+  echo "[ametrine] no supported package manager found"
   exit 1
 fi
 
 # get all npm packages
-npm ci
+npm install
+
+# make needed directories
+mkdir dist
 

@@ -1,0 +1,11 @@
+# this will be run when the backend starts
+
+enable cdn
+enable discord
+enable mailserver
+enable mailbox
+enable otp
+enable permissions
+enable utils
+enable website
+

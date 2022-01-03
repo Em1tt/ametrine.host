@@ -1,5 +1,6 @@
 {
-  "folder": "modules",
+  "modules": "modules",
+  "scripts": "scripts",
 
   "website": {
     "port": 3000

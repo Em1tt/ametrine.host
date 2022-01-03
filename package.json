@@ -5,11 +5,11 @@
   "main": "./dist/main.js",
   "scripts": {
     "lint": "npx eslint ./src --ext .ts",
-    "build": "rm -rf dist&&mkdir dist&&cp -r src/* dist&&echo '[ametrine-build] building (linux)'&&npx tsc -p .",
-    "sql": "echo '[ametrine-db] merging sql files'&&sqlite3 data/db/database.db < dist/sql/init.sql",
+    "build": "cp -r src/* dist&&echo '[ametrine] building'&&npx tsc -p .",
+    "sql": "echo '[ametrine] merging sql files'&&sqlite3 data/db/database.db < dist/sql/init.sql",
     "start": "pm2 start dist/main.js",
-    "nstart": "node dist/main.js",
-    "mb": "echo 'move billing from dist to src'&&rm -rf src/modules/views/billing&&mkdir src/modules/views/billing&&cp -r dist/modules/views/billing/* src/modules/views/billing",
+    "nstart": "cd dist&&node main.js&&cd ..",
+    "mb": "echo '[ametrine] moving billing from dist to src'&&rm -rf src/modules/views/billing&&mkdir src/modules/views/billing&&cp -r dist/modules/views/billing/* src/modules/views/billing",
     "ls": "npm run build && npm run nstart"
   },
   "repository": {

@@ -36,7 +36,7 @@
   },
   {
     "name": "Website",
-    "colour": "125",
+    "colour": "125", 
     "file": "dist/modules/website.js"
   }
 ]
