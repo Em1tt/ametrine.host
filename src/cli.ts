@@ -32,6 +32,6 @@ export const cmds = {
 
   usage: (): void => util.log(util.sreplace("%0%MB", [(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)])),
 
-  // TODO
-  exec: (filename: string) => {}
+  // TODO: uncomment and finish
+  // exec: (filename: string) => {}
 };
