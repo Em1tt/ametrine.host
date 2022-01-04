@@ -18,16 +18,14 @@ const modulePath: string = path.join(__dirname, config.modules),
 for (const file of moduleList) {
   const mpath = path.join(__dirname, 
                           config.modules,
-                          file.file);
+                          file.file),
+        isBin = (file.kind === "bin");
 
   modules.set(file.name,
     cp.spawn(
       // this is really dirty
-      "command",
-      [
-        (file.kind === "bin" ? `./${mpath}` : "node"),
-        (file.kind === "bin" ? "" : mpath)
-      ],
+      (isBin  ? "command"    : "node"),
+      [(isBin ? `./${mpath}` : mpath)],
       {
         stdio: ["ignore", "pipe", "pipe", "ipc"]
       }
