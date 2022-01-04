@@ -11,9 +11,8 @@ import cmds   from "./cli";
 import config from "./config.json";
 
 // variables
-const modulePath: string = path.join(__dirname, config.modules),
-      modules   : Map<string, cp.ChildProcess> = new Map(),
-      moduleList: any    = require(`./${config.modules}/modules.json`);
+const modules   : Map<string, cp.ChildProcess> = new Map(),
+      moduleList: any = require(`./${config.modules}/modules.json`);
 
 for (const file of moduleList) {
   const mpath = path.join(__dirname, 
@@ -54,6 +53,7 @@ const CLI = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+
 CLI.on("line", (input) => {
   const args: Array<string> = input.toString().trim().split(" ");
   const cmd : string        = args[0];
