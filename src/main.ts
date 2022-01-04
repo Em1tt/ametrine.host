@@ -16,9 +16,18 @@ const modulePath: string = path.join(__dirname, config.modules),
       moduleList: any    = require(`./${config.modules}/modules.json`);
 
 for (const file of moduleList) {
+  const mpath = path.join(__dirname, 
+                          config.modules,
+                          file.file);
+
   modules.set(file.name,
     cp.spawn(
-      `${file.kind === "bin" ? "./" : "node "}${file.file}`, [],
+      // this is really dirty
+      "command",
+      [
+        (file.kind === "bin" ? `./${mpath}` : "node"),
+        (file.kind === "bin" ? "" : mpath)
+      ],
       {
         stdio: ["ignore", "pipe", "pipe", "ipc"]
       }
