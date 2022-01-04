@@ -59,12 +59,15 @@ CLI.on("line", (input) => {
   const cmd : string        = args[0];
   args.shift();
 
-  cmds[cmd](modules, args);
+  if (!cmds.hasOwnProperty(cmd))
+    return util.error(`unknown command ${cmd}`);
+
+  try {
+    cmds[cmd](modules, args);
+  } catch (err) {
+    util.error(err);
+  }
 });
 
-process.once("SIGINT", () => {
-  modules.forEach((m) => m.kill());
-  console.log("\u001b[0m"); // reset colour
-  process.exit(0); // close nodejs
-});
+process.once("SIGINT", () => cmds.exit(modules));
 

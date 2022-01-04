@@ -7,5 +7,6 @@ export default {
     return text;
   },
 
-  log: (text: string): void => console.log(`[ametrine] ${text}`),
+  log  : (text: string): void => console.log  (`[ametrine] ${text}`),
+  error: (text: string): void => console.error(`!!! [ametrine] ${text}`)
 };
