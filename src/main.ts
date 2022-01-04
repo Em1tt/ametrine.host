@@ -59,7 +59,7 @@ CLI.on("line", (input) => {
   const cmd : string        = args[0];
   args.shift();
 
-  if (!cmds.hasOwnProperty(cmd))
+  if (!(cmd in cmds))
     return util.error(`unknown command ${cmd}`);
 
   try {
