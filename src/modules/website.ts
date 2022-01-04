@@ -1,4 +1,5 @@
 // imports
+import dotenv          from "dotenv" // annoying
 import express         from "express";
 import morgan          from "morgan";
 import path            from "path";
@@ -19,6 +20,8 @@ import rateLimit       from "express-rate-limit";
 import { cdn }         from "./cdn"
 import redis           from 'redis';
 import ms              from 'ms';
+
+dotenv.config({ path: __dirname + "/../../.env" })
 
 const redisClient: redis.Client = redis.createClient({ password: process.env.REDIS_PASSWORD, user: "default" });
 redisClient.on("connect", function() {

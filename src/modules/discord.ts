@@ -1,10 +1,12 @@
 // discord bot
-import "dotenv/config";
+//import "dotenv/config";
+import dotenv      from "dotenv" // annoying
 import Discord     from "discord.js";
 import fs          from "fs";
 import config      from "../config.json";
 import { Command } from "../types/discord/command";
 import util        from "../util";
+dotenv.config({ path: __dirname + "/../../.env" })
 
 const bot : Discord.Client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS] });
 const cmds: Discord.Collection<string, Command> 
