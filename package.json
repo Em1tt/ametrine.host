@@ -4,13 +4,14 @@
   "description": "Hosting service providing various virtual hosting solutions at an affordable price.",
   "main": "./dist/main.js",
   "scripts": {
-    "lint": "npx eslint ./src --ext .ts",
-    "build": "cp -r src/* dist&&echo '[ametrine] building'&&npx tsc -p .",
+    "lint": "npx eslint src --ext .ts",
+    "build": "cp -r src/* dist&&echo '[ametrine] building'&&npx tsc -p .&&echo '[ametrine] cleaning'&&find dist -name '*.ts' -type f -delete",
     "sql": "echo '[ametrine] merging sql files'&&sqlite3 data/db/database.db < dist/sql/init.sql",
     "start": "pm2 start dist/main.js",
     "nstart": "cd dist&&node main.js&&cd ..",
     "mb": "echo '[ametrine] moving billing from dist to src'&&rm -rf src/modules/views/billing&&mkdir src/modules/views/billing&&cp -r dist/modules/views/billing/* src/modules/views/billing",
-    "ls": "npm run build && npm run nstart"
+    "ls": "npm run build && npm run nstart",
+    "clean": "rm -rf dist&&mkdir dist"
   },
   "repository": {
     "type": "git",
