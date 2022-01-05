@@ -7,7 +7,7 @@
     "noEmitOnError"         : true,
     "experimentalDecorators": true,
     "preserveConstEnums"    : true,
-    "listEmittedFiles"      : true,
+    "listEmittedFiles"      : false,
     "alwaysStrict"          : true,
     "outDir"                : "./dist",
     "baseUrl"               : "."
