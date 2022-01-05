@@ -4,8 +4,8 @@
 import express                 from 'express';
 import { auth }                from './auth';
 import fetch                   from 'node-fetch';
-
-let client: any;
+import { Redis }               from "../../types/redis"
+let client: Redis;
 
 export const prop = {
     name: "register",
@@ -14,7 +14,7 @@ export const prop = {
         max: 3,
         time: 2 * (60 * 1000) // 2 Minutes
     },
-    setClient: function(newClient: unknown): void { client = newClient; },
+    setClient: function(newClient: Redis): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<express.Response | unknown> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.

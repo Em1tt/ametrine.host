@@ -6,7 +6,7 @@ import path            from "path";
 import fs              from "fs";
 import * as eta        from "eta";
 import config          from "../config.json";
-import util            from "../util";
+//import util            from "../util";
 import { Endpoint }    from "../types/endpoint";
 import helmet          from "helmet"
 import cookieParser    from "cookie-parser"
@@ -27,15 +27,15 @@ const redisClient: redis.Client = redis.createClient({ password: process.env.RED
 redisClient.on("connect", function() {
     console.log("[Redis] Connected to Database.")
     redisClient.db = { // Functions to make redis more easier to use than having a bunch of callback functions.
-      get: function(key: string): any {
-        return new Promise((resolve, reject): any => {
+      get: function(key: string): Promise<string | number | null> {
+        return new Promise((resolve, reject) => {
           redisClient.get(key, function(err, res) {
             if (err) return reject(err);
             resolve(res);
           })
         })
       },
-      hget: function(key: string, field: any): any {
+      hget: function(key: string, field: string | number): Promise<string | number | null> {
         return new Promise((resolve, reject) => {
           redisClient.hget(key, field, function(err, res) {
             if (err) return reject(err);
@@ -43,7 +43,7 @@ redisClient.on("connect", function() {
           })
         })
       },
-      hmget: function(key: string, fields: Array<any>): any {
+      hmget: function(key: string, fields: Array<string | number>): Promise<string | number | null> {
         return new Promise((resolve, reject) => {
           redisClient.hmget(key, fields, function(err, res) {
             if (err) return reject(err);
@@ -51,7 +51,7 @@ redisClient.on("connect", function() {
           })
         })
       },
-      incr: function(key: string): any {
+      incr: function(key: string): Promise<number | null> {
         return new Promise((resolve, reject) => {
           redisClient.incr(key, function(err, res) {
             if (err) return reject(err);
@@ -59,7 +59,7 @@ redisClient.on("connect", function() {
           })
         })
       },
-      hgetall: function(key: string): any {
+      hgetall: function(key: string): Promise<any> {
         return new Promise((resolve, reject) => {
           redisClient.hgetall(key, function(err, res) {
             if (err) return reject(err);
@@ -67,7 +67,7 @@ redisClient.on("connect", function() {
           })
         })
       },
-      hexists: function(key: string, field: any): Promise<any> {
+      hexists: function(key: string, field: string): Promise<number | boolean> {
         return new Promise((resolve, reject) => {
           redisClient.hexists(key, field, function(err, res) {
             if (err) return reject(err);
@@ -75,7 +75,7 @@ redisClient.on("connect", function() {
           })
         })
       },
-      exists: function(key: string): Promise<any> {
+      exists: function(key: string): Promise<number | boolean> {
         return new Promise((resolve, reject) => {
           redisClient.exists(key, function(err, res) {
             if (err) return reject(err);
@@ -204,6 +204,7 @@ const apiMethod = function (r: express.Request, s: express.Response) {
     return s.render(`${html}/404.eta`);
   }
 }
+
 /* amethyst.host/api/bill
    amethyst.host/api/auth
    and so on..            */
@@ -211,18 +212,25 @@ app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) =
   apiMethod(r, s);
 });
 // billing
+
+function renderBillingData (s: express.Response, userExists?: boolean): { userData: UserData, config: string } | boolean {
+  const userData: UserData = s.locals.userData;
+  if (!userData && userExists) return false;
+  return {
+    userData: userData,
+    config: config.billing,
+  };
+}
+
 app.get("/billing", (r: express.Request, s: express.Response) => {
   // You could use ETA and test whether or not it._locals.userData isnt null, and if it is then show stuff like Manage Account, similar to how you have "(!it.name.length) ?" in index.eta
-  const userData = s.locals.userData;
-  console.log(userData, config.billing);
-  s.render(`${billing}/index.eta`, {
-    userdata: userData,
-    config: config.billing
-  }
-);
+  const data = renderBillingData(s);
+  console.log(data);
+  s.render(`${billing}/index.eta`, data);
 });
 app.get("/billing/order", (r: express.Request, s: express.Response) => {
   //console.log(r);
+  const data = renderBillingData(s);
   const file = `${billing}/order.eta`;
 
   if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
@@ -242,20 +250,43 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
   }
     const desc = plans[item].description;
     console.log(details);
-    const userData = s.locals.userData;
   s.render(file, {
     details: details,
     item: item,
     itemid: id,
     description: desc,
-    userData: userData,
-    config: config.billing
+    ...data as Record<string, unknown>
   });
 });
 
+function staffPanel (fileName: string, permissionName: string, r: express.Request, s: express.Response): Record<string, unknown> | boolean { // May be alternatives to this, or may need to be modified.
+  const data = renderBillingData(s, true);
+  if (!data) {
+    s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
+    return false;
+  }
+  const userData = data["userData"]
+  const file = `${billing}/staff/${fileName}`;
+  if (!fs.existsSync(file)) {
+    s.render(`${html}/404.eta`);
+    return false;
+  }
+  if(permissionName.length && !permissions.hasPermission((userData.permission_id).toString(), permissionName)) {
+    s.status(403).send("Insufficient permissions.");
+    return false;
+  }
+  return {
+    file,
+    data: {
+      ...data as Record<string, unknown>, // typescript doesn't like this
+      permissions: permIDs
+    }
+  };
+}
+
 app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
-  const userData: UserData = s.locals.userData;
-  const file = `${billing}/staff/overview.eta`;
+  const renderData = staffPanel("overview.eta", "/staff/", r, s);
+  if (!renderData) return;
   return redisClient.keys("user:*", async function (err, result) {
       if (err) {
         console.error(err);
@@ -263,33 +294,26 @@ app.get("/billing/staff", async (r: express.Request, s: express.Response) => {
       }
       const users: Array<UserData> = await Promise.all(result.map(async userID => {
         const user: UserData = await redisClient.db.hgetall(userID);
-        return {id: user.user_id, registered: user.registered, permission: user.permission_id};
+        return { id: user.user_id, registered: user.registered, permission: user.permission_id };
     }))
-    if(!userData) return s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
-    if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/`)) return s.status(403).send("Insufficient permissions.");
-    s.render(file, {
-      userData: userData,
-      config: config.billing,
+    s.render(renderData["file"], {
       users: JSON.stringify(users),
-      permissions: permIDs
+      ...renderData["data"]
     });
   })
 });
 
 app.get("/billing/:name", (r: express.Request, s: express.Response) => {
   const file = `${billing}/${r.params.name}.eta`;
-
+  
   if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
-  const userData = s.locals.userData;
-  s.render(file, {
-    userData: userData,
-    config: config.billing
-  });
+  const data = renderBillingData(s);
+  s.render(file, data);
 });
 
 app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) => {
-  const userData: UserData = s.locals.userData;
-  const file = `${billing}/staff/${r.params.name}.eta`;
+  const renderData = staffPanel(`${r.params.name}.eta`, `/staff/${r.params.name}`, r, s);
+  if (!renderData) return;
   return redisClient.keys("user:*", async function (err, result) {
       if (err) {
         console.error(err);
@@ -299,13 +323,9 @@ app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) 
         const user: UserData = await redisClient.db.hgetall(userID);
         return {id: user.user_id, registered: user.registered, permission: user.permission_id};
     }))
-    if(!userData) return s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
-    if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/${r.params.name}`)) return s.status(403).send("Insufficient permissions.");
-    s.render(file, {
-      userData: userData,
-      config: config.billing,
+    s.render(renderData["file"], {
       users: JSON.stringify(users),
-      permissions: permIDs
+      ...renderData["data"]
     });
   })
 });

@@ -3,7 +3,6 @@ import express      from "express";
 import morgan       from "morgan";
 import path         from "path";
 import config       from '../config.json';
-import util         from '../util';
 import helmet       from "helmet"
 import rateLimit    from "express-rate-limit";
 import cookieParser from "cookie-parser"
@@ -12,6 +11,7 @@ import { imageopto, hasSupportedExtension } from 'hastily';
 import crypto       from "crypto";
 import mime         from "mime";
 import { auth }     from './api/auth';
+import { Redis }    from "../types/redis"
 
 const formats = ['gif', 'png', 'png8', 'jpg', 'pjpg', 'webp', 'webpll', 'webply']
 
@@ -22,7 +22,7 @@ export const cdn = {
      * Hosts the CDN server
      * @returns Boolean
      */
-    host: (redis: any): boolean => {
+    host: (redis: Redis): boolean => {
         if (!redis) {
             console.error("Redis Client not initialized");
             return false;
