@@ -243,7 +243,7 @@ app.get("/billing/order", (r: express.Request, s: express.Response) => {
     id = "vps"
   }
   let details = plans?.[item]?.[id];
-  if(!details){ //Default values so the backend doesn't shit itself when someone forges queries
+  if(!details){ //Default values so the backend doesn't die when someone forges queries
       id = "0";
       item = "vps";
       details = plans[item][id];
@@ -329,12 +329,10 @@ app.get("/billing/staff/:name", async (r: express.Request, s: express.Response) 
     });
   })
 });
-app.get("/billing/staff/tickets/:ticketid", async (r: express.Request, s: express.Response) => {
-  const userData: UserData = s.locals.userData;
-  const file = `${billing}/staff/ticket.eta`;
-  if(!parseInt(r.params.ticketid)) return s.status(404).send("ticket IDs are always numeric values.");
-  const getTicket : Ticket = await redisClient.db.hgetall(`ticket:${r.params.ticketid}`);
-  if (!getTicket) return s.sendStatus(404); // just in case
+
+async function ticketProps(ticketID: string): Promise<Ticket | boolean> {
+  const getTicket : Ticket = await redisClient.db.hgetall(`ticket:${ticketID}`);
+  if (!getTicket) return false; // just in case
   const newTicketProps = { ...getTicket};
   newTicketProps["ticket_id"] = parseInt(getTicket.ticket_id.toString());
   newTicketProps["user_id"] = parseInt(getTicket.user_id.toString());
@@ -343,25 +341,29 @@ app.get("/billing/staff/tickets/:ticketid", async (r: express.Request, s: expres
   newTicketProps["closed"] = parseInt(getTicket.closed.toString());
   newTicketProps["createdIn"] = parseInt(getTicket.createdIn.toString());
   newTicketProps["editedIn"] = parseInt(getTicket.editedIn.toString());
-  newTicketProps["level"] = parseInt(getTicket.level.toString());
-
+  return newTicketProps;
+}
+app.get("/billing/staff/tickets/:ticketid", async (r: express.Request, s: express.Response) => {
+  const renderData = staffPanel("ticket.eta", "/staff/tickets", r, s);
+  if (!renderData) return;
+  const ticketID = parseInt(r.params.ticketid)
+  const userData: UserData = renderData["data"]["userData"];
+  if (isNaN(ticketID)) return s.status(404).send("ticket IDs are always numeric values.");
+  let getTicket = await ticketProps(ticketID.toString());
+  if (!getTicket) return s.sendStatus(404);
+  getTicket = getTicket as Ticket;
   console.log(getTicket);
-if(!userData) return s.status(403).send("Must be logged in to visit staff panel.") //THIS WILL LATER REDIRECT TO A STAFF LOGIN PAGE
-if(!permissions.hasPermission(`${userData.permission_id}`, `/staff/tickets/`)) return s.status(403).send("Insufficient permissions.");
-if(newTicketProps.level > userData.permission_id) return s.status(403).send("Insufficient Permissions.");
-const ticketCats = require("../../src/ticket_categories.json");
-s.render(file, {
-  userData: userData,
-  config: config.billing,
-  ticket_categories: ticketCats,
-  ticket: getTicket,
-  permissions: permIDs
-});
+  if(getTicket.level > userData.permission_id) return s.status(403).send("Insufficient Permissions.");
+  const ticketCats = require("../../src/ticket_categories.json");
+  s.render(renderData["file"], {
+    ticket_categories: ticketCats,
+    ticket: getTicket,
+    ...renderData["data"]
+  });
 });
 
 app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => {
   const file = `${billing}/tickets/create.eta`;
-
   if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
   const userData = s.locals.userData;
   if(!userData) return s.status(403).send("Must be logged in to do this");
@@ -373,35 +375,28 @@ app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => 
   });
 });
 
+// why is this 2 spaced
+
 app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Response) => {
   const file = `${billing}/tickets/ticket.eta`,
-    ticketID = r.params.ticketID;
-    if(!parseInt(ticketID)) return s.status(404).send("ticket IDs are always numeric values.");
+  ticketID = parseInt(r.params.ticketID);
+  if(isNaN(ticketID)) return s.status(404).send("ticket IDs are always numeric values.");
 
+  // Will add priority to the fields.
+  let getTicket = await ticketProps(ticketID.toString());
+  if (!getTicket) return s.sendStatus(404);
+  getTicket = getTicket as Ticket;
 
-    // Will add priority to the fields.
-  let getTicket : Ticket = await redisClient.db.hgetall(`ticket:${ticketID}`);
-  if (!getTicket) return s.sendStatus(404); // just in case
-  const newTicketProps = { ...getTicket};
-  newTicketProps["ticket_id"] = parseInt(getTicket.ticket_id.toString());
-  newTicketProps["user_id"] = parseInt(getTicket.user_id.toString());
-  newTicketProps["status"] = parseInt(getTicket.status.toString());
-  newTicketProps["opened"] = parseInt(getTicket.opened.toString());
-  newTicketProps["closed"] = parseInt(getTicket.closed.toString());
-  newTicketProps["createdIn"] = parseInt(getTicket.createdIn.toString());
-  newTicketProps["editedIn"] = parseInt(getTicket.editedIn.toString());
-  
-  getTicket = newTicketProps;
   if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
-  const userData: UserData = s.locals.userData;
-  if(!userData) return s.status(403).send("Must be logged in to do this");
+  const data = renderBillingData(s, true);
+  if (!data) return s.status(403).send("Must be logged in to do this");
+  const userData: UserData = data["userData"];
   if(userData.user_id != getTicket.user_id) return s.status(403).send("No permission");
   const ticketCats = require("../../src/ticket_categories.json");
   s.render(file, {
-    userData: userData,
-    config: config.billing,
     ticket_categories: ticketCats,
-    ticket: getTicket
+    ticket: getTicket,
+    ...data as Record<string, unknown>
   });
 });
 app.get("/.env", (r: express.Request, s: express.Response) => {
