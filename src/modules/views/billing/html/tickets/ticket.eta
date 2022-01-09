@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<%it._locals.ticket = JSON.parse(it._locals.ticket)%>
+<%console.log(it._locals.ticket)%>
 <head>
     <title>Ametrine.host | Billing</title>
     <link rel="icon" type="image/png" href="../images/favicon.png">
@@ -43,18 +44,18 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intense-images/1.0.7/intense.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
-    <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it.ticket.ticket_id%></p>
-    <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
+<body class=<%=(it._locals.userData.email) ? "loggedIn" : ""%>>
+    <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it._locals.ticket.ticket_id%></p>
+    <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it._locals.userData.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it.config}) %>
     <main>
-        <%if(it.ticket.closed !== 0){%>
+        <%if(it._locals.ticket.closed !== 0){%>
             <h4 class="ticketClosed">This ticket is closed. Press "Open Ticket", send a message or edit the ticket to reopen it.</h4>
         <%}%>
         <div>
             <div>
-                <h1 class="header1"><%=decodeURI(atob(it.ticket.subject))%></h1>
+                <h1 class="header1"><%=decodeURI(atob(it._locals.ticket.subject))%></h1>
                 <div class="ticketInfo">
-                <% let opened = new Date(it.ticket.opened).toDateString().split(" ");
+                <% let opened = new Date(parseInt(it._locals.ticket.opened)).toDateString().split(" ");
                 if(opened[2].startsWith(0)){
                     opened[2] = opened[2].slice(1);
                 }
@@ -68,7 +69,7 @@
                     opened[2] = opened[2]+"th"
                 }
                 opened = [opened[2], opened[1], opened[3]].join(" ");
-                 let edited = new Date(it.ticket.editedIn).toDateString().split(" ");
+                 let edited = new Date(parseInt(it.ticket.editedIn)).toDateString().split(" ");
                 if(edited[2].startsWith(0)){
                     edited[2] = edited[2].slice(1);
                 }
@@ -82,7 +83,7 @@
                     edited[2] = edited[2]+"th"
                 }
                 edited = [edited[2], edited[1], edited[3]].join(" ");
-                 let closed = new Date(it.ticket.closed).toDateString().split(" ");
+                 let closed = new Date(parseInt(it.ticket.closed)).toDateString().split(" ");
                 if(closed[2].startsWith(0)){
                     closed[2] = closed[2].slice(1);
                 }
@@ -98,33 +99,33 @@
                 closed = [closed[2], closed[1], closed[3]].join(" ");
                 %>
                 <p>Opened On: <%=opened%></p>
-                <% if(it.ticket.closed != 0){ %>
+                <% if(parseInt(it._locals.ticket.closed) != 0){ %>
                     <p id="closedOn">Closed On: <%=closed%></p>
                 <%}%>
-                <p>Last Edit: <%=it.ticket.editedIn == 0 ? "never" : edited%></p>
-                <p>Ticket ID: <%=it.ticket.ticket_id%></p>
+                <p>Last Edit: <%=parseInt(it._locals.ticket.editedIn) == 0 ? "never" : edited%></p>
+                <p>Ticket ID: <%=parseInt(it._locals.ticket.ticket_id)%></p>
                 </div>
             </div>
             <hr class="semanticLine">
             <form id="editTicket">
                 <fieldset id="subjectWrapper" class="hidden">
                     <label for="subject">New Subject:</label>
-                    <input type="text" id="subject" name="subject" value=<%=atob(it.ticket.subject)%>>
+                    <input type="text" id="subject" name="subject" value=<%=atob(it._locals.ticket.subject)%>>
                 </fieldset>
                 <fieldset>
                     <label for="priority">Priority:</label>
                     <select disabled name="ticket_priority" id="priority">
-                        <option <%=it.ticket.priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
-                        <option <%=it.ticket.priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
-                        <option <%=it.ticket.priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
-                        <option <%=it.ticket.priority.toLowerCase() == "low" ? "selected" : ""%> value="Low">Low</option>
+                        <option <%=it._locals.ticket.priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
+                        <option <%=it._locals.ticket.priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
+                        <option <%=it._locals.ticket.priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
+                        <option <%=it._locals.ticket.priority.toLowerCase() == "low" ? "selected" : ""%> value="Low">Low</option>
                     </select>
                 </fieldset>
                                 <fieldset>
                     <label for="category">Category:</label>
                     <select disabled name="category" id="category">
-                                                <% it.ticket_categories.forEach(category => { %>
-                            <option <%=category.id == it.ticket.category_ids ? "selected" : ""%> value="<%=category.id%>"><%=category.name%></option>
+                                                <% it._locals.ticket_categories.forEach(category => { %>
+                            <option <%=category.id == it._locals.ticket.category_ids ? "selected" : ""%> value="<%=category.id%>"><%=category.name%></option>
                         <% }) %>
                     </select>
                 </fieldset>
@@ -144,7 +145,7 @@
                     <span id="imageManager"></span>
                 </fieldset>
                 <fieldset id="submitWrapper">
-                <%if(it.ticket.closed == 0){%>
+                <%if(parseInt(it._locals.ticket.closed) == 0){%>
                     <button type="button" class="buttons button1" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
                 <%}else{%>
                     <button type="button" class="buttons button1" id="closeTicket" onclick="ticketOpen()"><i class="fa fa-check-circle"></i> Open Ticket</button>
@@ -174,7 +175,7 @@
                     <span class="title">
                         <img src="/billing/public/images/User.svg" height="50" width="50" alt="User">
                             <div>
-                                <p><%=it.userData.name%></p>
+                                <p><%=it._locals.userData.name%></p>
                                 <p class="role">Customer</p>
                             </div>
                     </span>
@@ -192,8 +193,8 @@
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
     <%~ E.includeFile('../../public/templates/support.eta')%>
     <%~ E.includeFile('../../public/templates/announcements.eta') %>
-    <%~ E.includeFile('../../public/javascripts/announcements.eta', {userData: it.userData}) %>
-    <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
+    <%~ E.includeFile('../../public/javascripts/announcements.eta', {userData: it._locals.userData}) %>
+    <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it._locals.userData}) %>
     <script src="/billing/public/javascripts/ticket.js" async defer></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
@@ -210,7 +211,7 @@
                 toolbar: false
             }
         });
-        editor2.setContents(<%~it.ticket.content%>, "api")
+        editor2.setContents(<%~it._locals.ticket.content%>, "api")
         function editMode(){
     [...editButtons, ...buttons].forEach(btn => {
         btn.classList.toggle("hidden");

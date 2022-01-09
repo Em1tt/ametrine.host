@@ -7,8 +7,10 @@ const themeMap = {
 const theme = localStorage.getItem('theme') || (tmp = Object.keys(themeMap)[0],
     localStorage.setItem('theme', tmp),
         tmp);
-const bodyClass = document.body.classList;
+    const bodyClass = document.body.classList;
 bodyClass.add(theme);
+
+document.getElementById('theme-button').addEventListener("click", toggleTheme);
 
 function toggleTheme() {
     const current = localStorage.getItem('theme');
@@ -18,4 +20,3 @@ function toggleTheme() {
     localStorage.setItem('theme', next);
 }
 
-document.getElementById('theme-button').addEventListener("click", toggleTheme);

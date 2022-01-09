@@ -94,7 +94,7 @@ form select {
   overflow-y: auto;
   max-height: 300px;
 }
-form label {
+form label:not([for="askResponse"]) {
   background-color: #1e1f26;
   color: #cc37c0;
   padding: 10px;
@@ -102,8 +102,12 @@ form label {
   margin-right: 10px;
 }
 
-form label:hover {
+form label:not([for="askResponse"]):hover {
   background-color: #141419;
+}
+.checkbox{
+  margin-top: 0 !important;
+  margin-right: auto;
 }
 
 .screenshotsWrapper {

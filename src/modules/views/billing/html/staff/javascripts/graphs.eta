@@ -73,8 +73,8 @@ function createUserGraph(period) {
             dates = dates.map((date) => {
                 return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
             }).reverse();
-            if(dayjs().subtract(1, "week").year() == lastYear){
-                registeredUsers = registeredUsers.filter((user) => [curYear, lastYear].includes(user.registered.split(" ")[2]));
+            if(parseInt(dayjs().subtract(1, "week").year()) == parseInt(lastYear)){
+                registeredUsers = registeredUsers.filter((user) => [parseInt(curYear), parseInt(lastYear)].includes(parseInt(user.registered.split(" ")[2])));
             }else{
                 registeredUsers = registeredUsers.filter((user) => user.registered.split(" ")[2] == curYear);
             }
@@ -127,11 +127,13 @@ function createUserGraph(period) {
               dates = dates.map((date) => {
                   return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
               }).reverse();
-                          if(dayjs().subtract(1, "month").year() == lastYear){
-                registeredUsers = registeredUsers.filter((user) => [curYear, lastYear].includes(user.registered.split(" ")[2]));
+              console.log(parseInt(dayjs().subtract(1, "month").year()) == parseInt(lastYear))
+                          if(parseInt(dayjs().subtract(1, "month").year()) == parseInt(lastYear)){
+                registeredUsers = registeredUsers.filter((user) => [parseInt(curYear), parseInt(lastYear)].includes(parseInt(user.registered.split(" ")[2])));
             }else{
                 registeredUsers = registeredUsers.filter((user) => user.registered.split(" ")[2] == curYear);
             }
+            console.log(registeredUsers);
               const data = new Array(dates.length).fill(0);
               for (let i = 0; i < registeredUsers.length; i++) {
                 let match = dates.find((date) =>

@@ -90,6 +90,9 @@ background: var(--main-bg);
 margin-inline: auto;
 border-radius: 50px 50px 0 0;
 }
+iframe{
+  border: none;
+}
 main{
 width: 100vw !important;
 background:  var(--main-bg);
@@ -98,6 +101,7 @@ flex-flow: column wrap;
 padding:  0px 100px 0px 100px;
 height: calc(100vh - 91px);
 align-content: center;
+margin-top: 91px;
 }
 main > div{
 display: grid;

@@ -32,10 +32,18 @@ body > aside{
 body > aside > div{
     margin: 1rem;
 }
+
+#login-error{
+    color: #fff;
+}
+
 #authentication{
     transition: 600ms ease;
     right: -360px;
     overflow-y: auto;
+}
+#authentication h3{
+    margin:20px auto 0 auto;text-align:center
 }
 #authentication fieldset{
     border: none;
@@ -60,6 +68,9 @@ body > aside > div{
     padding-top: 10px;
     padding-bottom: 10px;
     color: #dce0ff;
+    height: 36px !important;
+    width: 36px !important;
+    display: block;
 }
 
 #switchLine{
@@ -124,12 +135,15 @@ body > aside > div{
     padding: 10px;
     margin: 0;
 }
-#announcements a i{
+#announcements a svg{
     padding: 10px;
     cursor: pointer;
     color: #e6b530;
+    height: 42px;
+    width: 42px;
+    display: block;
 }
-#announcements a:hover i{
+#announcements a:hover svg{
     color: #cc37c0;
     background: transparent;
     background-clip:initial;
@@ -187,7 +201,7 @@ body > aside > div{
     text-align: center;
 }
 
-#supportPopup a i{
+#supportPopup a svg{
     font-size: 2rem;
 }
 
@@ -286,7 +300,7 @@ input.submit:hover{
 .checkbox label:first-of-type:hover{
     background-color: #17171d;
 }
-.checkbox label:first-of-type i{
+.checkbox label:first-of-type svg{
     display: none;
 }
 .checkbox input:checked ~ label:first-of-type {
@@ -297,7 +311,7 @@ input.submit:hover{
 .checkbox input:checked ~ label:first-of-type:hover{
     background-color: #cc37c0;
   }
-.checkbox input:checked ~ label:first-of-type i {
+.checkbox input:checked ~ label:first-of-type svg {
     display: initial;
 }
 .checkbox label:last-of-type {

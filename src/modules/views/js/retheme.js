@@ -29,3 +29,7 @@ function retheme(){
         })
     }
 }
+
+[...document.getElementsByClassName("rethemeButton")].forEach((button) => {
+    button.addEventListener("click", retheme);
+})

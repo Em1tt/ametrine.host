@@ -36,25 +36,49 @@
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
-    <link href="/billing/public/stylesheets/tickets.css" rel="stylesheet">
+    <link href="/billing/html/staff/css/tickets.css" rel="stylesheet">
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it.permissions).filter((i) => i[0] == it.userData.permission_id)}) %>
     <main>
         <div>
             <div>
-                <h1 class="header1">Your tickets</h1>
+                <h1 class="header1">User Tickets</h1>
                 <span><button class="header1" onclick="window.location.href = './tickets/create'" <%=(it.userData.email) ? "" : "disabled"%>><i class="fa fa-plus"></i> Create a ticket</button></span>
             </div>
             <hr class="semanticLine">
-            <h2 class="header2"><%= (it.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>
-            <span class="pageButtons">
-                <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
-                <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
-            </span>
-            <div id="ticketWrapper">
-                
+            <div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" checked id="all">
+                    <label for="all"><i class="fa fa-check"></i></label>
+                    <label for="all">All</label>
+                </div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="asr">
+                    <label for="asr"><i class="fa fa-check"></i></label>
+                    <label for="asr">Awaiting Staff Reply</label>
+                </div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="acr">
+                    <label for="acr"><i class="fa fa-check"></i></label>
+                    <label for="acr">Awaiting Client Reply</label>
+                </div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="ans">
+                    <label for="ans"><i class="fa fa-check"></i></label>
+                    <label for="ans">Answered</label>
+                </div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="clo">
+                    <label for="clo"><i class="fa fa-check"></i></label>
+                    <label for="clo">Closed</label>
+                </div>
+                <span class="pageButtons">
+                    <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                    <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+                </span>
             </div>
+                <div id="ticketWrapper"></div>
         </div>
     </main>
     <script src="/billing/html/staff/javascripts/tickets.js" async defer></script>

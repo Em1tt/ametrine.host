@@ -1,45 +1,31 @@
 {
     "0": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"],
-        "accessPages": [],
-        "staffPanel": false,
-        "accessStaffPages": []
+        "accessPages": ["/", "/mail", "/tickets"]
     },
     "1": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
-        "accessPages": [],
-        "staffPanel": false,
-        "accessStaffPages": []
+        "accessPages": ["/"]
     },
     "2": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
-        "accessPages": [],
-        "staffPanel": true,
-        "accessStaffPages": ["support"]
+        "accessPages": ["/"]
     },
     "2:3": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
-        "accessPages": [],
-        "staffPanel": true,
-        "accessStaffPages": ["support"]
+        "accessPages": ["/"]
     },
     "2:4": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
-        "accessPages": [],
-        "staffPanel": true,
-        "accessStaffPages": ["support"]
+        "accessPages": ["/"]
     },
     "2:5": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
-        "accessPages": [],
-        "staffPanel": true,
-        "accessStaffPages": ["support", "announcements", "packages"]
+        "accessPages": ["/"]
     },
     "4": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/"],
-        "accessPages": [],
-        "staffPanel": true,
-        "accessStaffPages": ["support", "announcements", "packages", "referral"]
+        "accessPages": ["all"]
     }
     
 }

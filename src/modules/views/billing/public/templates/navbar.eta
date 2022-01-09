@@ -10,7 +10,7 @@
         </li>
 
         <li class="nav-item">
-            <a onclick="announcementsToggle();" id="announcementButton" aria-label="Announcements" class="nav-link">
+            <a id="announcementButton" aria-label="Announcements" class="nav-link">
                 <i class="fa fa-bell"></i>
                 <span aria-hidden="true" class="link-text">Announcements</span>
             </a>
@@ -24,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-            <a aria-label="Support" id="support" onclick=toggle("supportPopup"); class="nav-link">
+            <a aria-label="Support" id="support" class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
                 <span aria-hidden="true" class="link-text">Support</span>
             </a>
@@ -55,7 +55,7 @@
         </li>
 
                 <li class="nav-item">
-            <a <%= (it.text !== "Sign-In") ? 'href=/billing' : "onclick=toggle('authentication');" %> class="nav-link" aria-label="Log-In" id="login-button">
+            <a <%= (it.text !== "Sign-In") ? 'href=/billing' : 0 %> class="nav-link" aria-label="Log-In" id="login-button">
                 <i class="fa fa-<%=it.icon%>"></i>
                 <span aria-hidden="true" class="link-text">
                     <%=it.text%>

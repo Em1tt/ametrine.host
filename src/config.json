@@ -3,7 +3,30 @@
   "scripts": "scripts",
 
   "website": {
-    "port": 3000
+    "port": 3000,
+    "uploadLimit": {
+      "json": "50mb",
+      "urlencoded": "50mb"
+    },
+    "ticketCategories": [{
+      "name": "Billing panel",
+      "id": 0,
+      "color": "#99ff66",
+      "description": "Ask any billing questions here!",
+      "minPermission": 2
+  }, {
+      "name": "Partnerships & Sponsorships",
+      "id": 1,
+      "color": "#9966ff",
+      "description": "If you want to partner with us!",
+      "minPermission": "2:3"
+  }, {
+      "name": "Service Issues",
+      "id": 2,
+      "color": "#9966ff",
+      "description": "If you want to partner with us!",
+      "minPermission": 2
+  }]
   },
 
   "cdn": {

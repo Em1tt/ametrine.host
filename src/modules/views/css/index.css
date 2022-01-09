@@ -179,20 +179,22 @@ margin-inline: auto;
 margin-top: 100px;
 position: relative; 
 }
-.worldMap i{
+.worldMap svg{
 font-size: 1.75vw;
-position: absolute;
 color: white;
 text-align: center;
 }
-.worldMap i:hover, .worldMap i:focus-visible{
+.poi{
+  position: absolute;
+}
+.worldMap svg:hover, .worldMap svg:focus-visible{
 color: var(--light);
 }
-i.FL{
+.poi.FL{
 top: 10.2%;
 left: 50.15%;
 }
-i.GE{
+.poi.GE{
 top: 17.5%;
 left: 48.1%;
 }
@@ -405,8 +407,8 @@ color: var(--yellow);
     display: flex;
     flex-flow: row wrap;
     min-width: 280px;
-    }
-    .cardDivider div{
+  }
+  .cardDivider div{
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
@@ -419,48 +421,48 @@ color: var(--yellow);
     color: var(--default);
     width: 80%;
     margin-top: 10px;
-    }
-    main h2{
-      word-break:keep-all;
-      line-break:strict;
-      margin-inline: 10px;
-    }
-    main > div{
-width: 100%;
-      }
-    main .deploy{
-      width: 100% !important;
-    }
-    .deploy ol{
-      font-size: 1.2rem;
-    }
-    main img{
-      width: 200px;
-      aspect-ratio: 1/1;
-      margin-inline: auto;
-      height: 200px;
-    }
-    .deploy .bWtext{
-      font-size: 12pt;
-      margin-inline: 10px;
-    }
-    .mapSection h2{
-      margin-inline: 10px;
-      }
-      .mapSection h3{
-        margin-inline: 10px;
-      }
-      .worldMap i{
-        font-size: 6vw;
-        }
-        i.FL{
-          top: -1% !important;
-          left: 49% !important;
-          }
-          i.GE{
-          top: 8%;
-          left: 47%;
-          }
+  }
+  main h2{
+    word-break:keep-all;
+    line-break:strict;
+    margin-inline: 10px;
+  }
+  main > div{
+    width: 100%;
+  }
+  main .deploy{
+    width: 100% !important;
+  }
+  .deploy ol{
+    font-size: 1.2rem;
+  }
+  main img{
+    width: 200px;
+    aspect-ratio: 1/1;
+    margin-inline: auto;
+    height: 200px;
+  }
+  .deploy .bWtext{
+    font-size: 12pt;
+    margin-inline: 10px;
+  }
+  .mapSection h2{
+    margin-inline: 10px;
+  }
+  .mapSection h3{
+    margin-inline: 10px;
+  }
+  .worldMap i{
+    font-size: 6vw;
+  }
+  .poi.FL{
+    top: -1% !important;
+    left: 49% !important;
+  }
+  .poi.GE{
+    top: 8%;
+    left: 47%;
+  }
 }
 @media screen and (max-width: 520px){
   .mapSection{

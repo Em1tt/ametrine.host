@@ -11,3 +11,5 @@ function openNav(){
     buttonIcon.classList.toggle("fa-bars");
     buttonIcon.classList.toggle("fa-times");
 }
+
+document.getElementById("openNav").addEventListener("click", openNav);

@@ -122,3 +122,10 @@ function arrayBufferToBase64(buffer, type) {  // https://stackoverflow.com/a/945
     const b64 = window.btoa(binary);
     return (b64.length && type) ? `data:${type};base64,${b64}` : b64;
 }
+
+(async()=>{
+    var container = document.getElementById('editor');
+    var editor = new Quill(container, {
+        theme: "snow"
+    });
+})();

@@ -121,7 +121,6 @@ const billing: string = path.join(__dirname, "views", "billing", "html");
 const endpoints: Map<string, Endpoint> = new Map();
 const files    : Array<string>         = fs.readdirSync(`./modules/api`)
                                            .filter((f) => f.endsWith(".js"));
-
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
   endpoints.set(ep.prop.name, ep);
@@ -167,8 +166,8 @@ app.use(
       useDefaults: true, // nonce when
       directives: {
         defaultSrc: ["'self'"],
-        "script-src": ["'self'", "'unsafe-inline'", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com"],
-        "style-src": ["'self'", "'unsafe-inline'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
+        "script-src": ["'self'", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "static.cloudflareinsights.com", "unpkg.com", "cdn.jsdelivr.net", "ajax.googleapis.com", "*.gstatic.com", "js.stripe.com"],
+        "style-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "cdn.quilljs.com", "unpkg.com", "fonts.googleapis.com", "*.gstatic.com", "use.fontawesome.com", "fontawesome.com"],
         "script-src-attr": ["'self'", "'unsafe-inline'"],
         "img-src": ["'self'", "https: data:", "blob: http:"],
         "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"],
@@ -184,12 +183,11 @@ app.engine("eta", eta.renderFile);
 app.set("view engine", "eta");
 
 app.use(async (r: express.Request, s: express.Response, next: express.NextFunction) => {
+
   const userData = await auth.getUserData(r, s)
   s.locals.userData = userData
   next()
-})
-
-
+});
 
 app.get("/", (r: express.Request, s: express.Response) => {
   s.render(`${html}/index.eta`);
@@ -354,7 +352,7 @@ app.get("/billing/staff/tickets/:ticketid", async (r: express.Request, s: expres
   getTicket = getTicket as Ticket;
   console.log(getTicket);
   if(getTicket.level > userData.permission_id) return s.status(403).send("Insufficient Permissions.");
-  const ticketCats = require("../../src/ticket_categories.json");
+  const ticketCats = require("../ticket_categories.json");
   s.render(renderData["file"], {
     ticket_categories: ticketCats,
     ticket: getTicket,
@@ -367,7 +365,7 @@ app.get("/billing/tickets/create", (r: express.Request, s: express.Response) => 
   if (!fs.existsSync(file)) return s.render(`${html}/404.eta`);
   const userData = s.locals.userData;
   if(!userData) return s.status(403).send("Must be logged in to do this");
-  const ticketCats = require("../../src/ticket_categories.json");
+  const ticketCats = require("../ticket_categories.json");
   s.render(file, {
     userData: userData,
     config: config.billing,
@@ -392,7 +390,7 @@ app.get("/billing/tickets/:ticketID", async (r: express.Request, s: express.Resp
   if (!data) return s.status(403).send("Must be logged in to do this");
   const userData: UserData = data["userData"];
   if(userData.user_id != getTicket.user_id) return s.status(403).send("No permission");
-  const ticketCats = require("../../src/ticket_categories.json");
+  const ticketCats = require("../ticket_categories.json");
   s.render(file, {
     ticket_categories: ticketCats,
     ticket: getTicket,
@@ -411,8 +409,9 @@ app.get("/:name", (r: express.Request, s: express.Response) => {
   s.render(file);
 });
 
-// start up the website
+/*// start up the website
 app.listen(config.website.port, () => {
   console.log(`started website @${config.website.port}`);
   cdn.host(redisClient);
 });
+*/

@@ -169,6 +169,9 @@ main > aside div:hover {
 #delete-button{
   color:red !important;
 }
+#update-error{
+  color: white;
+}
 
 @media screen and (max-width: 1000px) {
   main {

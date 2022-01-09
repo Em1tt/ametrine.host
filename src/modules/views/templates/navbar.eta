@@ -77,12 +77,12 @@
           </div>
         </div>
                 <a id="responsiveClientArea" href="/billing">Client Area</a>
-        <button aria-label="Dark mode switch" id="responsiveTheme" onclick="retheme();"><i class="iconSwitch far fa-moon"></i></button>
+        <button class="rethemeButton" aria-label="Dark mode switch" id="responsiveTheme"><i class="iconSwitch far fa-moon"></i></button>
       </div>
       <div>
-        <button aria-label="Dark mode switch" onclick="retheme();"><i class="iconSwitch far fa-moon"></i></button>
+        <button class="rethemeButton" aria-label="Dark mode switch"><i class="iconSwitch far fa-moon"></i></button>
         <a href="/billing">Client Area</a>
-              <button id="openNav" aria-label="Open Navbar" onclick="openNav();"><i id="openNavIcon" class="fa fa-bars"></i></button>
+              <button id="openNav" aria-label="Open Navbar">Hello<i id="openNavIcon" class="fa fa-bars"></i></button>
       </div>
     </nav>
     <script src="../js/retheme.js"></script>

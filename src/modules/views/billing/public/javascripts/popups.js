@@ -8,3 +8,8 @@ const toggle = async (id) => {
 const announcementsToggle = async () => {
     document.getElementById("announcements").classList.toggle("showAnnouncements");
 }
+
+document.getElementById("support").addEventListener("click", () => {toggle("supportPopup")});
+document.getElementById("announcementButton").addEventListener("click", announcementsToggle);
+!document.querySelector(".loggedIn#login-button") ? document.getElementById("login-button").addEventListener("click", () => {toggle("authentication")}) : 0;
+document.getElementById("closeAnnouncements").addEventListener("click", announcementsToggle);

@@ -5,3 +5,4 @@ document.addEventListener("scroll", (event) => {
 function backToTop(){
     window.scrollTo(0, 0);
 }
+backtotop.addEventListener("click", backToTop);

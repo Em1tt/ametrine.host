@@ -56,7 +56,7 @@
   margin-left: 1rem;
 }
 
-.nav-link i {
+.nav-link svg {
   font-size: 1.5rem;
   width: 2rem;
   min-width: 2rem;
@@ -87,7 +87,7 @@
   justify-content: center;
 }
 
-.header i {
+.header svg {
   color: var(--nav-header-arrow);
   transform: rotate(0deg);
   transition: var(--nav-transition-speed);
@@ -104,7 +104,7 @@
   transition: var(--nav-transition-speed);
 }
 
-.navbar:hover .header i {
+.navbar:hover .header svg {
   color: var(--nav-header-arrow-hover);
   transform: rotate(-180deg);
   transition: var(--nav-transition-speed);
@@ -172,7 +172,7 @@
   .navbar:hover .link-text {
     display: inline;
   }
-  .navbar:hover .header i {
+  .navbar:hover .header svg {
     margin-left: 11rem;
   }
   .navbar:hover .header-text {

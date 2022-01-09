@@ -98,6 +98,7 @@ flex-flow: column wrap;
 padding:  0px 100px 0px 100px;
 height: calc(100vh - 91px);
 align-content: center;
+margin-top: 91px;
 }
 main > div{
 display: grid;

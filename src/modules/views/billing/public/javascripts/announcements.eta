@@ -1,4 +1,5 @@
-<script>
+<%console.log(it.nonce)%>
+<script nonce=<%=it.nonce%>>
 async function getAnnouncements(firstTime){
     const announcements = document.getElementById("announcementsWrapper");
     if(!firstTime){
@@ -10,9 +11,10 @@ async function getAnnouncements(firstTime){
             }
         }).then(response => {
         let localAnnouncements = JSON.parse(localStorage.getItem("announcements"));
+        console.log(localAnnouncements);
         let difference = []
         response.data.forEach(x => {
-          let match = localAnnouncements.find(y => x.announcement_id == y.announcement_id);
+          let match = localAnnouncements?.find(y => x.announcement_id == y.announcement_id);
           if(!match) difference.push(x);
         });
         console.log(response, localAnnouncements, difference);
@@ -82,4 +84,5 @@ async function getAnnouncements(firstTime){
     console.log("%c BEWARE OF WHAT YOU'RE PASTING HERE.", 'background-color: yellow;font-size:2rem;color:black;'); //Kinda an announcement
     }, 300000);
  })();
+
 </script>

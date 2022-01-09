@@ -1,8 +1,8 @@
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
-<div onload="checkAnnouncements();" id="announcements">
+<div id="announcements">
     <div id="header">
         <h3 class="header1"><i class="fa fa-bell"></i> Announcements</h3>
-        <a onclick=announcementsToggle()><i class="fa fa-times-circle"></i></a>
+        <a id="closeAnnouncements"><i class="fa fa-times-circle"></i></a>
     </div>
     <div id="announcementsWrapper">
     </div>

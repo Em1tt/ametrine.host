@@ -33,11 +33,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-    <link href="/billing/public/stylesheets/ticket.css" rel="stylesheet">
+    <link href="/billing/html/staff/css/ticket.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
-    <script src="/billing/public/javascripts/theme.js" async defer></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intense-images/1.0.7/intense.min.js"></script>
@@ -47,8 +46,8 @@
     <p style="visibility:hidden;position:absolute;" id="ticketID"><%=it.ticket.ticket_id%></p>
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it.permissions).filter((i) => i[0] == it.userData.permission_id)}) %>
     <main>
-        <%if(it.ticket.closed !== 0){%>
-            <h4 class="ticketClosed">This ticket is closed. Press "Open Ticket", send a message or edit the ticket to reopen it.</h4>
+        <%if(JSON.parse(it.ticket.closed) !== 0){%>
+            <h4 class="ticketClosed">This ticket is closed. Reply to closed tickets only if necessary.</h4>
         <%}%>
         <div>
             <div>
@@ -144,6 +143,12 @@
                     <span id="imageManager"></span>
                 </fieldset>
                 <fieldset id="submitWrapper">
+                <span class="checkbox">
+                    <input type="checkbox" id="askResponse" name="askResponse">
+                    <label for="askResponse"><i class="fa fa-check"></i></label>
+                    <label for="askResponse">Ask for response</label>
+                </span>
+                <button style="color: red;" type="button" class="buttons button1" id="deleteTicket" onclick="ticketDelete()"><i class="fa fa-trash"></i> Delete Ticket</button>
                 <%if(it.ticket.closed == 0){%>
                     <button type="button" class="buttons button1" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
                 <%}else{%>
