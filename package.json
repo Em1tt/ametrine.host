@@ -25,6 +25,7 @@
   "homepage": "https://github.com/Em1tt/ametrine.host#readme",
   "dependencies": {
     "argon2": "^0.28.3",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "canvas": "^2.8.0",
     "cookie-parser": "^1.4.5",
@@ -47,6 +48,7 @@
     "nonce-express": "^1.0.2",
     "qrcode": "^1.5.0",
     "redis": "^3.1.2",
+    "sharp": "^0.29.3",
     "smtp-server": "^3.9.0",
     "stripe": "^8.182.0"
   },

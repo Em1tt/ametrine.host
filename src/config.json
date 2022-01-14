@@ -7,7 +7,15 @@
     "uploadLimit": {
       "json": "50mb",
       "urlencoded": "50mb"
-    },
+    }
+  },
+
+  "cdn": {
+    "port": 3001
+  },
+  
+  "billing": {
+    "staffMinLevel": 2,
     "ticketCategories": [{
       "name": "Billing panel",
       "id": 0,
@@ -27,14 +35,6 @@
       "description": "If you want to partner with us!",
       "minPermission": 2
   }]
-  },
-
-  "cdn": {
-    "port": 3001
-  },
-  
-  "billing": {
-    "staffMinLevel": 2
   },
 
   "mail": {

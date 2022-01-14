@@ -37,11 +37,6 @@
   {
     "name": "Website",
     "colour": "125", 
-    "file": "website.js"
-  },
-  {
-    "name": "Website",
-    "colour": "125", 
     "file": "website-new.js"
   }
 ]

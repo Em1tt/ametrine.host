@@ -1,4 +1,3 @@
-<%console.log(it.nonce)%>
 <script nonce=<%=it.nonce%>>
 async function getAnnouncements(firstTime){
     const announcements = document.getElementById("announcementsWrapper");

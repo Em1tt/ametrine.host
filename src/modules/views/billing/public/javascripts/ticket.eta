@@ -1,3 +1,4 @@
+<script nonce=<%=it.nonce%>>
 const buttons = document.getElementsByClassName("buttons"),
     editButtons = document.getElementsByClassName("editButtons"),
     priority = document.getElementById("priority"),
@@ -5,7 +6,7 @@ const buttons = document.getElementsByClassName("buttons"),
     subjectWrapper = document.getElementById("subjectWrapper"),
     subject = document.getElementById("subject"),
     closedOn = document.getElementById("closedOn");
-const ticketID = document.getElementById("ticketID").innerHTML;
+const ticketID = <%=it.ticket.ticket_id%>;
 async function saveEdits() {
     try {
         const imageManager = document.querySelector("#imageManager");
@@ -303,3 +304,4 @@ async function sendMessage() {
         console.log(e);
     }
 })()
+</script>

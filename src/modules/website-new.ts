@@ -168,13 +168,16 @@ app.use(nonce());
 //Fetch userdata middleware && permission checking
 app.use(async (r: express.Request, s: express.Response, next: express.NextFunction) => {
   const userData = await auth.getUserData(r, s);
-  const path = r.url.slice(1).split("/");
+  let path = r.url.slice(1).split("/");
   path.shift();
-  console.log(r.url);
   path.length ? s.locals.userData = userData : 0;
+  if(!isNaN(parseInt(path.at(-1)))){
+    path.pop();
+    path.push(":id");
+  }
   s.locals.config = config.billing;
   const permission = s.locals?.userData?.permission_id || 0;
-  if(!r.url.startsWith("/api") && path.length && !permissions.canViewPage(permission, `/${path}`)) return s.sendStatus(403);
+  if(!r.url.startsWith("/api") && path.length && !permissions.canViewPage(permission, `/${path.join("/")}`)) return s.sendStatus(403);
   next();
 });
 
@@ -187,7 +190,7 @@ app.use(
         defaultSrc: ["'self'"],
         "script-src": ["'self'", (s: express.response, r: express.Response) => `'nonce-${r.locals["nonce"]}'`, "cdn.quilljs.com", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "cdn.jsdelivr.net", "js.stripe.com"],
         "style-src": ["'self'", "cdn.quilljs.com", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "fonts.googleapis.com", "use.fontawesome.com", "fontawesome.com"],
-        "img-src": ["'self'", "i.imgur.com", "blob: http:"],
+        "img-src": ["'self'", "i.imgur.com", "blob: http:", "data:"],
         "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"],
         "connect-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "blob: http:"]
       }
@@ -234,6 +237,8 @@ app.get("/:dir/:subdir/:file", async (r: express.Request, s: express.Response) =
           if(parseInt(r.params.file)){
             file = `${billing}/tickets/ticket.eta`;
             await handleTickets(r,s,false);
+          }else{
+            file = `${billing}/tickets/${r.params.file.toLowerCase()}.eta`;
           }
         } break;
       }
