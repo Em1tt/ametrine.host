@@ -294,17 +294,20 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
   if(getTicket.user_id != s.locals?.userData?.user_id) return s.sendStatus(403);
   s.locals.ticket = JSON.stringify(getTicket);
 }
-async function handleStaff(r: express.Request, s: express.Response){
-  redisClient.keys("user:*", async function (err, result) {
-    if (err) {
-      console.error(err);
-      return s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
-    }
-    return Promise.all(result.map(async userID => {
-      const user: UserData = await redisClient.db.hgetall(userID);
-      return {id: user.user_id, registered: user.registered, permission: user.permission_id};
-    }));
-  });
-
-  s.locals.permissions = permIDs;
+async function handleStaff(r: express.Request, s: express.Response) {
+  return new Promise((resolve, reject) => {
+    s.locals.permissions = permIDs;
+    redisClient.keys("user:*", async function (err, result) {
+      if (err) {
+        console.error(err);
+        s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
+        return reject(err);
+      }
+      s.locals.users = await Promise.all(result.map(async userID => {
+        const user: UserData = await redisClient.db.hgetall(userID);
+        return {id: user.user_id, registered: user.registered, permission: user.permission_id};
+      }));
+      resolve(true);
+    });
+  })
 }
