@@ -264,7 +264,6 @@
                     button.innerText = "Delete Image";
                     button.addEventListener("click", (event) => {
                         [...imageManager.children][[...imageManager.children].indexOf(div)].remove();
-                        console.log(imageManager.children);
                     });
                     if(fileList[i].startsWith("blob:")){
                     img.src = URL.createObjectURL(fileList[i]);

@@ -169,7 +169,6 @@ app.use(nonce());
 app.use(async (r: express.Request, s: express.Response, next: express.NextFunction) => {
   const userData = await auth.getUserData(r, s);
   const path = r.url.slice(1).split("?")[0].split("/");
-  console.log(path);
   path.shift();
   path.length ? s.locals.userData = userData : 0;
   if(!isNaN(parseInt(path.at(-1)))){
@@ -227,7 +226,6 @@ app.get("/:dir/:file", async (r: express.Request, s: express.Response) => {
         case "staff": {
           file = `${billing}/staff/overview.eta`;
           await handleStaff(r,s);
-          console.log(s.locals);
          } break;
         default: {
           file = `${billing}/${r.params.file.toLowerCase()}.eta`
@@ -244,7 +242,10 @@ app.get("/:dir/:subdir/:file", async (r: express.Request, s: express.Response) =
   switch(r.params.dir.toLowerCase()){
     case "billing": {
       switch(r.params.subdir.toLowerCase()){
-        case "staff": file = `${billing}/${r.params.file.toLowerCase()}.eta`; break;
+        case "staff": {
+          file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+          s.locals.permissions = permIDs;
+        } break;
         case "tickets": {
           if(parseInt(r.params.file)){
             file = `${billing}/tickets/ticket.eta`;
@@ -303,10 +304,10 @@ async function handleStaff(r: express.Request, s: express.Response) {
         s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
         return reject(err);
       }
-      s.locals.users = await Promise.all(result.map(async userID => {
+      s.locals.users = JSON.stringify(await Promise.all(result.map(async userID => {
         const user: UserData = await redisClient.db.hgetall(userID);
         return {id: user.user_id, registered: user.registered, permission: user.permission_id};
-      }));
+      })));
       resolve(true);
     });
   })

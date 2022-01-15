@@ -12,7 +12,7 @@ body {
   overflow-x: hidden;
   height: auto;
   overflow-y: auto;
-  width: 100vw;
+  width: 100vw; 
   position: absolute;
   left: 0;
   top: 0;
@@ -53,10 +53,22 @@ main hr {
   margin-bottom: 100px;
 }
 .cardWrapper div {
-  color: #dce0ff;
   background-color: #1e1f26;
   height: auto;
 }
+
+.cardWrapper input[type="checkbox"] ~ label svg{
+  visibility: hidden;
+}
+
+.cardWrapper input[type="checkbox"]:checked ~ label svg{
+  visibility: visible;
+}
+
+.cardWrapper input[type="checkbox"] ~ label:last-of-type{
+  color: #dce0ff;
+}
+
 .cardWrapper div h3 {
   color: #dce0ff;
   background-color: #141419;

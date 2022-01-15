@@ -1,4 +1,4 @@
-<script>
+<script nonce=<%=it.nonce%>>
 function instantiateUserGraph(type) {
     if (type == "monthly") {
         createUserGraph("month");
@@ -127,13 +127,11 @@ function createUserGraph(period) {
               dates = dates.map((date) => {
                   return date.split(",")[1].trim().split(" ").slice(0, 2).join(" ");
               }).reverse();
-              console.log(parseInt(dayjs().subtract(1, "month").year()) == parseInt(lastYear))
                           if(parseInt(dayjs().subtract(1, "month").year()) == parseInt(lastYear)){
                 registeredUsers = registeredUsers.filter((user) => [parseInt(curYear), parseInt(lastYear)].includes(parseInt(user.registered.split(" ")[2])));
             }else{
                 registeredUsers = registeredUsers.filter((user) => user.registered.split(" ")[2] == curYear);
             }
-            console.log(registeredUsers);
               const data = new Array(dates.length).fill(0);
               for (let i = 0; i < registeredUsers.length; i++) {
                 let match = dates.find((date) =>
@@ -161,12 +159,9 @@ function createPermissionGraph() {
     let registeredUsers = "<%=JSON.stringify(it.users)%>".replace(/&quot;/g, '"');
     let permissionIDs = JSON.parse("<%=JSON.stringify(Object.keys(it.permissions))%>".replace(/&quot;/g, '"')).sort();
     let data = Array(permissionIDs.length).fill(0);
-    console.log(permissionIDs);
     registeredUsers = JSON.parse(registeredUsers.slice(1, registeredUsers.length - 1));
-    console.log(registeredUsers);
 
     registeredUsers.forEach((user) => {
-        console.log(user);
         permissionIDs.forEach((id) => {
             if(id == user.permission){
                 data[permissionIDs.indexOf(id)]++;
@@ -189,4 +184,7 @@ window.onresize = function(){
   doit = setTimeout(resizedw, 100);
 };
 
+document.getElementById("weekly").addEventListener("click", () => {instantiateUserGraph('weekly');});
+document.getElementById("monthly").addEventListener("click", () => {instantiateUserGraph('monthly');});
+document.getElementById("yearly").addEventListener("click", () => {instantiateUserGraph('yearly');});
 </script>

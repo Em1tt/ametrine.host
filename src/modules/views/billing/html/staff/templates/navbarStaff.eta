@@ -1,5 +1,4 @@
-<% let staffPages = it.permissions[0][1].accessStaffPages %>
-
+<% let staffPages = it.permissions[0][1].accessPages %>
 <nav class="navbar">
     
     <ul class="navbar-nav">
@@ -10,7 +9,7 @@
                 <i class="fa fa-angle-double-right"></i>
             </a>
         </li>
-        <% if(staffPages.includes("announcements")){ %>
+        <% if(staffPages.includes("all") || staffPages.includes("/staff/announcements")){ %>
         <li class="nav-item">
             <a href="/billing/staff/announcements" aria-label="Announcements" class="nav-link">
                 <i class="fa fa-bell"></i>
@@ -18,7 +17,7 @@
             </a>
         </li>
         <%}%>
-        <% if(staffPages.includes("support")){ %>
+        <% if(staffPages.includes("all") || staffPages.includes("support")){ %>
         <li class="nav-item">
             <a aria-label="Support" id="support" class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
@@ -26,7 +25,7 @@
             </a>
         </li>
         <%}%>
-        <% if(staffPages.includes("referral")){ %>
+        <% if(staffPages.includes("all") || staffPages.includes("referral")){ %>
         <li class="nav-item">
             <a href="#" aria-label="Referral" class="nav-link">
                 <i class="fa fa-user-plus"></i>
@@ -34,7 +33,7 @@
             </a>
         </li>
         <%}%>
-        <% if(staffPages.includes("packages")){ %>
+        <% if(staffPages.includes("all") || staffPages.includes("packages")){ %>
         <li class="nav-item">
             <a aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-shopping-cart"></i>

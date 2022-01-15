@@ -350,6 +350,9 @@ input.submit:hover{
     -webkit-text-fill-color: transparent;
     max-width:max-content;
 }
+.header1 svg{
+    color: #e6b530;
+}
 .header2, .text1{
     color: #dce0ff;
 }
