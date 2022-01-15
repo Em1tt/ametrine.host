@@ -47,13 +47,13 @@
                 <h1 class="header1">Create a Ticket</h1>
             </div>
             <hr class="semanticLine">
+            <h2><%= (it._locals.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>
             <form id="ticketCreate">
                 <fieldset>
                     <div class="top">
                         <input required type="text" id="subject" placeholder="Subject - Max 100 chars" maxlength="100">
                     <select required name="ticket_category" id="category">
                         <option value="" selected disabled hidden>Choose Category</option>
-                        <% console.log(it._locals.config.ticketCategories)%>
                         <% it._locals.config.ticketCategories.forEach(category => { %>
                             <option value="<%=category.id%>"><%=category.name%></option>
                         <% }) %>

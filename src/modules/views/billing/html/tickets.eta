@@ -39,7 +39,7 @@
         <div>
             <div>
                 <h1 class="header1">Your tickets</h1>
-                <span><button class="header1" onclick="window.location.href = './tickets/create'" <%=(it.userData.email) ? "" : "disabled"%>><i class="fa fa-plus"></i> Create a ticket</button></span>
+                <span><button class="button2" id="createTicket" <%=(it.userData.email) ? "" : "disabled"%>><i class="fa fa-plus"></i> Create a ticket</button></span>
             </div>
             <hr class="semanticLine">
             <h2 class="header2"><%= (it.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>

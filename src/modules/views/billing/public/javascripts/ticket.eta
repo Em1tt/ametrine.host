@@ -134,6 +134,7 @@ async function sendMessage() {
     screenshots.onchange = async event => {
         const imageManager = document.querySelector("#imageManager");
         var fileList = [...screenshots.files];
+        screenshots.value = "";
         for(let i=0; i < fileList.length; i++){
             if (imageManager.children.length >= 5) {
                 Swal.fire({
@@ -150,7 +151,7 @@ async function sendMessage() {
                             Swal.fire({
                                 title: "Screenshot too big",
                                 icon: "error",
-                                html: `<p>The file <code style="color:#7066e0;">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
+                                html: `<p>The file <code class="highlightSwal1"">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
                                 showCancelButton: false,
                                 confirmButtonText: "Understood",
                                 preConfirm: resolve
@@ -304,4 +305,23 @@ async function sendMessage() {
         console.log(e);
     }
 })()
+
+document.getElementById("toggleTicket").addEventListener("click", () => {
+    <%if(parseInt(it.ticket.closed) != 0) {%>
+        ticketOpen();
+    <%}else{%>
+        ticketClose();
+    <%}%>
+});
+
+[...document.getElementsByClassName("editTicket")].forEach((e) => {
+    e.addEventListener("click", () => {
+        editMode();
+    });
+});
+
+document.getElementById("saveEdits").addEventListener("click", saveEdits);
+document.getElementById("sendMessage").addEventListener("click", () => {
+    sendMessage();
+});
 </script>

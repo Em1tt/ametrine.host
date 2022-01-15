@@ -189,11 +189,13 @@ body > aside > div{
     text-decoration: none;
     filter:saturate(0);
     transition: 600ms ease;
+    color: gray;
 }
 
 #supportPopup a:hover{
     background-color: #141419;
     filter:saturate(1);
+    color: #fff;
 }
 
 #supportPopup a div {
@@ -203,6 +205,7 @@ body > aside > div{
 
 #supportPopup a svg{
     font-size: 2rem;
+    color:#cc37c0;
 }
 
 @media screen and (max-width: 1000px){
@@ -332,6 +335,14 @@ input.submit:hover{
 .button1:hover{
     background-color: #292a34;
 }
+.button2{
+    color: #cc37c0;
+    background-color: #141419;
+}
+.button2:hover{
+    color: #e6b530;
+    background-color: #17171d;
+}
 .header1{
     background: -webkit-linear-gradient(-200deg, #cc37c0 25%, #e6b530);
     background-clip: text;
@@ -356,4 +367,7 @@ input.submit:hover{
 }
 .anchor1:hover{
     color: #cc37c0;
+}
+.highlightSwal1{
+    color:#7066e0;
 }

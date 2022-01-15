@@ -1,18 +1,18 @@
 <aside id="supportPopup">
     <a href="/billing/tickets">
-        <div class="header1">
+        <div>
             <i class="fa fa-ticket-alt"></i>
             <p>View your tickets</p>
         </div>
     </a>
     <a href="/billing/mail">
-        <div class="header1">
+        <div>
             <i class="fa fa-at"></i>
             <p>Write an E-Mail</p>
         </div>
     </a>
     <a href="https://discord.gg/U38DxhWHsR" target="_blank" rel="noopener">
-        <div class="header1">
+        <div>
             <i class="fab fa-discord"></i>
             <p>Join our Discord</p>
         </div>

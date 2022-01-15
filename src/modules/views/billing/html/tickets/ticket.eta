@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <%it._locals.ticket = JSON.parse(it._locals.ticket)%>
-<%console.log(it._locals.ticket)%>
 <head>
     <title>Ametrine.host | Billing</title>
     <link rel="icon" type="image/png" href="../../images/favicon.png">
@@ -37,7 +36,7 @@
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
         <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/intense-images/1.0.7/intense.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
 </head>
 <body class=<%=(it._locals.userData.email) ? "loggedIn" : ""%>>
@@ -48,11 +47,9 @@
         <%}%>
         <div>
             <div>
-            <%console.log(it._locals.ticket)%>
                 <h1 class="header1"><%=decodeURI(atob(it._locals.ticket.subject))%></h1>
                 <div class="ticketInfo">
                 <% let opened = new Date(parseInt(it._locals.ticket.opened)).toDateString().split(" ");
-                console.log(opened);
                 if(opened[2].startsWith(0)){
                     opened[2] = opened[2].slice(1);
                 }
@@ -66,42 +63,36 @@
                     opened[2] = opened[2]+"th"
                 }
                 opened = [opened[2], opened[1], opened[3]].join(" ");
-                 let edited = new Date(parseInt(it.ticket.editedIn)).toDateString().split(" ");
-                 if(edited[2]){
-                if(edited[2].startsWith(0)){
+                 let edited = new Date(parseInt(it._locals.ticket.editedIn)).toDateString().split(" ");
+
+                if(edited[2] && edited[2].startsWith(0)){
                     edited[2] = edited[2].slice(1);
                 }
-                if(edited[2].endsWith(1)){
+                if(edited[2] && edited[2].endsWith(1)){
                     edited[2] = edited[2]+"st"
-                }else if(edited[2].endsWith(2)){
+                }else if(edited[2] && edited[2].endsWith(2)){
                     edited[2] = edited[2]+"nd"
-                }else if(edited[2].endsWith(3)){
+                }else if(edited[2] && edited[2].endsWith(3)){
                     edited[2] = edited[2]+"rd"
                 }else{
                     edited[2] = edited[2]+"th"
                 }
-                edited = [edited[2], edited[1], edited[3]].join(" ");
-                }else{
-                    edited = "never"
-                }
-                 let closed = new Date(parseInt(it.ticket.closed)).toDateString().split(" ");
-                 if(closed[2]){
-                if(closed[2].startsWith(0)){
+
+                edited[2] ? edited = [edited[2], edited[1], edited[3]].join(" ") : "never";
+                 let closed = new Date(parseInt(it._locals.ticket.closed)).toDateString().split(" ");
+                if(closed[2] && closed[2].startsWith(0)){
                     closed[2] = closed[2].slice(1);
                 }
-                if(closed[2].endsWith(1)){
+                if(closed[2] && closed[2].endsWith(1)){
                     closed[2] = closed[2]+"st"
-                }else if(closed[2].endsWith(2)){
+                }else if(closed[2] && closed[2].endsWith(2)){
                     closed[2] = closed[2]+"nd"
-                }else if(closed[2].endsWith(3)){
+                }else if(closed[2] && closed[2].endsWith(3)){
                     closed[2] = closed[2]+"rd"
                 }else{
                     closed[2] = closed[2]+"th"
                 }
                 closed = [closed[2], closed[1], closed[3]].join(" ");
-                }else{
-                closed = "never";
-                }
                 %>
                 <p>Opened On: <%=opened%></p>
                 <% if(parseInt(it._locals.ticket.closed) != 0){ %>
@@ -120,7 +111,6 @@
                 <fieldset>
                     <label for="priority">Priority:</label>
                     <select disabled name="ticket_priority" id="priority">
-                    <%console.log(it._locals)%>
                         <option <%=it._locals.ticket.priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
                         <option <%=it._locals.ticket.priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
                         <option <%=it._locals.ticket.priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
@@ -152,14 +142,14 @@
                 </fieldset>
                 <fieldset id="submitWrapper">
                 <%if(parseInt(it._locals.ticket.closed) == 0){%>
-                    <button type="button" class="buttons button1" id="closeTicket" onclick="ticketClose()"><i class="fa fa-times-circle"></i> Close Ticket</button>
+                    <button type="button" class="buttons button1" id="toggleTicket"><i class="fa fa-times-circle"></i> Close Ticket</button>
                 <%}else{%>
-                    <button type="button" class="buttons button1" id="closeTicket" onclick="ticketOpen()"><i class="fa fa-check-circle"></i> Open Ticket</button>
+                    <button type="button" class="buttons button1" id="toggleTicket"><i class="fa fa-check-circle"></i> Open Ticket</button>
                 <%}%>
-                <button type="button" class="buttons button1" onclick="editMode()"><i class="fa fa-edit"></i> Edit Ticket</button>
-                <button class="buttons highlightButton button1" type="button" onclick="sendMessage()">Send a new message</button>
-                <button type="reset" form="editTicket" class="editButtons button1 hidden" onclick="editMode()"><i class="fa fa-times-circle"></i> Discard Edits</button>
-                <button type="button" class="editButtons button1 hidden highlightButton" onclick="saveEdits()"><i class="fa fa-check-circle"></i> Apply Edits</button>
+                <button type="button" class="buttons button1 editTicket"><i class="fa fa-edit"></i> Edit Ticket</button>
+                <button class="buttons highlightButton button1" type="button" id="sendMessage">Send a new message</button>
+                <button type="reset" form="editTicket" class="editButtons button1 hidden editTicket"><i class="fa fa-times-circle"></i> Discard Edits</button>
+                <button type="button" class="editButtons button1 hidden highlightButton" id="saveEdits"><i class="fa fa-check-circle"></i> Apply Edits</button>
                 </fieldset>
             </form>
             <span class="logs" id="messageWrapper">
@@ -179,7 +169,7 @@
                 <span class="opened">
                     <hr>
                     <span class="title">
-                        <img src="/billing/public/images/User.svg" height="50" width="50" alt="User">
+                        <img src="/billing/public/images/User.svg" class="user" height="50" width="50" alt="User">
                             <div>
                                 <p><%=it._locals.userData.name%></p>
                                 <p class="role">Customer</p>
@@ -225,14 +215,13 @@
     subjectWrapper.classList.toggle("hidden");
     priority.hasAttribute("disabled") ? priority.removeAttribute("disabled") : priority.setAttribute("disabled", true);
     category.hasAttribute("disabled") ? category.removeAttribute("disabled") : category.setAttribute("disabled", true);
-    category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~it._locals.ticket.content%>, "api")
+    category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~it.ticket.content%>, "api")
     category.hasAttribute("disabled") ? imageManager.innerText = "" : transferScreenshots();
     async function transferScreenshots(){
     const imageManager = document.querySelector("#imageManager");
     const screenshots = document.querySelector("#screenshots");
     let initialScreens = [...document.querySelector("#imageManagerInitial").children].map(i => [...i.children].map(o => o.src)).map(p => p[0]);
         var fileList = initialScreens.concat([...screenshots.files]);
-        console.log(fileList)
         for(let i=0; i < fileList.length; i++){
             if (imageManager.children.length >= 5) {
                 Swal.fire({
@@ -249,7 +238,7 @@
                             Swal.fire({
                                 title: "Screenshot too big",
                                 icon: "error",
-                                html: `<p>The file <code style="color:#7066e0;">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
+                                html: `<p>The file <code class="highlightSwal1">${fileList[i].name}</code> hit the size limit. It will not be uploaded.</p>`,
                                 showCancelButton: false,
                                 confirmButtonText: "Understood",
                                 preConfirm: resolve

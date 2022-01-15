@@ -13,6 +13,7 @@
     screenshots.onchange = async event => {
         const imageManager = document.querySelector("#imageManager");
         var fileList = [...screenshots.files];
+        screenshots.value = "";
         for(let i=0; i < fileList.length; i++){
             if (imageManager.children.length >= 5) {
                 Swal.fire({

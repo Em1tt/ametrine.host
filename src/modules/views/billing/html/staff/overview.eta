@@ -43,7 +43,8 @@
 </head>
 
 <body class="dark" onresize="updateGraphs()">
-    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it.permissions).filter((i) => i[0] == it.userData.permission_id)}) %>
+<%console.log(it._locals)%>
+    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <main>
         <div class="content">
             <h1>Staff panel - Overview</h1>
@@ -82,12 +83,12 @@
                 </div>
         </div>
     </main>
-    <script>
+    <script nonce=<%=it._locals.nonce%>>
     (async() => {
             const response = await axios.get("/api/tickets/categories");
             console.log(response);
     })()
 
     </script>
-<%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it.users, permissions: it.permissions}) %>
+<%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it._locals.users, permissions: it._locals.permissions}) %>
 </body>

@@ -2,7 +2,6 @@
 function dateFormatter(data) {
   let date = new Date(data).toDateString().split(" ");
   if (data == 0 || typeof data == undefined || data == null) {
-    let date = "never";
     return "never";
   } else {
     if (date[2].startsWith(0)) {
@@ -44,7 +43,13 @@ function dateFormatter(data) {
     const tickets = response.data;
     if (tickets.length == 0) {
       const header2 = document.createElement("h2");
+      header2.classList.add("header2");
       header2.innerText = "Nothing here... Yet...";
+      if (page != 1 && page > 0) {
+        leftButtons.forEach(button => {
+            button.removeAttribute("disabled");
+        })
+    }
       return ticketsWrapper.appendChild(header2);
     } else {
       if (page == 1 && tickets.length == 10) {
@@ -66,6 +71,7 @@ function dateFormatter(data) {
       tickets.forEach((ticket) => {
         if (ticket == null) return;
         let opened = dateFormatter(ticket.opened);
+        console.log(ticket);
         let edited = dateFormatter(ticket.editedIn);
         const clickable = document.createElement("a");
         const header = document.createElement("h2");
@@ -141,5 +147,13 @@ function dateFormatter(data) {
     }
   } catch (e) {
     console.log(e);
+    const header2 = document.createElement("h2");
+    header2.classList.add("header2");
+    header2.innerText = "Nothing here... Yet... Unless you hit the ratelimit, in which case you should wait a little bit.";
+    return ticketsWrapper.appendChild(header2);
   }
 })();
+
+document.getElementById("createTicket").addEventListener("click", () => {
+  window.location.href = './tickets/create';
+});

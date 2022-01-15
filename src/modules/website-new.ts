@@ -168,7 +168,8 @@ app.use(nonce());
 //Fetch userdata middleware && permission checking
 app.use(async (r: express.Request, s: express.Response, next: express.NextFunction) => {
   const userData = await auth.getUserData(r, s);
-  let path = r.url.slice(1).split("/");
+  const path = r.url.slice(1).split("?")[0].split("/");
+  console.log(path);
   path.shift();
   path.length ? s.locals.userData = userData : 0;
   if(!isNaN(parseInt(path.at(-1)))){
@@ -218,10 +219,21 @@ app.get("/:file", (r: express.Request, s: express.Response) => {
   s.render(file);
 });
 
-app.get("/:dir/:file", (r: express.Request, s: express.Response) => {
+app.get("/:dir/:file", async (r: express.Request, s: express.Response) => {
   let file : string;
   switch(r.params.dir.toLowerCase()){
-    case "billing": file = r.params.file.toLowerCase() == "staff" ? `${billing}/staff/overview.eta` : `${billing}/${r.params.file.toLowerCase()}.eta`; break;
+    case "billing": {
+      switch(r.params.file.toLowerCase()){
+        case "staff": {
+          file = `${billing}/staff/overview.eta`;
+          await handleStaff(r,s);
+          console.log(s.locals);
+         } break;
+        default: {
+          file = `${billing}/${r.params.file.toLowerCase()}.eta`
+        }
+      }
+    }
   }
   if (!fs.existsSync(file)) return throw404(s);
   s.render(file);
@@ -261,9 +273,9 @@ app.get("/:dir/:subdir1/:subdir2/:file", (r: express.Request, s: express.Respons
   s.render(file);
 });
 
-/*app.get('*', (r: express.Request, s: express.Response) => {
+app.get('*', (r: express.Request, s: express.Response) => {
   throw404(s);
-});*/
+});
 
 // start up the website
 app.listen(config.website.port, () => {
@@ -281,4 +293,18 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
   if(!getTicket) return throw404(s);
   if(getTicket.user_id != s.locals?.userData?.user_id) return s.sendStatus(403);
   s.locals.ticket = JSON.stringify(getTicket);
+}
+async function handleStaff(r: express.Request, s: express.Response){
+  redisClient.keys("user:*", async function (err, result) {
+    if (err) {
+      console.error(err);
+      return s.status(500).send("An error occurred while retrieving the announcements. Please report this.")
+    }
+    return Promise.all(result.map(async userID => {
+      const user: UserData = await redisClient.db.hgetall(userID);
+      return {id: user.user_id, registered: user.registered, permission: user.permission_id};
+    }));
+  });
+
+  s.locals.permissions = permIDs;
 }
