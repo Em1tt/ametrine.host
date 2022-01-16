@@ -261,12 +261,24 @@ app.get("/:dir/:subdir/:file", async (r: express.Request, s: express.Response) =
   s.render(file);
 });
 
-app.get("/:dir/:subdir1/:subdir2/:file", (r: express.Request, s: express.Response) => {
+app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.Response) => {
   let file : string;
   switch(r.params.dir.toLowerCase()){
     case "billing": {
       switch(r.params.subdir1.toLowerCase()){
-        case "staff": file = `${billing}/${r.params.file.toLowerCase()}.eta`; break;
+        case "staff": {
+          s.locals.permissions = permIDs;
+          switch(r.params.subdir2.toLowerCase()){
+            case "tickets": {
+              if(parseInt(r.params.file)){
+                file = `${billing}/staff/ticket.eta`;
+                await handleTickets(r,s,true);
+              }else{
+                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+              }
+            }
+          }
+        }
       }
     } break;
   }
@@ -292,7 +304,11 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
   if(!s.locals.userData) return s.status(403)
   const getTicket : Ticket = await redisClient.db.hgetall(`ticket:${parseInt(r.params.file)}`);
   if(!getTicket) return throw404(s);
-  if(getTicket.user_id != s.locals?.userData?.user_id) return s.sendStatus(403);
+  if(staff){
+    if(getTicket.level > s.locals?.userData?.permission_id) return s.sendStatus(403);
+  }else{
+    if(getTicket.user_id != s.locals?.userData?.user_id) return s.sendStatus(403);
+  }
   s.locals.ticket = JSON.stringify(getTicket);
 }
 async function handleStaff(r: express.Request, s: express.Response) {

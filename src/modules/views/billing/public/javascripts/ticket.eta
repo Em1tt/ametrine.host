@@ -29,7 +29,7 @@ async function saveEdits() {
             content: editor.getContents(),
             categories: [category.value],
             priority: priority.value,
-            reopen: closedOn?.innerHTML == undefined ? 0 : 1,
+            status: 0,
             files: images
         });
         location.reload()
@@ -63,7 +63,7 @@ function dateFormatter(data) {
 async function ticketClose() {
     try {
         const response = await axios.put(`/api/tickets/${ticketID}`, {
-            closed: 1
+            status: 1
         });
         location.reload()
         console.log(response);
@@ -74,7 +74,7 @@ async function ticketClose() {
 async function ticketOpen() {
     try {
         const response = await axios.put(`/api/tickets/${ticketID}`, {
-            reopen: 1
+            status: 0
         });
         location.reload()
         console.log(response);
@@ -112,11 +112,9 @@ async function sendMessage() {
             content: editor.getContents(),
             files: images
         });
-        if (closedOn?.innerHTML != undefined) {
-            await axios.put(`/api/tickets/${ticketID}`, {
-                reopen: 1
-            });
-        }
+        await axios.put(`/api/tickets/${ticketID}`, {
+            status: 0
+        });
         location.reload();
         console.log(response);
     } catch (e) {

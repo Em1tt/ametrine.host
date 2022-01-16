@@ -1,3 +1,4 @@
+<script nonce=<%=it.nonce%> >
 const buttons = document.getElementsByClassName("buttons"),
     editButtons = document.getElementsByClassName("editButtons"),
     priority = document.getElementById("priority"),
@@ -5,7 +6,7 @@ const buttons = document.getElementsByClassName("buttons"),
     subjectWrapper = document.getElementById("subjectWrapper"),
     subject = document.getElementById("subject"),
     closedOn = document.getElementById("closedOn");
-const ticketID = document.getElementById("ticketID").innerHTML;
+const ticketID = <%=JSON.parse(it.ticket).ticket_id%>;
 async function saveEdits() {
     try {
         const imageManager = document.querySelector("#imageManager");
@@ -28,7 +29,7 @@ async function saveEdits() {
             content: editor.getContents(),
             categories: [category.value],
             priority: priority.value,
-            reopen: closedOn?.innerHTML == undefined ? 0 : 1,
+            status: 0,
             files: images
         });
         location.reload()
@@ -62,7 +63,7 @@ function dateFormatter(data) {
 async function ticketClose() {
     try {
         const response = await axios.put(`/api/tickets/${ticketID}`, {
-            closed: 1
+            status: 1
         });
         location.reload()
         console.log(response);
@@ -73,7 +74,7 @@ async function ticketClose() {
 async function ticketOpen() {
     try {
         const response = await axios.put(`/api/tickets/${ticketID}`, {
-            reopen: 1
+            status: 0
         });
         location.reload()
         console.log(response);
@@ -94,6 +95,8 @@ function arrayBufferToBase64(buffer, type) {  // https://stackoverflow.com/a/945
 async function sendMessage() {
     try {
         const imageManager = document.querySelector("#imageManager");
+        const awaitResponse = document.querySelector("#askResponse").checked;
+        console.log(awaitResponse);
         let images = await Promise.all([...imageManager.children].map(async (div) => {
             let image = [...div.children][0];
             const blob = await (await fetch(image.src)).blob();
@@ -112,7 +115,7 @@ async function sendMessage() {
             files: images
         });
         await axios.put(`/api/tickets/${ticketID}`, {
-            status: 2
+            status: awaitResponse ? 2 : 3
         });
         location.reload();
         console.log(response);
@@ -301,3 +304,24 @@ async function sendMessage() {
         console.log(e);
     }
 })()
+
+document.getElementById("toggleTicket").addEventListener("click", () => {
+    <%if(parseInt(it.ticket.closed) != 0) {%>
+        ticketOpen();
+    <%}else{%>
+        ticketClose();
+    <%}%>
+});
+
+[...document.getElementsByClassName("editTicket")].forEach((e) => {
+    e.addEventListener("click", () => {
+        editMode();
+    });
+});
+
+document.getElementById("saveEdits").addEventListener("click", saveEdits);
+document.getElementById("deleteTicket").addEventListener("click", deleteTicket);
+document.getElementById("sendMessage").addEventListener("click", () => {
+    sendMessage();
+});
+</script>

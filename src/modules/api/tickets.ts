@@ -386,7 +386,7 @@ export const prop = {
                                 });
                             }
                             case "PUT": { // Updates the status on the ticket (Either opening it again after being closed, setting tags, etc)
-                                const { closed, subject, categories, reopen, priority, content, status } = req.body;
+                                const { subject, categories, priority, content, status } = req.body;
                                 let updated = false;
                                 /**
                                   * closed (closed=1) - Close the ticket
@@ -395,23 +395,13 @@ export const prop = {
                                   * categories (categories=0,1) - Categories for the ticket.
                                   * reopen (reopen=1) - Reopens the ticket
                                   */
-                                if(parseInt(status)){
-                                    if(parseInt(status) < 0 || parseInt(status) > 4) return res.sendStatus(406);
+                                if(parseInt(status) || parseInt(status) === 0){
+                                    if(![0,1,2,3].includes(parseInt(status))) return res.sendStatus(406);
                                     await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", parseInt(status)])
                                     updated = true;
                                 }
-                                if (closed && closed == "1" && !reopen) { // If closed is provided, close the ticket.
-                                    if (getTicket["closed"] != 0) return res.sendStatus(204);
-                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 1, "closed", timestamp])
-                                    updated = true;
-                                }
-                                if (reopen && reopen == "1") { // If reopen is provided, Open the ticket again.
-                                    if (getTicket["closed"] == 0) return res.sendStatus(406);
-                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 0, "opened", timestamp, "closed", 0])
-                                    updated = true;
-                                }
                                 //if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
-                                if (getTicket["user_id"] != userData["user_id"]) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
+                                if (getTicket["user_id"] != userData["user_id"] && userData["permission_id"] != 4 && (subject?.length || categories?.length || content)) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
                                 if (subject && subject.length) {
                                     await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "subject", utils.encode_base64(subject), "editedIn", timestamp])
                                     if (content) {
