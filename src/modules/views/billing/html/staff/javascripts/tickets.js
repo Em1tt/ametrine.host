@@ -1,4 +1,3 @@
-
 function dateFormatter(data) {
   let date = new Date(data).toDateString().split(" ");
   if (data == 0 || typeof data == undefined || data == null) {
@@ -25,27 +24,61 @@ function dateFormatter(data) {
   const ticketsWrapper = document.getElementById("ticketWrapper");
   try {
     const urlParams = new URLSearchParams(window.location.search);
+
+
+    switch(parseInt(urlParams.get("status"))){
+      case 0: document.getElementById("asr").setAttribute("checked", true); break;
+      case 1: document.getElementById("clo").setAttribute("checked", true); break;
+      case 2: document.getElementById("acr").setAttribute("checked", true); break;
+      case 3: document.getElementById("ans").setAttribute("checked", true); break;
+      default: document.getElementById("all").setAttribute("checked", true); break;
+    }
+  
+    document.getElementById("all").addEventListener("change", (e) => {
+      urlParams.delete('status');
+      window.location.search = urlParams;
+    });
+    document.getElementById("asr").addEventListener("change", (e) => {appendURLParams(0)});
+    document.getElementById("acr").addEventListener("change", (e) => {appendURLParams(2)});
+    document.getElementById("ans").addEventListener("change", (e) => {appendURLParams(3)});
+    document.getElementById("clo").addEventListener("change", (e) => {appendURLParams(1)});
+  
+    function appendURLParams(status){
+      urlParams.set('status', status);
+      window.location.search = urlParams;
+    }
+
+    let status = urlParams.get("status");
+    if( !status ) status = undefined;
     let page = urlParams.get("page");
     if (!page || page == undefined || page == null) page = 1;
     const leftButtons = [...document.getElementsByClassName("pageLeft")],
     rightButtons = [...document.getElementsByClassName("pageRight")];
     leftButtons.forEach(button => {
       button.addEventListener("click", () => {
-          window.location = `${window.location.pathname}?page=${parseInt(page) - 1}`
+        urlParams.set('page', parseInt(page)-1);
+          window.location.search = urlParams
       });
   });
   rightButtons.forEach(button => {
       button.addEventListener("click", () => {
-          window.location = `${window.location.pathname}?page=${parseInt(page) + 1}`
+        urlParams.set('page', parseInt(page)+1);
+        window.location.search = urlParams
       });
   })
-    const response = await axios.get(`/api/tickets/list?page=${page}`);
+    const response = await axios.get(`/api/tickets/list?page=${page}&status=${status}`);
     console.log(response);
     const tickets = response.data;
     if (tickets.length == 0) {
       const header2 = document.createElement("h2");
+      header2.classList.add("header2");
       header2.innerText = "Nothing here... Yet...";
-      return ticketsWrapper.appendChild(header2);
+      if (page != 1 && page > 0) {
+        leftButtons.forEach(button => {
+            button.removeAttribute("disabled");
+        })
+    }
+    return ticketsWrapper.appendChild(header2);
     } else {
       if (page == 1 && tickets.length == 10) {
         rightButtons.forEach(button => {
@@ -139,6 +172,7 @@ function dateFormatter(data) {
         clickable.appendChild(footer);
       });
     }
+
   } catch (e) {
     console.log(e);
   }

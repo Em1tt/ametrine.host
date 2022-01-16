@@ -104,7 +104,7 @@
   transition: var(--nav-transition-speed);
 }
 
-.navbar:hover .header svg {
+.navbar:hover .header svg, .navbar:focus-within .header svg {
   color: var(--nav-header-arrow-hover);
   transform: rotate(-180deg);
   transition: var(--nav-transition-speed);
@@ -165,17 +165,17 @@
     height: 100%;
     overflow-x: hidden;
   }
-  .navbar:hover {
+  .navbar:hover, .navbar:focus-within {
     width: 16rem;
     overflow-y: auto;
   }
-  .navbar:hover .link-text {
+  .navbar:hover .link-text, .navbar:focus-within .link-text {
     display: inline;
   }
-  .navbar:hover .header svg {
+  .navbar:hover .header svg, .navbar:focus-within .header svg {
     margin-left: 11rem;
   }
-  .navbar:hover .header-text {
+  .navbar:hover .header-text, .navbar:focus-within .header-text {
     background: var(--nav-header-text-gradient);
     background-clip: text;
     -webkit-background-clip: text;

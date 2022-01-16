@@ -10,21 +10,21 @@
         </li>
 
         <li class="nav-item">
-            <a id="announcementButton" aria-label="Announcements" class="nav-link">
+            <a tabindex=0 id="announcementButton" aria-label="Announcements" class="nav-link">
                 <i class="fa fa-bell"></i>
                 <span aria-hidden="true" class="link-text">Announcements</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a aria-label="Order" id="order" class="nav-link">
+            <a tabindex=0 aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-shopping-cart"></i>
                 <span aria-hidden="true" class="link-text">Order</span>
             </a>
         </li>
 
         <li class="nav-item">
-            <a aria-label="Support" id="support" class="nav-link">
+            <a tabindex=0 aria-label="Support" id="support" class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
                 <span aria-hidden="true" class="link-text">Support</span>
             </a>
@@ -48,7 +48,7 @@
         </li>
         <% }%>
         <li class="nav-item pushDown" aria-label="Change the theme">
-            <a class="nav-link" aria-label="Theme-Changer" id="theme-button">
+            <a tabindex=0 class="nav-link" aria-label="Theme-Changer" id="theme-button">
                 <i class="fa fa-paint-roller"></i>
                 <span aria-hidden="true" class="link-text">Re-Theme</span>
             </a>

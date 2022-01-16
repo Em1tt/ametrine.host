@@ -19,7 +19,7 @@
         <%}%>
         <% if(staffPages.includes("all") || staffPages.includes("support")){ %>
         <li class="nav-item">
-            <a aria-label="Support" id="support" class="nav-link">
+            <a href="/billing/staff/tickets" aria-label="Support" id="support" class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
                 <span aria-hidden="true" class="link-text">Support</span>
             </a>
@@ -35,7 +35,7 @@
         <%}%>
         <% if(staffPages.includes("all") || staffPages.includes("packages")){ %>
         <li class="nav-item">
-            <a aria-label="Order" id="order" class="nav-link">
+            <a href="#" aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-shopping-cart"></i>
                 <span aria-hidden="true" class="link-text">Manage Packages</span>
             </a>
@@ -50,7 +50,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a aria-label="Order" id="order" class="nav-link">
+            <a href="#" aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-tools"></i>
                 <span aria-hidden="true" class="link-text">Settings</span>
             </a>

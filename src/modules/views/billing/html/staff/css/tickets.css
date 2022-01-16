@@ -14,10 +14,10 @@ main > div > div{
     height: auto;
     margin-bottom: 20px;
 }
-main > div > div span{
+main > div > div span:not([class="pageButtons"]){
     background: #1e1f26;
 }
-main > div > div > span:hover{
+main > div > div > span:not([class="pageButtons"]):hover{
     background: #141419;
 }
 main > div > div button{
