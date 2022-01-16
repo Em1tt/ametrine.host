@@ -159,7 +159,7 @@ export const prop = {
                             return category;
                         }
                     }) : []
-                    if (files.length) {
+                    if (files && files.length) {
                         const maxUploadFiles = files.filter(file => {
                             if (!file.data) return true;
                             const buffer = Buffer.from(file.data.split(",")[1]);

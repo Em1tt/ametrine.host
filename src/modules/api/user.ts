@@ -5,6 +5,8 @@ import express                 from 'express';
 import { auth }                from './auth';
 import { otp }                 from '../otp';
 import { utils }               from '../utils';
+import { permissions }         from '../permissions'
+import { UserData }            from "../../types/billing/user";
 let client: any;
 export const prop = {
     name: "user",
@@ -33,6 +35,17 @@ export const prop = {
         if (!paramName) {
             paramName = ""
         }
+
+        function showUserData(userObj: UserData) {
+            return {
+                "user_id": parseInt(userObj.user_id.toString()),
+                "name": userObj.name,
+                "email": userObj.email,
+                "permission_id": userObj.permission_id,
+                "2fa": (userObj["2fa"] == 1)
+            };
+        }
+
         switch (paramName) {
             case "logout": { // Logs out a user.
                 if (utils.allowedMethod(req, res, ["POST"])) {
@@ -120,7 +133,7 @@ export const prop = {
                 break; // TS errors without this.
             }
             case "": {
-                if (utils.allowedMethod(req, res, ["DELETE", "PUT"])) {
+                if (utils.allowedMethod(req, res, ["DELETE", "PUT", "GET"])) {
                     switch (req.method) {
                         case "PUT": { // Updating user data, such as first name, email, etc
                             let user = await client.db.hmget(`user:${userData["user_id"]}`, ["password", "salt"])
@@ -197,6 +210,39 @@ export const prop = {
                         case "DELETE": // Deletes the account.
 
                             break;
+                        case "GET": {// Shows the user their account information (Or staff can view)
+                            if (Object.keys(req.query).length > 0) {
+                                if (permissions.hasPermission(userData['permission_id'], `/users`)) {
+                                    const userID = parseInt(req.query.id);
+                                    const allUsers = parseInt(req.query.list) == 1;
+                                    if (!isNaN(userID)) { // no user ID provided or the user isn't staff
+                                        const user = await client.db.hgetall(`user:${userID}`);
+                                        if (!user) return res.sendStatus(404);
+                                        res.status(200).json(showUserData(user));
+                                    } else if (allUsers) {
+                                        return client.keys("user:*", async function (err, result) {
+                                            if (err) {
+                                                console.error(err);
+                                                return res.status(500).send("Error occured while retrieving keys for users. Please report this.")
+                                            }
+                                            const users: Array<UserData> = await Promise.all(result.map(async userID => {
+                                                const ticket = await client.db.hgetall(userID);
+                                                return ticket;
+                                            }));
+                                            res.status(200).json(users.map(user => showUserData(user)));
+                                        })
+                                    }
+                                    
+                                    return false;
+                                } else {
+                                    res.status(200).json(showUserData(userData));
+                                }
+                            } else {
+                                res.status(200).json(showUserData(userData));
+                            }
+                            
+                            
+                        }
                     }
                 }
                 break;

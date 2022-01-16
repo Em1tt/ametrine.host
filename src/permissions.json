@@ -8,23 +8,23 @@
         "accessPages": ["all"]
     },
     "2": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
         "accessPages": ["all"]
     },
     "2:3": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
         "accessPages": ["all"]
     },
     "2:4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
         "accessPages": ["all"]
     },
     "2:5": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
         "accessPages": ["all"]
     },
     "4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/"],
+        "accessAPI": ["/users", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/knowledgebase/:articleid"],
         "accessPages": ["all"]
     }
     

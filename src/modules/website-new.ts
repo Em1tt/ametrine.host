@@ -270,12 +270,22 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
           s.locals.permissions = permIDs;
           switch(r.params.subdir2.toLowerCase()){
             case "tickets": {
-              if(parseInt(r.params.file)){
+              if (parseInt(r.params.file)){
                 file = `${billing}/staff/ticket.eta`;
                 await handleTickets(r,s,true);
-              }else{
+              } else {
                 file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
               }
+              break;
+            }
+            case "knowledgebase": {
+              if (parseInt(r.params.file)){
+                file = `${billing}/staff/knowledgebase.eta`;
+                await handleArticles(r,s,true);
+              } else {
+                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+              }
+              break;
             }
           }
         }
@@ -286,7 +296,7 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
   s.render(file);
 });
 
-app.get('*', (r: express.Request, s: express.Response) => {
+app.all('*', (r: express.Request, s: express.Response) => {
   throw404(s);
 });
 
@@ -301,6 +311,17 @@ function throw404(s: express.Response){
 }
 
 async function handleTickets(r: express.Request, s: express.Response, staff: boolean){
+  if(!s.locals.userData) return s.status(403)
+  const getTicket : Ticket = await redisClient.db.hgetall(`ticket:${parseInt(r.params.file)}`);
+  if(!getTicket) return throw404(s);
+  if(staff){
+    if(getTicket.level > s.locals?.userData?.permission_id) return s.sendStatus(403);
+  }else{
+    if(getTicket.user_id != s.locals?.userData?.user_id) return s.sendStatus(403);
+  }
+  s.locals.ticket = JSON.stringify(getTicket);
+}
+async function handleArticles(r: express.Request, s: express.Response, staff: boolean){
   if(!s.locals.userData) return s.status(403)
   const getTicket : Ticket = await redisClient.db.hgetall(`ticket:${parseInt(r.params.file)}`);
   if(!getTicket) return throw404(s);
