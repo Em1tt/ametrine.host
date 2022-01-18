@@ -1,5 +1,5 @@
 export interface UserData {
-    registered: any;
+    readonly registered     : number | Date;
     readonly refreshToken   : string;
     readonly accessToken    : string;
     readonly user_id        : string | number;

@@ -1,14 +1,17 @@
 /**
  * API for managing knowledgebase
  */
-import express                 from 'express';
-import { auth }                from './auth';
-import { permissions }         from '../permissions'
-import knowledgebase_categories       from '../../knowledgebase_categories.json';
+import express                  from 'express';
+import { auth }                 from './auth';
+import { permissions }          from '../permissions'
+import knowledgebase_categories from '../../knowledgebase_categories.json';
 import { Article }              from '../../types/billing/knowledgebase';
-import { utils }               from '../utils'
-import { cdn }                 from '../cdn'
-import crypto                  from 'crypto'
+import { UserData }             from '../../types/billing/user';
+import { Redis }                from '../../types/redis';
+
+import { utils }                from '../utils'
+import { cdn }                  from '../cdn'
+import crypto                   from 'crypto'
 const settings = {
     maxTitle: 100, // Maximum Length for the title of the knowledgebase article.
     maxBody: 2000, // Maximum Length for knowledgebasse article.
@@ -24,7 +27,7 @@ const settings = {
  * @param userData userData
  * @returns boolean
  */
-function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: any): boolean {
+function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: UserData): boolean {
     if (!permissions.hasPermission(userData['permission_id'], `/knowledgebase/${paramName}`)) {
         res.sendStatus(403);
         return false;
@@ -45,7 +48,7 @@ function paginate(array: Array<unknown>, page_size: number, page_number: number)
     return array.slice((page_number - 1) * page_size, page_number * page_size);
 }
 
-let client: any;
+let client: Redis;
 export const prop = {
     name: "knowledgebase",
     desc: "Support Knowledgebase System",
@@ -53,7 +56,7 @@ export const prop = {
         max: 20,
         time: 10 * 1000
     },
-    setClient: function(newClient: unknown): void { client = newClient; },
+    setClient: function(newClient: Redis): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
         async function fileURIs(articleID: string | number, files: Array<any>) {
             let URIS = []
@@ -99,7 +102,7 @@ export const prop = {
             paramName = ":articleid";
         }
         async function newArticle(article: Article) {
-            const name = await client.db.hget(`user:${article.user_id}`, 'name');
+            const name = await client.db.hget(`user:${article.user_id}`, 'name') as string;
             if (name && name.length) {
                 const newArticleProps = { ...article};
                 newArticleProps["article_id"] = parseInt(article.article_id.toString());
@@ -239,7 +242,7 @@ export const prop = {
                             break;
                     }
                     articles = paginate(articles.filter(article => articleWhere(article)).filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
-                                                   .sort((a,b) => (b.createdIn as any) - (a.createdIn as any)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
+                                                   .sort((a,b) => (b.createdIn as number) - (a.createdIn as number)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
                     return res.status(200).json(await Promise.all(articles.map(await newArticle)));
                 })
             }

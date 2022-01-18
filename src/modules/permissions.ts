@@ -13,8 +13,8 @@ import permission from '../permissions.json'
  */
 
 export const permissions = {
-    hasPermission: (permissionID: string, path: string): boolean => {
-        if (!permissionID && typeof permissionID != 'number') return false; // Also the reason why the permission ID 0 never works.
+    hasPermission: (permissionID: string | number, path: string): boolean => {
+        if (!permissionID && isNaN(parseInt(permissionID as string))) return false; // Also the reason why the permission ID 0 never works.
         //if (parseInt(permissionID) == 0) return false; // This is the reason why nothing with 0 wont work, not sure why I added this.
         return permission[permissionID].accessAPI.includes("all") ? true : permission[permissionID].accessAPI.includes(path);
     },

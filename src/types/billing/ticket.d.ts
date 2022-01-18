@@ -14,3 +14,12 @@ export interface Ticket {
       priority              : string;
       key                   : string;
 }
+
+export interface Message {
+      readonly msg_id    : number;
+      readonly ticket_id    : number;
+      readonly user_id    : number;
+      readonly createdIn    : number;
+      readonly editedIn    : number;
+      
+}

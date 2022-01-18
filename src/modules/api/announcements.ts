@@ -6,7 +6,8 @@ import { permissions }         from '../permissions'
 import { auth }                from './auth';
 import { Announcement }        from '../../types/billing/announcement';
 import { utils }               from '../utils'
-let client;
+import { Redis }               from "../../types/redis";
+let client: Redis;
 
 export const prop = {
     name: "announcements",
@@ -15,8 +16,8 @@ export const prop = {
        max: 10,
        time: 30 * 1000
     },
-    setClient: function(newClient: unknown): void { client = newClient; },
-    run: async (req: express.Request, res: express.Response): Promise<any> => {
+    setClient: function(newClient: Redis): void { client = newClient; },
+    run: async (req: express.Request, res: express.Response): Promise<unknown> => {
         if (!client) return res.status(500).send("Redis Client not available.");
         const allowedMethods = ["GET", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed

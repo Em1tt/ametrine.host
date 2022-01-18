@@ -8,9 +8,9 @@ import { randomBytes, createHash }  from 'crypto';
 import ms                           from 'ms';
 import { otp }                      from '../otp';
 import { UserData }                 from "../../types/billing/user";
+import { Redis }                    from "../../types/redis";
 
-
-let client: any;
+let client: Redis;
 
 export interface AuthLoginStruct {
     readonly email         : string;
@@ -212,10 +212,13 @@ export const auth = {
         if (!accessToken && !refreshToken && type == "both") return forbidden()
         let user_id: string;
 
-        let refreshTokenValid: any;
+        let refreshTokenValid: {
+            exp: number,
+            id: string
+        };
 
         //let tokenInDB: Array<number>;
-        let tokenInDB: any;
+        let tokenInDB: unknown;
 
         if (["refresh", "both"].includes(type)) {
             try {
@@ -237,19 +240,19 @@ export const auth = {
             }
             
         }
-        let accessTokenValid: any;
+        let accessTokenValid: UserData
         if (["access", "both"].includes(type)) {
             try {
                 accessTokenValid = jwt.verify(accessToken, process.env.ACCESS_TOKEN, client.JWToptions.ATOptions)
                 if (!accessTokenValid) return (sendResponse) ? res.sendStatus(403) : 101; // Forbidden, 101 for allowing me to know if it needs to generate an Access Token.
-                user_id = accessTokenValid.id;
+                user_id = accessTokenValid["id"];
             } catch (e) {
                 console.error(e)
                 return (sendResponse) ? res.sendStatus(401) : 101;
             }
         }
         if (type == "both") {
-            if (refreshTokenValid.id != accessTokenValid.id) return forbidden() // Forbidden.
+            if (refreshTokenValid["id"] != accessTokenValid["id"]) return forbidden() // Forbidden.
         }
         const userExists = await client.db.exists(`user:${user_id}`);
         if (!userExists) return (sendResponse) ? res.sendStatus(404) : 404;
@@ -277,7 +280,7 @@ export const prop = {
         max: 10,
         time: 60 * 1000
     },
-    setClient: function(newClient: unknown): void { client = newClient; },
+    setClient: function(newClient: Redis): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<express.Response | void> => {
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.

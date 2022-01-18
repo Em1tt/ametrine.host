@@ -5,10 +5,14 @@ import express                 from 'express';
 import { auth }                from './auth';
 import { permissions }         from '../permissions'
 import ticket_categories       from '../../ticket_categories.json';
-import { Ticket }              from '../../types/billing/ticket';
+import { Ticket, Message }              from '../../types/billing/ticket';
 import { utils }               from '../utils'
 import { cdn }                 from '../cdn'
 import crypto                  from 'crypto'
+import { Redis }               from "../../types/redis";
+import { File }                from "../../types/billing/file";
+import { UserData }            from "../../types/billing/user";
+
 const settings = {
     maxTitle: 100, // Maximum Length for the title of the ticket.
     maxBody: 2000, // Maximum Length for messages.
@@ -24,7 +28,7 @@ const settings = {
  * @param userData userData
  * @returns boolean
  */
-function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: any): boolean {
+function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: UserData): boolean {
     if (!permissions.hasPermission(userData['permission_id'], `/tickets/${paramName}`)) {
         res.sendStatus(403);
         return false;
@@ -45,7 +49,7 @@ function paginate(array: Array<unknown>, page_size: number, page_number: number)
     return array.slice((page_number - 1) * page_size, page_number * page_size);
 }
 
-let client: any;
+let client: Redis;
 export const prop = {
     name: "tickets",
     desc: "Support Ticket System",
@@ -53,9 +57,9 @@ export const prop = {
         max: 20,
         time: 10 * 1000
     },
-    setClient: function(newClient: unknown): void { client = newClient; },
-    run: async (req: express.Request, res: express.Response): Promise<any> => {
-        async function fileURIs(ticketID: string | number, files: Array<any>, key?: string) {
+    setClient: function(newClient: Redis): void { client = newClient; },
+    run: async (req: express.Request, res: express.Response): Promise<unknown> => {
+        async function fileURIs(ticketID: string | number, files: Array<File>, key?: string) {
             let randomKey;
             if (key && key != null) {
                 randomKey = key;
@@ -83,7 +87,7 @@ export const prop = {
                         console.error(e)
                         return null;
                     }
-                })) as Array<any>).filter(x => x != null);
+                })) as Array<string>).filter(x => x != null);
             }
             return { URIS, randomKey }
         }
@@ -152,10 +156,10 @@ export const prop = {
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
                     if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
-                    const category_ids = (categories) ? categories.split(",").map((category: any) => {
-                        const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
+                    const category_ids = (categories) ? categories.split(",").map((category: string | number) => {
+                        const findCategory = ticket_categories.find(cate => cate.id == parseInt(category.toString()));
                         if (findCategory) {
-                            category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                            category = parseInt(category.toString()); // Converting it to Int in case of any strings at the end.
                             return category;
                         }
                     }) : []
@@ -445,6 +449,10 @@ export const prop = {
                             case "DELETE": { // Closes the Ticket.
                                 if (permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`) && req.body.force) { // Force delete a message. (Used for spam tickets)
                                     return client.del(`ticket:${getTicket["ticket_id"]}`, async function (err0) {
+                                        if (err0) {
+                                            console.error(err0);
+                                            return res.status(500).send("Error occured while deleting the ticket. Please report this.")
+                                        }
                                         if (req.body.msgs) {
                                             return client.keys(`ticket_msg:${ticketID}:*`, function (err, result) {
                                                 if (err) {

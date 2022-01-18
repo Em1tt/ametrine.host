@@ -7,7 +7,8 @@ import { otp }                 from '../otp';
 import { utils }               from '../utils';
 import { permissions }         from '../permissions'
 import { UserData }            from "../../types/billing/user";
-let client: any;
+import { Redis }               from "../../types/redis";
+let client: Redis;
 export const prop = {
     name: "user",
     desc: "API for users.",
@@ -15,7 +16,7 @@ export const prop = {
         max: 2,
         time: 10 * 1000
     },
-    setClient: function(newClient: unknown): void { client = newClient; },
+    setClient: function(newClient: Redis): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<express.Response> => {
         // Copy & Paste from tickets.ts hA
         const allowedMethods = ["GET", "POST", "PATCH", "PUT", "DELETE"];
