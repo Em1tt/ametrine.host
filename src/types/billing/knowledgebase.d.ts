@@ -6,6 +6,7 @@ export interface Article {
     content               : string;
     readonly state        : string | number;
     readonly category_ids : string;
+    readonly tags         : Array<string>;
     likes                 : number;
     dislikes              : number;
     files                 : Array<string> | number;

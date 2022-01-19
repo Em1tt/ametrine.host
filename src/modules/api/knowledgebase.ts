@@ -130,6 +130,13 @@ export const prop = {
             case "create": { // Creates the article.
                 if (allowedMethod(req, res, ["POST"], paramName, userData)) {
                     const { header, content, categories, files } = req.body;
+                    let { tags } = req.body;
+                    // Tags must be in commas, so for example: "billing,vps,article"
+                    if (tags.length) {
+                        tags = tags.split(",")
+                    }
+                    if (!tags.length) tags = [];
+
                     if (!header || !content) return res.status(406).send("Missing header or content.");
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (header.length > settings.maxTitle) return res.status(403).send(`Header is too long. Max Length is ${settings.maxTitle}`);
@@ -186,6 +193,7 @@ export const prop = {
                                             "content", articleData.content,
                                             "state", 0,
                                             "category_ids", category_ids.join(","),
+                                            "tags", tags.join(","),
                                             "likes", 0,
                                             "dislikes", 0,
                                             "files", articleData.files,
