@@ -50,7 +50,7 @@
     "redis": "^3.1.2",
     "sharp": "^0.29.3",
     "smtp-server": "^3.9.0",
-    "stripe": "^8.182.0"
+    "stripe": "^8.198.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.9",
