@@ -132,10 +132,10 @@ export const prop = {
                     const { header, content, categories, files } = req.body;
                     let { tags } = req.body;
                     // Tags must be in commas, so for example: "billing,vps,article"
-                    if (tags.length) {
+                    if (tags && tags.length) {
                         tags = tags.split(",")
                     }
-                    if (!tags.length) tags = [];
+                    if (!tags || !tags.length) tags = [];
 
                     if (!header || !content) return res.status(406).send("Missing header or content.");
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
@@ -168,7 +168,8 @@ export const prop = {
                             header: utils.encode_base64(header),
                             content: JSON.stringify(content),
                             category_ids: category_ids.join(","),
-                            files: (cdnURIs.URIS.length) ? JSON.stringify(cdnURIs.URIS) : '[]'
+                            files: (cdnURIs.URIS.length) ? JSON.stringify(cdnURIs.URIS) : '[]',
+                            tags: tags
                         }
 
                         /*
@@ -209,6 +210,30 @@ export const prop = {
                 res.set("Allow", "GET");
                 if (req.method != "GET") return res.sendStatus(405);
                 return res.status(200).json(knowledgebase_categories);
+            }
+            case "tags": { // All available tags
+                res.set("Allow", "GET");
+                if (req.method != "GET") return res.sendStatus(405);
+                return client.keys("article:*", async function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send("Error occured while retrieving keys for articles. Please report this.")
+                    }
+                    const articles: Array<Article> = await Promise.all(result.map(async articleID => {
+                        const article = await client.db.hgetall(articleID);
+                        return article;
+                    }))
+                    const tags = [];
+                    articles.filter(article => article.state == 1).map(article => {
+                        if (article.tags.toString() != "") {
+                            const splitTag = (article.tags.toString()).split(",");
+                            if (splitTag[0] != "") {
+                                splitTag.forEach(tag => tags.push(tag));
+                            }
+                        }
+                    })
+                    return res.status(200).json(tags);
+                })
             }
             case "list": { // Lists the articles
                 res.set("Allow", "GET");
