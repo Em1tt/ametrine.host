@@ -1,0 +1,13 @@
+main{
+    overflow: hidden;
+}
+main p{
+    position: absolute;
+    top: -10px;
+    left: 100px;
+    color: #141419 !important;
+    font-size: 2rem;
+    font-weight: bold;
+    opacity: 1 !important;
+    filter:unset !important;
+}

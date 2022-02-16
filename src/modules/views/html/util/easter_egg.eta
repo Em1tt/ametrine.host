@@ -6,7 +6,7 @@
     href="https://fonts.googleapis.com/css?family=Roboto+Mono"
   />
   <head>
-    <link rel="stylesheet" href="../css/404.css">
+    <link rel="stylesheet" href="../../css/404.css">
   </head>
   <body>
     <ball></ball>
@@ -15,6 +15,6 @@
     <h2>CTRL+CLICK FOR "AI" MODE | CLICK TO START</h2>
     <h3 id="404">404</h3>
     <h3 id="pnf">Page not found.</h3>
-    <script src="../js/404.js"></script>
+    <script src="../../js/404.js"></script>
   </body>
 </html>

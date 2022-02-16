@@ -1,7 +1,7 @@
 {
     "0": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"],
-        "accessPages": ["/", "/mail", "/tickets", "/tickets/create", "/tickets/:id", "/staff/announcements"]
+        "accessPages": ["/", "/billing", "/billing/mail", "/billing/tickets", "/billing/tickets/create", "/billing/tickets/:id"]
     },
     "1": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],

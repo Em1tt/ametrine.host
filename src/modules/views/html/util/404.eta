@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%~ E.includeFile('../../templates/head.eta', {css: "../css/error.css"}) %>
+
+  <body>
+    <%~ E.includeFile('../../templates/preloader.eta') %>
+    <%~ E.includeFile('../../templates/navbar.eta') %>
+    <header id="header">
+      <div>
+        <span>
+          <h1>Page doesn't exist</h1>
+          <h2 class="subtitle">Go <a href="/">back home</a> or visit the <a href="/billing/">billing panel</a>.</h2>
+        </span>
+            <p class="error">404</p>
+      </div>
+    </header>
+    <div class="divider"></div>
+    <%~ E.includeFile('../../templates/footer.eta') %>
+    <%~ E.includeFile('../../templates/backtotop.eta') %>
+  </body>
+</html>
