@@ -37,7 +37,8 @@
 </head>
 <body class=<%=(it._locals.userData.email) ? "loggedIn" : ""%>>
     <main id="main">
-        <p id="text">403: Access denied</p>
+        <div></div>
+        <p id="error-text">403: Access denied</p>
     </main>
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <aside id="authentication" <%=it._locals.userData.email ? 0 : 'class=shown'%>>
@@ -112,6 +113,6 @@
             "/billing/public/images/forest.svg",
             "/billing/public/images/hole.svg"
         ];
-        document.getElementById("main").style = `background: url(${arr[Math.floor(Math.random() * arr.length)]}) no-repeat center center fixed; background-size: cover; width: 100vw; height: 100vh; filter: hue-rotate(${Math.floor(Math.random() * 360)}deg) invert(${Math.round(Math.random())}) saturate(${Math.round(Math.random() * 50) == 5 ? 0 : 1}) sepia(${Math.round(Math.random() * 20) == 5 ? 1 : 0});`;
+        document.querySelector("#main > div").style = `background: url(${arr[Math.floor(Math.random() * arr.length)]}) no-repeat center center fixed; background-size: cover; width: 100vw; height: 100vh; filter: hue-rotate(${Math.floor(Math.random() * 360)}deg) invert(${Math.round(Math.random())}) saturate(${Math.round(Math.random() * 50) == 5 ? 0 : 1}) sepia(${Math.round(Math.random() * 20) == 5 ? 1 : 0});`;
     </script>
 </body>

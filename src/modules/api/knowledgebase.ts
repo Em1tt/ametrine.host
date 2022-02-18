@@ -224,7 +224,9 @@ export const prop = {
                         return article;
                     }))
                     const tags = [];
-                    articles.filter(article => article.state == 1).map(article => {
+                    articles.filter(article => article.state == 1)
+                        .filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
+                        .map(article => {
                         if (article.tags.toString() != "") {
                             const splitTag = (article.tags.toString()).split(",");
                             if (splitTag[0] != "") {
@@ -232,7 +234,7 @@ export const prop = {
                             }
                         }
                     })
-                    return res.status(200).json(tags);
+                    return res.status(200).json([...new Set(tags)]); //Set to remove duplicate values.
                 })
             }
             case "list": { // Lists the articles
@@ -275,7 +277,8 @@ export const prop = {
                             break;
                     }
                     articles = paginate(articles.filter(article => articleWhere(article)).filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
-                                                   .sort((a,b) => (b.createdIn as number) - (a.createdIn as number)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
+                                                .filter(article => (JSON.parse(req.query.tags)?.length) ? JSON.parse(req.query.tags).some(a => article.tags.includes(a)) : true)
+                                                .sort((a,b) => (b.createdIn as number) - (a.createdIn as number)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
                     return res.status(200).json(await Promise.all(articles.map(await newArticle)));
                 })
             }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ametrine.host | Billing</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!--STYLESHEETS-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-add-css="false"></script>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/svg-with-js.css" rel="stylesheet" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/knowledgebase.css" rel="stylesheet">
+    <script src="/billing/public/javascripts/theme.js" async defer></script>
+    <link rel="stylesheet" href="/billing/public/stylesheets/pillbox.css">
+    <script src="/billing/public/javascripts/pillbox.js"></script>
+</head>
+<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+    <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
+    <main>
+        <div>
+            <div>
+                <h1 class="header1">Browse the knowledgebase</h1>
+            </div>
+            <hr class="semanticLine">
+            <form>
+                <div id="searchbar"></div><button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <h2 class="header2">Categories</h2>
+        <div class="knowledgebase-categories">
+            <a href="#">
+                <h2 class="header2">Billing Panel</h2>
+                <p>Ask any billing questions here!</p>
+            </a>
+            <a href="#">
+                <h2 class="header2">Partnerships & Sponsorships</h2>
+                <p>If you want to partner with us!</p>
+            </a>
+            <a href="#">
+                <h2 class="header2">Service Issues</h2>
+                <p>Resolve issues with our centralized database of solved issues.</p>
+            </a>
+        </div>
+    </main>
+    <%~ E.includeFile('../../public/templates/authentication.eta')%>
+    <%~ E.includeFile('../../public/templates/support.eta')%>
+    <%~ E.includeFile('../../public/templates/announcements.eta') %>
+    <%~ E.includeFile('../../public/javascripts/announcements.eta', {userData: it.userData, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
+    <script src="/billing/public/javascripts/authentication.js" async defer></script>
+    <script src="/billing/public/javascripts/popups.js" async defer></script>
+    <script src="/billing/public/javascripts/articles.js" async defer></script>
+    <script nonce=<%=it._locals.nonce%>>
+    </script>
+</body>

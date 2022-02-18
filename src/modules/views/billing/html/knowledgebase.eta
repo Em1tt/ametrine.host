@@ -30,33 +30,35 @@
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
-    <link href="/billing/public/stylesheets/login.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/knowledgebase.css" rel="stylesheet">
     <script src="/billing/public/javascripts/theme.js" async defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
+    <link rel="stylesheet" href="/billing/public/stylesheets/pillbox.css">
+    <script src="/billing/public/javascripts/pillbox.js"></script>
 </head>
-<body class=<%=(it?._locals?.userData?.email) ? "loggedIn" : ""%>>
-    <main id="main">
-        <div></div>
-        <p id="error-text">404: Page not found</p>
+<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it.userData.email ? "user-cog" : "users", text: it.userData.email ? "My Account" : "Sign-In", permission_id: it.userData.permission_id, config: it.config}) %>
+    <main>
+        <div>
+            <div>
+                <h1 class="header1">Browse the knowledgebase</h1>
+            </div>
+            <hr class="semanticLine">
+            <form id="tag-search">
+                <div id="searchbar"></div><button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <h2 class="header2">Categories</h2>
+        <div class="knowledgebase-categories" id="knowledgebase-categories">
+        </div>
     </main>
-        <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <%~ E.includeFile('../public/templates/authentication.eta')%>
-    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it?._locals?.userData?.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
     <%~ E.includeFile('../public/templates/support.eta')%>
     <%~ E.includeFile('../public/templates/announcements.eta') %>
-    <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it?._locals?.userData, nonce: it?._locals?.nonce}) %>
-    <%~ E.includeFile('../public/javascripts/retheme.eta', {userData: it?._locals?.userData}) %>
+    <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it.userData, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../public/javascripts/retheme.eta', {userData: it.userData}) %>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
-    <script nonce=<%=it?._locals?.nonce%>>
-        let arr = [
-            "/billing/public/images/desert.svg",
-            "/billing/public/images/waves.svg",
-            "/billing/public/images/cave.svg",
-            "/billing/public/images/forest.svg",
-            "/billing/public/images/hole.svg"
-        ];
-        document.querySelector("#main > div").style = `background: url(${arr[Math.floor(Math.random() * arr.length)]}) no-repeat center center fixed; background-size: cover; width: 100vw; height: 100vh; filter: hue-rotate(${Math.floor(Math.random() * 360)}deg) invert(${Math.round(Math.random())}) saturate(${Math.round(Math.random() * 50) == 5 ? 0 : 1}) sepia(${Math.round(Math.random() * 20) == 5 ? 1 : 0});`;
+    <script src="/billing/public/javascripts/knowledgebase.js" async defer></script>
+    <script nonce=<%=it._locals.nonce%>>
     </script>
 </body>

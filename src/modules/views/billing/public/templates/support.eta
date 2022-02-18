@@ -5,16 +5,22 @@
             <p>View your tickets</p>
         </div>
     </a>
-    <a href="/billing/mail">
+    <a href="/billing/knowledgebase">
         <div>
-            <i class="fa fa-at"></i>
-            <p>Write an E-Mail</p>
+            <i class="fas fa-book"></i>
+            <p>Browse the knowledgebase</p>
         </div>
     </a>
     <a href="https://discord.gg/U38DxhWHsR" target="_blank" rel="noopener">
         <div>
             <i class="fab fa-discord"></i>
             <p>Join our Discord</p>
+        </div>
+    </a>
+    <a href="/billing/mail">
+        <div>
+            <i class="fa fa-at"></i>
+            <p>Write an E-Mail</p>
         </div>
     </a>
 </aside>

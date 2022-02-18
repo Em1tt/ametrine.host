@@ -1,0 +1,84 @@
+main {
+  margin: 3rem 0 0 7rem;
+  display: grid;
+  height: 100%;
+}
+main > div {
+  width: 95%;
+}
+main > div > div {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+main div div > form {
+  width: 100%;
+}
+main h1 {
+  margin-right: 50px;
+}
+main div form {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.vscomp-toggle-button, #searchbar {
+  max-width: 100% !important;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+main div form button {
+    max-width: 100% !important;
+    background-color: #141419;
+    border: none;
+    color: gray;
+    width: 34px;
+    padding: 0;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+main div form button:hover {
+    color: #cc37c0;
+}
+.vscomp-toggle-all-button {
+  width: 50px;
+}
+.vscomp-value {
+  width: 100%;
+}
+.vscomp-value-tag {
+  width: auto;
+}
+
+@media screen and (max-width: 600px) {
+  main {
+    margin: 1rem;
+  }
+}
+.knowledgebase-categories {
+  display: flex;
+  flex-flow: column nowrap;
+}
+.knowledgebase-categories a {
+  background-color: #141419;
+  padding: 10px;
+  text-decoration: none;
+  margin-bottom: 5px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: 2px solid;
+  transition: 0.5s ease;
+}
+.knowledgebase-categories a:hover {
+  border-left: 5px solid;
+  transition: 0.5s ease;
+}
+.knowledgebase-categories h2 {
+  margin: 0;
+}
+.knowledgebase-categories p {
+  margin: 0;
+  color: gray;
+}

@@ -187,7 +187,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
         "script-src": ["'self'", (s: express.response, r: express.Response) => `'nonce-${r.locals["nonce"]}'`, "cdn.quilljs.com", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "cdn.jsdelivr.net", "js.stripe.com"],
-        "style-src": ["'self'", "cdn.quilljs.com", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "fonts.googleapis.com", "use.fontawesome.com", "fontawesome.com"],
+        "style-src": ["'self'", "cdn.quilljs.com", "cdn.jsdelivr.net", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "fonts.googleapis.com", "use.fontawesome.com", "fontawesome.com"],
         "img-src": ["'self'", "i.imgur.com", "blob: http:", "data:"],
         "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com"],
         "connect-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "blob: http:"]
@@ -234,7 +234,7 @@ app.get("/:dir/:file", async (r: express.Request, s: express.Response) => {
     }
   }
   if (!fs.existsSync(file)) return throw404(s);
-  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${r.params.file.toLowerCase()}`)) return throw403(s);
+  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${parseInt(r.params.file) ? ":id" : r.params.file.toLowerCase()}`)) return throw403(s);
   s.render(file);
 });
 
@@ -255,11 +255,18 @@ app.get("/:dir/:subdir/:file", async (r: express.Request, s: express.Response) =
             file = `${billing}/tickets/${r.params.file.toLowerCase()}.eta`;
           }
         } break;
+        case "knowledgebase": {
+          switch (r.params.file.toLowerCase()) {
+            case "articles": {
+              file = `${billing}/articles/articles.eta`
+            }
+          }
+        }
       }
     } break;
   }
   if (!fs.existsSync(file)) return throw404(s);
-  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${r.params.subdir.toLowerCase()}/${r.params.file.toLowerCase()}`)) return throw403(s);
+  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${r.params.subdir.toLowerCase()}/${parseInt(r.params.file) ? ":id" : r.params.file.toLowerCase()}`)) return throw403(s);
   s.render(file);
 });
 
@@ -295,7 +302,7 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
     } break;
   }
   if (!fs.existsSync(file)) return throw404(s);
-  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${r.params.subdir1.toLowerCase()}/${r.params.subdir2.toLowerCase()}/${r.params.file.toLowerCase()}`)) return throw403(s);
+  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${r.params.subdir1.toLowerCase()}/${r.params.subdir2.toLowerCase()}/${parseInt(r.params.file) ? ":id" : r.params.file.toLowerCase()}`)) return throw403(s);
   s.render(file);
 });
 

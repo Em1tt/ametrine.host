@@ -1,13 +1,29 @@
-main{
-    overflow: hidden;
-}
-main p{
+main {
+    display: grid;
+    grid-template-areas: "main banner";
+    grid-template-columns: 70% 250px;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    overflow: hidden !important;
+    padding: 0 !important;
+  }
+  main > div {
+    grid-area: main;
+    overflow: hidden !important;
+  }
+  #error-text{
     position: absolute;
-    top: -10px;
-    left: 100px;
-    color: #141419 !important;
+    color: #141419;
     font-size: 2rem;
     font-weight: bold;
-    opacity: 1 !important;
-    filter:unset !important;
+    opacity: 1;
+    filter:unset;
+    margin-left: 100px;
+}
+
+@media screen and (max-width: 600px){
+    #error-text{
+        margin-left: 10px;
+        font-size: 1.8rem;
+    }
 }
