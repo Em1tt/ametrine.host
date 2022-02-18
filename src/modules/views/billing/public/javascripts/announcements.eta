@@ -1,4 +1,3 @@
-<%console.log(it.nonce)%>
 <script nonce=<%=it.nonce%>>
 async function getAnnouncements(firstTime){
     const announcements = document.getElementById("announcementsWrapper");
@@ -11,13 +10,11 @@ async function getAnnouncements(firstTime){
             }
         }).then(response => {
         let localAnnouncements = JSON.parse(localStorage.getItem("announcements"));
-        console.log(localAnnouncements);
         let difference = []
         response.data.forEach(x => {
           let match = localAnnouncements?.find(y => x.announcement_id == y.announcement_id);
           if(!match) difference.push(x);
         });
-        console.log(response, localAnnouncements, difference);
         if(localAnnouncements){
           if(difference.length > 0){
           if(!document.hasFocus()){

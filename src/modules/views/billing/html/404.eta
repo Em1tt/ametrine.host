@@ -55,7 +55,9 @@
             "/billing/public/images/waves.svg",
             "/billing/public/images/cave.svg",
             "/billing/public/images/forest.svg",
-            "/billing/public/images/hole.svg"
+            "/billing/public/images/hole.svg",
+            "/billing/public/images/cave2.svg",
+            "/billing/public/images/mountains.svg"
         ];
         document.querySelector("#main > div").style = `background: url(${arr[Math.floor(Math.random() * arr.length)]}) no-repeat center center fixed; background-size: cover; width: 100vw; height: 100vh; filter: hue-rotate(${Math.floor(Math.random() * 360)}deg) invert(${Math.round(Math.random())}) saturate(${Math.round(Math.random() * 50) == 5 ? 0 : 1}) sepia(${Math.round(Math.random() * 20) == 5 ? 1 : 0});`;
     </script>

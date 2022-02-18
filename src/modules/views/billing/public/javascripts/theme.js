@@ -3,8 +3,8 @@ const themeMap = {
     dark: "neomorphism",
     neomorphism: "dark"
 };
-
-const theme = localStorage.getItem('theme') || (tmp = Object.keys(themeMap)[0],
+document.addEventListener("load", () => {
+    const theme = localStorage.getItem('theme') || (tmp = Object.keys(themeMap)[0],
     localStorage.setItem('theme', tmp),
         tmp);
     const bodyClass = document.body.classList;
@@ -19,4 +19,4 @@ function toggleTheme() {
     bodyClass.replace(current, next);
     localStorage.setItem('theme', next);
 }
-
+});

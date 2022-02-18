@@ -113,3 +113,28 @@ main {
     margin: 0;
     color: gray;
   }
+  .articles{
+    margin-top: 10px;
+  }
+  .articles a{
+    text-decoration: none;
+    display: block;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #141419;
+    margin-bottom: 5px;
+  }
+  .articles a:hover{
+    background-color: #1e1f26;
+  }
+  .articles h3{
+    margin: 0;
+    margin-bottom: 15px;
+  }
+  .articles span{
+    margin-right: 5px;
+    padding: 5px 15px;
+    border: 2px solid #292a34;
+    border-radius: 20px;
+    color: gray;
+  }

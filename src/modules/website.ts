@@ -20,6 +20,7 @@ import { cdn } from "./cdn"
 import redis from 'redis';
 import ms from 'ms';
 import nonce from 'nonce-express';
+import { Article } from "src/types/billing/knowledgebase";
 
 dotenv.config({ path: __dirname + "/../../.env" });
 
@@ -297,6 +298,28 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
               break;
             }
           }
+        } break;
+        case "knowledgebase": {
+          switch (r.params.subdir2.toLowerCase()) {
+            case "article": {
+              if (parseInt(r.params.file)) {
+                file = `${billing}/articles/article.eta`;
+                await handleArticles(r, s, true);
+              } else {
+                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+              }
+              break;
+            }
+            case "knowledgebase": {
+              if (parseInt(r.params.file)) {
+                file = `${billing}/staff/knowledgebase.eta`;
+                await handleArticles(r, s, true);
+              } else {
+                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+              }
+              break;
+            }
+          }
         }
       }
     } break;
@@ -337,14 +360,12 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
 }
 async function handleArticles(r: express.Request, s: express.Response, staff: boolean) {
   if (!s.locals.userData) return throw403(s);
-  const getTicket: Ticket = await redisClient.db.hgetall(`ticket:${parseInt(r.params.file)}`);
-  if (!getTicket) return throw404(s);
+  const getArticle: Article = await redisClient.db.hgetall(`article:${parseInt(r.params.file)}`);
+  if (!getArticle) return throw404(s);
   if (staff) {
-    if (getTicket.level > s.locals?.userData?.permission_id) return throw403(s);
-  } else {
-    if (getTicket.user_id != s.locals?.userData?.user_id) return throw403(s);
+    if (getArticle.permission_id > s.locals?.userData?.permission_id) return throw403(s);
   }
-  s.locals.ticket = JSON.stringify(getTicket);
+  s.locals.article = JSON.stringify(getArticle);
 }
 async function handleStaff(r: express.Request, s: express.Response) {
   return new Promise((resolve, reject) => {
