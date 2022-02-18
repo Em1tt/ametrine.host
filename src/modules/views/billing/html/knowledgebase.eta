@@ -49,6 +49,18 @@
         </div>
         <h2 class="header2">Categories</h2>
         <div class="knowledgebase-categories" id="knowledgebase-categories">
+        <div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     </main>
     <%~ E.includeFile('../public/templates/authentication.eta')%>

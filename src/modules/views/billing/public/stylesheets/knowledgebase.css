@@ -22,6 +22,13 @@ main h1 {
 main div form {
   display: flex;
   flex-flow: row nowrap;
+  background-color: #141419 !important;
+  border-radius: 10px;
+}
+#searchbar{
+  max-width: 100% !important;
+  background-color:#141419 !important;
+  height: 36px !important;
 }
 .vscomp-toggle-button, #searchbar {
   max-width: 100% !important;
@@ -38,6 +45,7 @@ main div form button {
     cursor: pointer;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    margin-left: auto;
 }
 main div form button:hover {
     color: #cc37c0;
@@ -61,7 +69,7 @@ main div form button:hover {
   display: flex;
   flex-flow: column nowrap;
 }
-.knowledgebase-categories a {
+.knowledgebase-categories a, .knowledgebase-categories > div {
   background-color: #141419;
   padding: 10px;
   text-decoration: none;
@@ -81,4 +89,28 @@ main div form button:hover {
 .knowledgebase-categories p {
   margin: 0;
   color: gray;
+}
+.knowledgebase-categories > div{
+  height: 66px;
+  border: transparent;
+  padding: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: flex-start;
+}
+.knowledgebase-categories > div > div:first-of-type{
+  display: block;
+  background-color: #292a34;
+  width: 20%;
+  height: 25px;
+  border-radius: 10px;
+}
+.knowledgebase-categories > div > div:last-of-type{
+  display: block;
+  background-color: #1e1f26;
+  width: 25%;
+  height: 12px;
+  border-radius: 10px;
+  margin-top: 10px;
 }

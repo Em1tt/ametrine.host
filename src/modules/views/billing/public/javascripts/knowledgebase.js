@@ -17,6 +17,7 @@
   }
   try {
     const categories = await axios.get("/api/knowledgebase/categories");
+    document.getElementById("knowledgebase-categories").innerHTML = "";
     categories.data.forEach(category => {
       const anchor = document.createElement("a");
       anchor.style = `border-color: ${category.color}`;

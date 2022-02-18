@@ -30,7 +30,7 @@
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
-    <link href="/billing/public/stylesheets/knowledgebase.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/articles.css" rel="stylesheet">
     <script src="/billing/public/javascripts/theme.js" async defer></script>
     <link rel="stylesheet" href="/billing/public/stylesheets/pillbox.css">
     <script src="/billing/public/javascripts/pillbox.js"></script>
@@ -43,24 +43,54 @@
                 <h1 class="header1">Browse the knowledgebase</h1>
             </div>
             <hr class="semanticLine">
-            <form>
+            <form id="tag-search">
                 <div id="searchbar"></div><button type="submit"><i class="fa fa-search"></i></button>
             </form>
         </div>
-        <h2 class="header2">Categories</h2>
-        <div class="knowledgebase-categories">
-            <a href="#">
-                <h2 class="header2">Billing Panel</h2>
-                <p>Ask any billing questions here!</p>
-            </a>
-            <a href="#">
-                <h2 class="header2">Partnerships & Sponsorships</h2>
-                <p>If you want to partner with us!</p>
-            </a>
-            <a href="#">
-                <h2 class="header2">Service Issues</h2>
-                <p>Resolve issues with our centralized database of solved issues.</p>
-            </a>
+        <button type="button" class="collapsible" id="categories-button">Categories</button>
+        <div class="knowledgebase-categories" id="knowledgebase-categories">
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+            <div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <h2 class="header2" id="articles-found-header">Articles Found: Searching...</h2>
+        <div class="articles" id="articles">
+            <div>
+                <div></div>
+                <div>
+                    <div></div>
+                </div>
+            </div>
+            <div>
+                <div></div>
+                <div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div>
+                <div></div>
+                <div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div>
+                <div></div>
+                <div>
+                    <div></div>
+                </div>
+            </div>
         </div>
     </main>
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
@@ -72,5 +102,20 @@
     <script src="/billing/public/javascripts/popups.js" async defer></script>
     <script src="/billing/public/javascripts/articles.js" async defer></script>
     <script nonce=<%=it._locals.nonce%>>
+    var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = "400px";
+      content.style.overflow = "auto";
+    }
+  });
+}
     </script>
 </body>
