@@ -277,7 +277,7 @@ export const prop = {
                             break;
                     }
                     articles = paginate(articles.filter(article => articleWhere(article)).filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
-                                                .filter(article => (JSON.parse(req.query.tags)?.length) ? JSON.parse(req.query.tags).some(a => article.tags.includes(a)) : true)
+                                                .filter(article => (JSON.parse(req.query.tags)?.length) ? JSON.parse(req.query.tags).every(a => article.tags.includes(a)) : true)
                                                 .sort((a,b) => (b.createdIn as number) - (a.createdIn as number)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
                     return res.status(200).json(await Promise.all(articles.map(await newArticle)));
                 })
