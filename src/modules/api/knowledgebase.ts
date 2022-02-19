@@ -246,12 +246,21 @@ export const prop = {
                 //const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
                 let pageLimit = 20;
                 let state = 1;
+                let tags = "{}"
                 if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req.query.state.toString());
                 if (req.query.page) page = parseInt(req.query.page.toString());
                 if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                 if (isNaN(pageLimit)) pageLimit = 10;
                 if (isNaN(page)) page = 1;
                 if (isNaN(state)) state = 1;
+                if (req.query.tags) {
+                    // prevent server from erroring if not json
+                    try {
+                        tags = JSON.parse(req.query.tags);
+                    } catch (e) {
+                        tags = "{}"
+                    }
+                }
                 return client.keys("article:*", async function (err, result) {
                     if (err) {
                         console.error(err);
@@ -277,9 +286,25 @@ export const prop = {
                             break;
                     }
                     articles = paginate(articles.filter(article => articleWhere(article)).filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
-                                                .filter(article => (JSON.parse(req.query.tags)?.length) ? JSON.parse(req.query.tags).every(a => article.tags.includes(a)) : true)
+                                                .filter(article => (JSON.parse(tags)?.length) ? JSON.parse(tags).every(a => article.tags.includes(a)) : true)
                                                 .sort((a,b) => (b.createdIn as number) - (a.createdIn as number)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
                     return res.status(200).json(await Promise.all(articles.map(await newArticle)));
+                })
+            }
+            case "count": { // Shows the count of all public articles
+                res.set("Allow", "GET");
+                if (req.method != "GET") return res.sendStatus(405);
+                return client.keys("article:*", async function (err, result) {
+                    if (err) {
+                        console.error(err);
+                        return res.status(500).send("Error occured while retrieving keys for articles. Please report this.")
+                    }
+                    let articles: Array<Article> = await Promise.all(result.map(async articleID => {
+                        const article = await client.db.hgetall(articleID);
+                        return article;
+                    }))
+                    articles = articles.filter(article => article.state == 1);
+                    return res.status(200).send(articles.length.toString());
                 })
             }
             case ":articleid": { // article ID
