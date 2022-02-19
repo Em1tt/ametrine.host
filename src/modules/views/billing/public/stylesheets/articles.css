@@ -187,6 +187,7 @@ main {
   }
   .pageButtons{
     width: 95%;
+    margin-top: 5px;
   }
   .pageButtons button:disabled{
     color: #292a34;

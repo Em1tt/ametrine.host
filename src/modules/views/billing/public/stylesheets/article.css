@@ -1,0 +1,41 @@
+main {
+    margin: 3rem 0 2rem 7rem;
+    display: grid;
+    height: 100%;
+  }
+  main > div {
+    width: 95%;
+  }
+  main > div > div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  main div div > form {
+    width: 100%;
+  }
+  main h1 {
+    margin-right: 50px;
+  }
+  .articleInfo {
+    display: flex;
+    flex-flow: row wrap;
+  }
+  .articleInfo * {
+    color: gray;
+    margin-inline: 10px;
+  }
+  #editor{
+      border: 0;
+      height: 500px;
+      color: white;
+  }
+  .ql-editor{
+      width: 100%;
+      font-size: 1.1rem;
+  }
+  .ql-editor > *{
+      cursor: default !important;
+  }
