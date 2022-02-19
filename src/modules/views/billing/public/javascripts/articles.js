@@ -21,7 +21,6 @@
   try {
     const tags = JSON.parse(params.tags);
     const response = await axios.get(`/api/knowledgebase/list?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
-    document.getElementById("articles-found-header").innerText = `Articles Found: ${response.data.length}`;
     document.getElementById("articles").innerHTML = "";
     response.data.forEach(articles => {
       const anchor = document.createElement("a");
@@ -58,6 +57,13 @@
         anchor.appendChild(description);
         document.getElementById("knowledgebase-categories").appendChild(anchor);
       })
+  } catch (e) {
+    console.error(e);
+  }
+  try {
+    const tags = JSON.parse(params.tags);
+    const response = await axios.get(`/api/knowledgebase/count?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    document.getElementById("articles-found-header").innerText = `Articles Found: ${response.data}`;
   } catch (e) {
     console.error(e);
   }

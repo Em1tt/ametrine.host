@@ -54,7 +54,7 @@ export const prop = {
     desc: "Support Knowledgebase System",
     rateLimit: {
         max: 20,
-        time: 10 * 1000
+        time: 3 * 1000
     },
     setClient: function(newClient: Redis): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<any> => {
@@ -246,7 +246,7 @@ export const prop = {
                 //const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
                 let pageLimit = 20;
                 let state = 1;
-                let tags = "{}"
+                let tags = [];
                 if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req.query.state.toString());
                 if (req.query.page) page = parseInt(req.query.page.toString());
                 if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
@@ -258,7 +258,7 @@ export const prop = {
                     try {
                         tags = JSON.parse(req.query.tags);
                     } catch (e) {
-                        tags = "{}"
+                        tags = [];
                     }
                 }
                 return client.keys("article:*", async function (err, result) {
@@ -277,7 +277,7 @@ export const prop = {
                             articleWhere = (article: Article) => article.state == state && (article.user_id == userData["user_id"] || article.permission_id >= parseInt(userData["permission_id"]));
                             break;
                         case 1: // Finished (public)
-                            if (pageLimit > 10) pageLimit = 10; // Users will have access to less pages, just in case.
+                            if (pageLimit > 20) pageLimit = 20; // Users will have access to less pages, just in case.
                             articleWhere = (article: Article) => article.state == state
                             break;
                         case 2: // Staff (any staff can see as long as they have the correct permissions)
@@ -286,7 +286,7 @@ export const prop = {
                             break;
                     }
                     articles = paginate(articles.filter(article => articleWhere(article)).filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
-                                                .filter(article => (JSON.parse(tags)?.length) ? JSON.parse(tags).every(a => article.tags.includes(a)) : true)
+                                                .filter(article => (tags?.length) ? tags.every(a => article.tags.includes(a)) : true)
                                                 .sort((a,b) => (b.createdIn as number) - (a.createdIn as number)), pageLimit, page) as Array<Article>; // typescript requires me to declare .opened as number
                     return res.status(200).json(await Promise.all(articles.map(await newArticle)));
                 })
@@ -294,6 +294,12 @@ export const prop = {
             case "count": { // Shows the count of all public articles
                 res.set("Allow", "GET");
                 if (req.method != "GET") return res.sendStatus(405);
+                let tags = [];
+                try {
+                    tags = JSON.parse(req.query.tags);
+                } catch (e) {
+                    tags = [];
+                }
                 return client.keys("article:*", async function (err, result) {
                     if (err) {
                         console.error(err);
@@ -303,7 +309,9 @@ export const prop = {
                         const article = await client.db.hgetall(articleID);
                         return article;
                     }))
-                    articles = articles.filter(article => article.state == 1);
+                    articles = articles.filter(article => article.state == 1)
+                        .filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
+                        .filter(article => (tags?.length) ? tags.every(a => article.tags.includes(a)) : true)
                     return res.status(200).send(articles.length.toString());
                 })
             }

@@ -42,7 +42,7 @@
     </main>
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
     <%~ E.includeFile('../public/templates/authentication.eta')%>
-    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it?._locals?.userData?.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it?._locals?.userData?.email ? "user-cog" : "users", text: it?._locals?.userData?.email ? "My Account" : "Sign-In", permission_id: it?._locals?.userData?.permission_id, config: it?._locals?.config}) %>
     <%~ E.includeFile('../public/templates/support.eta')%>
     <%~ E.includeFile('../public/templates/announcements.eta') %>
     <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it?._locals?.userData, nonce: it?._locals?.nonce}) %>

@@ -35,13 +35,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
 </head>
-<body class=<%=(it._locals.userData.email) ? "loggedIn" : ""%>>
+<body class=<%=(it?._locals?.userData?.email) ? "loggedIn" : ""%>>
     <main id="main">
         <div></div>
         <p id="error-text">403: Access denied</p>
     </main>
         <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-    <aside id="authentication" <%=it._locals.userData.email ? 0 : 'class=shown'%>>
+    <aside id="authentication" <%=it?._locals?.userData?.email ? 0 : 'class=shown'%>>
         <div>
             <h3 id="authHeader" class="header1"><i class="fa fa-lock"></i> Secure Sign-In</h3>
             <form id="login">
@@ -98,11 +98,11 @@
                     <button id="switchAuth">Register now!</button>
         </div>
     </aside>
-    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it._locals.userData.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it?._locals?.userData?.email ? "user-cog" : "users", text: it?._locals?.userData?.email ? "My Account" : "Sign-In", permission_id: it?._locals?.userData?.permission_id, config: it?._locals?.config}) %>
     <%~ E.includeFile('../public/templates/support.eta')%>
     <%~ E.includeFile('../public/templates/announcements.eta') %>
-    <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it._locals.userData, nonce: it._locals.nonce}) %>
-    <%~ E.includeFile('../public/javascripts/retheme.eta', {userData: it._locals.userData}) %>
+    <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it?._locals?.userData, nonce: it?._locals?.nonce}) %>
+    <%~ E.includeFile('../public/javascripts/retheme.eta', {userData: it?._locals?.userData}) %>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
     <script nonce=<%=it._locals.nonce%>>

@@ -1,4 +1,4 @@
-<script nonce=<%=it.nonce%>>
+<script nonce=<%=it?.nonce%>>
 async function getAnnouncements(firstTime){
     const announcements = document.getElementById("announcementsWrapper");
     if(!firstTime){
@@ -6,7 +6,7 @@ async function getAnnouncements(firstTime){
     }
         const response = axios.get("/api/announcements", {
             params: {
-                hasPermission: "<%=it.userData.permission_id%>"
+                hasPermission: "<%=it?.userData?.permission_id%>"
             }
         }).then(response => {
         let localAnnouncements = JSON.parse(localStorage.getItem("announcements"));
