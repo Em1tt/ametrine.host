@@ -1,5 +1,5 @@
 main {
-    margin: 3rem 0 0 7rem;
+    margin: 3rem 0 2rem 7rem;
     display: grid;
     height: 100%;
   }
@@ -58,12 +58,6 @@ main {
   }
   .vscomp-value-tag {
     width: auto;
-  }
-  
-  @media screen and (max-width: 600px) {
-    main {
-      margin: 1rem;
-    }
   }
   .knowledgebase-categories {
     display: flex;
@@ -190,4 +184,37 @@ main {
     border-radius: 50px;
     padding: 13px;
     margin-right: 5px;
+  }
+  .pageButtons{
+    width: 95%;
+  }
+  .pageButtons button:disabled{
+    color: #292a34;
+    background-color: #141419;
+    cursor: default;
+  }
+  .pageButtons button{
+    float: right;
+    padding: 10px;
+    border: none;
+    color: #dce0ff;
+    background-color: #141419;
+    cursor: pointer;
+  }
+  .pageButtons button:not(:disabled):hover{
+    color: #cc37c0;
+    background-color: #1e1f26;
+  }
+  .pageButtons button:first-of-type{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .pageButtons button:last-of-type{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  @media screen and (max-width: 600px) {
+    main {
+      margin: 1rem 1rem 100px 1rem;
+    }
   }

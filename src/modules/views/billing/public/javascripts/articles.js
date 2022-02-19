@@ -20,7 +20,8 @@
   }
   try {
     const tags = JSON.parse(params.tags);
-    const response = await axios.get(`/api/knowledgebase/list?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    const response = await axios.get(`/api/knowledgebase/list?page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    console.log(response);
     document.getElementById("articles").innerHTML = "";
     response.data.forEach(articles => {
       const anchor = document.createElement("a");
@@ -45,9 +46,10 @@
       const categories = await axios.get("/api/knowledgebase/categories");
       document.getElementById("knowledgebase-categories").innerHTML = "";
       categories.data.forEach(category => {
+        console.log(category);
         const anchor = document.createElement("a");
         anchor.style = `border-color: ${category.color}`;
-        anchor.href = tags?.length ? `/billing/knowledgebase/articles?tags=${encodeURIComponent(JSON.stringify(tags))}&category=${category.id}` : `/billing/knowledgebase/articles?category=${category.id}`;
+        anchor.href = `/billing/knowledgebase/articles?page=${params.page}&category=${category.id}&tags=${encodeURIComponent(JSON.stringify(tags))}`;
         const header = document.createElement("h2");
         header.innerText = category.name;
         header.classList.add("header2");
@@ -63,7 +65,28 @@
   try {
     const tags = JSON.parse(params.tags);
     const response = await axios.get(`/api/knowledgebase/count?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    const articleAmount = response.data;
     document.getElementById("articles-found-header").innerText = `Articles Found: ${response.data}`;
+    let page = params.page || 1;
+      if(parseInt(page)*20 < parseInt(articleAmount)){
+        [...document.querySelectorAll(".rightButton")].forEach((button) => {
+          button.removeAttribute("disabled");
+          button.addEventListener("click", () => {
+            window.location.href = `/billing/knowledgebase/articles?page=${parseInt(page)+1}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`
+          });
+        });
+      }
+    if(parseInt(page) > 1){
+      [...document.querySelectorAll(".leftButton")].forEach((button) => {
+        button.removeAttribute("disabled");
+        button.addEventListener("click", () => {
+          window.location.href = `/billing/knowledgebase/articles?page=${parseInt(page)-1}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`
+        });
+      });
+    }
+    [...document.querySelectorAll("leftButton")].forEach(() => {
+
+    });
   } catch (e) {
     console.error(e);
   }
@@ -72,19 +95,8 @@
       event.preventDefault();
       let tags = document.getElementById("searchbar").getSelectedOptions();
       tags = encodeURIComponent(JSON.stringify(tags.map(i => i.value)));
-      window.location.href = params.category == null ? `/billing/knowledgebase/articles?tags=${tags}` : `/billing/knowledgebase/articles?category=${params.category}?tags=${tags}`;
+      window.location.href = `/billing/knowledgebase/articles?page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${tags}`;
     });
-  } catch (e) {
-    console.error(e);
-  }
-  try {
-    const response = await axios.post("/api/knowledgebase/create", {
-      tags: "hello,second,what",
-      header: "Plugin installation",
-      content: "hello",
-      state: 1
-    });
-    console.log(response);
   } catch (e) {
     console.error(e);
   }

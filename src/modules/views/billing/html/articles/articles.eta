@@ -11,7 +11,7 @@
         content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
     <!-- APPLE -->
     <!-- Apple Touch Icon (at least 200x200px) -->
-    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="../../images/apple-touch-icon.png">
     <!-- To run web application in full-screen -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <!-- Status Bar Style-->
@@ -63,6 +63,10 @@
             </div>
         </div>
         <h2 class="header2" id="articles-found-header">Articles Found: Searching...</h2>
+        <div class="pageButtons">
+            <button disabled class="rightButton"><i class="fa fa-arrow-right"></i></button>
+            <button disabled class="leftButton"><i class="fa fa-arrow-left"></i></button>
+        </div>
         <div class="articles" id="articles">
             <div>
                 <div></div>
@@ -91,6 +95,10 @@
                     <div></div>
                 </div>
             </div>
+        </div>
+        <div class="pageButtons">
+            <button disabled class="rightButton"><i class="fa fa-arrow-right"></i></button>
+            <button disabled class="leftButton"><i class="fa fa-arrow-left"></i></button>
         </div>
     </main>
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
