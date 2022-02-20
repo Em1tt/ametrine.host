@@ -187,10 +187,10 @@ app.use(
       useDefaults: true, // nonce when
       directives: {
         defaultSrc: ["'self'"],
-        "script-src": ["'self'", (s: express.response, r: express.Response) => `'nonce-${r.locals["nonce"]}'`, "cdn.quilljs.com", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "cdn.jsdelivr.net", "js.stripe.com"],
+        "script-src": ["'self'", (s: express.response, r: express.Response) => `'nonce-${r.locals["nonce"]}'`, "cdn.jsdelivr.net", "cdn.quilljs.com", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "cdn.jsdelivr.net", "js.stripe.com"],
         "style-src": ["'self'", "cdn.quilljs.com", "cdn.jsdelivr.net", "use.fontawesome.com", "cdnjs.cloudflare.com", "hcaptcha.com", "*.hcaptcha.com", "unpkg.com", "fonts.googleapis.com", "use.fontawesome.com", "fontawesome.com"],
         "img-src": ["'self'", "i.imgur.com", "blob: http:", "data:"],
-        "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "youtube.com", "youtu.be"],
+        "frame-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "youtube.com", "youtu.be", "www.youtube.com"],
         "connect-src": ["'self'", "hcaptcha.com", "*.hcaptcha.com", "blob: http:"]
       }
     },

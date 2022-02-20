@@ -29,7 +29,6 @@ main {
   }
   #editor{
       border: 0;
-      height: 500px;
       color: white;
   }
   .ql-editor{
@@ -38,4 +37,10 @@ main {
   }
   .ql-editor > *{
       cursor: default !important;
+  }
+  #editor img{
+    object-fit: cover;
+    height: 300px;
+    cursor: url("/billing/public/images/plus_cursor.png") 25 25, auto;
+    filter: brightness(0.96);
   }
