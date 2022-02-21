@@ -78,12 +78,7 @@
                 </div>
         </div>
     </main>
-    <script nonce=<%=it._locals.nonce%>>
-    (async() => {
-            const response = await axios.get("/api/tickets/categories");
-            console.log(response);
-    })()
-
-    </script>
-<%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it._locals.users, permissions: it._locals.permissions, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
+    <script src="/billing/html/staff/javascripts/popups.js"></script>
+    <%~ E.includeFile('../../html/staff/javascripts/graphs.eta', {users: it._locals.users, permissions: it._locals.permissions, nonce: it._locals.nonce}) %>
 </body>

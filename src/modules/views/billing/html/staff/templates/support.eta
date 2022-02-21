@@ -1,0 +1,20 @@
+<% let staffPages = it.permissions[0][1].accessPages %>
+<%console.log(staffPages)%>
+<aside id="supportPopup">
+    <% if(staffPages.includes("all") || staffPages.includes("/staff/tickets")){ %>
+    <a href="/billing/staff/tickets">
+        <div>
+            <i class="fa fa-ticket-alt"></i>
+            <p>View tickets</p>
+        </div>
+    </a>
+    <% } %>
+    <% if(staffPages.includes("all") || staffPages.includes("/staff/knowledgebase")){ %>
+    <a href="/billing/staff/knowledgebase">
+        <div>
+            <i class="fas fa-book"></i>
+            <p>Browse the knowledgebase</p>
+        </div>
+    </a>
+    <% } %>
+</aside>

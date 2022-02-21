@@ -137,10 +137,10 @@ export const prop = {
                     }
                     if (!tags || !tags.length) tags = [];
 
-                    if (!header || !content) return res.status(406).send("Missing header or content.");
+                    //if (!header || !content) return res.status(406).send("Missing header or content."); NOT REQUIRED. IS CHECKED INSIDE PATCH
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
-                    if (header.length > settings.maxTitle) return res.status(403).send(`Header is too long. Max Length is ${settings.maxTitle}`);
-                    if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
+                    if (header?.length > settings.maxTitle) return res.status(403).send(`Header is too long. Max Length is ${settings.maxTitle}`);
+                    if (content?.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
                     const category_ids = (categories) ? categories.split(",").map((category: any) => {
                         const findCategory = knowledgebase_categories.find(cate => cate.id == parseInt(category));
                         if (findCategory) {
@@ -165,8 +165,8 @@ export const prop = {
                         const articleData = {
                             article_id: articleID,
                             user_id: userData["user_id"],
-                            header: utils.encode_base64(header),
-                            content: JSON.stringify(content),
+                            header: header ? utils.encode_base64(header) : "",
+                            content: content ? JSON.stringify(content) : "",
                             category_ids: category_ids.join(","),
                             files: (cdnURIs.URIS.length) ? JSON.stringify(cdnURIs.URIS) : '[]',
                             tags: tags
@@ -300,6 +300,9 @@ export const prop = {
                 } catch (e) {
                     tags = [];
                 }
+                let state = 1;
+                if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req.query.state.toString());
+                if (isNaN(state)) state = 1;
                 return client.keys("article:*", async function (err, result) {
                     if (err) {
                         console.error(err);
@@ -309,7 +312,7 @@ export const prop = {
                         const article = await client.db.hgetall(articleID);
                         return article;
                     }))
-                    articles = articles.filter(article => article.state == 1)
+                    articles = articles.filter(article => article.state == state)
                         .filter(article => (req.query.category) ? article.category_ids == req.query.category : true)
                         .filter(article => (tags?.length) ? tags.every(a => article.tags.includes(a)) : true)
                     return res.status(200).send(articles.length.toString());

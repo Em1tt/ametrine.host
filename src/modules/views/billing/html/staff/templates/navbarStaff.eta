@@ -19,7 +19,7 @@
         <%}%>
         <% if(staffPages.includes("all") || staffPages.includes("support")){ %>
         <li class="nav-item">
-            <a href="/billing/staff/tickets" aria-label="Support" id="support" class="nav-link">
+            <a aria-label="Support" id="support" class="nav-link">
                 <i class="fa fa-ticket-alt"></i>
                 <span aria-hidden="true" class="link-text">Support</span>
             </a>

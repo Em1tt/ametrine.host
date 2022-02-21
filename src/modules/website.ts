@@ -15,6 +15,7 @@ import { Ticket } from "../types/billing/ticket";
 import { UserData } from "../types/billing/user";
 import { permissions } from "./permissions";
 import permIDs from "../permissions.json";
+import article_categories from "../knowledgebase_categories.json";
 import rateLimit from "express-rate-limit";
 import { cdn } from "./cdn"
 import redis from 'redis';
@@ -291,8 +292,10 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
             case "knowledgebase": {
               if (parseInt(r.params.file)) {
                 file = `${billing}/staff/knowledgebase.eta`;
-                await handleArticles(r, s, true);
-              } else {
+                await handleArticles(r, s, false);
+              } else if(r.params.file.toLowerCase() == "articles"){
+                file = `${billing}/staff/articles/${r.params.file.toLowerCase()}.eta`;
+              }else{
                 file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
               }
               break;
@@ -304,16 +307,7 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
             case "article": {
               if (parseInt(r.params.file)) {
                 file = `${billing}/articles/article.eta`;
-                await handleArticles(r, s, true);
-              } else {
-                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
-              }
-              break;
-            }
-            case "knowledgebase": {
-              if (parseInt(r.params.file)) {
-                file = `${billing}/staff/knowledgebase.eta`;
-                await handleArticles(r, s, true);
+                await handleArticles(r, s, false);
               } else {
                 file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
               }
@@ -329,6 +323,43 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
   s.render(file);
 });
 
+app.get("/:dir/:subdir1/:subdir2/:subdir3/:file", async (r: express.Request, s: express.Response) => {
+  let file: string;
+  switch (r.params.dir.toLowerCase()) {
+    case "billing": {
+      switch (r.params.subdir1.toLowerCase()) {
+        case "staff": {
+          s.locals.permissions = permIDs;
+          switch (r.params.subdir2.toLowerCase()) {
+            case "knowledgebase": {
+              switch (r.params.subdir3.toLowerCase()) {
+                case "article": {
+                  if (parseInt(r.params.file)) {
+                    file = `${billing}/staff/articles/article.eta`;
+                    await handleArticles(r, s, true);
+                  } else {
+                    file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+                  }
+                } break;
+                case "editor": {
+                  if (parseInt(r.params.file)) {
+                    file = `${billing}/staff/articles/editor.eta`;
+                    await handleArticles(r, s, true);
+                  } else {
+                    file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+                  }
+                }
+              }
+            } break;
+          }
+        } break;
+      }
+    } break;
+  }
+  if (!fs.existsSync(file)) return throw404(s);
+  if(!permissions.canViewPage(s.locals?.userData?.permission_id || 0, `/${r.params.dir.toLowerCase()}/${r.params.subdir1.toLowerCase()}/${r.params.subdir2.toLowerCase()}/${r.params.subdir3.toLowerCase()}/${parseInt(r.params.file) ? ":id" : r.params.file.toLowerCase()}`)) return throw403(s);
+  s.render(file);
+});
 app.all('*', (r: express.Request, s: express.Response) => {
   throw404(s);
 });
@@ -364,8 +395,11 @@ async function handleArticles(r: express.Request, s: express.Response, staff: bo
   if (!getArticle) return throw404(s);
   if (staff) {
     if (getArticle.permission_id > s.locals?.userData?.permission_id) return throw403(s);
+  }else{
+    if(getArticle.state != 1) return throw403(s);
   }
   s.locals.article = JSON.stringify(getArticle);
+  s.locals.article_categories = JSON.stringify(article_categories);
 }
 async function handleStaff(r: express.Request, s: express.Response) {
   return new Promise((resolve, reject) => {

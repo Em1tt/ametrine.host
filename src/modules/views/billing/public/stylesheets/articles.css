@@ -219,3 +219,19 @@ main {
       margin: 1rem 1rem 100px 1rem;
     }
   }
+  .articleInfo button{
+    border-radius: 10px;
+    border: 0;
+    padding: 10px;
+    color: #dce0ff;
+    background-color: #141419;
+    cursor: pointer;
+  }
+  .articleInfo button:hover{
+    background-color: #1e1f26;
+  }
+  .articleInfo button:disabled{
+    cursor: default;
+    color: #292a34;
+    background-color: #141419;
+  }

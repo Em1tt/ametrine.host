@@ -114,3 +114,14 @@ main div form button:hover {
   border-radius: 10px;
   margin-top: 10px;
 }
+.articleInfo button{
+  border-radius: 10px;
+  border: 0;
+  padding: 10px;
+  color: #dce0ff;
+  background-color: #141419;
+  cursor: pointer;
+}
+.articleInfo button:hover{
+  background-color: #1e1f26;
+}
