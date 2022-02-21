@@ -24,7 +24,7 @@
         "accessPages": ["all"]
     },
     "4": {
-        "accessAPI": ["/users", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/knowledgebase/:articleid"],
+        "accessAPI": ["/users", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all"],
         "accessPages": ["all"]
     }
     

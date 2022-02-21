@@ -28,7 +28,7 @@ const settings = {
  * @returns boolean
  */
 function allowedMethod(req: express.Request, res: express.Response, type: Array<string>, paramName: string, userData: UserData): boolean {
-    if (!permissions.hasPermission(userData['permission_id'], `/knowledgebase/${paramName}`)) {
+    if (!permissions.hasPermission(userData['permission_id'], `/knowledgebase/${paramName}`) && !permissions.hasPermission(userData['permission_id'], `/staff/knowledgebase/${paramName}`)) {
         res.sendStatus(403);
         return false;
     }
@@ -195,8 +195,8 @@ export const prop = {
                                             "state", 0,
                                             "category_ids", category_ids.join(","),
                                             "tags", tags.join(","),
-                                            "likes", 0,
-                                            "dislikes", 0,
+                                            "likes", '[]',
+                                            "dislikes", '[]',
                                             "files", articleData.files,
                                             "createdIn", timestamp,
                                             "editedIn", 0]); // May need to add priority and level in req.body params
@@ -320,38 +320,63 @@ export const prop = {
             }
             case ":articleid": { // article ID
                 const articleID = parseInt(params[0])
-                if (allowedMethod(req, res, ["GET", "POST", "PUT", "DELETE"], paramName, userData)) {
+                if (allowedMethod(req, res, ["GET", "POST", "PUT", "DELETE"], paramName, userData)) { // going to fix permissions later to allow other users besides staff to send ratings
                     if (articleID < 0) return res.sendStatus(406);
                     const getArticle: Article = await client.db.hgetall(`article:${articleID}`);
                     if (!getArticle) return res.status(404).send("Article not found."); // If no articles are found.
                     if (getArticle.state == 2 && !permissions.hasPermission(userData['permission_id'], `/staff/knowledgebase/:articleid`)) return res.sendStatus(403);
+                    if (getArticle.state == 0 && (!permissions.hasPermission(userData['permission_id'], `/staff/knowledgebase/all`) || getArticle.user_id != userData["user_id"])) return res.sendStatus(403);
+                    const { like, dislike } = req.body;
+                    // Using {} at switch cases because ESLint is complaining
+                    switch (req.method) {
+                        case "GET": { // Viewing the article Conversation.
+                            return client.keys(`article:${articleID}:*`, async function (err, result) {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")
+                                }
+                                let article: Array<any> = await Promise.all(result.map(async articles => {
+                                    const ratings = await client.db.hgetall(articles);
+                                    ratings["likes"] = parseInt(articles["likes"]);
+                                    ratings["dislikes"] = parseInt(articles["dislikes"]);
+                                    return ratings;
+                                }))
+                                if (article.length) { // If there are messages
+                                    article = paginate(article, 1000000, 1);
+                                    getArticle['ratings'] = article;
+                                }
+                                return res.status(200).json(await newArticle(getArticle));
+                            });
+                        }
+                        case "POST": { // Sends a new rating to that article. (Responds with the new ratings)
+                            if (getArticle.state != 1) return res.status(403).send("You can't send ratings to unpublished articles.");
+                            if (!like && !dislike) return res.sendStatus(406);
+                            try {
+                                let likes = getArticle.likes.toString();
+                                let dislikes = getArticle.dislikes.toString();
+                                if (likes == '0') likes = '[]'
+                                if (dislikes == '0') dislikes = '[]'
+                                
+                            const likeArray: Array<number> = JSON.parse(likes); // typescript requires me to do .toString() else itll error
+                                const dislikeArray: Array<number> = JSON.parse(dislikes);
+                                if (like && likeArray.includes(userData["user_id"])) return res.status(403).send("You've already liked this article!");
+                                if (dislikeArray && dislikeArray.includes(userData["user_id"])) return res.status(403).send("You've already disliked this article!");
+                                if (like) { // if the user likes
+                                    likeArray.push(userData["user_id"]);
+                                    if (dislikeArray.includes(userData["user_id"])) dislikeArray.splice(dislikeArray.indexOf(userData["userData"]), 1)
+                                } else if (dislike) { // if the user dislikes
+                                    dislikeArray.push(userData["user_id"]);
+                                    if (likeArray.includes(userData["user_id"])) likeArray.splice(likeArray.indexOf(userData["userData"]), 1)
+                                }
+                                await client.db.hset([`article:${getArticle["article_id"]}`, "likes", JSON.stringify(likeArray), "dislikes", JSON.stringify(dislikeArray)])
 
-                        const { like, dislike } = req.body;
-                        // Using {} at switch cases because ESLint is complaining
-                        switch (req.method) {
-                            case "GET": { // Viewing the article Conversation.
-                                return client.keys(`article:${articleID}:*`, async function (err, result) {
-                                    if (err) {
-                                        console.error(err);
-                                        return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")
-                                    }
-                                    let article: Array<any> = await Promise.all(result.map(async articles => {
-                                        const ratings = await client.db.hgetall(articles);
-                                        ratings["likes"] = parseInt(articles["likes"]);
-                                        ratings["dislikes"] = parseInt(articles["dislikes"]);
-                                        return ratings;
-                                    }))
-                                    if (article.length) { // If there are messages
-                                        article = paginate(article, 1000000, 1);
-                                        getArticle['ratings'] = article;
-                                    }
-                                    return res.status(200).json(await newArticle(getArticle));
-                                });
-                            }
-                            case "POST": { // Sends a new rating to that article. (Responds with the new ratings)
-                                if (!like && !dislike) return res.sendStatus(406);
-                                return res.sendStatus(501);
-                                //!Please finish
+                                    return res.sendStatus(200);
+                                } catch (e) {
+                                    console.error(e);
+                                    return res.sendStatus(500).send("Error occured. Please report this.");
+                                }
+
+                                
                             }
                             case "PUT": { // Updates the article (Edit content, header, status, etc.)
                                 const { header, content, categories, state } = req.body;
