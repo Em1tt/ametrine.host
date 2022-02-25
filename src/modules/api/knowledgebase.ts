@@ -379,15 +379,18 @@ export const prop = {
                                 
                             }
                             case "PUT": { // Updates the article (Edit content, header, status, etc.)
-                                const { header, content, categories, state } = req.body;
+                                const { header, content, categories, state} = req.body;
+                                let { tags } = req.body;
                                 let updated = false;
                                 if (getArticle["user_id"] != getArticle["user_id"] && userData["permission_id"] != 4 &&
                                     ((getArticle.state == 0 && parseInt(userData['permission_id']) < getArticle.permission_id) ||
                                     (getArticle.state == 2 && !permissions.hasPermission(userData['permission_id'], `/staff/knowledgebase/:articleid`)) ||
                                     getArticle.state == 1)) return res.sendStatus(403);
-                                
                                 if (parseInt(state) || parseInt(state) == 0) {
-                                    if(![0,1,2].includes(parseInt(status))) return res.sendStatus(406);
+                                    if(![0,1,2].includes(parseInt(state))) return res.sendStatus(406);
+                                    if([1,2].includes(parseInt(state)) && ((header || content || categories || tags) || ((!getArticle.header || getArticle.header == '') || (!getArticle.content || getArticle.content == '') ||
+                                    (!getArticle.category_ids || getArticle.category_ids == '') || (!getArticle.tags || getArticle.tags.split(",").length < 2)))) return res.status(406)
+                                    .send(`Cannot publish article with missing information. Required: Header, Content, Category, At least 2 tags. Add these in a separate request.`);
                                     await client.db.hset([`article:${getArticle["article_id"]}`, "state", parseInt(state)])
                                     updated = true;
                                 }
@@ -425,6 +428,13 @@ export const prop = {
                                 }
                                 if (content) {
                                     editContent(JSON.stringify(content), timestamp, getArticle["article_id"]);
+                                    updated = true;
+                                }
+                                if(tags && tags.length){
+                                    tags = tags.split(",");
+                                    if (!tags || !tags.length) tags = [];
+                                    tags = tags.join(",");
+                                    await client.db.hset([`article:${getArticle["article_id"]}`, "tags", tags])
                                     updated = true;
                                 }
                                 return (updated) ? res.sendStatus(204) : res.sendStatus(406)
