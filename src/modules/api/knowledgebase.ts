@@ -115,9 +115,10 @@ export const prop = {
                 
                 article = newArticleProps;
                 article['name'] = name;
+                /*
                 if (article['content'].length > 100) {
                     article['content'] = article['content'].toString().slice(0, 100);
-                }
+                }*/
                 article["header"] = utils.decode_base64(article["header"]).toString();
                 //ticket["content"] = decode_base64(ticket["content"]);
                 article["editedIn"] = (article["editedIn"] == 0) ? null : new Date(article["editedIn"]);

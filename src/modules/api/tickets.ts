@@ -136,9 +136,18 @@ export const prop = {
                 newTicketProps["createdIn"] = parseInt(ticket.createdIn.toString());
                 ticket = newTicketProps;
                 ticket['name'] = name;
-                if (ticket['content'].length > 100) {
-                    ticket['content'] = ticket['content'].toString().slice(0, 100);
+                try {
+                    const parsedQuill = JSON.parse(ticket['content']);
+                    if (parsedQuill['ops']['insert'].length > settings.maxBody) {
+                        parsedQuill['ops']['insert'] = parsedQuill['ops']['insert'].toString().slice(0, settings.maxBody);
+                    }
+                    ticket['content'] = JSON.stringify(parsedQuill);
+                } catch (e) {
+                    if (ticket['content'].length > settings.maxBody) {
+                        ticket['content'] = ticket['content'].toString().slice(0, settings.maxBody);
+                    }
                 }
+                
                 ticket["subject"] = utils.decode_base64(ticket["subject"]).toString();
                 //ticket["content"] = decode_base64(ticket["content"]);
                 ticket["opened"] = new Date(ticket["opened"]);
