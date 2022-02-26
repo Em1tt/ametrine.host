@@ -44,4 +44,15 @@
   }catch(e){
     console.error(e);
   }
+  try{
+    let button = document.getElementById("article-new")
+    button.addEventListener("click", async (e) => {
+      button.setAttribute("disabled", true);
+      const response = await axios.post(`/api/knowledgebase/create`);
+      console.log(response);
+      window.location.href = `/billing/staff/knowledgebase/editor/${response.data.article_id}`;
+    });
+  }catch(e){
+    console.error(e);
+  }
 })();

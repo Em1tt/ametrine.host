@@ -42,7 +42,7 @@
             <div>
                 <h1 class="header1">Browse the knowledgebase</h1>
                 <div class="articleInfo">
-                    <button>Create a new article</button>
+                    <button id="article-new">Create a new article</button>
                 </div>
             </div>
             <hr class="semanticLine">

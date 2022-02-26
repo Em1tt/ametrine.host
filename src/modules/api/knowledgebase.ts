@@ -421,9 +421,6 @@ export const prop = {
                                 }
                                 if (header && header.length) {
                                     await client.db.hset([`article:${getArticle["article_id"]}`, "header", utils.encode_base64(header), "editedIn", timestamp])
-                                    if (content) {
-                                        editContent(JSON.stringify(content), timestamp, getArticle["article_id"])
-                                    }
                                     updated = true;
                                 }
                                 if (content) {

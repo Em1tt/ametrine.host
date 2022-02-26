@@ -257,7 +257,7 @@ input:read-only{
     color: #3e404f !important;
 }
 input::placeholder{
-    color: #dce0ff;
+    color: var(--error, #dce0ff);
 }
 
 input.text1{

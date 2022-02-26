@@ -39,28 +39,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intense-images/1.0.7/intense.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
+    <link rel="stylesheet" href="/billing/public/stylesheets/pillbox.css">
+    <script src="/billing/public/javascripts/pillbox.js"></script>
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%let article = JSON.parse(it._locals.article), article_categories = JSON.parse(it._locals.article_categories)%>
-    <%console.log(article, article_categories)%>
+    <%console.log(article)%>
     <%~ E.includeFile('../../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <top>
         <h3>Article Editor</h3>
+        <button id="delete-icon"><i class="fa fa-trash"></i></button>
         <button id="save-icon"><i class="fa fa-save"></i></button>
-        <button>Publish</button>
+        <button id="publish-button">Publish</button>
     </top>
     <main>
         <div>
             <form id="ticketCreate">
                 <fieldset>
                     <div class="top">
-                        <input required type="text" id="subject" value="<%=atob(article.header)%>" placeholder="Subject - Max 100 chars" maxlength="100">
-                    <select required name="ticket_category" id="category">
-                        <option value="" selected disabled hidden>Choose Category</option>
-                        <% article_categories.forEach(category => { %>
-                            <option value="<%=category.id%>"><%=category.name%></option>
-                        <% }) %>
-                    </select>
+                        <input required type="text" id="subject" value="<%=decodeURI(atob(article.header))%>" placeholder="Subject - Max 100 chars" maxlength="100">
+                        <select required name="ticket_category" id="category">
+                            <option value="" <%= article.category_ids == '' ? 'selected' : ''%> disabled hidden>Choose Category</option>
+                            <% article_categories.forEach(category => { %>
+                                <option <%= parseInt(category.id) == parseInt(article.category_ids) ? 'selected' : '' %> value="<%=category.id%>"><%=category.name%></option>
+                            <% }) %>
+                        </select>
+                        <input type="text" id="video" value="<%=article.video ? atob(article.video) : ''%>" placeholder="YouTube video link" maxlength="150">
+                    <div id="searchbar"></div>
                     </div>
                     <!--PUT TEXTAREA HERE-->
                     <div class="editorWrapper">
@@ -75,31 +80,29 @@
 <script src="/billing/html/staff/javascripts/popups.js" async defer></script>
     <%~ E.includeFile('../../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
 
-    <script src="/billing/public/javascripts/createTicket.js" async defer></script>
+    <%~ E.includeFile('../../../html/staff/javascripts/createArticle.eta', {article: article, nonce: it._locals.nonce}) %>
     <script nonce=<%=it._locals.nonce%>>
     var toolbarOptions = [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+                [{ 'header': [1, 2, 3, false] }],
+                ['bold', 'italic', 'underline', 'strike'],
                 ['blockquote', 'code-block'],
 
-                [{ 'header': 1 }, { 'header': 2 }],               // custom button values
                 [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-                [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
-                [{ 'direction': 'rtl' }],                         // text direction
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                [{ 'indent': '-1'}, { 'indent': '+1' }],
 
-                [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                [ 'link', 'image', 'video', 'formula' ],          // add's image support
-                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-                [{ 'font': [] }],
+                [ 'link', 'image' ],
+                [{ 'color': [] }, { 'background': [] }],
                 [{ 'align': [] }],
 
-                ['clean']                                         // remove formatting button
+                ['clean']
             ];
         var container = document.getElementById('editor');
         var editor = new Quill(container, {
             theme: "snow",
-
+            modules: {
+                toolbar: toolbarOptions
+            }
         });
     </script>
 </body>

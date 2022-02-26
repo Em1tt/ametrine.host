@@ -46,8 +46,12 @@ top button:last-of-type:hover{
     height: 50px;
 }
 #save-icon[active=true]{
+    color: #cc37c0;
     border: 1px dashed #cc37c0;
     animation: spin 2s ease infinite;
+}
+#delete-icon:hover{
+    color: rgb(255, 34, 34);
 }
 
 @keyframes spin { 

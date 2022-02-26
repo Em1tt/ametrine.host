@@ -36,10 +36,9 @@ main {
     margin-right: none !important;
   }
   
-  form #subject {
+  form input {
     color: #dce0ff;
     background-color: #141419;
-    padding: 5px 10px;
     margin-top: 0;
     border: none;
     margin: 5px 10px 5px 0;
@@ -47,21 +46,33 @@ main {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    width: 300px;
-    padding: 5px;
+    width: 280px;
+    padding: 5px 10px;
     font-size: 0.9rem;
+    height: 36px;
+    border-radius: 10px;
+    min-width: 230px;
+  }
+  form #video{
+    width: 320px;
   }
   form select {
     background-color: #141419;
-    color: white;
+    color: #dce0ff;
     outline: none;
     border: none;
-    margin: 5px 10px 5px 0;
-    padding: 5px;
+    margin: 0 0 5px 0;
+    padding: 5px 10px 5px 5px;
+    border-radius: 10px;
+    height: 36px;
+    min-width: 230px;
+    margin-right: 10px;
   }
   #editor {
     border: none;
     overflow-y: auto;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
   form label {
     background-color: #1e1f26;
@@ -75,66 +86,6 @@ main {
     background-color: #141419;
   }
   
-  .screenshotsWrapper {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: baseline;
-    padding: 0 10px 0 10px;
-    margin-inline: 1px;
-  }
-  
-  .screenshotsWrapper p {
-    color: white;
-  }
-  #imageManager {
-    display: flex;
-    flex-flow: column nowrap;
-    width: 100%;
-    background: #1e1f26;
-  }
-  #imageManager > div {
-    display: flex;
-    flex-flow: row nowrap;
-    width: 100%;
-    align-items: center;
-  }
-  #imageManager > div > div {
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
-  }
-  #imageManager div button {
-    background: #141419;
-    border: none;
-    padding: 10px;
-    color: red;
-    cursor: pointer;
-    width: 200px;
-  }
-  #imageManager div button:hover {
-    background: #101014;
-    color: red;
-  }
-  #imageManager img {
-    aspect-ratio: 16/9;
-    max-width: 200px;
-    margin: 10px;
-    cursor: url("/billing/public/images/plus_cursor.png") 25 25, auto;
-  }
-  
-  form input[type="file"] {
-    display: none;
-    position: absolute;
-    top: 0;
-  }
-  
-  
-  form input[type="submit"] {
-      width: 200px;
-      padding-inline: 0;
-      text-align: center;
-    }
-  
   #submitWrapper {
     display: flex;
     justify-content: end;
@@ -143,7 +94,10 @@ main {
   #errorText {
     color: red;
   }
-  
+  .ql-toolbar{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
   .ql-toolbar .ql-stroke {
     fill: none !important;
     stroke: #fff !important;
@@ -187,6 +141,23 @@ main {
     color: rgb(235, 90, 90) !important;
   }
   
+  #searchbar{
+    max-width: 100%;
+    background-color:#141419 !important;
+    height: 36px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+  }
+  .vscomp-toggle-button, #searchbar {
+    max-width: 100% !important;
+    border-radius: 10px;
+  }
+  #editor img{
+    object-fit: cover;
+    height: 300px;
+    cursor: url("/billing/public/images/plus_cursor.png") 25 25, auto;
+    filter: brightness(0.96);
+  }
   @media screen and (max-width: 600px) {
     main {
       margin-left: 0.5rem;

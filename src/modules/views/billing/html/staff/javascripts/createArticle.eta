@@ -1,0 +1,93 @@
+<script nonce=<%=it.nonce%> >
+(async() =>{
+    try {
+        const response = await axios.get("/api/knowledgebase/tags");
+        VirtualSelect.init({
+        ele: "#searchbar",
+        options: response.data.map((i) => {
+            return { label: i, value: i };
+        }),
+        multiple: true,
+        search: true,
+        placeholder: "Add tags (at least 2)",
+        allowNewOption: true,
+        selectedValue: `<%= JSON.parse(decodeURI(it.article.tags).replace(/%2C/g, ",")) %>`.split(","),
+        showValueAsTags: true,
+    });
+  } catch (e) {
+    console.error(e);
+  }
+  try{
+    const art = await axios.get(`/api/knowledgebase/<%=it.article.article_id%>`);
+    console.log(art);
+    const ops = JSON.parse(art.data.content);
+        console.log("hi");
+    console.log(ops);
+    editor.setContents(ops, "api")
+  }catch(e){
+    e;
+  }
+  document.querySelector("#save-icon").addEventListener("click", async () => {
+  console.log(editor.getContents());
+    document.querySelector("#save-icon").setAttribute("active", true);
+    const category = document.getElementById("category");
+    let tags = document.getElementById("searchbar").getSelectedOptions();
+    tags = encodeURIComponent(JSON.stringify(tags.map(i => i.value)));
+    const response = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
+        header: document.querySelector("#subject").value,
+        categories: [category.value],
+        content: editor.getContents(),
+        video: document.querySelector("#video").value,
+        tags: tags
+    });
+    setTimeout(() => {
+      document.querySelector("#save-icon").setAttribute("active", false);
+    }, 2000);
+  });
+  setInterval(() => {
+    document.querySelector("#save-icon").click();
+  }, 30000);
+    document.querySelector("#publish-button").addEventListener("click", async () => {
+    const category = document.getElementById("category").value;
+    if(!category) return blinkRed(document.getElementById("category"));
+    const header = document.querySelector("#subject").value;
+    if(!header) return blinkRed(document.querySelector("#subject"));
+    let tags = document.getElementById("searchbar").getSelectedOptions();
+    if(tags.length < 2) return blinkRed(document.getElementById("searchbar"));
+    tags = encodeURIComponent(JSON.stringify(tags.map(i => i.value)));
+    if(editor.getLength() < 100) return blinkRed(document.getElementById("editor"));
+    const response = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
+        state: 1
+    }).catch(e => {
+      console.log(e.response.data);
+    });
+  });
+})();
+
+function blinkRed(element){
+  let i = 0;
+  const interval = setInterval(() => {
+    if(!(i % 2)){
+      element.style.color = "red";
+      element.style.setProperty("--error", "red");
+      if(element.id == "searchbar"){
+        document.querySelector(".vscomp-ele-wrapper").style = "border: 2px solid red; border-radius: 10px;";
+      }
+      if(element.id == "editor"){
+        document.querySelector(".editorWrapper").style = "border: 2px solid red; border-radius: 10px";
+      };
+    }else{
+      element.style.color = "#dce0ff";
+      element.style.setProperty("--error", "#dce0ff");
+      if(element.id == "searchbar"){
+        document.querySelector(".vscomp-ele-wrapper").style = "border: none;";
+      }
+      if(element.id == "editor"){
+        document.querySelector(".editorWrapper").style = "border: none;";
+      };
+    }
+    i = i+1;
+    if(i == 4) clearInterval(interval);
+  }, 400);
+}
+</script>
