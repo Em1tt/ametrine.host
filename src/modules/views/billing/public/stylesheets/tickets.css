@@ -14,12 +14,6 @@ main > div > div{
     height: auto;
     margin-bottom: 20px;
 }
-main > div > div span{
-    background: #1e1f26;
-}
-main > div > div > span:hover{
-    background: #141419;
-}
 main > div > div button{
     padding: 15px;
     outline: none;
@@ -47,7 +41,8 @@ main > div > div button:disabled{
     margin-right: 25px;
     margin-bottom: 20px;
     margin-top: 60px;
-
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 #ticketWrapper a > h2{
     font-size: 1.2rem;
@@ -75,6 +70,8 @@ main > div > div button:disabled{
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 #ticketWrapper .answered{
     background-color: rgb(131, 194, 36);
@@ -92,35 +89,34 @@ main > div > div button:disabled{
     margin-inline: 2px;
 }
 
-.pageButtons {
-    display: flex;
-    justify-content: end;
-    margin: 20px 0 20px 0;
+.pageButtons{
+    width: 95%;
+    margin-top: 5px;
   }
-  
-  .pageButtons > * {
-    padding: 10px;
-    color: #cc37c0;
-    outline: none;
-    border: none;
-    background-color: #1e1f26;
-    margin-inline: 2px;
-    cursor: pointer;
-  }
-  
-  .pageButtons > *:disabled {
+  .pageButtons button:disabled{
     color: #292a34;
     background-color: #141419;
     cursor: default;
   }
-  .pageButtons > *:disabled:hover {
-    color: #292a34;
+  .pageButtons button{
+    float: right;
+    padding: 10px;
+    border: none;
+    color: #dce0ff;
     background-color: #141419;
+    cursor: pointer;
   }
-  
-  .pageButtons > *:hover {
-    color: #141419;
-    background-color: #cc37c0;
+  .pageButtons button:not(:disabled):hover{
+    color: #cc37c0;
+    background-color: #1e1f26;
+  }
+  .pageButtons button:first-of-type{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .pageButtons button:last-of-type{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
   }
 
 @media screen and (max-width:600px){

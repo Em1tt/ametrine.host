@@ -140,7 +140,7 @@
                 </fieldset>
                 <fieldset id="submitWrapper">
                 <span class="checkbox">
-                    <input type="checkbox" id="askResponse" name="askResponse">
+                    <input checked type="checkbox" id="askResponse" name="askResponse">
                     <label for="askResponse"><i class="fa fa-check"></i></label>
                     <label for="askResponse">Ask for response</label>
                 </span>
@@ -194,6 +194,8 @@
     <%~ E.includeFile('../../public/templates/support.eta')%>
     <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
     <%~ E.includeFile('../../html/staff/javascripts/ticket.eta', {ticket: it._locals.ticket, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
+    <script src="/billing/html/staff/javascripts/popups.js"></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script nonce=<%=it._locals.nonce%>>
         var container = document.getElementById('editor');

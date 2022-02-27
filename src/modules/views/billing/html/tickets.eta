@@ -44,8 +44,8 @@
             <hr class="semanticLine">
             <h2 class="header2"><%= (it.userData.email) ? "" : "Sign-In or create an account to view or create tickets"%></h2>
             <span class="pageButtons">
-                <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
                 <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+                <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
             </span>
             <div id="ticketWrapper">
                 

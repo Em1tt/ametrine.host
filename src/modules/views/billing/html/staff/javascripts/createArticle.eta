@@ -11,7 +11,7 @@
         search: true,
         placeholder: "Add tags (at least 2)",
         allowNewOption: true,
-        selectedValue: `<%= JSON.parse(decodeURI(it.article.tags).replace(/%2C/g, ",")) %>`.split(","),
+        selectedValue: `<%= it?.article?.tags ? it.article.tags.split(",") : "" %>`.split(","),
         showValueAsTags: true,
     });
   } catch (e) {
@@ -19,20 +19,16 @@
   }
   try{
     const art = await axios.get(`/api/knowledgebase/<%=it.article.article_id%>`);
-    console.log(art);
     const ops = JSON.parse(art.data.content);
-        console.log("hi");
-    console.log(ops);
     editor.setContents(ops, "api")
   }catch(e){
     e;
   }
   document.querySelector("#save-icon").addEventListener("click", async () => {
-  console.log(editor.getContents());
     document.querySelector("#save-icon").setAttribute("active", true);
     const category = document.getElementById("category");
     let tags = document.getElementById("searchbar").getSelectedOptions();
-    tags = encodeURIComponent(JSON.stringify(tags.map(i => i.value)));
+    tags = tags.map(i => i.value).join(",");
     const response = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
         header: document.querySelector("#subject").value,
         categories: [category.value],

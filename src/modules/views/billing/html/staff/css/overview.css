@@ -66,6 +66,7 @@ main hr {
   color: #dce0ff;
   background-color: #1e1f26;
   height: auto;
+  border-radius: 10px;
 }
 .cardWrapper div h3 {
   color: #dce0ff;
@@ -74,6 +75,7 @@ main hr {
   margin-top: 0;
   width: 100%;
   margin-bottom: 0;
+  border-radius: 10px 10px 0 0;
 }
 .cardWrapper div button {
   color: #cc37c0;

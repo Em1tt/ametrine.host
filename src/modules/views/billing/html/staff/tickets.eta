@@ -33,6 +33,7 @@
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/html/staff/css/tickets.css" rel="stylesheet">
 </head>
+<pre id="user_id"><%=it.userData.user_id%></pre>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <main>
@@ -67,13 +68,20 @@
                     <label for="ans"><i class="fa fa-check"></i></label>
                     <label for="ans">Answered</label>
                 </div>
-                <span class="pageButtons">
-                    <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
-                    <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
-                </span>
+                <div class="checkbox">
+                    <input type="checkbox" name="hideOwn" id="hideOwn">
+                    <label for="hideOwn"><i class="fa fa-check"></i></label>
+                    <label for="hideOwn">Show own tickets</label>
+                </div>
+            <span class="pageButtons">
+                <button disabled class="pageLeft"><i class="fa fa-arrow-left"></i></button>
+                <button disabled class="pageRight"><i class="fa fa-arrow-right"></i></button>
+            </span>
             </div>
                 <div id="ticketWrapper"></div>
         </div>
     </main>
     <script src="/billing/html/staff/javascripts/tickets.js" async defer></script>
+    <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
+    <script src="/billing/html/staff/javascripts/popups.js"></script>
 </body>

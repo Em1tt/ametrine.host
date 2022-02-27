@@ -34,6 +34,8 @@ function dateFormatter(data) {
       default: document.getElementById("all").setAttribute("checked", true); break;
     }
   
+    if(parseInt(urlParams.get("hideOwn")) == 0) document.getElementById("hideOwn").setAttribute("checked", true);
+
     document.getElementById("all").addEventListener("change", (e) => {
       urlParams.delete('status');
       window.location.search = urlParams;
@@ -42,15 +44,21 @@ function dateFormatter(data) {
     document.getElementById("acr").addEventListener("change", (e) => {appendURLParams(2)});
     document.getElementById("ans").addEventListener("change", (e) => {appendURLParams(3)});
     document.getElementById("clo").addEventListener("change", (e) => {appendURLParams(1)});
+    document.getElementById("hideOwn").addEventListener("change", (e) => {hideTickets(e)});
   
     function appendURLParams(status){
       urlParams.set('status', status);
+      window.location.search = urlParams;
+    }
+    function hideTickets(e){
+      urlParams.set('hideOwn', e.target.checked == true ? 0 : 1);
       window.location.search = urlParams;
     }
 
     let status = urlParams.get("status");
     if( !status ) status = undefined;
     let page = urlParams.get("page");
+    let hideOwnTickets = urlParams.get("hideOwn");
     if (!page || page == undefined || page == null) page = 1;
     const leftButtons = [...document.getElementsByClassName("pageLeft")],
     rightButtons = [...document.getElementsByClassName("pageRight")];
@@ -69,6 +77,7 @@ function dateFormatter(data) {
     const response = await axios.get(`/api/tickets/list?page=${page}&status=${status}`);
     console.log(response);
     const tickets = response.data;
+    const user_id = document.getElementById("user_id").innerText;
     if (tickets.length == 0) {
       const header2 = document.createElement("h2");
       header2.classList.add("header2");
@@ -97,7 +106,7 @@ function dateFormatter(data) {
         })
     }
       tickets.forEach((ticket) => {
-        if (ticket == null) return;
+        if (ticket == null || (hideOwnTickets == 1 && ticket.user_id == user_id)) return;
         let opened = dateFormatter(ticket.opened);
         let edited = dateFormatter(ticket.editedIn);
         const clickable = document.createElement("a");
@@ -106,6 +115,9 @@ function dateFormatter(data) {
         header.style = "margin-inline: auto;";
         header.innerText = `#${ticket.ticket_id}`;
         clickable.href = `./tickets/${ticket.ticket_id}`;
+        if(parseInt(ticket.user_id) == parseInt(user_id)) {
+          clickable.classList.add("disabled");
+        }
         ticketsWrapper.appendChild(clickable);
         clickable.appendChild(header);
         const div = document.createElement("div");

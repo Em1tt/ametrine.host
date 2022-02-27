@@ -24,6 +24,7 @@ main form fieldset > div:not(#editor, .ql-toolbar, .editorWrapper, .top) {
   border: none;
   overflow-y: auto;
   max-height: 300px;
+  border-radius: 0px 0px 10px 10px;
 }
 
 #submitWrapper {
@@ -31,7 +32,9 @@ main form fieldset > div:not(#editor, .ql-toolbar, .editorWrapper, .top) {
   justify-content: end;
   flex-flow: row wrap;
 }
-
+.ql-toolbar{
+  border-radius: 10px 10px 0 0;
+}
 .ql-toolbar .ql-stroke {
   fill: none !important;
   stroke: #fff !important;
@@ -79,6 +82,7 @@ form input[type="submit"] {
   width: 200px;
   padding-inline: 0;
   text-align: center;
+  border-radius: 10px;
 }
 form #subject {
   width: 400px;
@@ -104,6 +108,7 @@ form #email {
     flex-flow: column nowrap;
     width: 100%;
     background: #1e1f26;
+    border-radius: 10px;
 }
 #imageManager > div{
     display: flex;
@@ -123,6 +128,7 @@ form #email {
     color: red;
     cursor: pointer;
     width: 200px;
+    border-radius: 10px;
 }
 #imageManager div button:hover{
     background: #101014;
@@ -141,6 +147,7 @@ form label {
     padding: 10px;
     cursor: pointer;
     margin-right: 10px;
+    border-radius: 10px;
 }
 form label:hover{
     background-color: #141419;
