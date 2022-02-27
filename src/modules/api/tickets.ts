@@ -228,7 +228,9 @@ export const prop = {
                     let status = -1;
                     //const statusQuery = (["opened","closed"].includes(req.query.status)) ? " AND status = ?" : "";   
                     let pageLimit = 10;
+                    let hideOwn = false;
                     if (req.query.page) page = parseInt(req.query.page.toString());
+                    if (req.query.hideOwn == 1) hideOwn = true;                
                     if ([0,1,2,3].includes(parseInt(req.query.status))) status = parseInt(req.query.status);
                     if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                     if (isNaN(pageLimit)) pageLimit = 10;
@@ -257,7 +259,7 @@ export const prop = {
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.level <= level;
                         }
-                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket)).filter(ticket => [0,1,2,3].includes(parseInt(req.query.status)) ? ticket.status == parseInt(req.query.status) : ticket)
+                        tickets = paginate(tickets.filter(ticket => ticketWhere(ticket)).filter(ticket => (hideOwn) ? ticket.user_id != userData["user_id"] : true).filter(ticket => [0,1,2,3].includes(parseInt(req.query.status)) ? ticket.status == parseInt(req.query.status) : ticket)
                                                       .sort((a,b) => (b.opened as number) - (a.opened as number)), pageLimit, page) as Array<Ticket>; // typescript requires me to declare .opened as number
                         return res.status(200).json(await Promise.all(tickets.map(await newTicket)));
                     })
