@@ -1,16 +1,18 @@
 (async () => {
   try {
     const response = await axios.get("/api/knowledgebase/tags");
-
+    const totalTags = response.data.map((i) => {
+      return { label: i, value: i};
+    });
+    totalTags.unshift({ label: "unfinished", value: "unfinished" });
     VirtualSelect.init({
       ele: "#searchbar",
-      options: response.data.map((i) => {
-        return { label: i, value: i };
-      }),
+      options: totalTags,
       multiple: true,
       search: true,
       placeholder: "Find articles with tags",
       showValueAsTags: true,
+      allowNewOption: true,
     });
   } catch (e) {
     console.error(e);
@@ -48,8 +50,9 @@
     let button = document.getElementById("article-new")
     button.addEventListener("click", async (e) => {
       button.setAttribute("disabled", true);
-      const response = await axios.post(`/api/knowledgebase/create`);
-      console.log(response);
+      const response = await axios.post(`/api/knowledgebase/create`, {
+        tags: "unfinished"
+      });
       window.location.href = `/billing/staff/knowledgebase/editor/${response.data.article_id}`;
     });
   }catch(e){

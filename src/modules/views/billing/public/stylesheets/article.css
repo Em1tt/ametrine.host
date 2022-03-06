@@ -27,6 +27,9 @@ main {
     color: gray;
     margin-inline: 10px;
   }
+  .articleInfo button{
+    padding: 10px;
+  }
   #editor{
       border: 0;
       color: white;

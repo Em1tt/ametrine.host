@@ -40,6 +40,7 @@
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%let article = JSON.parse(it._locals.article)%>
+    <%console.log(article)%>
     <%console.log(it._locals.permissions)%>
     <%~ E.includeFile('../../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <main>
@@ -47,8 +48,9 @@
             <div>
                 <h1 class="header1"><%=decodeURIComponent(atob(article.header))%></h1>
                 <div class="articleInfo">
-                    <p>Opened On: <%=new Date(parseInt(article.createdIn)).toDateString().split(" ").slice(1).join(" ")%></p>
+                    <p>Created On: <%=new Date(parseInt(article.createdIn)).toDateString()%></p>
                     <p>Article ID: <%=parseInt(article.article_id)%></p>
+                    <button>Edit Article</button>
                 </div>
             </div>
             <hr class="semanticLine">
