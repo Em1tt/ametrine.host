@@ -21,5 +21,9 @@ export const permissions = {
     canViewPage: (permissionID: string, path: string): boolean => {
         if (!permissionID && typeof permissionID != 'number') return false;
         return permission[permissionID].accessPages.includes("all") ? true : permission[permissionID].accessPages.includes(path);
+    },
+    validPermission: (permissionID: string | number): boolean => {
+        if (!permissionID && isNaN(parseInt(permissionID as string))) return false;
+        return (permission[permissionID]) ? true : false
     }
 }

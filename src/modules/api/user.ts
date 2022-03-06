@@ -8,6 +8,7 @@ import { utils }               from '../utils';
 import { permissions }         from '../permissions'
 import { UserData }            from "../../types/billing/user";
 import { Redis }               from "../../types/redis";
+import ms                      from "ms"
 let client: Redis;
 export const prop = {
     name: "user",
@@ -43,7 +44,8 @@ export const prop = {
                 "name": userObj.name,
                 "email": userObj.email,
                 "permission_id": userObj.permission_id,
-                "2fa": (userObj["2fa"] == 1)
+                "2fa": (userObj["2fa"] == 1),
+                "state": userObj.state
             };
         }
 
@@ -157,8 +159,8 @@ export const prop = {
                                     if (emailUsed) return res.status(403).send("Email is already being used.");
                                     const emailRes = await client.db.hset([`user:${userData["user_id"]}`, "email", email])
                                     if (emailRes != 0) return res.status(500).send("Error occured while changing email. Please report this.")
-                                    await client.hdel('users.email', userData["email"], function(err, emailRes2) {
-                                        if (!emailRes2) return console.error(err);
+                                    client.hdel('users.email', userData["email"], function(err, emailRes2) {
+                                        if (!emailRes2 || err) return console.error(err);
                                     })
                                     await client.db.hset([`users.email`, email, 1])
                                     updated = true;
@@ -187,30 +189,52 @@ export const prop = {
                                 if (!getAllSessions) return res.status(500).send("Sessions not found.");
                                 const userSessions = Object.keys(getAllSessions).filter(session => session.split(":")[1] == userData["user_id"] && session != `${refreshToken}:${userData["user_id"]}`); // Get all sessions besides user
                                 if (!userSessions.length) return res.sendStatus(200) // No other sessions found besides the users.
-                                let errorMsg = null;
-                                userSessions.map(session => {
-                                    client.del(`session:${getAllSessions[session]}`, function(err) {
-                                        if (err) {
-                                            console.error(err);
-                                            errorMsg = "Error occurred while deleting the sessions. Please report this.";
-                                            return;
-                                        }
-                                        return client.hdel(`sessions.jwtid`, `${session}:${userData["user_id"]}`, function (err2) {
-                                            if (err2) {
-                                                console.error(err2);
-                                                errorMsg = "Error occured while deleting the session. Please report this."
-                                                return;
-                                            }
-                                        })
-                                    })
+                                return auth.logoutAll(userData["user_id"], userSessions, getAllSessions).then(() => {
+                                    return res.sendStatus(200)
+                                }).catch(err => {
+                                    console.error(err);
+                                    return res.status(500).send(err);
                                 })
-                                if (errorMsg != null) return res.status(500).send(errorMsg);
-                                return res.sendStatus(200); // OK
                             }
                         }
-                        case "DELETE": // Deletes the account.
-
+                        case "DELETE": {// Deletes the account.
+                            let user = await client.db.hmget(`user:${userData["user_id"]}`, ["password", "salt"])
+                            if (!user) return res.status(404).send("Cannot find user.");
+                            user = { password: user[0], salt: user[1] };
+                            const { password } = req.body;
+                            if (!password) return res.status(406).send("Please insert a password.");
+                            
+                            // Confirm Refresh Token
+                            const { refreshToken } = await auth.verifyToken(req, res, false, "refresh");
+                            if (!refreshToken) return res.sendStatus(403);
+                            const sessionID = await client.db.hget("sessions.jwtid", `${refreshToken}:${userData["user_id"]}`);
+                            if (!sessionID) return res.sendStatus(403);
+                            
+                            // Verify Password
+                            const verifyHash = await auth.verifyPassword(password, user);
+                            if (!verifyHash) return res.status(403).send("Incorrect Password.");
+                            
+                            // Deleting all sessions
+                            let getAllSessions = await client.db.hgetall(`sessions.jwtid`); // May find another solution to this, as this could cost performance.
+                            if (!getAllSessions) return res.status(500).send("Sessions not found.");
+                            const userSessions = Object.keys(getAllSessions).filter(session => session.split(":")[1] == userData["user_id"] && session != `${refreshToken}:${userData["user_id"]}`); // Get all sessions besides user
+                            if (!userSessions.length) getAllSessions = userSessions; // No other sessions found besides the users.
+                            auth.logoutAll(userData["user_id"], userSessions, getAllSessions).then(() => {
+                                auth.startDeletion(userData["user_id"]).then(result => {
+                                    if (result) {
+                                        return res.sendStatus(204);
+                                    }
+                                }).catch(err => {
+                                    console.error(err)
+                                    return res.status(500).send(err);
+                                })
+                                // May have to setup a cron job later for purging unused emails
+                            }).catch(err => {
+                                console.error(err);
+                                return res.status(500).send(err);
+                            })
                             break;
+                        }
                         case "GET": // Shows the user their account information (Or staff can view)
                             return res.status(200).json(showUserData(userData));
                     }

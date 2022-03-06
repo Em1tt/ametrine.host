@@ -20,23 +20,65 @@ export interface AuthLoginStruct {
 }
 
 export const auth = {
-    version: 1,
+    version: 2,
     updateHashVersion: async (userID: string | number): Promise<boolean> => {
         const data = await client.db.hgetall(`user:${userID}`);
         if (!data) return false;
         if (data["version"] == auth.version) return false;
         switch (parseInt(data["version"])) {
             default:
-            case 1: // OTP_Secret for 2FA, and version.
+                await client.db.hset([`user:${userID}`, "version", auth.version]);
+                break;
+            case 0: // OTP_Secret for 2FA, and version.
                 await client.db.hset([`user:${userID}`, "version", auth.version, "2fa", 0, "otp_secret", '-1', "backup_codes", '[]']);
+                break;
+            case 1:
+                await client.db.hset([`user:${userID}`, "version", auth.version, "state", 0]);
+                break;
         }
-        console.log("[Auth] Updated Hash Version from " + data["version"] + " to " + auth.version + ".")
+        console.log("[Auth] Updated User Hash Version from " + data["version"] + " to " + auth.version + ".")
         return true;
     },
     has2FA: async (userID: string | number): Promise<boolean> => {
         const data = await client.db.hget(`user:${userID}`, '2fa');
         if (!data) return false;
         return (data == 1);
+    },
+    startDeletion: async (userID: string | number): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            client.expire(`user:${userID}`, (ms("1 week") / 1000), function(err) {
+                if (err) {
+                    return reject("Error occurred while setting up deletion period for user. Please report this.");
+                }
+                client.db.hset([`user:${userID}`, "state", 2])
+                resolve(true)
+            })
+        })
+        // Later, setup a cron job that automatically purges any unused emails
+        // every 1 hour or 1 day.
+    },
+    logoutAll: (userID: string | number, sessions: Record<string, any>, sessionsReal?: Record<string, any>): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            return (async function() {
+                await sessions.map(async session => {
+                    await auth.logout(userID, (sessionsReal != undefined) ? sessionsReal[session] : sessions[session], session)
+                        .then(res => (!res) ? reject("Logout didn't return true.") : true)
+                        .catch(reject)
+                })
+                return resolve(true);
+            })()
+        })
+    },
+    logout: (userID: string | number, sessionID: string | number, session: string): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            client.del(`session:${sessionID}`, function(err) {
+                if (err) return reject("Error occured while deleting the sessions. Please report this.");
+                return client.hdel(`sessions.jwtid`, session, function (err2) {
+                    if (err2) return reject("Error occured while deleting the session. Please report this.");
+                    resolve(true)
+                })
+            })
+        })
     },
     /**
      * Logins in the user via amethyst.host
@@ -291,6 +333,18 @@ export const prop = {
         if (!userID) return res.status(404).send("Couldn't find email.");
         const account = await client.db.hgetall(`user:${userID}`);
         if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.
+
+        // [support] being replaced with <a href... for the front end
+        switch (parseInt(account["state"])) {
+            case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.
+                break;
+            case 2: // Process of being deleted
+                return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
+            case 3: // Disabled
+                return res.status(403).send("This account is disabled. Please read your email for more information and contact [support].");
+            case 4: // Terminated
+                return res.status(403).send("This account is terminated. Please read your email for more information.")
+        }
         if (req.cookies.jwt) {
             //return res.status(403).send("Already authenticated.")
             await res.clearCookie('jwt');
