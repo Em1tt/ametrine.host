@@ -28,7 +28,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
         rel="stylesheet">
-    <link href="/billing/html/staff/css/ticket.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/ticket.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
@@ -191,7 +191,7 @@
         </div>
     </main>
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
-    <%~ E.includeFile('../../public/templates/support.eta')%>
+    <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
     <%~ E.includeFile('../../html/staff/javascripts/ticket.eta', {ticket: it._locals.ticket, nonce: it._locals.nonce}) %>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>

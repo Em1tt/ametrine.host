@@ -42,7 +42,7 @@
 <body class=<%=(it._locals.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it._locals.userData.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
     <main>
-        <%if(it._locals.ticket.closed != 0){%>
+        <%if(it._locals.ticket.status == 1){%>
             <h4 class="ticketClosed">This ticket is closed. Press "Open Ticket", send a message or edit the ticket to reopen it.</h4>
         <%}%>
         <div>
@@ -141,7 +141,7 @@
                     <span id="imageManager"></span>
                 </fieldset>
                 <fieldset id="submitWrapper">
-                <%if(parseInt(it._locals.ticket.closed) == 0){%>
+                <%if(parseInt(it._locals.ticket.status) != 1){%>
                     <button type="button" class="buttons button1" id="toggleTicket"><i class="fa fa-times-circle"></i> Close Ticket</button>
                 <%}else{%>
                     <button type="button" class="buttons button1" id="toggleTicket"><i class="fa fa-check-circle"></i> Open Ticket</button>
@@ -208,6 +208,7 @@
             }
         });
         editor2.setContents(<%~it._locals.ticket.content%>, "api")
+        <%console.log(it.ticket)%>
         function editMode(){
     [...editButtons, ...buttons].forEach(btn => {
         btn.classList.toggle("hidden");
@@ -215,7 +216,7 @@
     subjectWrapper.classList.toggle("hidden");
     priority.hasAttribute("disabled") ? priority.removeAttribute("disabled") : priority.setAttribute("disabled", true);
     category.hasAttribute("disabled") ? category.removeAttribute("disabled") : category.setAttribute("disabled", true);
-    category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~it.ticket.content%>, "api")
+    category.hasAttribute("disabled") ? editor.setContents("", "api") : editor.setContents(<%~JSON.parse(it.ticket).content%>, "api")
     category.hasAttribute("disabled") ? imageManager.innerText = "" : transferScreenshots();
     async function transferScreenshots(){
     const imageManager = document.querySelector("#imageManager");

@@ -24,6 +24,7 @@ async function saveEdits() {
                 }
             }
         }));
+        if(editor.getLength() == 1) return;
         const response = await axios.put(`/api/tickets/${ticketID}`, {
             subject: subject.value,
             content: editor.getContents(),
@@ -92,6 +93,48 @@ function arrayBufferToBase64(buffer, type) {  // https://stackoverflow.com/a/945
     const b64 = window.btoa(binary);
     return (b64.length && type) ? `data:${type};base64,${b64}` : b64;
 }
+
+async function editMessage(id, msg, initialContent, editButton, deleteButton, saveButton){
+    try{
+        if(msg.getModule("toolbar").container.style.display == "flex"){
+            msg.getModule("toolbar").container.style = "display: none";
+            msg.enable(false);
+            msg.setContents(JSON.parse(initialContent), "api");
+            editButton.innerHTML = '<i class="fa fa-edit"></i>'
+            deleteButton.style = "display: initial;";
+            saveButton.style = "display: none;";
+        }else{
+            msg.getModule("toolbar").container.style = "display: flex";
+            msg.enable(true);
+            editButton.innerHTML = '<i class="fa fa-times"></i>';
+            deleteButton.style = "display: none;";
+            saveButton.style = "display: initial;";
+        }
+    }catch(e){
+    
+    }
+}
+
+async function saveMessageEditChanges(ticketID, id, msg){
+    try{
+        const response = await axios.patch(`/api/tickets/${ticketID}/${id}`, {
+            content: msg.getContents()
+        });
+        location.reload();
+    }catch(e){
+        console.log(e);
+    }
+}
+
+async function deleteMessage(id){
+    try{
+        const response = await axios.delete(`/api/tickets/${ticketID}/${id}`);
+        if(response) location.reload();
+    }catch(e){
+        console.log(e);
+    }
+}
+
 async function sendMessage() {
     try {
         const imageManager = document.querySelector("#imageManager");
@@ -110,6 +153,7 @@ async function sendMessage() {
                 }
             }
         }));
+        if(editor.getLength() == 1) return;
         const response = await axios.post(`/api/tickets/${ticketID}`, {
             content: editor.getContents(),
             files: images
@@ -250,7 +294,9 @@ async function sendMessage() {
                 img.width = 50;
                 img.alt = "User";
                 let div = document.createElement("div");
-                let clientName, role;
+                let clientName, role, buttonWrapper, editButton, saveButton;
+                    buttonWrapper = document.createElement("div");
+                    buttonWrapper.classList.add("buttons");
                 if (msg.user_id == ticket.user_id) {
                     img.classList.add("user");
                     clientName = document.createElement("p");
@@ -265,6 +311,17 @@ async function sendMessage() {
                     role = document.createElement("p");
                     role.innerText = "Staff Member";
                     role.classList.add("role");
+                    editButton = document.createElement("button");
+                    const editIcon = document.createElement("i");
+                    editIcon.classList.add("fa", "fa-edit");
+                    editButton.appendChild(editIcon);
+                    editButton.classList.add("edit");
+                    buttonWrapper.appendChild(editButton);
+                    saveButton = document.createElement("button");
+                    saveButton.classList.add("save");
+                    saveButton.innerHTML = '<i class="fa fa-save"></i>';
+                    saveButton.style = "display: none";
+                    buttonWrapper ? buttonWrapper.appendChild(saveButton) : 0;
                 }
                 actualWrapper.appendChild(title);
                 title.appendChild(img);
@@ -275,16 +332,45 @@ async function sendMessage() {
                 const dateCreated = document.createElement("p");
                 dateCreated.innerText = dateFormatter(msg.createdIn);
                 dateCreated.classList.add("dateCreated");
+                let dateEdited; 
+                if(msg.editedIn){
+                    dateEdited = document.createElement("p");
+                    dateEdited.innerText = `Edited: ${dateFormatter(msg.editedIn)}`
+                    dateEdited.classList.add("dateEdited");
+                }
                 title.appendChild(dateCreated);
+                dateEdited ? title.appendChild(dateEdited) : 0;
+                title.appendChild(buttonWrapper);
+                actualWrapper.appendChild(spanContent);
                 let messageEditorrr = new Quill(spanContent, {
                     theme: "snow",
                     readOnly: true,
                     modules: {
-                        toolbar: false
+                        toolbar: true,
+                        history: {
+                            delay: 1000,
+                            maxStack: 100,
+                            userOnly: true
+                        }
                     }
                 });
-                messageEditorrr.setContents(JSON.parse(msg.content), "api")
-                actualWrapper.appendChild(spanContent);
+                messageEditorrr.getModule("toolbar").container.style = "display: none";
+                messageEditorrr.setContents(JSON.parse(msg.content), "api");
+                saveButton ? saveButton.addEventListener("click", () => {
+                    saveMessageEditChanges(ticket.ticket_id, msg.msg_id, messageEditorrr);
+                }) : 0;
+                const deleteButton = document.createElement("button");
+                    const trashIcon = document.createElement("i");
+                    trashIcon.classList.add("fa", "fa-trash");
+                    deleteButton.appendChild(trashIcon);
+                    deleteButton.classList.add("delete");
+                    deleteButton.addEventListener("click", () => {
+                        deleteMessage(msg.msg_id)
+                    });
+                editButton ? editButton.addEventListener("click", () => {
+                    editMessage(msg.msg_id, messageEditorrr, msg.content, editButton, deleteButton, saveButton);
+                }) : 0;
+                buttonWrapper.appendChild(deleteButton)
                 let imageManager = document.createElement("div");
                 JSON.parse(msg.files).forEach((file) => {
                     let div = document.createElement("div");

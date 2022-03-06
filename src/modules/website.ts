@@ -384,6 +384,7 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
   if (!getTicket) return throw404(s);
   if (staff) {
     if (getTicket.level > s.locals?.userData?.permission_id) return throw403(s);
+    if (getTicket.user_id == s.locals?.userData?.user_id) return throw403(s);
   } else {
     if (getTicket.user_id != s.locals?.userData?.user_id) return throw403(s);
   }

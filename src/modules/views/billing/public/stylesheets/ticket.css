@@ -16,6 +16,10 @@ main > div > div {
   margin-bottom: 20px;
 }
 
+#deleteTicket{
+  color: red;
+}
+
 #editTicket {
   display: flex;
   flex-flow: row wrap;
@@ -38,7 +42,8 @@ main > div > div {
   outline: none;
   border: none;
   margin: 5px 10px 5px 0;
-  padding: 5px;
+  padding: 10px 15px;
+  border-radius: 10px;
 }
 
 #editTicket select:disabled {
@@ -70,7 +75,7 @@ main form fieldset > div:not(#editor, .ql-toolbar, .editorWrapper, .top) {
 form #subject {
   color: #dce0ff;
   background-color: #141419;
-  padding: 5px 10px;
+  padding: 10px 15px;
   border: none;
   margin: 5px 10px 5px 0;
   outline: none;
@@ -78,8 +83,8 @@ form #subject {
   -moz-appearance: none;
   appearance: none;
   width: 300px;
-  padding: 5px;
   font-size: 0.9rem;
+  border-radius: 10px;
 }
 form select {
   background-color: #141419;
@@ -93,6 +98,7 @@ form select {
   border: none;
   overflow-y: auto;
   max-height: 300px;
+  border-radius: 0 0 10px 10px;
 }
 form label:not([for="askResponse"]) {
   background-color: #1e1f26;
@@ -100,6 +106,7 @@ form label:not([for="askResponse"]) {
   padding: 10px;
   cursor: pointer;
   margin-right: 10px;
+  border-radius: 10px;
 }
 
 form label:not([for="askResponse"]):hover {
@@ -134,6 +141,7 @@ form input[type="file"] {
   flex-flow: column nowrap;
   width: 100%;
   background: #1e1f26;
+  border-radius: 10px;
 }
 .imageManager {
   display: flex;
@@ -141,6 +149,8 @@ form input[type="file"] {
   justify-content: left;
   width: 100%;
   background: #1e1f26;
+  border-radius: 10px;
+  margin-top: 10px;
 }
 #imageManager > div{
   display: flex;
@@ -164,6 +174,7 @@ form input[type="file"] {
   color: red;
   cursor: pointer;
   width: 200px;
+  border-radius: 10px;
 }
 #imageManager div button:hover {
   background: #101014;
@@ -202,6 +213,7 @@ form #submitWrapper button:hover {
   flex-flow: row nowrap;
   padding: 5px;
   margin-top: 20px;
+  border-radius: 10px 10px 0 0;
 }
 .title * {
   margin-right: 20px;
@@ -230,6 +242,34 @@ form #submitWrapper button:hover {
   color: gray;
   font-size: 0.9rem;
 }
+.title div.buttons{
+  margin-inline: auto 0;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.title div.buttons button{
+  padding: 10px;
+  font-size: 1.1rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: 0 10px 0 0;
+}
+.title div.buttons button.edit{
+  color:#3e404f;
+}
+.title div.buttons button.delete{
+  color:#cc3737;
+}
+.title div.buttons button.save{
+  color:#cc37c0;
+}
+.title div.buttons button:hover{
+  color: #dce0ff;
+}
+.title div.buttons button svg{
+  margin: 0;
+}
 
 #submitWrapper {
   display: flex;
@@ -239,6 +279,14 @@ form #submitWrapper button:hover {
 
 #errorText {
   color: red;
+}
+
+.ql-editor{
+  border-radius: 0 0 10px 10px;
+}
+
+#ticketCreate .ql-toolbar{
+  border-radius: 10px 10px 0 0;
 }
 
 .ql-toolbar .ql-stroke {
@@ -374,35 +422,41 @@ form #submitWrapper button:hover {
   justify-content: end;
   margin: 20px 0 20px 0;
 }
-
-.pageButtons > * {
-  padding: 10px;
-  color: #cc37c0;
-  outline: none;
-  border: none;
-  background-color: #1e1f26;
-  margin-inline: 2px;
-  cursor: pointer;
-}
-
-.pageButtons > *:disabled {
+.pageButtons button:disabled{
   color: #292a34;
   background-color: #141419;
   cursor: default;
 }
-.pageButtons > *:disabled:hover {
-  color: #292a34;
+.pageButtons button{
+  float: right;
+  padding: 10px;
+  border: none;
+  color: #dce0ff;
   background-color: #141419;
+  cursor: pointer;
+}
+.pageButtons button:not(:disabled):hover{
+  color: #cc37c0;
+  background-color: #1e1f26;
+}
+.pageButtons button:first-of-type{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.pageButtons button:last-of-type{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .dateCreated {
   margin-top: 8px !important;
+  margin-right: 10px !important;
   color: gray !important;
 }
 
-.pageButtons > *:hover {
-  color: #141419;
-  background-color: #cc37c0;
+.dateEdited {
+  margin-top: 8px !important;
+  color: gray !important;
 }
 
 @media screen and (max-width: 600px) {
