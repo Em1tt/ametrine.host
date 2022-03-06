@@ -22,17 +22,26 @@ main {
   .articleInfo {
     display: flex;
     flex-flow: row wrap;
+    align-items: center;
   }
   .articleInfo * {
     color: gray;
-    margin-inline: 10px;
+    margin: 0 10px;
   }
-  .articleInfo button{
+  .articleInfo a{
     padding: 10px;
+    background-color: #141419;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .articleInfo a:hover{
+    background-color: #1e1f26;
+    color: #dce0ff;
   }
   #editor{
       border: 0;
       color: white;
+      margin-bottom: 100px;
   }
   .ql-editor{
       width: 100%;
@@ -46,4 +55,33 @@ main {
     height: 300px;
     cursor: url("/billing/public/images/plus_cursor.png") 25 25, auto;
     filter: brightness(0.96);
+  }
+  footer{
+    position: fixed;
+    bottom: -100px;
+    height: 100px;
+    width: 100%;
+    left: 0;
+    background-color: #141419;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    color: #dce0ff;
+    transition: 0.5s ease;
+  }
+  footer button{
+    margin-left: 10px;
+    font-size: 1.1rem;
+    background-color: transparent;
+    border: none;
+    color: #dce0ff;
+    cursor: pointer;
+  }
+  footer button:hover{
+    color: #cc37c0;
+  }
+  footer button[selected]{
+    color: #e6b530;
+    cursor: not-allowed;
   }

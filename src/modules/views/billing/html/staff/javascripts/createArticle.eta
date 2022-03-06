@@ -49,7 +49,7 @@
     const header = document.querySelector("#subject").value;
     if(!header) return blinkRed(document.querySelector("#subject"));
     let tags = document.getElementById("searchbar").getSelectedOptions();
-    if(tags.length < 2) return blinkRed(document.getElementById("searchbar"));
+    if(tags.length < 2 || tags.some(i => i.value.toLowerCase().trim() == "unfinished")) return blinkRed(document.getElementById("searchbar"));
     tags = encodeURIComponent(JSON.stringify(tags.map(i => i.value)));
     if(editor.getLength() < 100) return blinkRed(document.getElementById("editor"));
     const response = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {

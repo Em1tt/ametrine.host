@@ -62,7 +62,7 @@
                 <div></div>
             </div>
         </div>
-        <h2 class="header2" id="articles-found-header">Articles Found: Searching...</h2>
+        <h2 class="header2" id="articles-found-header">Articles Found: 0</h2>
         <div class="pageButtons">
             <button disabled class="rightButton"><i class="fa fa-arrow-right"></i></button>
             <button disabled class="leftButton"><i class="fa fa-arrow-left"></i></button>

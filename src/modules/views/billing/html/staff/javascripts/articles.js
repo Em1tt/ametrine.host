@@ -24,7 +24,7 @@
   }
   try {
     const tags = JSON.parse(params.tags);
-    const response = await axios.get(`/api/knowledgebase/list?limit=50&state=0&page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    const response = await axios.get(`/api/knowledgebase/list?limit=50&page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
     console.log(response);
     document.getElementById("articles").innerHTML = "";
     response.data.forEach(articles => {
@@ -68,7 +68,7 @@
   }
   try {
     const tags = JSON.parse(params.tags);
-    const response = await axios.get(`/api/knowledgebase/count?state=0&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    const response = await axios.get(`/api/knowledgebase/count?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
     const articleAmount = response.data;
     document.getElementById("articles-found-header").innerText = `Articles Found: ${response.data}`;
     let page = params.page || 1;

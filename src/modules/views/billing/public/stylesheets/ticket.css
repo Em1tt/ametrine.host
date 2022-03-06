@@ -1,5 +1,6 @@
 main {
   margin: 3rem 0 0 7rem;
+  display: -ms-grid;
   display: grid;
   height: 100%;
 }
