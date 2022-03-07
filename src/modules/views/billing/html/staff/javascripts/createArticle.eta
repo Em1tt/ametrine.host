@@ -27,6 +27,21 @@
   }catch(e){
     e;
   }
+    document.querySelector("#delete-icon").addEventListener("click", async () => {
+      Swal.fire({
+        title: "Delete this article?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        preConfirm: async () => {
+          const response = await axios.delete(`/api/knowledgebase/<%=it.article.article_id%>`).then(response => {
+            history.back();
+            window.location.href = "/billing/staff/knowledgebase/articles"
+          })
+        },
+      });
+  });
   document.querySelector("#save-icon").addEventListener("click", async () => {
     document.querySelector("#save-icon").setAttribute("active", true);
     const category = document.getElementById("category");
