@@ -45,9 +45,12 @@
     <main>
         <div>
             <div>
+            <span>
+                <button id="go-back"><i class="fa fa-angle-left"></i> Go back</button>
                 <h1 class="header1"><%=decodeURIComponent(atob(article.header))%></h1>
+            </span>
                 <div class="articleInfo">
-                    <p>Opened On: <%=new Date(parseInt(article.createdIn)).toDateString()%></p>
+                    <p>Created On: <%=new Date(parseInt(article.createdIn)).toDateString()%></p>
                     <p id="article-id">Article ID: <%=parseInt(article.article_id)%></p>
                 </div>
             </div>

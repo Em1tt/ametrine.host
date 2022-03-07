@@ -78,10 +78,29 @@ main {
     color: #dce0ff;
     cursor: pointer;
   }
+  footer button:disabled:hover{
+    cursor: not-allowed;
+    color: #dce0ff;
+  }
   footer button:hover{
     color: #cc37c0;
   }
   footer button[selected]{
     color: #e6b530;
     cursor: not-allowed;
+  }
+  #iframeWrapper{
+    width: 95%;
+    background-color: #141419;
+    padding: 10px;
+  }
+  #go-back{
+    color: gray;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  #go-back:hover{
+    color: #dce0ff;
   }

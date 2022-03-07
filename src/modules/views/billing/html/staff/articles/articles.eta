@@ -40,7 +40,10 @@
     <main>
         <div>
             <div>
+                <span>
+                <button id="go-back"><i class="fa fa-angle-left"></i> Go back</button>
                 <h1 class="header1">Browse the knowledgebase</h1>
+                </span>
                 <div class="articleInfo">
                     <button id="article-new">Create a new article</button>
                 </div>
@@ -69,12 +72,12 @@
                 <div class="checkbox">
                     <input type="radio" name="filter" id="finished">
                     <label for="finished"><i class="fa fa-check"></i></label>
-                    <label for="finished">Finished</label>
+                    <label for="finished">Published</label>
                 </div>
                 <div class="checkbox">
                     <input type="radio" name="filter" id="unfinished">
                     <label for="unfinished"><i class="fa fa-check"></i></label>
-                    <label for="unfinished">Unfinished</label>
+                    <label for="unfinished">Unpublished</label>
                 </div>
                 <div class="checkbox">
                     <input type="radio" name="filter" id="staff">

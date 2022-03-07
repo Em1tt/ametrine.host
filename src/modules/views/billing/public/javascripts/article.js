@@ -10,7 +10,15 @@ window.onscroll = function(ev) {
     }
 };
 
-document.querySelector("#like").addEventListener("click", async () => {
+document.querySelector("#go-back")?.addEventListener("click", () => {
+    history.back();
+});
+
+if(document.body.clientHeight <= window.innerHeight){
+    footer.style = "bottom: 0px";
+}
+
+document.querySelector("#like")?.addEventListener("click", async () => {
     try{
         const response = await axios.post(`/api/knowledgebase/${id}`, {
             like: 1
@@ -21,7 +29,7 @@ document.querySelector("#like").addEventListener("click", async () => {
         console.error(e);
     }
 });
-document.querySelector("#dislike").addEventListener("click", async () => {
+document.querySelector("#dislike")?.addEventListener("click", async () => {
     try{
         const response = await axios.post(`/api/knowledgebase/${id}`, {
             dislike: 1

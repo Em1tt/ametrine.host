@@ -1,5 +1,8 @@
 <script nonce=<%=it.nonce%> >
 (async() =>{
+  document.querySelector("#go-back")?.addEventListener("click", () => {
+    history.back();
+});
     try {
         const response = await axios.get("/api/knowledgebase/tags");
         VirtualSelect.init({
@@ -43,7 +46,7 @@
   setInterval(() => {
     document.querySelector("#save-icon").click();
   }, 30000);
-    document.querySelector("#publish-button").addEventListener("click", async () => {
+    document.querySelector("#publish-button")?.addEventListener("click", async () => {
     const category = document.getElementById("category").value;
     if(!category) return blinkRed(document.getElementById("category"));
     const header = document.querySelector("#subject").value;
@@ -54,8 +57,8 @@
     if(editor.getLength() < 100) return blinkRed(document.getElementById("editor"));
     document.querySelector("#save-icon").setAttribute("active", true);
       const saveResponse = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
-        header: document.querySelector("#subject").value,
-        categories: [category.value],
+        header: header,
+        categories: [category],
         content: editor.getContents(),
         video: document.querySelector("#video").value,
         tags: tags
@@ -66,7 +69,16 @@
     await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
         state: 1
     }).then(response => {
-      window.location.href = `/billing/staff/knowledgebase/articles/<%=it.article.article_id%>`
+      window.location.href = `/billing/staff/knowledgebase/article/<%=it.article.article_id%>`
+    }).catch(e => {
+      console.log(e.response.data);
+    });
+  });
+      document.querySelector("#unpublish-button")?.addEventListener("click", async () => {
+    await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
+        state: 0
+    }).then(response => {
+      location.reload();
     }).catch(e => {
       console.log(e.response.data);
     });

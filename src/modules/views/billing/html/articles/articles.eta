@@ -40,7 +40,10 @@
     <main>
         <div>
             <div>
-                <h1 class="header1">Browse the knowledgebase</h1>
+                <span>
+                    <button id="go-back"><i class="fa fa-angle-left"></i> Go back</button>
+                    <h1 class="header1">Browse the knowledgebase</h1>
+                </span>
             </div>
             <hr class="semanticLine">
             <form id="tag-search">

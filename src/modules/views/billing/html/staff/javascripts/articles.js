@@ -2,6 +2,9 @@
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
+  document.querySelector("#go-back")?.addEventListener("click", () => {
+    history.back();
+});
   try {
     const response = await axios.get(params.category == null ? "/api/knowledgebase/tags" : `/api/knowledgebase/tags?category=${params.category}`);
     const totalTags = response.data.map((i) => {

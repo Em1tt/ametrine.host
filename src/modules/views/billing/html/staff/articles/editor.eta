@@ -47,10 +47,15 @@
     <%console.log(article)%>
     <%~ E.includeFile('../../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <top>
+        <button id="go-back"><i class="fa fa-angle-left"></i> Go back</button>
         <h3>Article Editor</h3>
         <button id="delete-icon"><i class="fa fa-trash"></i></button>
         <button id="save-icon"><i class="fa fa-save"></i></button>
-        <button id="publish-button">Publish</button>
+        <%if(parseInt(article.state) == 0){%>
+            <button id="publish-button">Publish</button>
+        <%}else{%>
+            <button id="unpublish-button">Unpublish</button>
+        <%}%>
     </top>
     <main>
         <div>

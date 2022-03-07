@@ -46,19 +46,32 @@
     <main>
         <div>
             <div>
+                <span>
+                <button id="go-back"><i class="fa fa-angle-left"></i> Go back</button>
                 <h1 class="header1"><%=decodeURIComponent(atob(article.header))%></h1>
+                </span>
                 <div class="articleInfo">
                     <p>Created On: <%=new Date(parseInt(article.createdIn)).toDateString()%></p>
-                    <p>Article ID: <%=parseInt(article.article_id)%></p>
+                    <p id="article-id">Article ID: <%=parseInt(article.article_id)%></p>
                     <a href="/billing/staff/knowledgebase/editor/<%=article.article_id%>">Edit Article</a>
                 </div>
             </div>
             <hr class="semanticLine">
         </div>
+        <%if(article.video){%>
+        <span id="iframeWrapper">
+        <iframe width="560" height="315" src=<%=article.video%> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </span>
+        <%}%>
         <div class="editorWrapper">
             <div id="editor"></div>
             <input type="hidden" name="quill-html" id="quill-html">
         </div>
+        <footer>
+            <p>Article's ratings:</p>
+            <button disabled><i class="fa fa-thumbs-up"></i> <%=JSON.parse(article.likes).length%></button>
+            <button disabled><i class="fa fa-thumbs-down"></i> <%=JSON.parse(article.dislikes).length%></button>
+        </footer>
     </main>
     <%~ E.includeFile('../../../public/templates/authentication.eta')%>
     <script src="/billing/public/javascripts/article.js" async defer></script>
