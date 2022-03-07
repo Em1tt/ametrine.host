@@ -65,6 +65,23 @@
                 <div></div>
             </div>
         </div>
+        <span id="checkboxWrapper">
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="finished">
+                    <label for="finished"><i class="fa fa-check"></i></label>
+                    <label for="finished">Finished</label>
+                </div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="unfinished">
+                    <label for="unfinished"><i class="fa fa-check"></i></label>
+                    <label for="unfinished">Unfinished</label>
+                </div>
+                <div class="checkbox">
+                    <input type="radio" name="filter" id="staff">
+                    <label for="staff"><i class="fa fa-check"></i></label>
+                    <label for="staff">Staff Only</label>
+                </div>
+        </span>
         <h2 class="header2" id="articles-found-header">Articles Found: Searching...</h2>
         <div class="pageButtons">
             <button disabled class="rightButton"><i class="fa fa-arrow-right"></i></button>

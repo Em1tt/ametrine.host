@@ -24,7 +24,8 @@
   }
   try {
     const tags = JSON.parse(params.tags);
-    const response = await axios.get(`/api/knowledgebase/list?limit=50&page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    console.log(params.state);
+    const response = await axios.get(`/api/knowledgebase/list?limit=50&page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}&state=${params.state ? params.state : 1 }`);
     console.log(response);
     document.getElementById("articles").innerHTML = "";
     response.data.forEach(articles => {
@@ -45,6 +46,31 @@
   } catch (e) {
     console.error(e);
   }
+
+try{
+  const finished = document.querySelector(".checkbox #finished");
+  const staff = document.querySelector(".checkbox #staff");
+  const unfinished = document.querySelector(".checkbox #unfinished");
+  const tags = encodeURIComponent(params.tags)
+  if(parseInt(params.state) == 0){
+    unfinished.setAttribute("checked", true);
+  }else if(parseInt(params.state) == 2){
+    staff.setAttribute("checked", true);
+  }else{
+    finished.setAttribute("checked", true)
+  }
+  finished.addEventListener("change", () => {
+    window.location.href = `/billing/staff/knowledgebase/articles?page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${tags}&state=1`;
+  });
+  staff.addEventListener("change", () => {
+    window.location.href = `/billing/staff/knowledgebase/articles?page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${tags}&state=2`;
+  });
+  unfinished.addEventListener("change", () => {
+    window.location.href = `/billing/staff/knowledgebase/articles?page=${params.page}&${params.category == null ? "": `category=${params.category}&`}tags=${tags}&state=0`;
+  });
+}catch(e){
+  console.log(e);
+}
   try {
       const tags = JSON.parse(params.tags);
       const categories = await axios.get("/api/knowledgebase/categories");
@@ -68,7 +94,7 @@
   }
   try {
     const tags = JSON.parse(params.tags);
-    const response = await axios.get(`/api/knowledgebase/count?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}`);
+    const response = await axios.get(`/api/knowledgebase/count?${params.category == null ? "": `category=${params.category}&`}tags=${encodeURIComponent(JSON.stringify(tags))}&state=${params.state ? params.state : 1 }`);
     const articleAmount = response.data;
     document.getElementById("articles-found-header").innerText = `Articles Found: ${response.data}`;
     let page = params.page || 1;

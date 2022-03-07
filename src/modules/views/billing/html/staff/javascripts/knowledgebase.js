@@ -1,4 +1,26 @@
 (async () => {
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+  try{
+    const finished = document.querySelector(".checkbox #finished");
+    const staff = document.querySelector(".checkbox #staff");
+    const unfinished = document.querySelector(".checkbox #unfinished");
+    finished.removeAttribute("checked");
+    staff.removeAttribute("checked");
+    unfinished.removeAttribute("checked");
+    finished.addEventListener("change", () => {
+      window.location.href = `/billing/staff/knowledgebase/articles?state=1`;
+    });
+    staff.addEventListener("change", () => {
+      window.location.href = `/billing/staff/knowledgebase/articles?state=2`;
+    });
+    unfinished.addEventListener("change", () => {
+      window.location.href = `/billing/staff/knowledgebase/articles?state=0`;
+    });
+  }catch(e){
+    console.log(e);
+  }
   try {
     const response = await axios.get("/api/knowledgebase/tags");
     const totalTags = response.data.map((i) => {

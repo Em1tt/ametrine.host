@@ -126,3 +126,11 @@ main div form button:hover {
 .articleInfo button:hover{
   background-color: #1e1f26;
 }
+#checkboxWrapper{
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+}
+#checkboxWrapper > *{
+  margin-right: 20px;
+}

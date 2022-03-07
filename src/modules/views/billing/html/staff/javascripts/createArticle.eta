@@ -50,10 +50,23 @@
     if(!header) return blinkRed(document.querySelector("#subject"));
     let tags = document.getElementById("searchbar").getSelectedOptions();
     if(tags.length < 2 || tags.some(i => i.value.toLowerCase().trim() == "unfinished")) return blinkRed(document.getElementById("searchbar"));
-    tags = encodeURIComponent(JSON.stringify(tags.map(i => i.value)));
+    tags = tags.map(i => i.value).join(",");
     if(editor.getLength() < 100) return blinkRed(document.getElementById("editor"));
-    const response = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
+    document.querySelector("#save-icon").setAttribute("active", true);
+      const saveResponse = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
+        header: document.querySelector("#subject").value,
+        categories: [category.value],
+        content: editor.getContents(),
+        video: document.querySelector("#video").value,
+        tags: tags
+    });
+    setTimeout(() => {
+      document.querySelector("#save-icon").setAttribute("active", false);
+    }, 2000);
+    await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
         state: 1
+    }).then(response => {
+      window.location.href = `/billing/staff/knowledgebase/articles/<%=it.article.article_id%>`
     }).catch(e => {
       console.log(e.response.data);
     });

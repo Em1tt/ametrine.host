@@ -29,7 +29,7 @@ top button:last-of-type{
     width: 150px;
     font-size: 1rem;
     background-color: #141419;
-    color: #dce0ff;
+    color: gray;
 }
 top button:hover{
     color: #cc37c0;
