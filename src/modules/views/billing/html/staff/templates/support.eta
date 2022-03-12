@@ -1,6 +1,6 @@
 <% let staffPages = it.permissions[0][1].accessPages %>
 <%console.log(staffPages)%>
-<aside id="supportPopup">
+<aside class="popups" id="supportPopup">
     <% if(staffPages.includes("all") || staffPages.includes("/staff/tickets")){ %>
     <a href="/billing/staff/tickets">
         <div>

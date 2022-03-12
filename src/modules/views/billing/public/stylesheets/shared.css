@@ -178,12 +178,12 @@ body > aside > div{
     border-left: 3px solid rgba(255, 252, 84, 1);
 }
 
-#supportPopup{
+.popups{
     overflow-y: auto;
     z-index: 2;
 }
 
-#supportPopup a{
+.popups a{
     width: 100%;
     height: 250px;
     display: grid;
@@ -194,18 +194,18 @@ body > aside > div{
     color: gray;
 }
 
-#supportPopup a:hover{
+.popups a:hover{
     background-color: #141419;
     filter:saturate(1);
     color: #fff;
 }
 
-#supportPopup a div {
+.popups a div {
     width: 100%;
     text-align: center;
 }
 
-#supportPopup a svg{
+.popups a svg{
     font-size: 2rem;
     color:#cc37c0;
 }

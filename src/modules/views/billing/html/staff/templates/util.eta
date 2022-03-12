@@ -1,0 +1,35 @@
+<% let staffPages = it.permissions[0][1].accessPages %>
+<aside class="popups" id="utilPopup">
+    <% if(staffPages.includes("all") || staffPages.includes("/staff/announcements")){ %>
+    <a href="/billing/staff/announcements">
+        <div>
+            <i class="fa fa-bell"></i>
+            <p>Manage Announcements</p>
+        </div>
+    </a>
+    <% } %>
+    <% if(staffPages.includes("all") || staffPages.includes("/staff/referral")){ %>
+    <a href="/billing/staff/referral">
+        <div>
+            <i class="fa fa-user-plus"></i>
+            <p>Manage referrals</p>
+        </div>
+    </a>
+    <% } %>
+    <% if(staffPages.includes("all") || staffPages.includes("/staff/packages")){ %>
+    <a href="/billing/staff/referral">
+        <div>
+            <i class="fa fa-shopping-cart"></i>
+            <p>Manage packages</p>
+        </div>
+    </a>
+    <% } %>
+    <% if(staffPages.includes("all") || staffPages.includes("/staff/users")){ %>
+    <a href="/billing/staff/users">
+        <div>
+            <i class="fa fa-users"></i>
+            <p>Manage users</p>
+        </div>
+    </a>
+    <% } %>
+</aside>

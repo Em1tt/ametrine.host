@@ -95,6 +95,9 @@ announcementForm.addEventListener("submit", (event) => {
     const staffOnly = document.getElementById("staffAnnouncement")?.checked;
     let announcementType = document.getElementById("announcementType");
     announcementType = announcementType.options[announcementType.selectedIndex].value;
-
-    createAnnouncement(announcementText, announcementType, announcementEnd, customersOnly, staffOnly, broadcast);
+    createAnnouncement(announcementText, announcementType, announcementEnd / 1000, customersOnly, staffOnly, broadcast);
 });
+let date = new Date();
+date.setDate(date.getDate() + 1);
+date = date.toISOString().split("T")[0];
+document.querySelector("#announcementEnd").setAttribute("min", date)

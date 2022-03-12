@@ -9,14 +9,6 @@
                 <i class="fa fa-angle-double-right"></i>
             </a>
         </li>
-        <% if(staffPages.includes("all") || staffPages.includes("/staff/announcements")){ %>
-        <li class="nav-item">
-            <a href="/billing/staff/announcements" aria-label="Announcements" class="nav-link">
-                <i class="fa fa-bell"></i>
-                <span aria-hidden="true" class="link-text">Announcements</span>
-            </a>
-        </li>
-        <%}%>
         <% if(staffPages.includes("all") || staffPages.includes("support")){ %>
         <li class="nav-item">
             <a aria-label="Support" id="support" class="nav-link">
@@ -25,19 +17,11 @@
             </a>
         </li>
         <%}%>
-        <% if(staffPages.includes("all") || staffPages.includes("referral")){ %>
+        <% if(staffPages.includes("all") || staffPages.includes("util")){ %>
         <li class="nav-item">
-            <a href="#" aria-label="Referral" class="nav-link">
-                <i class="fa fa-user-plus"></i>
-                <span aria-hidden="true" class="link-text">Referral</span>
-            </a>
-        </li>
-        <%}%>
-        <% if(staffPages.includes("all") || staffPages.includes("packages")){ %>
-        <li class="nav-item">
-            <a href="#" aria-label="Order" id="order" class="nav-link">
-                <i class="fa fa-shopping-cart"></i>
-                <span aria-hidden="true" class="link-text">Manage Packages</span>
+            <a aria-label="Support" id="utils" class="nav-link">
+                <i class="fas fa-tasks"></i>
+                <span aria-hidden="true" class="link-text">Management</span>
             </a>
         </li>
         <%}%>
@@ -52,7 +36,7 @@
         <li class="nav-item">
             <a href="#" aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-tools"></i>
-                <span aria-hidden="true" class="link-text">Settings</span>
+                <span aria-hidden="true" class="link-text">Panel settings</span>
             </a>
         </li>
                 <li class="nav-item">

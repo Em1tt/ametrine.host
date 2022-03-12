@@ -70,14 +70,15 @@ export const prop = {
                 if (!permissions.hasPermission(userData['permission_id'], `/announcements`)) return res.sendStatus(403);
                 const announcement = req.body.text; // Announcement Text
                 const type = req.body.type; // Announcement Type
-                const deleteOn = parseInt(req.body.deleteOn); // When to delete the announcement
-                const currentDate = Date.now();
+                const deleteOn = parseInt(req.body.deleteOn);
+                const currentDate = Math.floor(Date.now() / 1000);
                 if (deleteOn && (isNaN(deleteOn) || (deleteOn < currentDate))) return res.status(406).send(`Invalid Timestamp. Timestamps cannot be in the past and must be a numeric value.`);
                 let showCustomers = req.body.showToCustomersOnly; // If it should only show to customers
                 if (!announcement || !type || !deleteOn || !showCustomers) return res.status(406).send('Body is missing the required values (announcement, type, deleteOn, showCustomers)');
                 if (!["outage", "news", "warning"].includes(type.toString())) return res.status(406).send('Query "type" has an invalid value.');
                 if (isNaN(deleteOn)) return res.status(406).send("Invalid Timestamp")
                 if (!["0","1","true","false"].includes(showCustomers.toString())) return res.status(406).send("Show Customers must be true or false.")
+                console.log(deleteOn, currentDate);
                 switch (showCustomers.toString()) {
                     case "true": showCustomers = 1; break;
                     case "false": showCustomers = 0; break;
@@ -87,7 +88,8 @@ export const prop = {
                         console.error(err);
                         return res.status(500).send("Error occured while incrementing announcement ID. Please report this.")
                     }
-                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", utils.encode_base64(announcement), "deleteIn", deleteOn, "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
+                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", utils.encode_base64(announcement), "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
+                    client.expire(`announcement:${announcementID}`, deleteOn - currentDate);
                     return res.status(200).json({announcement_id: announcementID})
                     /*client.sadd(`announcements`, announcementID, function(err) {
                         if (err) return console.error(err);
