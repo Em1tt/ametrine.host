@@ -1,0 +1,62 @@
+main {
+  margin: 3rem 0 0 7rem;
+  display: -ms-grid;
+  display: grid;
+  height: 100%;
+}
+main > div {
+  width: 95%;
+}
+main > div > div {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+main div div > form {
+  width: 100%;
+}
+main h1 {
+  margin-right: 50px;
+}
+main div form {
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: #141419 !important;
+  border-radius: 10px;
+}
+#go-back{
+  color: gray;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+#go-back:hover{
+  color: #dce0ff;
+}
+.badges{
+  display: flex;
+  flex-flow: row wrap;
+}
+.badges div{
+  display: inherit;
+  flex-flow: column nowrap;
+  background-color: #141419;
+  padding: 20px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.badges div h2{
+  margin: 0;
+}
+.badges div p{
+  margin: 0;
+  text-align: left;
+}
+#disable-2fa{
+  color: #cc37c0;
+  text-decoration: underline;
+  cursor: pointer;
+}

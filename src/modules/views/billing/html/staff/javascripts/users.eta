@@ -78,5 +78,8 @@
     }catch(e){
       console.error(e);
     }
+    document.querySelector("#go-back")?.addEventListener("click", () => {
+      history.back();
+    });
   })();
 </script>

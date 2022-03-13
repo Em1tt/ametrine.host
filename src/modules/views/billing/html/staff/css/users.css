@@ -132,3 +132,13 @@ main div form button:hover {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
+  #go-back{
+    color: gray;
+    background-color: transparent;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+  #go-back:hover{
+    color: #dce0ff;
+  }

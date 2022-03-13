@@ -300,6 +300,15 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
               }
               break;
             }
+            case "user": {
+              if(parseInt(r.params.file)) {
+                file = `${billing}/staff/user.eta`;
+                await handleUsers(r,s);
+              }else{
+                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+              }
+              break;
+            }
           }
         } break;
         case "knowledgebase": {
@@ -402,7 +411,7 @@ async function handleArticles(r: express.Request, s: express.Response, staff: bo
   s.locals.article = JSON.stringify(getArticle);
   s.locals.article_categories = JSON.stringify(article_categories);
 }
-async function handleStaff(r: express.Request, s: express.Response) {
+async function handleStaff(r: express.Request, s: express.Response) { //TODO: USE API ENDPOINT INSTEAD OF THIS.
   return new Promise((resolve, reject) => {
     s.locals.permissions = permIDs;
     redisClient.keys("user:*", async function (err, result) {
@@ -418,4 +427,10 @@ async function handleStaff(r: express.Request, s: express.Response) {
       resolve(true);
     });
   })
+}
+async function handleUsers(r: express.Request, s: express.Response) {
+  if (!s.locals.userData) return throw403(s);
+  const getUser: UserData = await redisClient.db.hgetall(`user:${parseInt(r.params.file)}`);
+  if (!getUser) return throw404(s);
+  s.locals.user = JSON.stringify(getUser);
 }

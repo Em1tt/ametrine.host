@@ -1,0 +1,25 @@
+<script nonce=<%=it.nonce%>>
+document.querySelector("#go-back")?.addEventListener("click", () => {
+    history.back();
+});
+document.getElementById("disable-2fa")?.addEventListener("click", () => {
+    Swal.fire({
+      title: `Disable 2FA on user?`,
+      text: "Make sure beforehand, that this is the correct user.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      preConfirm: async () => {
+        try{
+            const response = await axios.patch("/api/users/<%=it.user.user_id%>", {
+                category: "2fa"
+            });
+            console.log(response);
+            location.reload();
+        }catch(e){
+            console.error(e);
+        }
+      }
+    });
+});
+</script>
