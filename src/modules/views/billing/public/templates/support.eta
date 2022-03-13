@@ -1,4 +1,4 @@
-<aside id="supportPopup">
+<aside id="supportPopup" class="popups">
     <a href="/billing/tickets">
         <div>
             <i class="fa fa-ticket-alt"></i>

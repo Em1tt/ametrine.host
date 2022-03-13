@@ -248,7 +248,7 @@ export const prop = {
                 let pageLimit = 20;
                 let state = 1;
                 let tags = [];
-                if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req.query.state.toString());
+                if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req?.query?.state?.toString());
                 if (req.query.page) page = parseInt(req.query.page.toString());
                 if (req.query.limit) pageLimit = parseInt(req.query.limit.toString());
                 if (isNaN(pageLimit)) pageLimit = 10;
@@ -302,7 +302,7 @@ export const prop = {
                     tags = [];
                 }
                 let state = 1;
-                if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req.query.state.toString());
+                if ([0,1,2].includes(parseInt(req.query.state))) state = parseInt(req?.query?.state?.toString());
                 if (isNaN(state)) state = 1;
                 return client.keys("article:*", async function (err, result) {
                     if (err) {

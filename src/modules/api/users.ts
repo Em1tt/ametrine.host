@@ -29,7 +29,6 @@ export const prop = {
         const params = req.params[0].split("/").slice(1); // Probably a better way to do this in website.ts via doing /api/:method/:optionalparam*? but it doesnt work for me.
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405) // If the request isn't included from allowed methods, then respond with Method not Allowed.
-        //let userData = await auth.verifyToken(req, res, false, "access");
         let userData = await auth.verifyToken(req, res, false, "access");
         if (userData == 101) {
             const newAccessToken = await auth.regenAccessToken(req, res);
@@ -157,17 +156,33 @@ export const prop = {
                         case "GET": { // Shows a list of users
                             let page = 1;
                             if (!isNaN(parseInt(req.query.page))) page = parseInt(req.query.page);
+                            const uIDs       : Array<number> = [],
+                                  permissions: Array<string> = [],
+                                  emails     : Array<string> = [];
+                            if(req.query.filter){
+                                req.query.filter.split(",").forEach(filter => {
+                                    if(!isNaN(parseInt(filter))) return uIDs.push(parseInt(filter));
+                                    if(filter.split("=")[0].toLowerCase() == "perm") return permissions.push(filter.split("=")[1]);
+                                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                    if(emailRegex.test(filter.toLowerCase())) return emails.push(filter.toLowerCase());
+                                });
+                            }
                             return client.keys("user:*", async function (err, result) {
                                 if (err) {
                                     console.error(err);
                                     return res.status(500).send("Error occured while retrieving keys for users. Please report this.")
                                 }
-                                const users: Array<UserData> = await Promise.all(result.map(async userID => {
+                                if(uIDs.length) result = result.filter(u => uIDs.includes(parseInt(u.split(":")[1])));
+                                if(!result.length) return res.sendStatus(404);
+                                let users: Array<UserData> = await Promise.all(result.map(async userID => {
                                     const user = await client.db.hgetall(userID);
                                     return user;
                                 }));
+                                if(permissions.length) users = users.filter(user => permissions.includes(user.permission_id as string));
+                                if(emails.length) users = users.filter(user => emails.includes(user.email.toLowerCase()));
+                                if(!users.length) return res.sendStatus(404);
                                 res.status(200).json(paginate(users.map(user => showUserData(user)), 10, page));
-                            })
+                            });
                         }
                     }
                 }

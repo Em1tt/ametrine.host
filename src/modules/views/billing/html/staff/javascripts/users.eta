@@ -1,0 +1,82 @@
+<script nonce=<%=it.nonce%> >
+(async () => {
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
+    try {
+      VirtualSelect.init({
+        ele: "#searchbar",
+        multiple: true,
+        selectedValue: params.filter.split(",").map(i => {
+          return i;
+        }),
+        search: false,
+        placeholder: "Find users by ID, E-Mail or permission ID",
+        showValueAsTags: true,
+        allowNewOption: true,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    try {
+      const users = await axios.get(`/api/users?filter=${params.filter}`);
+      console.log(users);
+      document.getElementById("users").innerHTML = "";
+      users.data.forEach(user => {
+        const anchor = document.createElement("a");
+        anchor.href = `/billing/staff/user/${user.user_id}`;
+        const header = document.createElement("h2");
+        header.innerText = user.email;
+        header.classList.add("header2");
+        const description = document.createElement("p");
+        description.innerText = `User ID: ${user.user_id} | Permission ID: ${user.permission_id}`;
+        anchor.appendChild(header);
+        anchor.appendChild(description);
+        document.getElementById("users").appendChild(anchor);
+      })
+      let page = params.page;
+      const leftButtons  = [...document.getElementsByClassName("pageLeft")],
+            rightButtons = [...document.getElementsByClassName("pageRight")];
+      if (!page || page == undefined || page == null) page = 1;
+      /*if (page == 1 && users.data.length == 10) {
+        rightButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+      } else if (page != 1 && page > 0 && users.data.length == 10) {*/
+        rightButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+        leftButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+      /*} else if (page != 1 && page > 0 && users.data.length < 10) {
+        leftButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+      }*/
+      leftButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                window.location = `${window.location.pathname}?page=${parseInt(page) - 1}`
+            });
+        });
+        rightButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                window.location = `${window.location.pathname}?page=${parseInt(page) + 1}`
+            });
+        })
+    } catch (e) {
+    console.log(e);
+      document.getElementById("users").innerHTML = '<h3 class="header2">None found.</h3>';
+    }
+    try{
+      document.getElementById("tag-search").addEventListener("submit", (event) => {
+        event.preventDefault();
+        let tags = document.getElementById("searchbar").getSelectedOptions();
+        tags = tags.map(i => i.value).join(",");
+        window.location.href = `/billing/staff/users?filter=${tags}`;
+      });
+    }catch(e){
+      console.error(e);
+    }
+  })();
+</script>

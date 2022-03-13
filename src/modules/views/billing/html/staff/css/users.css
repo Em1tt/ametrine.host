@@ -1,0 +1,134 @@
+main {
+    margin: 3rem 0 0 7rem;
+    display: -ms-grid;
+    display: grid;
+    height: 100%;
+  }
+  main > div {
+    width: 95%;
+  }
+  main > div > div {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  main div div > form {
+    width: 100%;
+  }
+  main h1 {
+    margin-right: 50px;
+  }
+  main div form {
+    display: flex;
+    flex-flow: row nowrap;
+    background-color: #141419 !important;
+    border-radius: 10px;
+  }
+
+#searchbar{
+    max-width: 100% !important;
+    background-color:#141419 !important;
+    height: 36px !important;
+  }
+  .vscomp-toggle-button, #searchbar {
+    max-width: 100% !important;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  main div form button {
+    max-width: 100% !important;
+    background-color: #141419;
+    border: none;
+    color: gray;
+    width: 34px;
+    padding: 0;
+    cursor: pointer;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    margin-left: auto;
+}
+main div form button:hover {
+    color: #cc37c0;
+}
+.users {
+    display: flex;
+    flex-flow: column nowrap;
+  }
+  .users a, .users > div {
+    background-color: #141419;
+    padding: 10px;
+    text-decoration: none;
+    margin-bottom: 5px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: 2px solid #62636e;
+    transition: 0.5s ease;
+  }
+  .users a:hover {
+    border-left: 5px solid #cc37c0;
+    transition: 0.5s ease;
+  }
+  .users h2 {
+    margin: 0;
+  }
+  .users p {
+    margin: 0;
+    margin-top: 5px;
+    color: gray;
+  }
+  .users > div{
+    height: 66px;
+    border: transparent;
+    padding: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: start;
+    align-items: flex-start;
+  }
+  .users > div > div:first-of-type{
+    display: block;
+    background-color: #292a34;
+    width: 20%;
+    height: 25px;
+    border-radius: 10px;
+  }
+  .users > div > div:last-of-type{
+    display: block;
+    background-color: #1e1f26;
+    width: 25%;
+    height: 12px;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
+  .pageButtons{
+    width: 95%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .pageButtons button:disabled{
+    color: #292a34;
+    background-color: #141419;
+    cursor: default;
+  }
+  .pageButtons button{
+    float: right;
+    padding: 10px;
+    border: none;
+    color: #dce0ff;
+    background-color: #141419;
+    cursor: pointer;
+  }
+  .pageButtons button:not(:disabled):hover{
+    color: #cc37c0;
+    background-color: #1e1f26;
+  }
+  .pageButtons button:first-of-type{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .pageButtons button:last-of-type{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
