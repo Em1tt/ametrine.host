@@ -23,7 +23,6 @@ main h1 {
 main div form {
   display: flex;
   flex-flow: row nowrap;
-  background-color: #141419 !important;
   border-radius: 10px;
 }
 #go-back{
@@ -36,9 +35,65 @@ main div form {
 #go-back:hover{
   color: #dce0ff;
 }
+#grid{
+  display: grid;
+  grid-template-areas: 
+    "badges management"
+    "text management";
+  grid-template-columns: 2fr 1fr;
+  margin-bottom: 100px;
+}
+#textArea{
+  grid-area: text;
+}
+#textArea > div{
+  margin-right: 10px;
+}
+#textArea input{
+  margin-top: 5px;
+}
+#textArea button[type=submit]{
+  color: #cc37c0;
+  padding: 10px;
+  border-radius: 10px;
+  border: 0;
+  align-self: flex-end;
+  width: 35px;
+  height: 35px;
+  font-size: 1rem;
+  background-color: #141419;
+  cursor: pointer;
+}
+#textArea button[type=submit]:hover{
+  color: #dce0ff;
+}
+#management{
+  grid-area: management;
+  background-color: #141419;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+}
+#management button{
+  background-color: #1e1f26;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: #dce0ff;
+  cursor: pointer;
+}
+#management button:hover{
+  color: #cc37c0;
+}
 .badges{
   display: flex;
   flex-flow: row wrap;
+  grid-area: badges;
+  justify-content: start;
 }
 .badges div{
   display: inherit;
@@ -47,6 +102,7 @@ main div form {
   padding: 20px;
   border-radius: 10px;
   margin-right: 10px;
+  margin-bottom: 10px;
 }
 .badges div h2{
   margin: 0;
@@ -55,7 +111,7 @@ main div form {
   margin: 0;
   text-align: left;
 }
-#disable-2fa{
+.badges a{
   color: #cc37c0;
   text-decoration: underline;
   cursor: pointer;

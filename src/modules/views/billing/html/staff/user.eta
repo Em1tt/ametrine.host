@@ -50,50 +50,65 @@
         </div>
         
         <h2 class="header2">User Info</h2>
-        <div class="badges">
-            <div>
-                <h2 class="header2">User ID</h2>
-                <p class="text2"><%= user.user_id %></p>
+        <div id="grid">
+            <div class="badges">
+                <div>
+                    <h2 class="header2">User ID</h2>
+                    <p class="text2"><%= user.user_id %></p>
+                </div>
+                <div>
+                    <h2 class="header2">Permission ID</h2>
+                    <p class="text2">
+                        <% if(parseInt(user.permission_id) >= parseInt(it.userData.permission_id) && parseInt(it.userData.permission_id) != 4){ %>
+                            <%=user.permission_id%>
+                        <%}else{%>
+                            <a id="change-permission"><%= user.permission_id %></a>
+                        <%}%>
+                    </p>
+                </div>
+                <div>
+                    <h2 class="header2">Registered on</h2>
+                    <p class="text2"><%= new Date(parseInt(user.registered)).toDateString()%> [<%= Math.ceil(Math.abs(new Date() - new Date(parseInt(user.registered))) / (1000 * 60 * 60 * 24))%> day(s) ago]</p>
+                </div>
+                <div>
+                    <h2 class="header2">2-Factor Authentication</h2>
+                    <p class="text2">
+                        <%if(Boolean(parseInt(user['2fa']))){%>
+                            <a id="disable-2fa">Active</a>
+                        <%}else{%>
+                        Not Set
+                        <%}%>
+                    </p>
+                </div>
+                <div>
+                    <h2 class="header2">Account State</h2>
+                    <p class="text2"><%= parseInt(user.state) == 2 ? "Pending Deletion" : parseInt(user.state) == 3 ? "Disabled" : parseInt(user.state) == 4 ? "Terminated" : "Active"%></p>
+                </div>
+                <div>
+                    <h2 class="header2">API Version</h2>
+                    <p class="text2"><%= user.version %>.0</p>
+                </div>
             </div>
-            <div>
-                <h2 class="header2">Permission ID</h2>
-                <p class="text2"><%= user.permission_id %></p>
-            </div>
-            <div>
-                <h2 class="header2">Registered on</h2>
-                <p class="text2"><%= new Date(parseInt(user.registered)).toDateString()%> [<%= Math.ceil(Math.abs(new Date() - new Date(parseInt(user.registered))) / (1000 * 60 * 60 * 24))%> day(s) ago]</p>
-            </div>
-            <div>
-                <h2 class="header2">2-Factor Authentication</h2>
-                <p class="text2">
-                    <%if(Boolean(parseInt(user['2fa']))){%>
-                        <a id="disable-2fa">Active</a>
-                    <%}else{%>
-                    Not Set
-                    <%}%>
-                </p>
-            </div>
-            <div>
-                <h2 class="header2">Account State</h2>
-                <p class="text2"><%= parseInt(user.state) == 2 ? "Pending Deletion" : parseInt(user.state) == 3 ? "Disabled" : parseInt(user.state) == 4 ? "Terminated" : "Active"%></p>
-            </div>
-            <div>
-                <h2 class="header2">API Version</h2>
-                <p class="text2"><%= user.version %>.0</p>
+            <form id="textArea">
+                <h2 class="header2"></h2>
+                <div>
+                    <label class="text1">Full name:</label><br>
+                    <input class="text1" type="text" value="<%=user.name%>">
+                </div>
+                <div>
+                    <label class="text1">E-Mail:</label><br>
+                    <input class="text1" type="text" value="<%=user.email%>">
+                </div>
+                <button type="submit"><i class="fa fa-save"></i></button>
+            </form>
+            <div id="management">
+                <button>Start Account Deletion</button>
+                <button>Disable Account</button>
+                <button>Force Delete Account</button>
             </div>
         </div>
-        <form>
-            <input class="text1" type="text" value="<%=user.name%>">
-            <select>
-                <% Object.entries(it._locals.permissions).forEach(permission => { %>
-                    <option <%= parseInt(permission[0]) == parseInt(user.permission_id) ? "selected" : ""%> ><%=permission[0]%></option>
-                <% }) %>
-            </select>
-            <input class="text1" type="text" value="<%=user.email%>">
-            <input type="checkbox" <%=Boolean(parseInt(user['2fa'])) ? "checked" : ""%> >
-            <button type="submit"><i class="fa fa-save"></i></button>
-        </form>
     </main>
+    <%~ E.includeFile('../../html/staff/templates/util.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <%~ E.includeFile('../../html/staff/javascripts/user.eta', {permissions: it._locals.permissions, userData: it._locals.userData, nonce: it._locals.nonce, user: user}) %>
     <script src="/billing/html/staff/javascripts/popups.js" async defer></script>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
