@@ -33,7 +33,7 @@
     document.getElementById("articles").innerHTML = "";
     response.data.forEach(articles => {
       const anchor = document.createElement("a");
-      anchor.href = `/billing/staff/knowledgebase/article/${articles.article_id}`;
+      anchor.href = `/billing/staff/knowledgebase/${articles.article_id}`;
       const h3 = document.createElement("h3");
       h3.classList.add("header2");
       h3.innerText = articles.header == "false" ? "Unnamed" : articles.header;
@@ -139,7 +139,7 @@ try{
       button.setAttribute("disabled", true);
       const response = await axios.post(`/api/knowledgebase/create`);
       console.log(response);
-      window.location.href = `/billing/staff/knowledgebase/editor/${response.data.article_id}`;
+      window.location.href = `/billing/staff/knowledgebase/${response.data.article_id}/editor`;
     });
   }catch(e){
     console.error(e);

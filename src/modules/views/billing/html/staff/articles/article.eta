@@ -53,14 +53,14 @@
                 <div class="articleInfo">
                     <p>Created On: <%=new Date(parseInt(article.createdIn)).toDateString()%></p>
                     <p id="article-id">Article ID: <%=parseInt(article.article_id)%></p>
-                    <a href="/billing/staff/knowledgebase/editor/<%=article.article_id%>">Edit Article</a>
+                    <a href="/billing/staff/knowledgebase/<%=article.article_id%>/editor">Edit Article</a>
                 </div>
             </div>
             <hr class="semanticLine">
         </div>
         <%if(article.video){%>
         <span id="iframeWrapper">
-        <iframe width="560" height="315" src=<%=article.video%> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <iframe width="560" height="315" src=<%=decodeURIComponent(article.video)%> title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </span>
         <%}%>
         <div class="editorWrapper">

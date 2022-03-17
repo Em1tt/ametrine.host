@@ -36,7 +36,7 @@
     <script src="/billing/public/javascripts/pillbox.js"></script>
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
-    <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
+    <%~ E.includeFile('../../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <main>
         <div>
             <div>
@@ -68,9 +68,9 @@
             </div>
         </div>
     </main>
-    <%~ E.includeFile('../../html/staff/templates/util.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
+    <%~ E.includeFile('../../../html/staff/templates/util.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
 
-    <%~ E.includeFile('../../html/staff/javascripts/users.eta', {permissions: it._locals.permissions, userData: it._locals.userData, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../../../html/staff/javascripts/users.eta', {permissions: it._locals.permissions, userData: it._locals.userData, nonce: it._locals.nonce}) %>
     <script src="/billing/html/staff/javascripts/popups.js" async defer></script>
-    <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
+    <%~ E.includeFile('../../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
 </body>

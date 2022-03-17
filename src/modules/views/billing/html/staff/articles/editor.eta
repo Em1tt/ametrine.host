@@ -43,6 +43,7 @@
     <script src="/billing/public/javascripts/pillbox.js"></script>
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+<%console.log(it._locals)%>
     <%let article = JSON.parse(it._locals.article), article_categories = JSON.parse(it._locals.article_categories)%>
     <%console.log(article)%>
     <%~ E.includeFile('../../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>

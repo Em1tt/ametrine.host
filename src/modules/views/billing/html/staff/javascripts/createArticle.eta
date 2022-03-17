@@ -51,7 +51,7 @@
         header: document.querySelector("#subject").value,
         categories: [category.value],
         content: editor.getContents(),
-        video: document.querySelector("#video").value,
+        video: encodeURIComponent(document.querySelector("#video").value),
         tags: tags
     });
     setTimeout(() => {

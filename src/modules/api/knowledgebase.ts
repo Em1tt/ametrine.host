@@ -130,7 +130,7 @@ export const prop = {
         switch (paramName) {
             case "create": { // Creates the article.
                 if (allowedMethod(req, res, ["POST"], paramName, userData)) {
-                    const { header, content, categories, files } = req.body;
+                    const { header, content, categories, files, video } = req.body;
                     let { tags } = req.body;
                     // Tags must be in commas, so for example: "billing,vps,article"
                     if (tags && tags.length) {
@@ -170,7 +170,8 @@ export const prop = {
                             content: content ? JSON.stringify(content) : "",
                             category_ids: category_ids.join(","),
                             files: (cdnURIs.URIS.length) ? JSON.stringify(cdnURIs.URIS) : '[]',
-                            tags: tags
+                            tags: tags,
+                            video: video
                         }
 
                         /*
@@ -380,7 +381,7 @@ export const prop = {
                                 
                             }
                             case "PUT": { // Updates the article (Edit content, header, status, etc.)
-                                const { header, content, categories, state} = req.body;
+                                const { header, content, categories, state, video} = req.body;
                                 let { tags } = req.body;
                                 let updated = false;
                                 if (getArticle["user_id"] != getArticle["user_id"] && userData["permission_id"] != 4 &&
@@ -394,6 +395,9 @@ export const prop = {
                                     .send(`Cannot publish article with missing information. Required: Header, Content, Category, At least 2 tags. Add these in a separate request.`);
                                     await client.db.hset([`article:${getArticle["article_id"]}`, "state", parseInt(state)])
                                     updated = true;
+                                }
+                                if(video && video.length) {
+                                    await client.db.hset([`article:${getArticle["article_id"]}`, "video", video])
                                 }
                                 if (header && header.length > settings.maxTitle) return res.status(403).send(`Header is too long. Max Length is ${settings.maxTitle}`);
                                 if (content && content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);

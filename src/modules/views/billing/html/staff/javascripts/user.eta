@@ -2,67 +2,7 @@
 document.querySelector("#go-back")?.addEventListener("click", () => {
     history.back();
 });
-document.getElementById("disable-2fa")?.addEventListener("click", () => {
-    Swal.fire({
-      title: `Disable 2FA on user?`,
-      text: "Make sure beforehand, that this is the correct user.",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Disable",
-      input: "checkbox",
-      inputPlaceholder: "This is the correct user.",
-      inputAttributes: {
-      autocapitalize: "off",
-      },
-      preConfirm: async (checkbox) => {
-              if (!checkbox)
-        return Swal.showValidationMessage(
-          "You must confirm that this is the correct user."
-        );
-        try{
-            const response = await axios.patch("/api/users/<%=it.user.user_id%>", {
-                category: "2fa"
-            });
-            console.log(response);
-            location.reload();
-        }catch(e){
-            console.error(e);
-        }
-      }
-    });
-});
-<%console.log(Object.keys(it.permissions).map(i => {
-    return JSON.stringify({i});
-}))%>
-document.getElementById("change-permission")?.addEventListener("click", () => {
-    Swal.fire({
-      title: `Change Permission`,
-      text: "Make sure beforehand, that this is the correct user.",
-      icon: "question",
-      showCancelButton: true,
-      confirmButtonText: "Change",
-      html: `<select class="swal2-select">
-                <option selected hidden disabled>Permission ID</option>
-                <% Object.entries(it.permissions).forEach(permission => { %>
-                    <%if(parseInt(permission[0]) >= parseInt(it.userData.permission_id) && parseInt(it.userData.permission_id) != 4) return;%>
-                    <option><%=permission[0]%></option>
-                <% }) %>
-            </select>`,
-      preConfirm: async (checkbox) => {
-              if (!checkbox)
-        return Swal.showValidationMessage(
-          "You must confirm that this is the correct user."
-        );
-        try{
-            const response = await axios.patch("/api/users/<%=it.user.user_id%>", {
-                category: "2fa"
-            });
-            console.log(response);
-            location.reload();
-        }catch(e){
-            console.error(e);
-        }
-      }
-    });
+document.querySelector("#edit-user")?.addEventListener("click", () => {
+    window.location.href = window.location.href.concat("/edit");
 });
 </script>

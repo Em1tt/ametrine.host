@@ -1,0 +1,119 @@
+<script nonce=<%=it.nonce%>>
+document.querySelector("#go-back")?.addEventListener("click", () => {
+    history.back();
+});
+document.getElementById("disable-2fa")?.addEventListener("click", () => {
+    Swal.fire({
+      title: `Disable 2FA on user?`,
+      text: "Make sure beforehand, that this is the correct user.",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Disable",
+      input: "checkbox",
+      inputPlaceholder: "This is the correct user.",
+      inputAttributes: {
+      autocapitalize: "off",
+      },
+      preConfirm: async (checkbox) => {
+              if (!checkbox)
+        return Swal.showValidationMessage(
+          "You must confirm that this is the correct user."
+        );
+        try{
+            const response = await axios.patch("/api/users/<%=it.user.user_id%>", {
+                category: "2fa"
+            });
+            console.log(response);
+            location.reload();
+        }catch(e){
+            console.error(e);
+        }
+      }
+    });
+});
+let permsChanged;
+document.getElementById("input-permission")?.addEventListener("change", () => {
+    permsChanged = true;
+});
+let disabled, deleted, terminated;
+document.getElementById("account-action").addEventListener("change", (event) => {
+    if(!event.isTrusted) return;
+    if(parseInt(event.target.value)){
+        switch(parseInt(event.target.value)){
+            case 2: {
+                if(deleted) return;
+                deleted = !deleted;
+                Swal.fire({
+                    title: `Deleting an Account`,
+                    text: "This will start the account deletion phase which takes 14 days, and can be cancelled by the user by contacting the support.",
+                    icon: "info",
+                    confirmButtonText: "I understand",
+                });
+            }; break;
+            case 3: {
+                if(disabled) return;
+                disabled = !disabled;
+                Swal.fire({
+                    title: `Disabling an Account`,
+                    text: "This will block all access to an account, until the original owner makes an appeal. The account won't get deleted, and can be reinstated.",
+                    icon: "info",
+                    confirmButtonText: "I understand",
+                });
+            }; break;
+            case 4: {
+                if(terminated) return;
+                terminated = !terminated;
+                Swal.fire({
+                    title: `Terminating an Account`,
+                    text: "This action will instantly delete the account.",
+                    icon: "info",
+                    confirmButtonText: "I understand",
+                });
+            }; break;
+        }
+    }
+});
+const editForm   = document.querySelector("#edit-account"),
+      emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+editForm.addEventListener("submit", (event) => {
+    const name       = document.querySelector("#input-name").value,
+        email      = document.querySelector("#input-email").value,
+        permission = document.querySelector("#input-permission").value,
+        action     = document.querySelector("#account-action").value;
+    event.preventDefault();
+    console.log(name,email,permission,action)
+    if(name.length <= 3) return Swal.fire({
+            title: `Name too short`,
+            text: "New name cannot be shorter than 3 characters.",
+            icon: "error",
+    });
+    if(!emailRegex.test(email)) return Swal.fire({
+            title: `Invalid E-Mail`,
+            text: "E-Mail didn't pass the required checks.",
+            icon: "error",
+    });
+    if(permsChanged){
+        axios.patch("/api/users/<%=it.user.user_id%>", {
+            category: "permission",
+            id: permission
+        });
+    };
+    if(parseInt(action)){
+        switch(parseInt(action)){
+            case 2: {
+                axios.delete("/api/users/<%=it.user.user_id%>");
+            }; break;
+            case 3: {
+                //axios.post("/api/users/<%=it.user.user_id%>/terminate"); //Unknown Endpoint, so I'll comment out for now.
+            }; break;
+            case 4: {
+                axios.post("/api/users/<%=it.user.user_id%>/terminate"); //Unknown Method, so I'll use post for now
+            }; break;
+        }
+    }
+    axios.put("/api/users/<%=it.user.user_id%>", {
+        name: name,
+        email: email
+    });
+});
+</script>

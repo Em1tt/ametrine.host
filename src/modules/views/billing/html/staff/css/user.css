@@ -20,11 +20,6 @@ main div div > form {
 main h1 {
   margin-right: 50px;
 }
-main div form {
-  display: flex;
-  flex-flow: row nowrap;
-  border-radius: 10px;
-}
 #go-back{
   color: gray;
   background-color: transparent;
@@ -38,81 +33,135 @@ main div form {
 #grid{
   display: grid;
   grid-template-areas: 
-    "badges management"
-    "text management";
-  grid-template-columns: 2fr 1fr;
-  margin-bottom: 100px;
+    "overview text"
+    "overview management";
+  grid-template-columns: minmax(240px, 1fr) 4fr;
+  margin-bottom: 50px;
+  column-gap: 10px;
 }
-#textArea{
-  grid-area: text;
+.cardWrapper{
+  grid-area: overview;
 }
-#textArea > div{
-  margin-right: 10px;
-}
-#textArea input{
-  margin-top: 5px;
-}
-#textArea button[type=submit]{
-  color: #cc37c0;
-  padding: 10px;
-  border-radius: 10px;
-  border: 0;
-  align-self: flex-end;
-  width: 35px;
-  height: 35px;
-  font-size: 1rem;
-  background-color: #141419;
-  cursor: pointer;
-}
-#textArea button[type=submit]:hover{
-  color: #dce0ff;
-}
-#management{
-  grid-area: management;
-  background-color: #141419;
-  padding: 10px;
-  border-radius: 10px;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: start;
-}
-#management button{
+.user-card{
   background-color: #1e1f26;
-  width: 100%;
-  border: 0;
-  padding: 15px;
   border-radius: 10px;
-  margin-bottom: 10px;
-  color: #dce0ff;
-  cursor: pointer;
+  overflow: hidden;
+  display: block;
+  position: sticky;
+  top: 30px;
 }
-#management button:hover{
-  color: #cc37c0;
-}
-.badges{
-  display: flex;
-  flex-flow: row wrap;
-  grid-area: badges;
-  justify-content: start;
-}
-.badges div{
-  display: inherit;
-  flex-flow: column nowrap;
+.card h3{
+  padding: 5px 10px;
   background-color: #141419;
-  padding: 20px;
-  border-radius: 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-.badges div h2{
+  display: block;
   margin: 0;
+  color: #dce0ff;
 }
-.badges div p{
-  margin: 0;
-  text-align: left;
-}
-.badges a{
+.card  a{
   color: #cc37c0;
-  text-decoration: underline;
   cursor: pointer;
+}
+.card > h3 > a{
+  float: right;
+}
+.card a:hover{
+  color: #dce0ff;
+}
+.card div{
+  padding: 10px;
+  color: #dce0ff;
+}
+.card div .full-name{
+  font-weight: bold;
+  margin: 10px 0 0 0;
+}
+.card div #role{
+  font-size: 0.9rem;
+  color: gray;
+  margin: 0;
+}
+.card div p{
+  font-size: 0.95rem;
+}
+.card div p span{
+  color: gray;
+  font-size: 0.95rem;
+}
+.card > div > p > svg{
+  color: #cc37c0 !important;
+  align-self: center;
+}
+.card sup{
+  color: gray;
+}
+.card div button{
+  background-color: #cc37c0;
+  color: #dce0ff;
+  border-radius: 10px;
+  border: 0;
+  padding: 10px;
+  width: 100%;
+  margin-top: 5px;
+  font-weight: normal;
+  cursor: pointer;
+}
+.card div button:hover{
+  background-color: #e6b530;
+}
+.edit-card{
+  background-color: #1e1f26;
+  border-radius: 10px;
+  overflow: hidden;
+  display: block;
+  position: sticky;
+  top: 30px;
+}
+.user-edit{
+  grid-area: text;
+  background-color: #1e1f26;
+  border-radius: 10px;
+  overflow: hidden;
+  display: block;
+}
+.user-edit form{
+  padding: 10px;
+}
+.user-edit form label{
+  color: gray;
+  font-size: 0.9rem;
+}
+.user-edit form input[type="text"], .user-edit form input[type="email"], .user-edit form select{
+  color: #dce0ff;
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
+  margin: 5px 0 10px 0;
+  outline: none;
+  background-color: #141419;
+  border: none;
+}
+.user-edit form fieldset{
+  border: 0;
+  line-height: 100%;
+  padding: 0;
+  line-height: 28px;
+}
+.user-edit form button.button1{
+  width: 100%;
+}
+.user-edit form *:disabled{
+  cursor: not-allowed;
+  color: gray;
+}
+.user-edit form button.button3{
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+  color: #dce0ff;
+  background-color: #141419;
+  cursor: pointer;
+}
+.user-edit form button.button3:hover{
+  background-color: #292a34;
 }

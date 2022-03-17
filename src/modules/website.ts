@@ -246,7 +246,10 @@ app.get("/:dir/:subdir/:file", async (r: express.Request, s: express.Response) =
     case "billing": {
       switch (r.params.subdir.toLowerCase()) {
         case "staff": {
-          file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+          switch(r.params.file){
+            case "users": file = `${billing}/staff/user/${r.params.file.toLowerCase()}.eta`; break;
+            default: file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`; break;
+        }
           s.locals.permissions = permIDs;
         } break;
         case "tickets": {
@@ -291,8 +294,8 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
             }
             case "knowledgebase": {
               if (parseInt(r.params.file)) {
-                file = `${billing}/staff/knowledgebase.eta`;
-                await handleArticles(r, s, false);
+                file = `${billing}/staff/articles/article.eta`;
+                await handleArticles(r, s, true, parseInt(r.params.file));
               } else if(r.params.file.toLowerCase() == "articles"){
                 file = `${billing}/staff/articles/${r.params.file.toLowerCase()}.eta`;
               }else{
@@ -302,10 +305,10 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
             }
             case "user": {
               if(parseInt(r.params.file)) {
-                file = `${billing}/staff/user.eta`;
-                await handleUsers(r,s);
+                file = `${billing}/staff/user/user.eta`;
+                await handleUsers(r,s, parseInt(r.params.file));
               }else{
-                file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
+                file = `${billing}/staff/user/${r.params.file.toLowerCase()}.eta`;
               }
               break;
             }
@@ -316,7 +319,7 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
             case "article": {
               if (parseInt(r.params.file)) {
                 file = `${billing}/articles/article.eta`;
-                await handleArticles(r, s, false);
+                await handleArticles(r, s, false, parseInt(r.params.file));
               } else {
                 file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
               }
@@ -341,23 +344,33 @@ app.get("/:dir/:subdir1/:subdir2/:subdir3/:file", async (r: express.Request, s: 
           s.locals.permissions = permIDs;
           switch (r.params.subdir2.toLowerCase()) {
             case "knowledgebase": {
+              if(parseInt(r.params.subdir3.toLowerCase())){
+                switch(r.params.file){
+                  case "editor": {
+                    file = `${billing}/staff/articles/editor.eta`;
+                    await handleArticles(r, s, true, parseInt(r.params.subdir3.toLowerCase()));
+                  }; break;
+                  default: file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`; break;
+                }
+              }else{
               switch (r.params.subdir3.toLowerCase()) {
                 case "article": {
-                  if (parseInt(r.params.file)) {
-                    file = `${billing}/staff/articles/article.eta`;
-                    await handleArticles(r, s, true);
-                  } else {
                     file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
-                  }
                 } break;
-                case "editor": {
-                  if (parseInt(r.params.file)) {
-                    file = `${billing}/staff/articles/editor.eta`;
-                    await handleArticles(r, s, true);
-                  } else {
-                    file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
-                  }
+              }
+            }
+            } break;
+            case "user": {
+              if(parseInt(r.params.subdir3)){
+                switch(r.params.file){
+                  case "edit": {
+                    console.log("hi");
+                    file = `${billing}/staff/user/${r.params.file.toLowerCase()}.eta`;
+                    await handleUsers(r,s, parseInt(r.params.subdir3));
+                  } break;
                 }
+              }else{
+                //;
               }
             } break;
           }
@@ -399,9 +412,9 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
   }
   s.locals.ticket = JSON.stringify(getTicket);
 }
-async function handleArticles(r: express.Request, s: express.Response, staff: boolean) {
+async function handleArticles(r: express.Request, s: express.Response, staff: boolean, articleID: number) {
   if (!s.locals.userData) return throw403(s);
-  const getArticle: Article = await redisClient.db.hgetall(`article:${parseInt(r.params.file)}`);
+  const getArticle: Article = await redisClient.db.hgetall(`article:${articleID}`);
   if (!getArticle) return throw404(s);
   if (staff) {
     if (getArticle.permission_id > s.locals?.userData?.permission_id) return throw403(s);
@@ -428,9 +441,9 @@ async function handleStaff(r: express.Request, s: express.Response) { //TODO: US
     });
   })
 }
-async function handleUsers(r: express.Request, s: express.Response) {
+async function handleUsers(r: express.Request, s: express.Response, userID: number) {
   if (!s.locals.userData) return throw403(s);
-  const getUser: UserData = await redisClient.db.hgetall(`user:${parseInt(r.params.file)}`);
+  const getUser: UserData = await redisClient.db.hgetall(`user:${userID}`);
   if (!getUser) return throw404(s);
   s.locals.user = JSON.stringify(getUser);
 }

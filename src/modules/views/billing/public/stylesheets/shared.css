@@ -275,6 +275,13 @@ input.text2, input.submit{
     color: #e6b530 !important;
     height: 36px;
 }
+#login-error ~ div, #register-error ~ div{
+    border-radius: 10px;
+    overflow: hidden;
+}
+input.submit{
+    border-radius: 10px;
+}
 input.text2:focus::placeholder, input.text2:focus{
     color: #cc37c0;
 }

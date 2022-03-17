@@ -75,7 +75,7 @@
       const response = await axios.post(`/api/knowledgebase/create`, {
         tags: "unfinished"
       });
-      window.location.href = `/billing/staff/knowledgebase/editor/${response.data.article_id}`;
+      window.location.href = `/billing/staff/knowledgebase/${response.data.article_id}/editor`;
     });
   }catch(e){
     console.error(e);
