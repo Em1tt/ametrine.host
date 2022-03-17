@@ -19,7 +19,7 @@ export const prop = {
     name: "users",
     desc: "API for users (Staff Only).",
     rateLimit: {
-        max: 5,
+        max: 10,
         time: 10 * 1000
     },
     setClient: function(newClient: Redis): void { client = newClient; },
@@ -130,7 +130,7 @@ export const prop = {
                                     case "permission": {
                                         if (!permissions.hasPermission(userData['permission_id'], `/users/:userid/permission`)) return res.sendStatus(403);
                                         const { id } = req.body;
-                                        if (id >= parseInt(userData["permission_id"])) return res.status(403).send("You can't set a permission higher than your own!");
+                                        if (id != 4 && id >= parseInt(userData["permission_id"])) return res.status(403).send("You can't set a permission higher than your own!");
                                         const validPermission = permissions.validPermission(id);
                                         if (!validPermission) return res.status(406).send("That is an invalid Permission ID!");
                                         await client.db.hset([`user:${userID}`, "permission_id", id]);

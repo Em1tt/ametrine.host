@@ -70,7 +70,7 @@
                                 <option <%= parseInt(category.id) == parseInt(article.category_ids) ? 'selected' : '' %> value="<%=category.id%>"><%=category.name%></option>
                             <% }) %>
                         </select>
-                        <input type="text" id="video" value="<%=article.video ? atob(article.video) : ''%>" placeholder="YouTube video link" maxlength="150">
+                        <input type="text" id="video" value="<%=article.video ? decodeURIComponent(article.video) : ''%>" placeholder="YouTube video link" maxlength="150">
                     <div id="searchbar"></div>
                     </div>
                     <!--PUT TEXTAREA HERE-->

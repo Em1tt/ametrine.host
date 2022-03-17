@@ -75,13 +75,12 @@ document.getElementById("account-action").addEventListener("change", (event) => 
 });
 const editForm   = document.querySelector("#edit-account"),
       emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-editForm.addEventListener("submit", (event) => {
+editForm.addEventListener("submit", async (event) => {
     const name       = document.querySelector("#input-name").value,
         email      = document.querySelector("#input-email").value,
         permission = document.querySelector("#input-permission").value,
         action     = document.querySelector("#account-action").value;
     event.preventDefault();
-    console.log(name,email,permission,action)
     if(name.length <= 3) return Swal.fire({
             title: `Name too short`,
             text: "New name cannot be shorter than 3 characters.",
@@ -93,27 +92,34 @@ editForm.addEventListener("submit", (event) => {
             icon: "error",
     });
     if(permsChanged){
-        axios.patch("/api/users/<%=it.user.user_id%>", {
+        await axios.patch("/api/users/<%=it.user.user_id%>", {
             category: "permission",
             id: permission
+        }).then(res => {
+            location.reload();
         });
     };
     if(parseInt(action)){
         switch(parseInt(action)){
             case 2: {
                 axios.delete("/api/users/<%=it.user.user_id%>");
+                location.reload();
             }; break;
             case 3: {
                 //axios.post("/api/users/<%=it.user.user_id%>/terminate"); //Unknown Endpoint, so I'll comment out for now.
+                location.reload();
             }; break;
             case 4: {
                 axios.post("/api/users/<%=it.user.user_id%>/terminate"); //Unknown Method, so I'll use post for now
+                location.reload();
             }; break;
         }
     }
-    axios.put("/api/users/<%=it.user.user_id%>", {
+    await axios.put("/api/users/<%=it.user.user_id%>", {
         name: name,
         email: email
-    });
+    }).finally(() => {
+        location.reload();
+    })
 });
 </script>
