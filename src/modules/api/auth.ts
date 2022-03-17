@@ -57,6 +57,17 @@ export const auth = {
         // Later, setup a cron job that automatically purges any unused emails
         // every 1 hour or 1 day.
     },
+    cancelDeletion: async (userID: string | number): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            client.persist(`user:${userID}`, function(err) {
+                if (err) {
+                    return reject("Error occurred while setting up deletion period for user. Please report this.");
+                }
+                client.db.hset([`user:${userID}`, "state", 1]) // Might want to add hashes to check for verified emails, as this can cause issues with unverified emails.
+                resolve(true)
+            })
+        })
+    },
     logoutAll: (userID: string | number, sessions: Record<string, any>, sessionsReal?: Record<string, any>): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             return (async function() {
@@ -341,7 +352,7 @@ export const prop = {
             case 2: // Process of being deleted
                 return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
             case 3: // Disabled
-                return res.status(403).send("This account is disabled. Please read your email for more information and contact [support].");
+                return res.status(403).send("This account is disabled. Please contact [support] if you wish to enable your account.");
             case 4: // Terminated
                 return res.status(403).send("This account is terminated. Please read your email for more information.")
         }

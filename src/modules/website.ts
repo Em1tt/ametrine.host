@@ -349,7 +349,8 @@ app.get("/:dir/:subdir1/:subdir2/:subdir3/:file", async (r: express.Request, s: 
                   case "editor": {
                     file = `${billing}/staff/articles/editor.eta`;
                     await handleArticles(r, s, true, parseInt(r.params.subdir3.toLowerCase()));
-                  }; break;
+                    break;
+                  }
                   default: file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`; break;
                 }
               }else{

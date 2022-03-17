@@ -5,6 +5,7 @@ export interface Redis {
     keys: (key: string, callback?: any) => void,
     hdel: (key: string, field: string | number, callback?: any) => void,
     expire: (key: string, field: string | number, callback?: any) => void,
+    persist: (key: string, callback?: any) => void,
     db: {
         get: (key: string) => Promise<any>,
         hget: (key: string, field: string | number) => Promise<any>,

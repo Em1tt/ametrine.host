@@ -105,6 +105,21 @@ export const prop = {
                             case "terminate": { // For starting the deletion period and notifying the user that their account was deleted (Not sure if this will be added)
                                 break;
                             }
+                            case "canceldelete": { // For cancelling the deletion period
+                                if (utils.allowedMethod(req, res, ["POST"])) {
+                                    if ([3,4].includes(getUser.state)) return res.status(406).send("The account is currently either disabled or terminated.")
+                                    if (getUser.state != 2) return res.status(406).send("The account is not in the process of being deleted!")
+                                    auth.cancelDeletion(getUser.user_id).then(resp => {
+                                        if (resp) {
+                                            return res.sendStatus(204);
+                                        }
+                                    }).catch(err => {
+                                        console.error(err);
+                                        return res.status(500).send(err);
+                                    })
+                                }
+                                break;
+                            }
                         }
                     } else {
                         switch (req.method) {
