@@ -63,6 +63,10 @@
       <div class="divider2"></div>
       <h2>Find the location that suits you the most</h2>
       <h3>Didn't find your location? We'll be adding more as we grow!</h3>
+        <div id="map-buttons-wrapper">
+          <button id="finland-button">Finland</button>
+          <button id="germany-button">Germany</button>
+        </div>
       <div class="worldMap">
         <div class="poi FL">
           <i class="fa fa-map-marker-alt FL" tabindex="0"></i><div class="tooltip"></div>
