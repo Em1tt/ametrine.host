@@ -82,7 +82,7 @@
       <div>
         <button class="rethemeButton" aria-label="Dark mode switch"><i class="iconSwitch far fa-moon"></i></button>
         <a href="/billing">Client Area</a>
-              <button id="openNav" aria-label="Open Navbar">Hello<i id="openNavIcon" class="fa fa-bars"></i></button>
+              <button id="openNav" aria-label="Open Navbar"><i id="openNavIcon" class="fa fa-bars"></i></button>
       </div>
     </nav>
     <script src="../js/retheme.js"></script>

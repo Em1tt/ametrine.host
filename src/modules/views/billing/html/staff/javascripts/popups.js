@@ -12,5 +12,5 @@ const announcementsToggle = async () => {
 document.getElementById("support")?.addEventListener("click", () => {toggle("supportPopup")});
 document.getElementById("utils")?.addEventListener("click", () => {toggle("utilPopup")});
 document.getElementById("announcementButton")?.addEventListener("click", announcementsToggle);
-!document.querySelector(".loggedIn#login-button") ? document.getElementById("login-button")?.addEventListener("click", () => {toggle("authentication")}) : 0;
+!document.querySelector(".loggedIn #login-button") ? document.getElementById("login-button")?.addEventListener("click", () => {toggle("authentication")}) : 0;
 document.getElementById("closeAnnouncements")?.addEventListener("click", announcementsToggle);
