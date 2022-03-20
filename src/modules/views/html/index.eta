@@ -7,8 +7,8 @@
     <header id="header">
       <div>
         <span>
-          <h1>First fully open-source host</h1>
-          <h2 class="subtitle">We are the host of the future. Transparent, Secure, Affordable.</h2>
+          <h1 class="default-header">First fully open-source host</h1>
+          <h2 class="default-paragraph">We are the host of the future. Transparent, Secure, Affordable.</h2>
         </span>
         <span>
             <img alt="laptop" src="../images/svg/laptop.svg" height="400px" width="400px">
@@ -18,16 +18,15 @@
     <div class="divider"></div>
     <main role="main" id="main">
       <div>
-         <img alt="construction" src="../images/svg/construct.svg" height="400px" width="400px">
-         <div class="deploy">
-           <h2>Deploy with us in <del>hours</del> minutes.</h2>
-           <ol>
-             <li>Create an <a href="/billing">account</a></li>
+         <img class="reveal right" alt="construction" src="../images/svg/construct.svg" height="400px" width="400px">
+         <div class="deploy reveal right">
+           <h2 class="default-header">Deploy with us in <del>hours</del> minutes.</h2>
+           <ol class="default-paragraph">
+             <li>Create an <a class="default-anchor" href="/billing">account</a></li>
              <li>Order a product</li>
              <li>Success!</li>
            </ol>
-           <sub>It's that easy!</sub>
-           <span class="cardDivider">
+           <span class="cardDivider default-header">
              <div>
                <i class="fa fa-clock"></i>
                <p>Instant Setup</p>
@@ -38,14 +37,14 @@
            </div>
            <div>
             <i class="fa fa-coins"></i>
-            <p>Ultra affordable</p>
+            <p>Affordable</p>
          </div>
            </span>
          </div>
-         <div class="deploy">
-          <h2>Be one step ahead.</h2>
-          <p class="bWtext">With our custom-built billing panel and <a href="https://wisp.gg/features" target="_blank" rel="noreferrer noopener">Wisp.gg</a><br> as your server management panel.</p>
-          <span class="cardDivider">
+         <div class="deploy reveal left">
+          <h2 class="default-header">Be one step ahead.</h2>
+          <p class="bWtext default-paragraph">With our custom-built billing panel and Pterodactyl<br> panel as your server management panel.</p>
+          <span class="cardDivider default-header">
             <div>
               <i class="fa fa-eye"></i>
               <p>Clean Design</p>
@@ -56,42 +55,83 @@
           </div>
           </span>
         </div>
-         <img alt="panel" src="../images/svg/panel.svg" height="400px" width="400px">
+         <img class="reveal left" alt="panel" src="../images/svg/panel.svg" height="400px" width="400px">
       </div>
     </main>
     <section class="mapSection">
       <div class="divider2"></div>
       <h2>Find the location that suits you the most</h2>
-      <h3>Didn't find your location? We'll be adding more as we grow!</h3>
         <div id="map-buttons-wrapper">
           <button id="finland-button">Finland</button>
           <button id="germany-button">Germany</button>
         </div>
       <div class="worldMap">
         <div class="poi FL">
-          <i class="fa fa-map-marker-alt FL" tabindex="0"></i><div class="tooltip"></div>
+          <i class="fa fa-map-marker-alt FL"></i><div class="tooltip"></div>
         </div>
         <div class="poi GE">
-          <i class="fa fa-map-marker-alt GE" tabindex="0"></i><div class="tooltip"></div>
+          <i class="fa fa-map-marker-alt GE"></i><div class="tooltip"></div>
         </div>
         <img src="../images/svg/World Map.svg" alt="World Map">
+        <h3>Didn't find your location? We'll be adding more as we grow!</h3>
       </div>
     </section>
     <div class="divider3"></div>
     <section class="reviewsWrapper">
       <span>
-        <div class="reviews">
-          <h2>Reviews from our clients</h2>
-          <p>
-            Clients rely on us to provide them with amazing performance even in the most critical situations. Read about their
-            opinions, and how we satisfied their projects' needs.
-          </p>
-          <a href="#" class="trustpilot">View our Trustpilot</a>
-        </div>
+      <h2 class="default-header">Our Trustpilot reviews</h2>
         <div class="carousel">
           <div class="carousel-cell">
             <h3>Review</h3>
-            <p>We do not have any reviews yet, so enjoy this Lorem Ipsum placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip... <a href="#">(read full review)</a></p>
+            <p>We do not have any reviews yet, so enjoy this Lorem Ipsum placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... <a href="#">(read full review)</a></p>
+            <sub>Author <a href="#">(Source)</a></sub>
+            <span>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </span>
+          </div>
+          <div class="carousel-cell">
+            <h3>Review</h3>
+            <p>We do not have any reviews yet, so enjoy this Lorem Ipsum placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... <a href="#">(read full review)</a></p>
+            <sub>Author <a href="#">(Source)</a></sub>
+            <span>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </span>
+          </div>
+          <div class="carousel-cell">
+            <h3>Review</h3>
+            <p>We do not have any reviews yet, so enjoy this Lorem Ipsum placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... <a href="#">(read full review)</a></p>
+            <sub>Author <a href="#">(Source)</a></sub>
+            <span>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </span>
+          </div>
+          <div class="carousel-cell">
+            <h3>Review</h3>
+            <p>We do not have any reviews yet, so enjoy this Lorem Ipsum placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... <a href="#">(read full review)</a></p>
+            <sub>Author <a href="#">(Source)</a></sub>
+            <span>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </span>
+          </div>
+          <div class="carousel-cell">
+            <h3>Review</h3>
+            <p>We do not have any reviews yet, so enjoy this Lorem Ipsum placeholder text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... <a href="#">(read full review)</a></p>
             <sub>Author <a href="#">(Source)</a></sub>
             <span>
               <i class="far fa-star"></i>
@@ -110,6 +150,7 @@
     <%~ E.includeFile('../templates/backtotop.eta') %>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
     <script src="../js/tooltips.js"></script>
+    <script src="../js/animate.js"></script>
     <script src="../js/flickity.js"></script>
   </body>
 </html>

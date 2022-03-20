@@ -10,6 +10,7 @@
     "start": "pm2 start dist/main.js",
     "nstart": "cd dist&&node main.js&&cd ..",
     "mb": "echo '[ametrine] moving billing from dist to src'&&rm -rf src/modules/views/billing&&mkdir src/modules/views/billing&&cp -r dist/modules/views/billing/* src/modules/views/billing",
+    "move-main-website": "echo '[ametrine] moving main-website from dist to src'&&rm -rf src/modules/views/css &&mkdir src/modules/views/css &&cp -r dist/modules/views/css/* src/modules/views/css &&rm -rf src/modules/views/html &&mkdir src/modules/views/html &&cp -r dist/modules/views/html/* src/modules/views/html &&rm -rf src/modules/views/js &&mkdir src/modules/views/js &&cp -r dist/modules/views/js/* src/modules/views/js &&rm -rf src/modules/views/templates &&mkdir src/modules/views/templates &&cp -r dist/modules/views/templates/* src/modules/views/templates",
     "ls": "npm run build && npm run nstart",
     "clean": "rm -rf dist&&mkdir dist"
   },

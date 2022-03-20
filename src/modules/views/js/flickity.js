@@ -4,5 +4,5 @@ var flkty = new Flickity( '.carousel', {
   contain: true,
   prevNextButtons: false,
   wrapAround: true,
-  autoPlay: 3000
+  groupCells: true
 });

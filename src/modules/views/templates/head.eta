@@ -32,8 +32,8 @@
       rel="stylesheet"
     />
     <!--Synchronous load-->
+    <link rel="stylesheet" href="../css/shared.css" />
     <link rel="stylesheet" href=<%=it.css%> />
-    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
     <link
       rel="stylesheet"
       href="https://unpkg.com/flickity@2/dist/flickity.min.css"

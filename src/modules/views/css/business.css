@@ -227,15 +227,6 @@
   top: 17.5%;
   left: 48.1%;
   }
-  .mapSection h2{
-  margin-top: 75px;
-  text-align: center;
-  color: var(--map-h2);
-  }
-  .mapSection h3{
-  text-align: center;
-  color: var(--light);
-  }
   .plansWrapper{
   width: 100vw !important;
   display: flex;
