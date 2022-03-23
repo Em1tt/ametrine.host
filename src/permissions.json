@@ -4,27 +4,27 @@
         "accessPages": ["/", "/billing", "/billing/mail", "/billing/tickets", "/billing/tickets/create", "/billing/tickets/:id"]
     },
     "1": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail", "/staff/"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"],
         "accessPages": ["all"]
     },
     "2": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"]
     },
     "2:3": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"]
     },
     "2:4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"]
     },
     "2:5": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid"],
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"]
     },
     "4": {
-        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all"],
+        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit"],
         "accessPages": ["all"]
     }
     

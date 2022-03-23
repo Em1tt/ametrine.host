@@ -23,6 +23,8 @@ import ms from 'ms';
 import nonce from 'nonce-express';
 import { Article } from "src/types/billing/knowledgebase";
 
+import audit from "../audit.json";
+
 dotenv.config({ path: __dirname + "/../../.env" });
 
 const redisClient: redis.Client = redis.createClient({ password: process.env.REDIS_PASSWORD, user: "default" });
@@ -199,8 +201,27 @@ app.use(
   })
 );
 
-app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) => {
+app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) => { // Change to just /* if you want to log all pages, assuming you set them in audit.json
   const ep: Endpoint = endpoints.get(r.params.method)
+
+  const logStaffActions = true; // This will log any requests staff sends (Only URI though)
+  if (logStaffActions) {
+    if (permissions.hasPermission(s.locals?.userData?.permission_id || 0, "/api/audit") && Object.keys(audit).includes(r.path)) {
+      const auditURI = audit[r.path];
+      if (auditURI && auditURI.includes(r.method)) {
+        const auditData = {
+          userID: parseInt(s.locals?.userData?.user_id),
+          page: r.protocol + "://" + r.get('host') + r.originalUrl, // change to r.originalUrl if you dont want to include the http://localhost:3000 part
+          method: r.method,
+          body: r.body
+        }
+        redisClient.hset([`audit`, Date.now().toString(), JSON.stringify(auditData)]);
+      }
+      //if (audit[])
+      //redisClient.hset([`audit`, "announcement_id", announcementID, "announcementType", type, "announcementText", utils.encode_base64(announcement), "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
+    }
+  }
+
   if (ep) { // Prevent site from sending errors when the :method is not defined.
     ep.prop.run(r, s);
   } else {
