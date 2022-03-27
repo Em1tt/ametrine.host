@@ -206,9 +206,10 @@ app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) =
 
   const logStaffActions = true; // This will log any requests staff sends (Only URI though)
   if (logStaffActions) {
-    if (permissions.hasPermission(s.locals?.userData?.permission_id || 0, "/api/audit") && Object.keys(audit).includes(r.path)) {
+    if (permissions.hasPermission(s.locals?.userData?.permission_id || 0, "/api/audit")) {
       const auditURI = audit[r.path];
-      if (auditURI && auditURI.includes(r.method)) {
+      console.log("hello", auditURI, audit, r.method);
+      if (!auditURI || (auditURI && !auditURI.includes(r.method))) {
         const auditData = {
           userID: parseInt(s.locals?.userData?.user_id),
           page: r.protocol + "://" + r.get('host') + r.originalUrl, // change to r.originalUrl if you dont want to include the http://localhost:3000 part

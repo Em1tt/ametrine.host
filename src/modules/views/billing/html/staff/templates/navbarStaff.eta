@@ -25,6 +25,14 @@
             </a>
         </li>
         <%}%>
+        <% if(staffPages.includes("all") || staffPages.includes("audit")){ %>
+        <li class="nav-item">
+            <a href="/billing/staff/audit" aria-label="Audit Log" id="audit" class="nav-link">
+                <i class="fas fa-history"></i>
+                <span aria-hidden="true" class="link-text">Audit Logs</span>
+            </a>
+        </li>
+        <%}%>
         <li class="nav-item pushDown">
             <a href=/billing class="nav-link" aria-label="Log-In" id="login-button">
                 <i class="fa fa-cogs"></i>
