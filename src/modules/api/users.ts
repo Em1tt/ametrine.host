@@ -145,7 +145,7 @@ export const prop = {
                                     case "permission": {
                                         if (!permissions.hasPermission(userData['permission_id'], `/users/:userid/permission`)) return res.sendStatus(403);
                                         const { id } = req.body;
-                                        if (id != 4 && id >= parseInt(userData["permission_id"])) return res.status(403).send("You can't set a permission higher than your own!");
+                                        if (parseInt(userData["permission_id"]) != 4 && id >= parseInt(userData["permission_id"])) return res.status(403).send("You can't set a permission higher than or equal as your own!");
                                         const validPermission = permissions.validPermission(id);
                                         if (!validPermission) return res.status(406).send("That is an invalid Permission ID!");
                                         await client.db.hset([`user:${userID}`, "permission_id", id]);

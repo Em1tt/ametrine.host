@@ -35,7 +35,7 @@
              userData = await auth.verifyToken(req, res, false, "both")
          }
          if (typeof userData != "object" && req.method != "GET") return res.sendStatus(userData);
-        if (!permissions.hasPermission(userData['permission_id'], `/api/audit`)) return res.sendStatus(403);
+        if (!permissions.hasPermission(userData['permission_id'], `/api/audit/view`)) return res.sendStatus(403);
             let userID = req.query.userID; // Announcement Type
             const page = req.query.page || 1; // Use this to eliminate some code. (also allows me to define as constant)
             const pageLimit = req.query.pageLimit || 50;
