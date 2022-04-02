@@ -200,6 +200,7 @@ app.use(
     xssFilter: true
   })
 );
+process.on('uncaughtException', console.error)
 
 app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) => { // Change to just /* if you want to log all pages, assuming you set them in audit.json
   const ep: Endpoint = endpoints.get(r.params.method)
