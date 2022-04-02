@@ -209,7 +209,6 @@ app.all("/api/:method*", apiLimiter, (r: express.Request, s: express.Response) =
   if (logStaffActions) {
     if (permissions.hasPermission(s.locals?.userData?.permission_id || 0, "/api/audit")) {
       const auditURI = audit[r.path];
-      console.log("hello", auditURI, audit, r.method);
       if (!auditURI || (auditURI && !auditURI.includes(r.method))) {
         const auditData = {
           userID: parseInt(s.locals?.userData?.user_id),

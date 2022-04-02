@@ -15,5 +15,13 @@ export const utils = {
     decode_base64: (str: string): boolean |  string => {
         if (!str.length) return false;
         return decodeURIComponent(atob(str));
+    },
+    JSONCheck: (str: string): boolean => { // Checks if the string is a valid JSON string or not.
+        try {
+            const json = JSON.parse(str);
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 };

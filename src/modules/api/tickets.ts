@@ -158,13 +158,14 @@ export const prop = {
             return null;
         }
         switch (paramName) {
-            case "create": {// Creates the ticket.
+            case "create": { // Creates the ticket.
                 if (allowedMethod(req, res, ["POST"], paramName, userData)) {
                     const { subject, content, categories, priority, files } = req.body;
                     if (!subject || !content) return res.status(406).send("Missing subject or content.");
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (subject.length > settings.maxTitle) return res.status(403).send(`Subject is too long. Max Length is ${settings.maxTitle}`);
                     if (content.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
+                    
                     const category_ids = (categories) ? categories.split(",").map((category: string | number) => {
                         const findCategory = ticket_categories.find(cate => cate.id == parseInt(category.toString()));
                         if (findCategory) {
@@ -173,11 +174,20 @@ export const prop = {
                         }
                     }) : []
                     if (files && files.length) {
-                        const maxUploadFiles = files.filter(file => {
-                            if (!file.data) return true;
-                            const buffer = Buffer.from(file.data.split(",")[1]);
-                            return Math.floor((buffer.length / 1024) / 1024) > settings.maxUploadLimit
-                        })
+                        if (typeof files != "object" && !utils.JSONCheck(files)) return res.status(403).send("Invalid format for files (Files must be an object)")
+                        const maxUploadFiles = files.map(file => {
+                            if ([file.data,file.name].includes(undefined)) return "invalid";
+                            try {
+                                const buffer = Buffer.from(file.data.split(",")[1]);
+                                return Math.floor((buffer.length / 1024) / 1024) > settings.maxUploadLimit
+                            } catch (e) {
+                                console.error(e)
+                                return "error"
+                            }
+                        }).filter(x => x); // The .filter fillters out anything that is undefined or is false
+                        if (maxUploadFiles.includes("error")) return res.status(500).send("An error occurred while uploading the files. If this wasn't intentional, please report this.")
+                        
+                        if (maxUploadFiles.includes("invalid")) return res.status(403).send("One of the files has invalid data! Please reupload the files or report this.")
                         if (maxUploadFiles.length) return res.status(403).send(`Files: ${files.map(file => file.name).join(", ")} are too large! Max file limit is ${settings.maxUploadLimit}MB.`)
                     }
                     return client.incr("ticket_id", async function(err, ticketID: number) {
