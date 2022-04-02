@@ -2,9 +2,6 @@
   font-size: 16px;
   font-family: "Ubuntu", Arial, Helvetica, sans-serif;
 }
-* {
-  box-sizing: border-box;
-}
 html {
   background-color: var(--main-bg);
 }
@@ -228,7 +225,7 @@ main hr {
   display: flex;
   flex-flow: row nowrap;
   opacity: 0.9;
-  word-break:break-all;
+  word-break:break-word;
 }
 
 #staffannouncements span:hover{
@@ -282,10 +279,10 @@ main hr {
   .cardWrapper {
     display: grid;
     grid-template-areas:
-      "account account"
-      "security security"
-      "services services"
-      "transactions transactions";
+    "users"
+    "staffannouncements"
+    "transactions"
+    "permissions";
     column-gap: 5%;
     row-gap: 50px;
   }
@@ -293,6 +290,12 @@ main hr {
     display: flex;
     flex-flow: column nowrap;
   }
+  #permissions div{
+    max-width: unset;
+  }
+  #staffannouncements {
+    max-width: unset;
+}
 }
 @media screen and (max-width: 600px) {
 

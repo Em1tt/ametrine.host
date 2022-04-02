@@ -34,7 +34,8 @@ main h1 {
   display: grid;
   grid-template-areas: 
     "overview text"
-    "overview management";
+    "overview management"
+    "overview audit";
   grid-template-columns: minmax(240px, 1fr) 4fr;
   margin-bottom: 50px;
   column-gap: 10px;
@@ -43,12 +44,14 @@ main h1 {
   grid-area: overview;
 }
 .user-card{
-  background-color: #1e1f26;
-  border-radius: 10px;
-  overflow: hidden;
-  display: block;
   position: sticky;
   top: 30px;
+}
+.card{
+  background-color: #1e1f26;
+  display: block;
+  border-radius: 10px;
+  overflow: hidden;
 }
 .card h3{
   padding: 5px 10px;

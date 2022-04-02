@@ -65,6 +65,22 @@
                     </div>
                 </span>
             </span>
+            <span class="audit">
+                <span class="card">
+                    <h3><i class="fa fa-history"></i> Audit Logs</h3>
+                    <div>
+                        <p class="full-name"><%= user.name%></p>
+                        <p id="role">User ID: <%= user.user_id%></p>
+                        <p id="email"><i class="fa fa-at"></i> <%=user.email%> <br><sup>Not verified. <a>Resend E-Mail?</a></sup></p>
+                        <p id="permission-id"><i class="fas fa-sitemap"></i> Permission ID: <span><%= user.permission_id %></span></p>
+                        <p id="2fa"><i class="fas fa-lock"></i> 2-FA: <span><%= parseInt(user["2fa"]) ? "Active" : "Not Active"%></span></p>
+                        <p id="registered"><i class="fas fa-clock"></i> Registered: <span><%= new Date(parseInt(user.registered)).toDateString() %></span></p>
+                        <p id=""><i class="fas fa-info-circle"></i> Account State: <span><%= user.state %></span></p>
+                        <button id="edit-user"><i class="fa fa-tools"></i> Edit Account</button>
+                        <button><i class="fa fa-envelope"></i> Send E-Mail</button>
+                    </div>
+                </span>
+            </span>
         </div>
     </main>
     <%~ E.includeFile('../../../html/staff/templates/util.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>

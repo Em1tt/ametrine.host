@@ -56,15 +56,6 @@
                     </div>
                     <div id="staffannouncements">
                         <h3><i class="fa fa-bell"></i> Notification centre</h3>
-                        <span class="announcement">
-                            <i class="fa fa-bell"></i><p>Lookatme!Lookatme! Lookatme!Lookatme! Lookatme!Lookatme!Lookatme!</p>
-                        </span>
-                        <span class="ticket">
-                            <i class="fa fa-ticket-alt"></i><p>5 tickets awaiting staff response</p>
-                        </span>
-                        <span class="ticketsOpen">
-                            <i class="fa fa-ticket-alt"></i><p>5 tickets open in total</p>
-                        </span>
                     </div>
                     <div id="permissions">
                         <h3><i class="fa fa-shield-alt"></i> Permission Overview</h3>

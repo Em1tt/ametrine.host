@@ -187,4 +187,36 @@ window.onresize = function(){
 document.getElementById("weekly").addEventListener("click", () => {instantiateUserGraph('weekly');});
 document.getElementById("monthly").addEventListener("click", () => {instantiateUserGraph('monthly');});
 document.getElementById("yearly").addEventListener("click", () => {instantiateUserGraph('yearly');});
+
+const announcementsWrapper = document.querySelector("div#staffannouncements");
+
+axios.get("/api/tickets/list?limit=101&status=0").then(res => { //Awaiting Staff Reply Tickets
+    if(res.data.length){
+        const span = document.createElement("span");
+        span.classList.add("ticket");
+        const p = document.createElement("p");
+        const icon = document.createElement("i");
+        icon.classList.add("fa");
+        icon.classList.add("fa-ticket-alt")
+        p.innerText = res.data.length == 101 ? "100+ tickets awaiting staff reply." : res.data.length == 1 ? "1 ticket awaiting staff reply" : `${res.data.length} tickets awaiting staff reply.`;
+        span.appendChild(icon);
+        span.appendChild(p);
+        announcementsWrapper.appendChild(span);
+    }
+});
+axios.get("/api/tickets/list?limit=101&status=2").then(res => { //Awaiting Client Reply Tickets
+    if(res.data.length){
+        const span = document.createElement("span");
+        span.classList.add("ticketsOpen");
+        const p = document.createElement("p");
+        const icon = document.createElement("i");
+        icon.classList.add("fa");
+        icon.classList.add("fa-ticket-alt")
+        p.innerText = res.data.length == 101 ? "100+ tickets awaiting client reply." : res.data.length == 1 ? "1 ticket awaiting client reply" : `${res.data.length} tickets awaiting client reply.`;
+        span.appendChild(icon);
+        span.appendChild(p);
+        announcementsWrapper.appendChild(span);
+    }
+});
+
 </script>

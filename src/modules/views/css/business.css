@@ -1,126 +1,13 @@
-*{
-    font-family: "Ubuntu";
-    font-smooth: auto;
-    box-sizing:border-box;
-    scroll-behavior: smooth;
-    
-    /*ACCENT COLORS*/
-    --light: #e2c5fd;
-    --default: #955bcc;
-    --dark: #604385;
-    --yellow: #ad702f;
-    --yellow-light: #e99842;
-  }
-  .dark{
-    --body-bg: #161616 !important;
-    --body-polka-bg: #111111; 
-    --paragraph-color: #d1d1d1;
-    --main-bg: rgb(14, 14, 14);
-    --map-bg: linear-gradient(to right, rgb(14, 14, 14), #1d1127);
-    --divider2: transparent;
-    --divider3: var(--map-bg);
-    --map-h2: white;
-    --footer-bg: rgb(20, 20, 20);
-    --footer-border: rgb(0, 0, 0);
-    --footer-text: white;
-    --about-border: rgb(20, 20, 20);
-    --card-about-border: white;
-    --card-about-p: white;
-    --summary-h2: var(--default);
-    --summary-h3: var(--light);
-    --summary-p: white;
-  }
-  body {
-    background-color: var(--body-bg);
-    background-image: radial-gradient(var(--body-polka-bg) 10%, transparent 11%),
-      radial-gradient(var(--body-polka-bg) 10%, transparent 11%);
-    background-size: 10px 10px;
-    background-position: 0 0, 15px 15px;
-    background-repeat: repeat;
-    overflow: hidden;
-    display: flex;
-    flex-flow: column wrap;
-    margin: 0;
-    overflow-x: hidden !important;
-        /*Constant colors*/
-        --body-bg: rgb(240, 240, 240);
-        --body-polka-bg: #e3e3e3; 
-        --paragraph-color: #181818;
-        --main-bg: white;
-        --map-bg: #362742;
-        --divider2: var(--main-bg);
-        --divider3: var(--map-bg);
-        --map-h2: white;
-        --footer-bg: rgb(255, 255, 255);
-        --footer-text: rgb(0, 0, 0);
-        --footer-border: rgb(170,170,170);
-        --about-border: rgb(177, 177, 177);
-        --card-about-border: white;
-        --card-about-p: white;
-        --summary-h2: var(--default);
-        --summary-h3: var(--yellow);
-        --summary-p: black;
-  }
-  header{
-  display: grid;
-  place-items: center;
-  margin-top: 100px;
-  height: 500px;
-  width: 100%;
-  }
-  header h1{
-  color: var(--default);
-  }
-  header h2{
-  color: var(--paragraph-color);
-  }
-  header div{
-  display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-  }
-  header img{
-  animation: float 5s ease infinite;
-  pointer-events: none;
-  }
-  .subtitle{
-  max-width: 400px;
-  }
-  .divider{
-  display: block;
-  margin-top: 100px;
-  width: 80%;
-  height: 75px;
-  background: var(--main-bg);
-  margin-inline: auto;
-  border-radius: 50px 50px 0 0;
-  }
-  main{
-  width: 100vw !important;
-  background:  var(--main-bg);
-  display: flex;
-  flex-flow: column wrap;
-  padding:  50px 200px 150px 200px;
-  }
-  main > h2{
-      color: var(--default);
-      text-align: center;
-  }
-  main > div{
+main h2{
+  text-align: center;
+}
+.cardWrapper{
   display: grid;
   grid-template-columns: repeat(2, auto);
-  row-gap: 100px;
+  row-gap: 20px;
   margin-top: 50px;
-  }
-  .cardWrapper{
-    display: grid;
-    grid-template-columns: repeat(2, auto);
-    row-gap: 20px;
-    margin-top: 50px;
-    padding:  50px 200px 150px 200px;
-  }
+  padding:  50px 200px 150px 200px;
+}
   .about{
       text-align: center;
       border: 1px solid var(--about-border);
@@ -133,9 +20,6 @@
   }
   .about p{
      color: var(--paragraph-color);
-  }
-  .cardWrapper .about p{
-    color: var(--card-about-p);
   }
   .about h3{
   color: var(--default);

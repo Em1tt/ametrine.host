@@ -8,8 +8,8 @@
     <header id="header">
       <div>
         <span>
-          <h1>So, what's our business plan?</h1>
-          <h2 class="subtitle">Read about our values, commitments and plans.</h2>
+          <h1 class="default-header">So, what's our business plan?</h1>
+          <h2 class="default-paragraph">Read about our values, commitments and plans.</h2>
         </span>
         <span>
             <img alt="laptop" src="../images/svg/link.svg" height="400px" width="400px">
@@ -18,19 +18,19 @@
     </header>
     <div class="divider"></div>
     <main id="main">
-      <h2>Our values</h2>
+      <h2 class="default-header">Our values</h2>
       <div>
         <div class="about">
           <h3>Honesty</h3>
           <p>
             We are honest to our clients, regardless of the situation. We communicate problems with clients,
-            and we try to resolve them as soon as possible with the best solution possible.
+            and we try to resolve them as soon as possible.
           </p>
         </div>
         <div class="about">
           <h3>Trust</h3>
           <p>
-            We want to build a company, which you can trust, regardless of your current standing with us.
+            Our main priority is building a company, which you can trust. 
           </p>
         </div>
       </div>
@@ -38,11 +38,11 @@
     <section class="mapSection">
       <div class="divider2"></div>
       <h2>Our commitments</h2>
-      <h3>We are commited to maintain...</h3>
+      <h3>we promise to maintain...</h3>
       <div class="cardWrapper">
           <div class="about">
           <h3><i class="fa fa-lock"></i> Data Privacy</h3>
-          <p>
+          <p class="default-paragraph">
             We won't sell, share, or use your data in a malicious way.
           </p>
         </div>
@@ -59,9 +59,9 @@
           </p>
         </div>
         <div class="about">
-          <h3><i class="fa fa-coins"></i> Minimum profitability</h3>
+          <h3><i class="fa fa-coins"></i> Minimum pricing</h3>
           <p>
-            Our VPS nodes have a maximum profitability of only €10/Mo.
+            Our lineups have an average maximum profitability of €10/Mo.
           </p>
         </div>
       </div>

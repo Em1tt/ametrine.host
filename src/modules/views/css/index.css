@@ -285,16 +285,16 @@
   .mapSection h3 {
     margin-inline: 10px;
   }
-  .worldMap i {
+  .poi svg {
     font-size: 6vw;
   }
   .poi.FL {
-    top: -1% !important;
-    left: 49% !important;
+    top: 8%;
+    left: 50.45%;
   }
   .poi.GE {
-    top: 8%;
-    left: 47%;
+    top: 18%;
+    left: 47.95%;
   }
 }
 @media screen and (max-width: 520px) {
@@ -304,5 +304,13 @@
   }
   .worldMap {
     width: 90%;
+  }
+  .poi.FL {
+    top: 7%;
+    left: 50.45%;
+  }
+  .poi.GE {
+    top: 18%;
+    left: 47.95%;
   }
 }
