@@ -1,8 +1,73 @@
 <script nonce=<%=it.nonce%>>
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+      get: (searchParams, prop) => searchParams.get(prop),
+    });
 document.querySelector("#go-back")?.addEventListener("click", () => {
     history.back();
 });
 document.querySelector("#edit-user")?.addEventListener("click", () => {
     window.location.href = window.location.href.concat("/edit");
 });
+(async () => {
+const audit = await axios.get(`/api/audit?userID=<%=it.user.user_id%>${params.page ? `&page=${params.page}` : ""}`);
+
+audit.data.forEach(log => {
+    const logs = document.querySelector("#logs");
+    const span = document.createElement("span");
+    const date = document.createElement("p");
+    const url = document.createElement("p");
+    const a = document.createElement("a");
+    date.classList.add("date");
+    date.innerText = new Date(log.createdIn).toDateString();
+    span.appendChild(date);
+    url.classList.add("url");
+    url.innerText = log.method + " " + log.page + " ";
+    span.appendChild(url);
+    a.innerText = "view body";
+    if(Object.entries(log.body).length) url.appendChild(a);
+    logs.appendChild(span);
+    a.addEventListener("click", () =>{
+        Swal.fire({
+            title: "Log Body",
+            text: JSON.stringify(log.body)
+        });
+    })
+});
+
+const page = params.page || 1;
+console.log(page, audit.data.length);
+      const leftButtons  = [...document.getElementsByClassName("leftButton")],
+            rightButtons = [...document.getElementsByClassName("rightButton")];
+      if (page == 1 && audit.data.length == 50) {
+      console.log("hi");
+        rightButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+      } else if (page != 1 && page > 0 && audit.data.length == 50) {
+      console.log("hi");
+        rightButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+        leftButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+      } else if (page != 1 && page > 0 && audit.data.length < 50) {
+      console.log("hi");
+        leftButtons.forEach(button => {
+          button.removeAttribute("disabled");
+        })
+      }
+      leftButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                window.location = `${window.location.pathname}?page=${parseInt(page) - 1}`
+            });
+        });
+        rightButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                window.location = `${window.location.pathname}?page=${parseInt(page) + 1}`
+            });
+        })
+
+})();
+
 </script>

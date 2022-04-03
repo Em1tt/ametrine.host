@@ -126,6 +126,7 @@ export const prop = {
                             case "GET": // gets the users data
                                 return res.status(200).json(showUserData(getUser));
                             case "PUT": // Edits user information such as their name, email, clearing sessions, or password
+                                return res.sendStatus(501);
                                 // not finished
                                 break;
                             case "PATCH": { // Edits user information such as toggling 2fa, or permission id

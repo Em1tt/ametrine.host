@@ -1,3 +1,7 @@
 {
-    "/api/announcements": ["GET"]
+    "/api/announcements": ["GET"],
+    "/api/audit": ["GET"],
+    "/api/knowledgebase/categories": ["GET"],
+    "/api/knowledgebase/tags": ["GET"],
+    "/api/tickets/list": ["GET"]
 }

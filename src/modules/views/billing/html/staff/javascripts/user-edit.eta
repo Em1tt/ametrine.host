@@ -80,6 +80,7 @@ editForm.addEventListener("submit", async (event) => {
         email      = document.querySelector("#input-email").value,
         permission = document.querySelector("#input-permission").value,
         action     = document.querySelector("#account-action").value;
+    console.log(name,email,permission,action);
     event.preventDefault();
     if(name.length <= 3) return Swal.fire({
             title: `Name too short`,
@@ -115,11 +116,13 @@ editForm.addEventListener("submit", async (event) => {
             }; break;
         }
     }
-    await axios.put("/api/users/<%=it.user.user_id%>", {
+    console.log("<%=it.user.user_id%>");
+    const r = await axios.put("/api/users/<%=it.user.user_id%>", {
         name: name,
         email: email
-    }).finally(() => {
-        location.reload();
-    })
+    });
+    console.log("hi");
+    console.log(r);
+    location.reload();
 });
 </script>

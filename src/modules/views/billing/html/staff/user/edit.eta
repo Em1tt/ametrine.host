@@ -30,7 +30,7 @@
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
-    <link href="/billing/html/staff/css/user.css" rel="stylesheet">
+    <link href="/billing/html/staff/css/user-edit.css" rel="stylesheet">
     <script src="/billing/public/javascripts/theme.js" async defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">

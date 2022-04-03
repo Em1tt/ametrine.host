@@ -35,9 +35,9 @@
         <%}%>
         <li class="nav-item pushDown">
             <a href=/billing class="nav-link" aria-label="Log-In" id="login-button">
-                <i class="fa fa-cogs"></i>
+                <i class="fa fa-user-cog"></i>
                 <span aria-hidden="true" class="link-text">
-                    Manage Account
+                    Client Area
                 </span>
             </a>
         </li>
@@ -51,7 +51,7 @@
             <a href="/billing/staff" class="nav-link" aria-label="staff-panel" id="staff-panel">
                 <i class="fa fa-bars"></i>
                 <span aria-hidden="true" class="link-text">
-                    Staff Area
+                    Overview
                 </span>
             </a>
         </li>

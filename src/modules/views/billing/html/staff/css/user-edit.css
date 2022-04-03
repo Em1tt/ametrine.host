@@ -37,7 +37,6 @@ main h1 {
     "overview management"
     "overview audit";
   grid-template-columns: minmax(240px, 1fr) 4fr;
-  grid-template-rows: 500px 300px;
   margin-bottom: 50px;
   column-gap: 10px;
 }
@@ -71,7 +70,7 @@ main h1 {
 .card a:hover{
   color: #dce0ff;
 }
-.card > div{
+.card div{
   padding: 10px;
   color: #dce0ff;
 }
@@ -98,7 +97,7 @@ main h1 {
 .card sup{
   color: gray;
 }
-.user-card.card div button{
+.card div button{
   background-color: #141419;
   color: #dce0ff;
   border-radius: 10px;
@@ -109,7 +108,7 @@ main h1 {
   font-weight: normal;
   cursor: pointer;
 }
-.user-card.card div button:hover{
+.card div button:hover{
   background-color: #cc37c0;
 }
 .audit .card div{
@@ -131,9 +130,6 @@ main h1 {
 .audit .card span p.url{
   margin: 5px 0;
   color: #dce0ff;
-}
-.audit a{
-  font-size: 0.8rem;
 }
 .edit-card{
   background-color: #1e1f26;
@@ -191,32 +187,4 @@ main h1 {
 }
 .user-edit form button.button3:hover{
   background-color: #292a34;
-}
-.pageButtons{
-  margin: 5px 0;
-}
-.pageButtons button:disabled{
-  color: #292a34;
-  background-color: #141419;
-  cursor: default;
-}
-.pageButtons button{
-  float: right;
-  padding: 10px;
-  border: none;
-  color: #dce0ff;
-  background-color: #141419;
-  cursor: pointer;
-}
-.pageButtons button:not(:disabled):hover{
-  color: #cc37c0;
-  background-color: #1e1f26;
-}
-.pageButtons button:first-of-type{
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.pageButtons button:last-of-type{
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
 }
