@@ -1,31 +1,38 @@
 {
     "0": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"],
-        "accessPages": ["/", "/billing", "/billing/mail", "/billing/tickets", "/billing/tickets/create", "/billing/tickets/:id"]
+        "accessPages": ["/", "/billing", "/billing/mail", "/billing/tickets", "/billing/tickets/create", "/billing/tickets/:id"],
+        "name": "User"
     },
     "1": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"],
-        "accessPages": ["all"]
+        "accessPages": ["all"],
+        "name": "Client"
     },
     "2": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
-        "accessPages": ["all"]
+        "accessPages": ["all"],
+        "name": "Level 1 Support"
     },
-    "2:3": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
-        "accessPages": ["all"]
-    },
-    "2:4": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
-        "accessPages": ["all"]
-    },
-    "2:5": {
-        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
-        "accessPages": ["all"]
+    "3": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/api/audit"],
+        "accessPages": ["all"],
+        "name": "Level 2 Support"
     },
     "4": {
-        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit", "/api/audit/view"],
-        "accessPages": ["all"]
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list","/staff/knowledgebase/:articleid", "/api/audit"],
+        "accessPages": ["all"],
+        "name": "Level 3 Support"
+    },
+    "5": {
+        "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list","/staff/knowledgebase/:articleid", "/api/audit"],
+        "accessPages": ["all"],
+        "name": "Level 4 Support"
+    },
+    "6": {
+        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit", "/api/audit/view"],
+        "accessPages": ["all"],
+        "name": "Administrator"
     }
     
 }

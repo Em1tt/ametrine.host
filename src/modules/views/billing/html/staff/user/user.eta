@@ -31,7 +31,7 @@
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
     <link href="/billing/html/staff/css/user.css" rel="stylesheet">
-    <script src="/billing/public/javascripts/theme.js" async defer></script>3
+    <script src="/billing/public/javascripts/theme.js" async defer></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>    
     <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intense-images/1.0.7/intense.min.js"></script>

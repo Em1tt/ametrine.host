@@ -263,7 +263,7 @@ export const prop = {
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.user_id == userData["user_id"];
                         } else {
-                            if (level > 5 || level < 3) return res.sendStatus(403);
+                            if (!permissions.hasPermission(level, "/staff/tickets/list")) return res.sendStatus(403);
                             if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
                             elements[0] = (level + 1)
                             elements.push(pageLimit, (page - 1) * pageLimit);
@@ -403,7 +403,7 @@ export const prop = {
                                                         "ticket_id", msgData.ticket_id,
                                                         "user_id", msgData.user_id,
                                                         "content", msgData.content,
-                                                        "files", msgData.files,
+                                                        "files",  msgData.files,
                                                         "createdIn", timestamp,
                                                         "editedIn", 0]);
                                     if (!getMsg) return res.sendStatus(201);
