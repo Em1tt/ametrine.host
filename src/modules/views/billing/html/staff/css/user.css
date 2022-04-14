@@ -220,3 +220,13 @@ main h1 {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+.left-align{
+  text-align: left !important;
+  max-width: 200px !important;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+a.intense{
+  color: #cc37c0;
+  cursor: pointer;
+}

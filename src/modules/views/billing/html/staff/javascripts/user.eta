@@ -11,7 +11,7 @@ document.querySelector("#edit-user")?.addEventListener("click", () => {
 (async () => {
 const audit = await axios.get(`/api/audit?userID=<%=it.user.user_id%>${params.page ? `&page=${params.page}` : ""}`);
 
-audit.data.forEach(log => {
+audit.data.forEach(async log => {
     const logs = document.querySelector("#logs");
     const span = document.createElement("span");
     const date = document.createElement("p");
@@ -26,14 +26,29 @@ audit.data.forEach(log => {
     a.innerText = "view body";
     if(Object.entries(log.body).length) url.appendChild(a);
     logs.appendChild(span);
-    a.addEventListener("click", () =>{
+    if(log?.body?.content){
+    const logb = Object.values(log.body.content.ops);
+      await logb.forEach(operation => {
+        if(operation?.insert?.image) operation.insert.image = `<a class=intense data-image='${operation.insert.image}'>b64imgObj</a>`;
+      });
+      a.addEventListener("click", () =>{
         Swal.fire({
             title: "Log Body",
-            text: JSON.stringify(log.body)
+            html: `<pre class="left-align">${JSON.stringify(logb, undefined, 4)}</pre>`,
+            didOpen: () => {
+              Intense(document.querySelectorAll(".intense"));
+            }
         });
     })
+    }else{
+        a.addEventListener("click", () =>{
+        Swal.fire({
+            title: "Log Body",
+            html: `<pre class="left-align">${JSON.stringify(log.body, undefined, 4)}</pre>`
+        });
+      })
+    }
 });
-
 const page = params.page || 1;
 console.log(page, audit.data.length);
       const leftButtons  = [...document.getElementsByClassName("leftButton")],
