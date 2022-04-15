@@ -332,7 +332,7 @@ export const prop = {
                         const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] < `${getTicket.level}` && !permissions.isAdminPermission(userData["permission_id"])) return res.sendStatus(403);
-                        const { content } = req.body;
+                        const { content, userName } = req.body;
                         // Using {} at switch cases because ESLint is complaining
                         
                         switch (req.method) {
@@ -405,6 +405,8 @@ export const prop = {
                                                         "content", msgData.content,
                                                         "files",  msgData.files,
                                                         "createdIn", timestamp,
+                                                        'name', userData["name"],
+                                                        'permission', JSON.stringify({id: userData["permission_id"], name: permissions.getPermissionName(userData["permission_id"])}),
                                                         "editedIn", 0]);
                                     if (!getMsg) return res.sendStatus(201);
                                     return res.status(201).json(msgData);

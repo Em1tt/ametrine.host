@@ -307,9 +307,9 @@ async function sendMessage() {
                 } else {
                     img.classList.add("staff");
                     clientName = document.createElement("p");
-                    clientName.innerText = ticket.name;
+                    clientName.innerText = msg.name;
                     role = document.createElement("p");
-                    role.innerText = "Staff Member";
+                    role.innerText = JSON.parse(msg.permission).name;
                     role.classList.add("role");
                 }
                 actualWrapper.appendChild(title);

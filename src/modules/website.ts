@@ -430,6 +430,8 @@ async function handleTickets(r: express.Request, s: express.Response, staff: boo
   if (staff) {
     if (getTicket.level > s.locals?.userData?.permission_id) return throw403(s);
     if (getTicket.user_id == s.locals?.userData?.user_id) return throw403(s);
+    const user: UserData = await redisClient.db.hgetall(`user:${getTicket.user_id}`); 
+    getTicket["user"] = {name: user.name, user_id: user.user_id, permission: user.permission_id};
   } else {
     if (getTicket.user_id != s.locals?.userData?.user_id) return throw403(s);
   }

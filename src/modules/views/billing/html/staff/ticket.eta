@@ -175,7 +175,7 @@
                     <span class="title">
                         <img src="/billing/public/images/User.svg" class="user" height="50" width="50" alt="User">
                             <div>
-                                <p><%=it._locals.userData.name%></p>
+                                <p><%=JSON.parse(it.ticket).user.name%></p>
                                 <p class="role">Customer</p>
                             </div>
                     </span>
@@ -193,7 +193,7 @@
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
-    <%~ E.includeFile('../../html/staff/javascripts/ticket.eta', {ticket: it._locals.ticket, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../../html/staff/javascripts/ticket.eta', {ticket: it._locals.ticket, nonce: it._locals.nonce, userData: it.userData}) %>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <script src="/billing/html/staff/javascripts/popups.js"></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>

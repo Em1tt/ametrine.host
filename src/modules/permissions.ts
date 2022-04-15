@@ -31,5 +31,8 @@ export const permissions = {
     },
     isStaffPermission: (permissionID: number): boolean => {
         return Boolean(permission[permissionID]?.isStaff); //Prevents null as a response;
+    },
+    getPermissionName: (permissionID: number): string => {
+        return permission[permissionID]?.name;
     }
 }

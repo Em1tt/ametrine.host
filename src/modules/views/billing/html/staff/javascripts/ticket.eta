@@ -156,6 +156,7 @@ async function sendMessage() {
         if(editor.getLength() == 1) return;
         const response = await axios.post(`/api/tickets/${ticketID}`, {
             content: editor.getContents(),
+            userName: "<%=it.userData.name%>",
             files: images
         });
         await axios.put(`/api/tickets/${ticketID}`, {
@@ -307,9 +308,9 @@ async function sendMessage() {
                 } else {
                     img.classList.add("staff");
                     clientName = document.createElement("p");
-                    clientName.innerText = ticket.name;
+                    clientName.innerText = msg.name;
                     role = document.createElement("p");
-                    role.innerText = "Staff Member";
+                    role.innerText = JSON.parse(msg.permission).name;
                     role.classList.add("role");
                     editButton = document.createElement("button");
                     const editIcon = document.createElement("i");
