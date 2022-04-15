@@ -2,37 +2,45 @@
     "0": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid"],
         "accessPages": ["/", "/billing", "/billing/mail", "/billing/tickets", "/billing/tickets/create", "/billing/tickets/:id"],
-        "name": "User"
+        "name": "User",
+        "isStaff": false
     },
     "1": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/mail"],
         "accessPages": ["all"],
-        "name": "Client"
+        "name": "Client",
+        "isStaff": false
     },
     "2": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"],
-        "name": "Level 1 Support"
+        "name": "Level 1 Support",
+        "isStaff": true
     },
     "3": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"],
-        "name": "Level 2 Support"
+        "name": "Level 2 Support",
+        "isStaff": true
     },
     "4": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list","/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"],
-        "name": "Level 3 Support"
+        "name": "Level 3 Support",
+        "isStaff": true
     },
     "5": {
         "accessAPI": ["/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/knowledgebase/create", "/mail", "/staff/", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list","/staff/knowledgebase/:articleid", "/api/audit"],
         "accessPages": ["all"],
-        "name": "Level 4 Support"
+        "name": "Level 4 Support",
+        "isStaff": true
     },
     "6": {
-        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit", "/api/audit/view"],
+        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit", "/api/audit/view", "/mail/any"],
         "accessPages": ["all"],
-        "name": "Administrator"
+        "name": "Administrator",
+        "isStaff": true,
+        "isAdmin": true
     }
     
 }

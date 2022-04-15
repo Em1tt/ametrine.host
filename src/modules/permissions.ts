@@ -25,5 +25,11 @@ export const permissions = {
     validPermission: (permissionID: string | number): boolean => {
         if (!permissionID && isNaN(parseInt(permissionID as string))) return false;
         return (permission[permissionID]) ? true : false
+    },
+    isAdminPermission: (permissionID: number): boolean => {
+        return Boolean(permission[permissionID]?.isAdmin); //Prevents null as a response;
+    },
+    isStaffPermission: (permissionID: number): boolean => {
+        return Boolean(permission[permissionID]?.isStaff); //Prevents null as a response;
     }
 }

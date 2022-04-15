@@ -107,7 +107,7 @@ export const prop = {
                             }
                             case "canceldelete": { // For cancelling the deletion period
                                 if (utils.allowedMethod(req, res, ["POST"])) {
-                                    if ([3,4].includes(getUser.state)) return res.status(406).send("The account is currently either disabled or terminated.")
+                                    //if ([3,4].includes(getUser.state)) return res.status(406).send("The account is currently either disabled or terminated.") Useless since one line under IF statement exists
                                     if (getUser.state != 2) return res.status(406).send("The account is not in the process of being deleted!")
                                     auth.cancelDeletion(getUser.user_id).then(resp => {
                                         if (resp) {
@@ -146,9 +146,8 @@ export const prop = {
                                     case "permission": {
                                         if (!permissions.hasPermission(userData['permission_id'], `/users/:userid/permission`)) return res.sendStatus(403);
                                         const { id } = req.body;
-                                        if (parseInt(userData["permission_id"]) != 4 && id >= parseInt(userData["permission_id"])) return res.status(403).send("You can't set a permission higher than or equal as your own!");
-                                        const validPermission = permissions.validPermission(id);
-                                        if (!validPermission) return res.status(406).send("That is an invalid Permission ID!");
+                                        if (!permissions.isAdminPermission(userData['permission_id']) && parseInt(id) >= parseInt(userData["permission_id"])) return res.status(403).send("You can't set a permission higher than or equal as your own!");
+                                        if (!permissions.validPermission(id)) return res.status(406).send("Invalid permission ID.");
                                         await client.db.hset([`user:${userID}`, "permission_id", id]);
                                         return res.sendStatus(204);
                                     }
