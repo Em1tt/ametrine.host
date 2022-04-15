@@ -153,7 +153,7 @@ export const auth = {
         return { email: data.email, refreshToken, accessToken, expiresIn };
     },
     setCookie: async (res: express.Response, name: string, value: string, expiresIn: number): Promise<boolean> => {
-        res.cookie(name, value, { secure: true, httpOnly: true, maxAge: expiresIn, sameSite: 'strict' }); // Client Side wont access this because httpOnly.
+        res.cookie(name, value, { secure: Boolean(process.env.PRODUCTION), httpOnly: true, maxAge: expiresIn, sameSite: 'strict' }); // Client Side wont access this because httpOnly.
         return true;
     },
     verifyPassword: async (password: string, data: UserData): Promise<boolean> => {

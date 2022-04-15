@@ -263,7 +263,7 @@ export const prop = {
                             elements.push(pageLimit, (page - 1) * pageLimit);
                             ticketWhere = (ticket: Ticket) => ticket.user_id == userData["user_id"];
                         } else {
-                            if (!permissions.hasPermission(level, "/staff/tickets/list")) return res.sendStatus(403);
+                            //if (!permissions.hasPermission(level, "/staff/tickets/list") && !permissions.isAdminPermission(level)) return res.sendStatus(403);
                             if (pageLimit > 50) pageLimit = 50; // Making sure server isn't vulnerable to this kind of attack.
                             elements[0] = (level + 1)
                             elements.push(pageLimit, (page - 1) * pageLimit);
@@ -295,7 +295,7 @@ export const prop = {
                         if (ticketID < 0) return res.sendStatus(406);
                         const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
-                        if (getTicket.user_id != userData["user_id"] && userData["permission_id"] != `2:${getTicket.level}` && ![3,4].includes(parseInt(userData["permission_id"]))) return res.sendStatus(403);
+                        //if (getTicket.user_id != userData["user_id"] && userData["permission_id"] < `${getTicket.level}` && !permissions.isAdminPermission(userData["permission_id"])) return res.sendStatus(403);
                         const msgID = parseInt(params[1])
                         if (msgID < 0) return res.sendStatus(406);
                         const getMessage = await client.db.hgetall(`ticket_msg:${ticketID}:${msgID}`);
@@ -332,7 +332,7 @@ export const prop = {
                         const getTicket: Ticket = await client.db.hgetall(`ticket:${ticketID}`);
                         if (!getTicket) return res.status(404).send("Ticket not found."); // If no tickets are found.
                         if (getTicket.user_id != userData["user_id"] && userData["permission_id"] < `${getTicket.level}` && !permissions.isAdminPermission(userData["permission_id"])) return res.sendStatus(403);
-                        const { content, userName } = req.body;
+                        const { content } = req.body;
                         // Using {} at switch cases because ESLint is complaining
                         
                         switch (req.method) {
@@ -428,7 +428,7 @@ export const prop = {
                                     updated = true;
                                 }
                                 //if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed
-                                if (getTicket["user_id"] != userData["user_id"] && userData["permission_id"] != 4 && (subject?.length || categories?.length || content)) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
+                                //if (getTicket["user_id"] != userData["user_id"] && userData["permission_id"] != 4 && (subject?.length || categories?.length || content)) return res.sendStatus(403); // No Staff is allowed to change the users title and content.
                                 if (subject && subject.length) {
                                     await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "subject", utils.encode_base64(subject), "editedIn", timestamp])
                                     if (content) {
