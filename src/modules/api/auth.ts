@@ -44,6 +44,13 @@ export const auth = {
         if (!data) return false;
         return (data == 1);
     },
+    // Fix for the potential security vulnerability. \/\/
+    getPermissionID: async (userID: string | number, permission_id: number): Promise<number> => {
+        if (permission_id == 0) return 0;
+        const data = await client.db.hget(`user:${userID}`, 'permission_id');
+        if (data < 2 || !data) return 0;
+        return parseInt(data);
+    },
     startDeletion: async (userID: string | number): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             client.expire(`user:${userID}`, (ms("1 week") / 1000), function(err) {
@@ -225,7 +232,8 @@ export const auth = {
         if (typeof verifyToken != "object") return verifyToken;
         const data = await client.db.hgetall(`user:${verifyToken["user_id"]}`);
         if (!data) return 404;
-        const userData = { email: data.email, name: data.name, id: parseInt(data.user_id), permission_id: parseInt(data.permission_id) }
+        const getPermissionID = await auth.getPermissionID(data.user_id, parseInt(data.permission_id))
+        const userData = { email: data.email, name: data.name, id: parseInt(data.user_id), permission_id: getPermissionID }
         const accessToken = auth.genToken(userData, null, "access");
         const expiresIn = parseInt((ms("1h") + Date.now()).toString().slice(0, -3));
         auth.setCookie(res, "access_token", accessToken, expiresIn);
@@ -311,15 +319,16 @@ export const auth = {
         if (!userExists) return (sendResponse) ? res.sendStatus(404) : 404;
         let response = {};
         const OTPEnabled = await auth.has2FA(user_id)
+        const getPermissionID = (["both","access"].includes(type)) && await auth.getPermissionID(user_id, parseInt(accessTokenValid.permission_id as string))
         switch (type) {
             case "both":
-                response = { refreshToken, accessToken, user_id: tokenInDB[0], name: accessTokenValid.name, email: accessTokenValid.email, permission_id: accessTokenValid.permission_id, "2fa": OTPEnabled }
+                response = { refreshToken, accessToken, user_id: tokenInDB[0], name: accessTokenValid.name, email: accessTokenValid.email, permission_id: getPermissionID, "2fa": OTPEnabled }
                 break;
             case "refresh":
                 response = { refreshToken, user_id: tokenInDB[0] }
                 break;
             case "access":
-                response = { accessToken, user_id: user_id, name: accessTokenValid.name, email: accessTokenValid.email, permission_id: accessTokenValid.permission_id, "2fa": OTPEnabled }
+                response = { accessToken, user_id: user_id, name: accessTokenValid.name, email: accessTokenValid.email, permission_id: getPermissionID, "2fa": OTPEnabled }
                 break;
         }
         auth.updateHashVersion(user_id);
