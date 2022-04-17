@@ -470,13 +470,13 @@ export const prop = {
                                 return (updated) ? res.sendStatus(204) : res.sendStatus(406)
                             }
                             case "DELETE": { // Closes the Ticket.
-                                if (permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`) && req.body.force) { // Force delete a message. (Used for spam tickets)
+                                if (!permissions.hasPermission(userData['permission_id'], `/tickets/:ticketid/delete`)) return res.sendStatus(403); // Force delete a ticket. (Used for spam tickets)
                                     return client.del(`ticket:${getTicket["ticket_id"]}`, async function (err0) {
                                         if (err0) {
                                             console.error(err0);
                                             return res.status(500).send("Error occured while deleting the ticket. Please report this.")
                                         }
-                                        if (req.body.msgs) {
+                                        /*if (req.body.msgs) { Might use in future.
                                             return client.keys(`ticket_msg:${ticketID}:*`, function (err, result) {
                                                 if (err) {
                                                     console.error(err);
@@ -492,14 +492,10 @@ export const prop = {
                                                 return res.sendStatus(204);
                                                 
                                             })
-                                        }
+                                        }*/
                                         return res.sendStatus(204);
                                     })
-                                } else { // Closing a ticket. (Not deleting)
-                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", 1, "closed", timestamp])
-                                    return res.sendStatus(204);
-                                }
-                            }
+                            } break;
                             default:
                                 return res.sendStatus(404); // This should never happen.
                           }

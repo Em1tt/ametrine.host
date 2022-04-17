@@ -135,6 +135,15 @@ async function deleteMessage(id){
     }
 }
 
+async function deleteTicket(id){
+    try{
+        const response = await axios.delete(`/api/tickets/${ticketID}?force`);
+        if(response) location.reload();
+    }catch(e){
+        console.log(e);
+    }
+}
+
 async function sendMessage() {
     try {
         const imageManager = document.querySelector("#imageManager");
@@ -393,9 +402,11 @@ async function sendMessage() {
 })()
 
 document.getElementById("toggleTicket").addEventListener("click", () => {
-    <%if(parseInt(it.ticket.closed) != 0) {%>
+    <%if(parseInt(JSON.parse(it.ticket).status) == 1) {%>
+    console.log("trying to open");
         ticketOpen();
     <%}else{%>
+    console.log("trying to close");
         ticketClose();
     <%}%>
 });

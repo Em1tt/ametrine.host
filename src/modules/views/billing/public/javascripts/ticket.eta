@@ -390,9 +390,8 @@ async function sendMessage() {
         console.log(e);
     }
 })()
-
 document.getElementById("toggleTicket").addEventListener("click", () => {
-    <%if(parseInt(it.ticket.status) == 1) {%>
+    <%if(parseInt(JSON.parse(it.ticket).status) == 1) {%>
         ticketOpen();
     <%}else{%>
         ticketClose();
@@ -405,7 +404,9 @@ document.getElementById("toggleTicket").addEventListener("click", () => {
     });
 });
 
-document.getElementById("saveEdits").addEventListener("click", saveEdits);
+document.getElementById("saveEdits").addEventListener("click", () => {
+    saveEdits()
+});
 document.getElementById("sendMessage").addEventListener("click", () => {
     sendMessage();
 });
