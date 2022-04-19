@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%it._locals.ticket = JSON.parse(it._locals.ticket)%>
+<%it._locals.ticket = JSON.parse(it.ticket)%>
 <head>
     <title>Ametrine.host | Billing</title>
     <link rel="icon" type="image/png" href="../../images/favicon.png">
@@ -40,6 +40,7 @@
     <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
 </head>
 <body class=<%=(it._locals.userData.email) ? "loggedIn" : ""%>>
+<%console.log(it._locals)%>
     <%~ E.includeFile('../../public/templates/navbar.eta', {icon: it._locals.userData.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
     <main>
         <%if(it._locals.ticket.status == 1){%>
@@ -47,59 +48,11 @@
         <%}%>
         <div>
             <div>
-                <h1 class="header1"><%=decodeURI(atob(it._locals.ticket.subject))%></h1>
+                <span>
+                <button id="go-back"><i class="fa fa-angle-left"></i> Go back</button>
+                <h1 class="header1">[Ticket #<%=it._locals.ticket.ticket_id%>] <%=decodeURI(atob(it._locals.ticket.subject))%></h1>
+                </span>
                 <div class="ticketInfo">
-                <% let opened = new Date(parseInt(it._locals.ticket.opened)).toDateString().split(" ");
-                if(opened[2].startsWith(0)){
-                    opened[2] = opened[2].slice(1);
-                }
-                if(opened[2].endsWith(1)){
-                    opened[2] = opened[2]+"st"
-                }else if(opened[2].endsWith(2)){
-                    opened[2] = opened[2]+"nd"
-                }else if(opened[2].endsWith(3)){
-                    opened[2] = opened[2]+"rd"
-                }else{
-                    opened[2] = opened[2]+"th"
-                }
-                opened = [opened[2], opened[1], opened[3]].join(" ");
-                 let edited = new Date(parseInt(it._locals.ticket.editedIn)).toDateString().split(" ");
-
-                if(edited[2] && edited[2].startsWith(0)){
-                    edited[2] = edited[2].slice(1);
-                }
-                if(edited[2] && edited[2].endsWith(1)){
-                    edited[2] = edited[2]+"st"
-                }else if(edited[2] && edited[2].endsWith(2)){
-                    edited[2] = edited[2]+"nd"
-                }else if(edited[2] && edited[2].endsWith(3)){
-                    edited[2] = edited[2]+"rd"
-                }else{
-                    edited[2] = edited[2]+"th"
-                }
-
-                edited[2] ? edited = [edited[2], edited[1], edited[3]].join(" ") : "never";
-                 let closed = new Date(parseInt(it._locals.ticket.closed)).toDateString().split(" ");
-                if(closed[2] && closed[2].startsWith(0)){
-                    closed[2] = closed[2].slice(1);
-                }
-                if(closed[2] && closed[2].endsWith(1)){
-                    closed[2] = closed[2]+"st"
-                }else if(closed[2] && closed[2].endsWith(2)){
-                    closed[2] = closed[2]+"nd"
-                }else if(closed[2] && closed[2].endsWith(3)){
-                    closed[2] = closed[2]+"rd"
-                }else{
-                    closed[2] = closed[2]+"th"
-                }
-                closed = [closed[2], closed[1], closed[3]].join(" ");
-                %>
-                <p>Opened On: <%=opened%></p>
-                <% if(parseInt(it._locals.ticket.closed) != 0){ %>
-                    <p id="closedOn">Closed On: <%=closed%></p>
-                <%}%>
-                <p>Last Edit: <%=parseInt(it._locals.ticket.editedIn) == 0 ? "never" : edited%></p>
-                <p>Ticket ID: <%=parseInt(it._locals.ticket.ticket_id)%></p>
                 </div>
             </div>
             <hr class="semanticLine">

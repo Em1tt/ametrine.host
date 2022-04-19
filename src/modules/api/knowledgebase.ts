@@ -351,7 +351,7 @@ export const prop = {
                             });
                         }
                         case "POST": { // Sends a new rating to that article. (Responds with the new ratings)
-                            if (getArticle.state != 1) return res.status(403).send("You can't send ratings to unpublished articles.");
+                            if (getArticle.state != 1) return res.status(406).send("You can't send ratings to unpublished articles.");
                             if (!like && !dislike) return res.sendStatus(406);
                             try {
                                 let likes = getArticle.likes.toString();
@@ -362,7 +362,7 @@ export const prop = {
                             const likeArray: Array<number> = JSON.parse(likes); // typescript requires me to do .toString() else itll error
                                 const dislikeArray: Array<number> = JSON.parse(dislikes);
                                 if (like && likeArray.includes(userData["user_id"])) return res.status(403).send("You've already liked this article!");
-                                if (dislikeArray && dislikeArray.includes(userData["user_id"])) return res.status(403).send("You've already disliked this article!");
+                                if (dislike && dislikeArray.includes(userData["user_id"])) return res.status(403).send("You've already disliked this article!");
                                 if (like) { // if the user likes
                                     likeArray.push(userData["user_id"]);
                                     if (dislikeArray.includes(userData["user_id"])) dislikeArray.splice(dislikeArray.indexOf(userData["userData"]), 1)

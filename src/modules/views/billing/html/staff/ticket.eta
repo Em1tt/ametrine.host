@@ -108,10 +108,10 @@
                 <fieldset>
                     <label for="priority">Priority:</label>
                     <select disabled name="ticket_priority" id="priority">
-                        <option <%=JSON.parse(it._locals.ticket).priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
-                        <option <%=JSON.parse(it._locals.ticket).priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
-                        <option <%=JSON.parse(it._locals.ticket).priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
-                        <option <%=JSON.parse(it._locals.ticket).priority.toLowerCase() == "low" ? "selected" : ""%> value="Low">Low</option>
+                        <option <%= JSON.parse(it.ticket).priority.toLowerCase() == "emergency" ? "selected" : ""%> value="Emergency">Emergency</option>
+                        <option <%= JSON.parse(it.ticket).priority.toLowerCase() == "high" ? "selected" : ""%> value="High">High</option>
+                        <option <%= JSON.parse(it.ticket).priority.toLowerCase() == "medium" ? "selected" : ""%> value="Medium">Medium</option>
+                        <option <%= JSON.parse(it.ticket).priority.toLowerCase() == "low" ? "selected" : ""%> value="Low">Low</option>
                     </select>
                 </fieldset>
                                 <fieldset>
@@ -192,7 +192,7 @@
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <%~ E.includeFile('../../public/javascripts/retheme.eta', {userData: it.userData}) %>
-    <%~ E.includeFile('../../html/staff/javascripts/ticket.eta', {ticket: it.ticket, nonce: it._locals.nonce, userData: it.userData}) %>
+    <%~ E.includeFile('../../html/staff/javascripts/ticket.eta', {ticket: it.ticket, nonce: it.nonce, userData: it.userData}) %>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <script src="/billing/html/staff/javascripts/popups.js"></script>
     <script src="/billing/public/javascripts/authentication.js" async defer></script>

@@ -391,7 +391,7 @@ async function sendMessage() {
     }
 })()
 document.getElementById("toggleTicket").addEventListener("click", () => {
-    <%if(parseInt(JSON.parse(it.ticket).status) == 1) {%>
+    <%if(parseInt(it.ticket.status) == 1) {%>
         ticketOpen();
     <%}else{%>
         ticketClose();
@@ -409,5 +409,8 @@ document.getElementById("saveEdits").addEventListener("click", () => {
 });
 document.getElementById("sendMessage").addEventListener("click", () => {
     sendMessage();
+});
+document.querySelector("#go-back")?.addEventListener("click", () => {
+    history.back();
 });
 </script>

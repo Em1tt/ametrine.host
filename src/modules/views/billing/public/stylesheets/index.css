@@ -98,18 +98,18 @@ main > aside div:hover {
 .cardWrapper {
   display: grid;
   grid-template-areas:
-    "account security"
-    "services services"
-    "transactions transactions";
+    "account transactions"
+    "account services";
+  grid-template-columns: 280px auto;
+  grid-template-rows: 280px;
   column-gap: 5%;
   row-gap: 50px;
+  margin-bottom: 100px;
 }
 
 #accountCard {
   grid-area: account;
-}
-#security {
-  grid-area: security;
+  width: 100%;
 }
 #services {
   grid-area: services;
@@ -118,7 +118,7 @@ main > aside div:hover {
   grid-area: transactions;
 }
 
-.cardWrapper div {
+.cardWrapper div:not(.account) {
   background-color: #1e1f26;
   border-radius: 10px;
 }
@@ -150,26 +150,58 @@ main > aside div:hover {
   border: none;
   line-height: 25px;
 }
-#accountCard form fieldset div {
+#accountCard form fieldset div.buttons {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
 }
-#accountCard form fieldset div > *{
-  margin-right: 10px;
+#accountCard form fieldset div.buttons > *{
+  width: 100%;
+  margin-top: 5px;
+}
+#accountCard form fieldset div.devDetails > *{
+  margin: 10px 0 0 0;
+}
+#accountCard form fieldset input{
+  width: 100%;
 }
 
-#security > div{
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
+#accountCard hr{
+  border: none;
+  height: 2px;
+  background-color: #292a34;
+  margin: 20px 0 20px 0;
 }
-#security div button{
-    margin: 10px;
+
+#accountCard h4{
+  margin: 0;
+  padding-inline: 10px;
+  color: #dce0ff;
 }
-#security div button:hover{
-    background-color: #292a34;
+
+#accountCard p{
+  margin: 0;
+  padding-inline: 10px;
+  color: gray;
+  font-size: 0.9rem;
 }
+
+.control{
+  margin-top: 10px;
+}
+
+.control .buttons{
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-content: center;
+  padding: 10px;
+}
+
+.control .buttons button{
+  width: 100%;
+  margin-top: 5px;
+}
+
 #delete-button{
   color:red !important;
 }
@@ -182,21 +214,21 @@ main > aside div:hover {
     grid-template-areas: "main";
     grid-template-columns: 95%;
   }
-  #accountCard form fieldset div:first-of-type {
-    flex-flow: column nowrap;
-  }
-  #accountCard form fieldset div:first-of-type * {
-    margin: 10px 0 0 0;
-    width: 100%;
+  .cardWrapper {
+    grid-template-columns: 240px auto;
   }
 }
 @media screen and (max-width: 600px) {
   .cardWrapper {
     grid-template-areas:
       "account"
-      "security"
       "services"
       "transactions";
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+  }
+  #accountCard > div {
+    position: initial;
   }
   main {
     margin: 3rem 0 0 1rem;

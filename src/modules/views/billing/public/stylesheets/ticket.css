@@ -51,6 +51,17 @@ main > div > div {
   color: gray;
 }
 
+#go-back{
+  color: gray;
+  background-color: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+#go-back:hover{
+  color: #dce0ff;
+}
+
 main > form > fieldset {
   display: flex;
   flex-flow: row wrap;

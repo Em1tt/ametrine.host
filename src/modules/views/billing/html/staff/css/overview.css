@@ -18,15 +18,11 @@ body {
 main {
   margin: 3rem 0 0 7rem;
   display: grid;
-  grid-template-areas: "main";
   grid-template-columns: 90%;
   grid-template-rows: auto;
   justify-content: space-between;
   height: 100%;
   overflow-x: auto;
-}
-main > div {
-  grid-area: main;
 }
 main h1 {
   background: -webkit-linear-gradient(-200deg, #cc37c0 80%, #e6b530);
@@ -50,10 +46,8 @@ main hr {
 }
 .cardWrapper {
   display: grid;
-  grid-template-areas:
-    "users staffannouncements"
-    "transactions permissions"
-    "lol permissions";
+  grid-template-columns: auto 500px;
+  grid-template-rows: 420px auto;
   column-gap: 5%;
   row-gap: 50px;
   margin-bottom: 100px;
@@ -187,7 +181,6 @@ main hr {
 }
 
 #users {
-  grid-area: users;
   max-height: 600px;
 }
 #users div{
@@ -199,13 +192,6 @@ main hr {
 }
 #users div canvas{
   max-height: 350px;
-}
-#permissions {
-  grid-area: permissions;
-}
-#staffannouncements {
-  grid-area: staffannouncements;
-  max-width: 500px;
 }
 
 #staffannouncements h4{
@@ -247,16 +233,17 @@ main hr {
   border-left: 2px #3033e6 solid;
 }
 
-#transactions {
-  grid-area: transactions;
+#permissions{
+  max-width: 500px;
 }
+
 #permissions div{
   width: 100%;
   padding-inline: 10px;
   padding-bottom: 10px;
+  margin-inline: 0;
   position: relative;
   margin-top: 25px;
-  max-width: 500px;
 }
 #permissions div canvas{
   width: 100%;
@@ -273,16 +260,11 @@ main hr {
 @media screen and (max-width: 1000px) {
 
   main {
-    grid-template-areas: "main";
     grid-template-columns: 90%;
   }
   .cardWrapper {
     display: grid;
-    grid-template-areas:
-    "users"
-    "staffannouncements"
-    "transactions"
-    "permissions";
+    grid-template-columns: auto;
     column-gap: 5%;
     row-gap: 50px;
   }
@@ -290,7 +272,7 @@ main hr {
     display: flex;
     flex-flow: column nowrap;
   }
-  #permissions div{
+  #permissions{
     max-width: unset;
   }
   #staffannouncements {
@@ -301,8 +283,7 @@ main hr {
 
   main {
     margin: 3rem 0 0 1rem;
-    grid-template-areas: "main";
-    grid-template-columns: 90%;
+    grid-template-columns: 80%;
   }
   .deco:nth-of-type(8) {
     margin-bottom: 100px;

@@ -37,7 +37,8 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 </head>
-
+<%let permissionsList = it._locals.permissions[it._locals.userData.permission_id]%>
+<%console.log(permissionsList)%>
 <body class="dark" onresize="updateGraphs()">
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
     <main>
@@ -45,26 +46,28 @@
             <h1>Staff panel - Overview</h1>
             <hr>
                 <div class="cardWrapper">
+                        <%if(!permissionsList.accessPages.includes("/overview/users")){%>
                     <div id="users">
                         <h3><i class="fa fa-user-circle"></i> Users</h3>
-                        <button id="weekly" class="selected">Weekly</button>
-                        <button id="monthly">Monthly</button>
-                        <button id="yearly">Yearly</button>
-                        <div>
-                            <canvas id="userChart" height="300px"></canvas>
-                        </div>
+                            <button id="weekly" class="selected">Weekly</button>
+                            <button id="monthly">Monthly</button>
+                            <button id="yearly">Yearly</button>
+                            <div>
+                                <canvas id="userChart" height="300px"></canvas>
+                            </div>
                     </div>
+                        <%}%>
                     <div id="staffannouncements">
                         <h3><i class="fa fa-bell"></i> Notification centre</h3>
+                    </div>
+                    <div id="transactions">
+                        <h3><i class="fa fa-file-invoice"></i> Transactions</h3>
                     </div>
                     <div id="permissions">
                         <h3><i class="fa fa-shield-alt"></i> Permission Overview</h3>
                         <div>
                             <canvas id="permissionChart" height="300px"></canvas>
                         </div>
-                    </div>
-                    <div id="transactions">
-                        <h3><i class="fa fa-file-invoice"></i> Transactions</h3>
                     </div>
                 </div>
         </div>

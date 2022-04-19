@@ -333,6 +333,9 @@ input.submit:hover{
 }
 .invisible{
     display: none;
+    position: absolute;
+    top: 0;
+    visibility: hidden;
 }
 
 .button1{

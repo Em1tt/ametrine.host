@@ -2,19 +2,19 @@
 function instantiateUserGraph(type) {
     if (type == "monthly") {
         createUserGraph("month");
-        document.getElementById("weekly").classList.remove("selected");
-        document.getElementById("monthly").classList.add("selected");
-        document.getElementById("yearly").classList.remove("selected");
+        document.getElementById("weekly")?.classList.remove("selected");
+        document.getElementById("monthly")?.classList.add("selected");
+        document.getElementById("yearly")?.classList.remove("selected");
     } else if (type == "yearly") {
         createUserGraph("year");
-        document.getElementById("weekly").classList.remove("selected");
-        document.getElementById("monthly").classList.remove("selected");
-        document.getElementById("yearly").classList.add("selected");
+        document.getElementById("weekly")?.classList.remove("selected");
+        document.getElementById("monthly")?.classList.remove("selected");
+        document.getElementById("yearly")?.classList.add("selected");
     } else {
         createUserGraph("week");
-        document.getElementById("weekly").classList.add("selected");
-        document.getElementById("monthly").classList.remove("selected");
-        document.getElementById("yearly").classList.remove("selected");
+        document.getElementById("weekly")?.classList.add("selected");
+        document.getElementById("monthly")?.classList.remove("selected");
+        document.getElementById("yearly")?.classList.remove("selected");
     }
 }
 instantiateUserGraph("weekly");
@@ -55,6 +55,7 @@ function renderGraph(ctx, type, labels, data, label) {
 }
 
 function createUserGraph(period) {
+    if(!document.getElementById("userChart")) return;
     const ctx = document.getElementById("userChart").getContext("2d");
     let dates = [],
         curYear = dayjs().year(),
@@ -184,9 +185,9 @@ window.onresize = function(){
   doit = setTimeout(resizedw, 100);
 };
 
-document.getElementById("weekly").addEventListener("click", () => {instantiateUserGraph('weekly');});
-document.getElementById("monthly").addEventListener("click", () => {instantiateUserGraph('monthly');});
-document.getElementById("yearly").addEventListener("click", () => {instantiateUserGraph('yearly');});
+document.getElementById("weekly")?.addEventListener("click", () => {instantiateUserGraph('weekly');});
+document.getElementById("monthly")?.addEventListener("click", () => {instantiateUserGraph('monthly');});
+document.getElementById("yearly")?.addEventListener("click", () => {instantiateUserGraph('yearly');});
 
 const announcementsWrapper = document.querySelector("div#staffannouncements");
 

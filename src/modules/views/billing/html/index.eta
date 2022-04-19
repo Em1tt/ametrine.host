@@ -55,40 +55,41 @@
             </div>
             <%}else{%> <!--Displayed when a user is signed in -->
                 <div class="cardWrapper">
-                    <div id="accountCard">
-                        <h3><i class="fa fa-user-circle"></i> Account</h3>
-                        <form>
-                            <fieldset>
-                                <label class="header2" for="account-fullName">Full Name</label><br>
-                                <input class="text1" type="text" required readonly id="account-fullName" value="<%=it.userData.name%>"/><br>
-                                <label class="header2" for="account-email">E-Mail</label><br>
-                                <input class="text1" type="email" required readonly id="account-email" value="<%=it.userData.email%>"/><br>
-                                <label class="invisible header2" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br>
-                                <input class="invisible text1" type="password" required id="account-confirm-password"/><br>
-                                <p id="update-error"></p>
-                                <div>
-                                    <button type="reset" id="toggleEditMode" class="button1">Edit Account</button>
-                                    <button type="button" id="multiButton" class="button1">Sign Out</button>
-                                </div>
-                                <div>
-                                    <p class="text2">User ID: <%=it.userData.user_id%></p>
-                                    <p class="text2">Permission ID: <%=it.userData.permission_id%></p>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div id="security">
-                        <h3><i class="fa fa-shield-alt"></i> Security</h3>
-                        <div id="buttonWrapper">
-                            <button class="button1" id="change-pass-button">Change Password</button>
-                            <% if(it.userData['2fa']){ %>
-                            <button class="button1" id="2fa-button">Disable 2FA</button>
-                            <% }else{ %>
-                            <button class="button1" id="2fa-button">Enable 2FA</button>
-                            <% } %>
-                            <button class="button1" id="discord-button">Link With Discord (Coming Soon)</button>
-                            <button class="button1" id="delete-button">Delete Account</button>
-                        </div>
+                    <div id="accountCard" class="account">
+                        <span>
+                            <div>
+                            <h3><i class="fa fa-user-circle"></i> Client #<%=it.userData.user_id%></h3>
+                            <h4 class="user-details">Richard Marcinčák</h4>
+                            <p class="user-details">test@test.test</p>
+                            <form>
+                                <fieldset>
+                                    <label class="header2 invisible" for="account-fullName">Full Name</label><br class="invisible">
+                                    <input class="text1 invisible" type="text" required id="account-fullName" value="<%=it.userData.name%>"/><br class="invisible">
+                                    <label class="header2 invisible" for="account-email">E-Mail</label><br class="invisible">
+                                    <input class="text1 invisible" type="email" required id="account-email" value="<%=it.userData.email%>"/><br class="invisible">
+                                    <label class="invisible header2" id="account-confirm-password-label" for="account-confirm-password">Current Password</label><br class="invisible">
+                                    <input class="invisible text1" type="password" required id="account-confirm-password"/><br class="invisible">
+                                    <p id="update-error"></p>
+                                    <div class="buttons">
+                                        <button type="reset" id="toggleEditMode" class="button1"><i class="fas fa-pencil-alt"></i> Change</button>
+                                        <button type="button" id="multiButton" class="button1"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            </div>
+                            <div class="control">
+                                <div class="buttons">
+                                        <button class="button1" id="change-pass-button"><i class="fas fa-lock"></i> Change Password</button>
+                                        <% if(it.userData['2fa']){ %>
+                                            <button class="button1" id="2fa-button"><i class="fas fa-key"></i> Disable 2FA</button>
+                                        <% }else{ %>
+                                            <button class="button1" id="2fa-button"><i class="fas fa-key"></i> Enable 2FA</button>
+                                        <% } %>
+                                        <button class="button1" id="discord-button"><i class="fab fa-discord"></i> Link With Discord (Coming Soon)</button>
+                                        <button class="button1" id="delete-button"><i class="fas fa-trash"></i> Delete Account</button>
+                                    </div>
+                            </div>
+                        </span>
                     </div>
                     <div id="services">
                         <h3><i class="fa fa-box"></i> Services</h3>

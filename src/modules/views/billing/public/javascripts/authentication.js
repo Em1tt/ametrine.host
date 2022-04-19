@@ -195,34 +195,53 @@ const switcher = async () => {
 };
 
 const toggleEditMode = async () => {
-  const name = document.querySelector("#accountCard #account-fullName"),
-    email = document.querySelector("#accountCard #account-email"),
-    resetButton = document.querySelector("#accountCard button[type='reset']"),
-    confirmButton = document.querySelector("#accountCard #multiButton"),
-    errorParagraph = document.querySelector("#update-error"),
-    passwordConfirm = document.querySelector("#account-confirm-password"),
-    passwordConfirmLabel = document.querySelector(
-      "#account-confirm-password-label"
-    );
-  name.readOnly = !name.readOnly;
-  email.readOnly = !email.readOnly;
-  if (!name.readOnly) {
+  const     labels = [...document.querySelectorAll("#accountCard label")],
+            inputs = [...document.querySelectorAll("#accountCard input")],
+        breaklines = [...document.querySelectorAll("#accountCard br")],
+       resetButton = document.querySelector("#accountCard button[type='reset']"),
+     confirmButton = document.querySelector("#accountCard #multiButton"),
+    errorParagraph = document.querySelector("#update-error");
+  if (confirmButton.getAttribute("type") == "button") {
     resetButton.innerText = "Discard Changes";
     resetButton.style = "color: red;";
     confirmButton.innerText = "Submit Changes";
     confirmButton.type = "submit";
     confirmButton.removeAttribute("onclick");
-    passwordConfirm.classList.remove("invisible");
-    passwordConfirmLabel.classList.remove("invisible");
+    labels.forEach((label) => {
+      label.classList.remove("invisible");
+    });
+    inputs.forEach((label) => {
+      label.classList.remove("invisible");
+    });
+    breaklines.forEach((br) => {
+      br.classList.remove("invisible");
+    });
+    document.querySelectorAll(".user-details").forEach((ud) => {
+      ud.classList.add("invisible");
+    });
+    document.querySelector(".buttonDiv").classList.add("invisible");
+    document.querySelector(".buttonDiv ~ div").classList.add("invisible");
   } else {
-    resetButton.innerText = "Edit Account";
+    resetButton.innerHTML = '<i class="fas fa-pencil-alt"></i> Change';
     resetButton.style = "";
-    confirmButton.innerText = "Sign Out";
+    confirmButton.innerHTML = '<i class="fas fa-sign-out-alt"></i> Sign Out';
     confirmButton.type = "button";
     confirmButton.setAttribute("onclick", "logOut()");
     errorParagraph.innerText = "";
-    passwordConfirm.classList.add("invisible");
-    passwordConfirmLabel.classList.add("invisible");
+    labels.forEach((label) => {
+      label.classList.add("invisible");
+    });
+    inputs.forEach((label) => {
+      label.classList.add("invisible");
+    });
+    breaklines.forEach((br) => {
+      br.classList.add("invisible");
+    });
+    document.querySelectorAll(".user-details").forEach((ud) => {
+      ud.classList.remove("invisible");
+    });
+    document.querySelector(".buttonDiv").classList.remove("invisible");
+    document.querySelector(".buttonDiv ~ div").classList.remove("invisible");
   }
 };
 const editPassword = () => {
