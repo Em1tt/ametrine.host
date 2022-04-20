@@ -48,12 +48,6 @@ function paginate(array: Array<unknown>, page_size: number, page_number: number)
     return array.slice((page_number - 1) * page_size, page_number * page_size);
 }
 
-function CheckRatingParse(check) {
-    return utils.JSONCheck(check.toString())
-            ? JSON.parse(check.toString())
-            : parseInt(check.toString());
-}
-
 let client: Redis;
 export const prop = {
     name: "knowledgebase",
@@ -352,7 +346,6 @@ export const prop = {
                                 }
                                 let article: Array<any> = await Promise.all(result.map(async articles => {
                                     const ratings = await client.db.hgetall(articles);
-                                    console.log(ratings)
                                     try {
                                         ratings["likes"] = JSON.parse(articles["likes"]).length;
                                         ratings["dislikes"] = JSON.parse(articles["dislikes"]).length;
@@ -360,8 +353,6 @@ export const prop = {
                                         ratings["likes"] = 0;
                                         ratings["dislikes"] = 0;
                                     }
-                                    console.log(ratings)
-                                    console.log("---")
                                     return ratings;
                                 }))
                                 if (article.length) { // If there are messages
