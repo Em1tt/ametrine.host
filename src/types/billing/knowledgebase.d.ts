@@ -7,8 +7,8 @@ export interface Article {
     readonly state        : number | 0 | 1 | 2;
     readonly category_ids : string;
     readonly tags         : string;
-    likes                 : number | Array<number>;
-    dislikes              : number | Array<number>;
+    likes                 : string | number | Array<number>;
+    dislikes              : string | number | Array<number>;
     files                 : Array<string> | number;
     createdIn             : number | Date;
     editedIn              : number | Date;

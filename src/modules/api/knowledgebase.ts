@@ -48,6 +48,12 @@ function paginate(array: Array<unknown>, page_size: number, page_number: number)
     return array.slice((page_number - 1) * page_size, page_number * page_size);
 }
 
+function CheckRatingParse(check) {
+    return utils.JSONCheck(check.toString())
+            ? JSON.parse(check.toString())
+            : parseInt(check.toString());
+}
+
 let client: Redis;
 export const prop = {
     name: "knowledgebase",
@@ -108,8 +114,15 @@ export const prop = {
                 newArticleProps["article_id"] = parseInt(article.article_id.toString());
                 newArticleProps["user_id"] = parseInt(article.user_id.toString());
                 newArticleProps["state"] = parseInt(article.state.toString());
-                newArticleProps["likes"] = parseInt(article.likes.toString());
-                newArticleProps["dislikes"] = parseInt(article.dislikes.toString());
+                
+                newArticleProps["likes"] = utils.JSONCheck(newArticleProps["likes"].toString())
+                                            ? JSON.parse(newArticleProps["likes"].toString()).length
+                                            : parseInt(article.likes.toString());
+                
+                newArticleProps["dislikes"] = utils.JSONCheck(newArticleProps["dislikes"].toString())
+                                            ? JSON.parse(newArticleProps["dislikes"].toString()).length
+                                            : parseInt(article.likes.toString());
+
                 newArticleProps["createdIn"] = parseInt(article.createdIn.toString());
                 newArticleProps["permission_id"] = parseInt(article.permission_id.toString());
                 
@@ -331,7 +344,7 @@ export const prop = {
                     const { like, dislike } = req.body;
                     // Using {} at switch cases because ESLint is complaining
                     switch (req.method) {
-                        case "GET": { // Viewing the article Conversation.
+                        case "GET": { // Viewing the article
                             return client.keys(`article:${articleID}:*`, async function (err, result) {
                                 if (err) {
                                     console.error(err);
@@ -339,8 +352,16 @@ export const prop = {
                                 }
                                 let article: Array<any> = await Promise.all(result.map(async articles => {
                                     const ratings = await client.db.hgetall(articles);
-                                    ratings["likes"] = parseInt(articles["likes"]);
-                                    ratings["dislikes"] = parseInt(articles["dislikes"]);
+                                    console.log(ratings)
+                                    try {
+                                        ratings["likes"] = JSON.parse(articles["likes"]).length;
+                                        ratings["dislikes"] = JSON.parse(articles["dislikes"]).length;
+                                    } catch (e) {
+                                        ratings["likes"] = 0;
+                                        ratings["dislikes"] = 0;
+                                    }
+                                    console.log(ratings)
+                                    console.log("---")
                                     return ratings;
                                 }))
                                 if (article.length) { // If there are messages
@@ -353,6 +374,7 @@ export const prop = {
                         case "POST": { // Sends a new rating to that article. (Responds with the new ratings)
                             if (getArticle.state != 1) return res.status(406).send("You can't send ratings to unpublished articles.");
                             if (!like && !dislike) return res.sendStatus(406);
+                            const userID = parseInt(userData["user_id"]);
                             try {
                                 let likes = getArticle.likes.toString();
                                 let dislikes = getArticle.dislikes.toString();
@@ -361,14 +383,14 @@ export const prop = {
                                 
                             const likeArray: Array<number> = JSON.parse(likes); // typescript requires me to do .toString() else itll error
                                 const dislikeArray: Array<number> = JSON.parse(dislikes);
-                                if (like && likeArray.includes(userData["user_id"])) return res.status(403).send("You've already liked this article!");
-                                if (dislike && dislikeArray.includes(userData["user_id"])) return res.status(403).send("You've already disliked this article!");
+                                if (like && likeArray.includes(userID)) return res.status(403).send("You've already liked this article!");
+                                if (dislike && dislikeArray.includes(userID)) return res.status(403).send("You've already disliked this article!");
                                 if (like) { // if the user likes
-                                    likeArray.push(userData["user_id"]);
-                                    if (dislikeArray.includes(userData["user_id"])) dislikeArray.splice(dislikeArray.indexOf(userData["userData"]), 1)
+                                    likeArray.push(userID);
+                                    if (dislikeArray.includes(userID)) dislikeArray.splice(dislikeArray.indexOf(userID), 1)
                                 } else if (dislike) { // if the user dislikes
-                                    dislikeArray.push(userData["user_id"]);
-                                    if (likeArray.includes(userData["user_id"])) likeArray.splice(likeArray.indexOf(userData["userData"]), 1)
+                                    dislikeArray.push(userID);
+                                    if (likeArray.includes(userID)) likeArray.splice(likeArray.indexOf(userID), 1)
                                 }
                                 await client.db.hset([`article:${getArticle["article_id"]}`, "likes", JSON.stringify(likeArray), "dislikes", JSON.stringify(dislikeArray)])
 
