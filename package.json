@@ -34,7 +34,7 @@
     "dotenv": "^14.2.0",
     "eta": "^1.12.3",
     "express": "^4.17.2",
-    "express-rate-limit": "^6.1.0",
+    "express-rate-limit": "^6.4.0",
     "hastily": "^0.5.0",
     "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
