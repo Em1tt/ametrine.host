@@ -23,7 +23,8 @@ export const prop = {
             helpEmbed : MessageEmbed = new MessageEmbed();
       //Customize the embed for basic needs
       helpEmbed.setTitle("Help command")
-        .setColor(config.discord.amethyst)
+        //.setColor(config.discord.amethyst)
+        .setColor('#202225')
         .setDescription(`My prefix is \`${config.discord.prefix}\` | Do \`${config.discord.prefix}help <command>\` to get detailed help for a certain command.`);
       //Run a check for each command, detect all categories and store unique categories in categories array | Creates a list of categories available
       cmds.forEach(cmd => {
@@ -51,7 +52,8 @@ export const prop = {
 
       //Fill the embed out with information
       helpCommandEmbed.setTitle(`Help command - ${cmd.prop.name}`)
-      .setColor(config.discord.amethyst)
+      //.setColor(config.discord.amethyst)
+      .setColor('#202225')
       .setDescription(`${cmd.prop.desc}\n**Usage:** ${cmd.prop.usage}`)
       .addField("Category", cmd.prop.category, true);
 

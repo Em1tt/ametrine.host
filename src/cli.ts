@@ -25,7 +25,7 @@ export default {
         return util.log(util.sreplace("module %0% is already loaded", [args[0]]));
 
       modules.set(args[0],
-                  cp.fork(`dist/${config.folder}/${args[0]}.js`));
+                  cp.fork(`dist/modules/${args[0]}.js`)); //config.folder??
       util.log(util.sreplace("loaded module %0%", [args[0]]));
   },
 

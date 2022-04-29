@@ -444,7 +444,7 @@ export const prop = {
                                     let category_ids = []
                                     if (typeof categories == "string") {
                                         category_ids = (categories) ? categories.split(",").map(category => { // TS is telling me that number cant be converted to string when parseInt on this, but it works on the else statement
-                                            const findCategory = ticket_categories.find(cate => cate.id == category);
+                                            const findCategory = ticket_categories.find(cate => cate.id == parseInt(category));
                                             if (findCategory) {
                                                 //category = parseInt(category); // Converting it to Int in case of any strings at the end.
                                                 return category;
