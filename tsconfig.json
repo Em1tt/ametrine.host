@@ -10,7 +10,8 @@
     "listEmittedFiles"      : false,
     "alwaysStrict"          : true,
     "outDir"                : "./dist",
-    "baseUrl"               : "."
+    "baseUrl"               : ".",
+    "resolveJsonModule"     : true
   },
 
   "include": [

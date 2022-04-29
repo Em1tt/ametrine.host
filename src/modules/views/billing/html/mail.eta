@@ -44,7 +44,7 @@
         <div>
             <h1 class="header1">Send an E-Mail</h1>
             <hr class="semanticLine">
-            <h2 class="header2"><%= (it.userData.email) ? "If you prefer communication over e-mail, write us an e-mail." : "Sign-In or create an account to write an e-mail"%></h2>
+            <h2 class="header2"><%= (it.userData.email) ? "If you prefer communication over e-mail, write us one." : "Sign-In or create an account to write an e-mail"%></h2>
             <%if(it.userData.email){%>
             <form id="mailCreate">
                 <fieldset>

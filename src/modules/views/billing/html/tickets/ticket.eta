@@ -59,7 +59,7 @@
             <form id="editTicket">
                 <fieldset id="subjectWrapper" class="hidden">
                     <label for="subject">New Subject:</label>
-                    <input type="text" id="subject" name="subject" value=<%=atob(it._locals.ticket.subject)%>>
+                    <input type="text" id="subject" name="subject" value="<%=decodeURI(atob(it._locals.ticket.subject))%>">
                 </fieldset>
                 <fieldset>
                     <label for="priority">Priority:</label>

@@ -178,7 +178,7 @@ main > aside div:hover {
   color: #dce0ff;
 }
 
-#accountCard p{
+#accountCard p:not(#update-error){
   margin: 0;
   padding-inline: 10px;
   color: gray;
@@ -206,7 +206,7 @@ main > aside div:hover {
   color:red !important;
 }
 #update-error{
-  color: white;
+  color: #dce0ff;
 }
 
 @media screen and (max-width: 1000px) {

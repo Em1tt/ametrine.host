@@ -59,8 +59,8 @@
                         <span>
                             <div>
                             <h3><i class="fa fa-user-circle"></i> Client #<%=it.userData.user_id%></h3>
-                            <h4 class="user-details">Richard Marcinčák</h4>
-                            <p class="user-details">test@test.test</p>
+                            <h4 class="user-details"><%=it.userData.name%></h4>
+                            <p class="user-details"><%=it.userData.email%></p>
                             <form>
                                 <fieldset>
                                     <label class="header2 invisible" for="account-fullName">Full Name</label><br class="invisible">

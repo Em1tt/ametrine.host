@@ -219,8 +219,6 @@ const toggleEditMode = async () => {
     document.querySelectorAll(".user-details").forEach((ud) => {
       ud.classList.add("invisible");
     });
-    document.querySelector(".buttonDiv").classList.add("invisible");
-    document.querySelector(".buttonDiv ~ div").classList.add("invisible");
   } else {
     resetButton.innerHTML = '<i class="fas fa-pencil-alt"></i> Change';
     resetButton.style = "";
@@ -240,8 +238,6 @@ const toggleEditMode = async () => {
     document.querySelectorAll(".user-details").forEach((ud) => {
       ud.classList.remove("invisible");
     });
-    document.querySelector(".buttonDiv").classList.remove("invisible");
-    document.querySelector(".buttonDiv ~ div").classList.remove("invisible");
   }
 };
 const editPassword = () => {
