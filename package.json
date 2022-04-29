@@ -49,7 +49,7 @@
     "nonce-express": "^1.0.2",
     "qrcode": "^1.5.0",
     "redis": "^3.1.2",
-    "sharp": "^0.29.3",
+    "sharp": "^0.30.4",
     "smtp-server": "^3.9.0",
     "stripe": "^8.182.0"
   },
