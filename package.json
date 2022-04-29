@@ -36,7 +36,7 @@
     "express": "^4.17.2",
     "express-rate-limit": "^6.1.0",
     "hastily": "^0.5.0",
-    "helmet": "^4.6.0",
+    "helmet": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
     "mailparser": "^3.4.0",
     "mime": "^3.0.0",
