@@ -424,7 +424,12 @@ export const prop = {
                                   */
                                 if(parseInt(status) || parseInt(status) === 0){
                                     if(![0,1,2,3].includes(parseInt(status))) return res.sendStatus(406);
-                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", parseInt(status)])
+                                    await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "status", parseInt(status)]);
+                                    if(parseInt(status) == 1){
+                                        await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "closed", Date.now()]);
+                                    }else{
+                                        await client.db.hset([`ticket:${getTicket["ticket_id"]}`, "closed", 0]);
+                                    }
                                     updated = true;
                                 }
                                 //if (getTicket["closed"] != 0) return res.sendStatus(406); // If ticket is closed

@@ -55,7 +55,7 @@
                             <option value="outage">outage</option>
                             <option value="warning">warning</option>
                         </select>
-                        <input title="Date of automatic deletion" required id="announcementEnd" type="date" onfocus="this.min=new Date().toISOString().split('T')[0]" />
+                        <input title="Date of automatic deletion" required id="announcementEnd" type="date" onfocus="this.min=new Date(new Date().setDate(new Date().getDate()+1)).toISOString().split('T')[0]" />
                         </fieldset>
                         <div>
                             <input type="checkbox" id="customersOnly" name="customersOnly"/>

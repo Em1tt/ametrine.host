@@ -112,14 +112,14 @@
     <script src="/billing/public/javascripts/authentication.js" async defer></script>
     <script src="/billing/public/javascripts/popups.js" async defer></script>
     <script nonce=<%=it._locals.nonce%> >
-        document.getElementById("toggleEditMode").addEventListener("click", () => {toggleEditMode()});
-        document.getElementById("multiButton").addEventListener("click", (e) => {
+        document?.getElementById("toggleEditMode")?.addEventListener("click", () => {toggleEditMode()});
+        document?.getElementById("multiButton")?.addEventListener("click", (e) => {
         if(e.srcElement.innerText == "Sign Out"){
             logOut()
         }
         });
-        document.getElementById("change-pass-button").addEventListener("click", () => {editPassword()});
-        document.getElementById("2fa-button").addEventListener("click", () => {twofa()});
-        document.getElementById("delete-button").addEventListener("click", () => {deleteAccount()});
+        document.getElementById("change-pass-button")?.addEventListener("click", () => {editPassword()});
+        document.getElementById("2fa-button")?.addEventListener("click", () => {twofa()});
+        document.getElementById("delete-button")?.addEventListener("click", () => {deleteAccount()});
     </script>
 </body>

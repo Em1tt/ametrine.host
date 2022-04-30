@@ -46,7 +46,7 @@
             <h1>Staff panel - Overview</h1>
             <hr>
                 <div class="cardWrapper">
-                        <%if(!permissionsList.accessPages.includes("/overview/users")){%>
+                        <%if(permissionsList.accessPages.includes("/overview/users")){%>
                     <div id="users">
                         <h3><i class="fa fa-user-circle"></i> Users</h3>
                             <button id="weekly" class="selected">Weekly</button>

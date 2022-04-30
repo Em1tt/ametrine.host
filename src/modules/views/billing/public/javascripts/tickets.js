@@ -42,9 +42,11 @@ function dateFormatter(data) {
     console.log(response);
     const tickets = response.data;
     if (tickets.length == 0) {
-      const header2 = document.createElement("h2");
-      header2.classList.add("header2");
-      header2.innerText = "Nothing here... Yet...";
+      if(document.body.classList.contains("loggedIn")){
+        const header2 = document.createElement("h2");
+        header2.classList.add("header2");
+        header2.innerText = "Nothing here... Yet...";
+      }
       if (page != 1 && page > 0) {
         leftButtons.forEach(button => {
             button.removeAttribute("disabled");
@@ -147,9 +149,11 @@ function dateFormatter(data) {
     }
   } catch (e) {
     console.log(e);
-    const header2 = document.createElement("h2");
-    header2.classList.add("header2");
-    header2.innerText = "Nothing here... Yet... Unless you hit the ratelimit, in which case you should wait a little bit.";
+    if(document.body.classList.contains("loggedIn")){
+      const header2 = document.createElement("h2");
+      header2.classList.add("header2");
+      header2.innerText = "Nothing here... Yet...";
+    }
     return ticketsWrapper.appendChild(header2);
   }
 })();

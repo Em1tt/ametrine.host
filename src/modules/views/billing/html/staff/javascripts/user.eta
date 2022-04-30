@@ -6,7 +6,7 @@ document.querySelector("#go-back")?.addEventListener("click", () => {
     history.back();
 });
 document.querySelector("#edit-user")?.addEventListener("click", () => {
-    window.location.href = window.location.href.concat("/edit");
+    window.location.href = window.location.href.split("?")[0].concat("/edit");
 });
 (async () => {
 const audit = await axios.get(`/api/audit?userID=<%=it.user.user_id%>${params.page ? `&page=${params.page}` : ""}`);

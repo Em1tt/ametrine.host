@@ -338,6 +338,7 @@ const deleteAccount = () => {
 };
 
 window.onload = () => {
+  if(!document.body.classList.contains("loggedIn") && (window.location.pathname == "/billing" || window.location.pathname == "/billing/")) document.querySelector("#authentication").classList.add("shown");
   switcher();
   loginForm.addEventListener("submit", (event) => {
     event.preventDefault();

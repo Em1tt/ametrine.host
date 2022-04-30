@@ -98,7 +98,7 @@ main h1 {
 .card sup{
   color: gray;
 }
-.user-card.card div button{
+.user-card.card div button, .userButton{
   background-color: #141419;
   color: #dce0ff;
   border-radius: 10px;

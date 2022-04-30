@@ -88,8 +88,13 @@ export const prop = {
                         console.error(err);
                         return res.status(500).send("Error occured while incrementing announcement ID. Please report this.")
                     }
-                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", utils.encode_base64(announcement), "showToCustomersOnly", showCustomers, "dateCreated", currentDate]);
-                    client.expire(`announcement:${announcementID}`, deleteOn - currentDate);
+                    function addDays(date, days) {
+                        const result = new Date(date);
+                        result.setDate(result.getDate() + days);
+                        return new Date(result).getTime();
+                    }
+                    await client.db.hset([`announcement:${announcementID}`, "announcement_id", announcementID, "announcementType", type, "announcementText", utils.encode_base64(announcement), "showToCustomersOnly", showCustomers, "dateCreated", currentDate*1000, "deleteIn", addDays(deleteOn,1)]);
+                    client.expire(`announcement:${announcementID}`, deleteOn/1000 - currentDate);
                     return res.status(200).json({announcement_id: announcementID})
                     /*client.sadd(`announcements`, announcementID, function(err) {
                         if (err) return console.error(err);

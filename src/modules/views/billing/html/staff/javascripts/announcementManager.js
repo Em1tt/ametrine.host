@@ -1,7 +1,6 @@
 async function createAnnouncement(text, type, end, customersOnly, staffOnly, broadcast){
     const errorText = document.getElementById("announcementError");
     const exclamation = `<i class="fa fa-exclamation-circle"></i>`
-    console.log(text,type,end,customersOnly,staffOnly,broadcast);
     if(!text || text == " "){
         errorText.innerHTML = `${exclamation} You're missing an announcement text.`;
     }
@@ -11,7 +10,6 @@ async function createAnnouncement(text, type, end, customersOnly, staffOnly, bro
     if(!end || end == " " || typeof end == "undefined"){
         errorText.innerHTML = `${exclamation} Please select an announcement deletion date.`;
     }
-    console.log(end);
     await axios.post("/api/announcements",{
         text: text,
         type: type,
@@ -95,7 +93,7 @@ announcementForm.addEventListener("submit", (event) => {
     const staffOnly = document.getElementById("staffAnnouncement")?.checked;
     let announcementType = document.getElementById("announcementType");
     announcementType = announcementType.options[announcementType.selectedIndex].value;
-    createAnnouncement(announcementText, announcementType, announcementEnd / 1000, customersOnly, staffOnly, broadcast);
+    createAnnouncement(announcementText, announcementType, announcementEnd, customersOnly, staffOnly, broadcast);
 });
 let date = new Date();
 date.setDate(date.getDate() + 1);

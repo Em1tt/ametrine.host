@@ -109,13 +109,15 @@ body > aside > div{
 .shown{
     right: 0px !important;
 }
-
+#authentication.shown ~ #announcements, #supportPopup.shown ~ #announcements{
+    right: 340px;
+}
 #announcements{
     width: 400px;
     height: 400px;
     position: fixed;
     bottom: -420px;
-    right: 340px;
+    right: 0px;
     background-color: #1e1f26;
     box-shadow: 0px 0px 20px rgba(0,0,0,0.4);
     transition: 600ms ease;
@@ -176,6 +178,14 @@ body > aside > div{
 #announcementsWrapper .warning{
     background-color: rgba(255, 252, 84, 0.4);
     border-left: 3px solid rgba(255, 252, 84, 1);
+}
+#announcementsWrapper p:not(p~p){
+    margin: 0;
+    font-size: 0.8rem;
+    color:#dce0ff;
+}
+#announcementsWrapper :is(p~p){
+    margin: 5px 0 0 0;
 }
 
 .popups{
