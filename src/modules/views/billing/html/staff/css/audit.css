@@ -1,0 +1,100 @@
+main {
+  margin: 3rem 0 0 7rem;
+  display: -ms-grid;
+  display: grid;
+  height: 100%;
+}
+
+main>div {
+  width: 95%;
+}
+
+main>div>div {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main div div>form {
+  width: 100%;
+}
+
+main h1 {
+  margin-right: 50px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 280px auto;
+  column-gap: 5%;
+  row-gap: 50px;
+}
+
+.grid>div {
+  background-color: #1e1f26;
+  border-radius: 10px;
+  display: block;
+}
+
+.grid>div>span {
+  padding: 10px;
+  width: 100%;
+  display: block;
+}
+
+.grid div h3 {
+  color: #dce0ff;
+  background-color: #141419;
+  padding: 5px 10px;
+  margin-top: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  top: 0;
+}
+
+.grid form {
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.grid form > *:not(*:last-child) {
+  margin-bottom: 10px;
+}
+
+
+.searchbar, #searchbar {
+  max-width: 100% !important;
+  background-color: #141419 !important;
+  max-height: min-content;
+}
+
+.vscomp-toggle-button,
+.searchbar, #searchbar {
+  max-width: 100% !important;
+  border-radius: 10px;
+}
+
+.vscomp-toggle-all-button {
+  width: 50px;
+}
+
+form button{
+  width: 100% !important;
+}
+
+.perPageButtons{
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.perPageButtons .button1{
+  border-radius: 0;
+  justify-content: center;
+}
+.perPageButtons .button1[selected="true"]{
+  color: #cc37c0;
+}
