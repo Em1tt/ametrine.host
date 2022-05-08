@@ -27,17 +27,27 @@ main h1 {
 .grid {
   display: grid;
   grid-template-columns: 280px auto;
-  column-gap: 5%;
+  column-gap: 25px;
   row-gap: 50px;
 }
 
-.grid>div {
+.grid>div:not(.filterWrapper), .grid>div>div {
   background-color: #1e1f26;
   border-radius: 10px;
   display: block;
+  width: 100%;
 }
 
-.grid>div>span {
+.filterWrapper{
+  display: flex;
+  align-content: flex-start;
+}
+.filterWrapper > div{
+  position: sticky;
+  top: 25px;
+}
+
+.grid>div>div>span {
   padding: 10px;
   width: 100%;
   display: block;
@@ -97,4 +107,43 @@ form button{
 }
 .perPageButtons .button1[selected="true"]{
   color: #cc37c0;
+}
+
+#logs h3{
+  margin: 0;
+}
+#logs span{
+  display: flex;
+  flex-flow: column wrap;
+  padding: 10px;
+}
+#logs span div{
+  background-color: #16161d;
+  padding: 10px;
+  border-radius: 10px;
+  color: #dce0ff;
+  margin: 5px 0;
+}
+#logs span p{
+  color: gray;
+  margin: 0;
+  font-size: 0.8rem;
+}
+#logs span h4{
+  margin: 5px 0;
+  font-size: 1rem;
+}
+#logs span a{
+  color: #cc37c0;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+#logs span a:hover{
+  color: #dce0ff;
+}
+.left-align{
+  text-align: left !important;
+  max-width: 200px !important;
+  word-break: break-all;
+  word-wrap: break-word;
 }

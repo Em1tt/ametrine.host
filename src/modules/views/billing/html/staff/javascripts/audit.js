@@ -2,13 +2,60 @@
     const params = new Proxy(new URLSearchParams(window.location.search), {
       get: (searchParams, prop) => searchParams.get(prop),
     });
-    document.querySelector("#go-back")?.addEventListener("click", () => {
+    document.querySelector("#go-back")?.addEventListener("click", async () => {
       history.back();
   });
+  try{
+    console.log(params.userIDs, params.methods)
+    const response = await axios.get(`/api/audit?userIDs=${params.userIDs ? params.userIDs : ""}&methods=${params.methods ? params.methods : ""}&pageLimit=${params.perPage ? params.perPage : ""}`);
+    console.log(response);
+    const logsWrapper = document.querySelector("#logsWrapper");
+    response.data.forEach(async log => {
+      const div = document.createElement("div");
+      const p = document.createElement("p");
+      const h4 = document.createElement("h4");
+      const a = document.createElement("a");
+
+      div.appendChild(p);
+      div.appendChild(h4);
+
+      p.innerText = new Date(log.createdIn).toDateString();
+      h4.innerText = log.method.toUpperCase() + " " + log.page
+      if(Object.keys(log.body).length != 0){
+        a.innerText = "View Body";
+        div.appendChild(a);
+        if(log?.body?.content){
+          const logb = Object.values(log.body.content.ops);
+            await logb.forEach(operation => {
+              if(operation?.insert?.image) operation.insert.image = `<a class=intense data-image='${operation.insert.image}'>b64imgObj</a>`;
+            });
+            a.addEventListener("click", () =>{
+              Swal.fire({
+                  title: "Log Body",
+                  html: `<pre class="left-align">${JSON.stringify(logb, undefined, 4)}</pre>`,
+                  didOpen: () => {
+                    Intense(document.querySelectorAll(".intense"));
+                  }
+              });
+          })
+          }else{
+              a.addEventListener("click", () =>{
+              Swal.fire({
+                  title: "Log Body",
+                  html: `<pre class="left-align">${JSON.stringify(log.body, undefined, 4)}</pre>`
+              });
+            })
+          }
+      }
+
+      logsWrapper.appendChild(div);
+    });
+  }catch(e){
+    console.log(e);
+  }
   const el1 = document.querySelector("#searchbar1");
   const el2 = document.querySelector("#searchbar2");
     try {
-      console.log(decodeURIComponent(params.userIDs).split(","));
       VirtualSelect.init({
         ele: "#searchbar1",
         multiple: true,
@@ -30,7 +77,6 @@
       console.error(e);
     }
     try {
-      console.log(decodeURIComponent(params.methods));
       VirtualSelect.init({
         ele: "#searchbar2",
         options: [
@@ -57,7 +103,6 @@
       document.querySelector('.button1[selected="true"]').removeAttribute("selected");
       [...document.querySelectorAll('.perPageButtons .button1')].find(i => i.innerText == params.perPage).setAttribute("selected", "true");
     }
-
     document.querySelector("#filter").addEventListener("submit", async (event) => {
       event.preventDefault();
       const userIDs = el1.value;
