@@ -8,13 +8,14 @@
   const el1 = document.querySelector("#searchbar1");
   const el2 = document.querySelector("#searchbar2");
     try {
+      console.log(decodeURIComponent(params.userIDs).split(","));
       VirtualSelect.init({
         ele: "#searchbar1",
         multiple: true,
         search: true,
         placeholder: "Filter by user IDs",
         maxValues: 10,
-        selectedValue: JSON.parse(params.userIDs),
+        selectedValue: decodeURIComponent(params.userIDs).split(","),
         showValueAsTags: true,
         allowNewOption: true,
       });
@@ -29,6 +30,7 @@
       console.error(e);
     }
     try {
+      console.log(decodeURIComponent(params.methods));
       VirtualSelect.init({
         ele: "#searchbar2",
         options: [
@@ -40,7 +42,7 @@
           
         ],
         placeholder: "Filter by request methods",
-        selectedValue: JSON.parse(params.methods),
+        selectedValue: decodeURIComponent(params.methods).split(","),
         showValueAsTags: true,
         search: false,
         multiple: true
@@ -50,11 +52,24 @@
     } catch (e) {
       console.error(e);
     }
+
+    if(parseInt(params.perPage)){
+      document.querySelector('.button1[selected="true"]').removeAttribute("selected");
+      [...document.querySelectorAll('.perPageButtons .button1')].find(i => i.innerText == params.perPage).setAttribute("selected", "true");
+    }
+
     document.querySelector("#filter").addEventListener("submit", async (event) => {
       event.preventDefault();
       const userIDs = el1.value;
       const methods = el2.value;
       const perPage = document.querySelector('.perPageButtons .button1[selected="true"]').innerText;
-      console.log(perPage);
+      window.location.href = window.location.href = `/billing/staff/audit?userIDs=${userIDs ? encodeURIComponent(userIDs) : ""}&methods=${methods ? encodeURIComponent(methods) : ""}&perPage=${perPage}`
     });
+    document.querySelectorAll(".perPageButtons .button1").forEach(button => {
+      button.addEventListener("click", (event) => {
+        event.preventDefault();
+        document.querySelector('.button1[selected="true"]').removeAttribute("selected");
+        button.setAttribute("selected", "true");
+      })
+    })
 })()
