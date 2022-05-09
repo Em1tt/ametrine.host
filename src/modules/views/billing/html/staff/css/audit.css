@@ -117,7 +117,7 @@ form button{
   flex-flow: column wrap;
   padding: 10px;
 }
-#logs span div{
+#logs span div:not(.pageButtons){
   background-color: #16161d;
   padding: 10px;
   border-radius: 10px;
@@ -146,4 +146,34 @@ form button{
   max-width: 200px !important;
   word-break: break-all;
   word-wrap: break-word;
+}
+.pageButtons{
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.pageButtons button:disabled{
+  color: #292a34;
+  background-color: #141419;
+  cursor: default;
+}
+.pageButtons button{
+  float: right;
+  padding: 10px;
+  border: none;
+  color: #dce0ff;
+  background-color: #141419;
+  cursor: pointer;
+}
+.pageButtons button:not(:disabled):hover{
+  color: #cc37c0;
+  background-color: #1e1f26;
+}
+.pageButtons button:first-of-type{
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.pageButtons button:last-of-type{
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
 }

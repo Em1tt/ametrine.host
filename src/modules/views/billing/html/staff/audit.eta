@@ -62,8 +62,8 @@
                         <label for="searchbar" class="text1">Logs per site:</label>
                         <div class="perPageButtons">
                             <button class="button1 perPageButtons">10</button>
-                            <button class="button1 perPageButtons" selected="true">25</button>
-                            <button class="button1 perPageButtons">50</button>
+                            <button class="button1 perPageButtons">25</button>
+                            <button class="button1 perPageButtons" selected="true">50</button>
                             <button class="button1 perPageButtons">100</button>
                         </div>
                         <button class="button1" type="submit">Apply Filters</button>
@@ -73,7 +73,12 @@
                 </div>
             <div id="logs">
                 <h3><i class="fa fa-bars"></i> Logs</h3>
-                <span id="logsWrapper"></span>
+                <span id="logsWrapper">
+                    <div class="pageButtons">
+                        <button disabled class="rightButton"><i class="fa fa-arrow-right"></i></button>
+                        <button disabled class="leftButton"><i class="fa fa-arrow-left"></i></button>
+                    </div>
+                </span>
             </div>
         </div>
     </main>

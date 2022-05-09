@@ -6,9 +6,24 @@
       history.back();
   });
   try{
-    console.log(params.userIDs, params.methods)
-    const response = await axios.get(`/api/audit?userIDs=${params.userIDs ? params.userIDs : ""}&methods=${params.methods ? params.methods : ""}&pageLimit=${params.perPage ? params.perPage : ""}`);
-    console.log(response);
+    const response = await axios.get(`/api/audit?userIDs=${params.userIDs ? params.userIDs : ""}&methods=${params.methods ? params.methods : ""}&pageLimit=${params.perPage ? params.perPage : ""}&page=${params.page ? params.page : ""}`);
+    let page = params.page || 1;
+    if((params.perPage ? parseInt(params.perPage) : 50) == parseInt(response.data.length)){
+      [...document.querySelectorAll(".rightButton")].forEach((button) => {
+        button.removeAttribute("disabled");
+        button.addEventListener("click", () => {
+          window.location.href = `/billing/staff/audit?userIDs=${params.userIDs ? params.userIDs : ""}&methods=${params.methods ? params.methods : ""}&perPage=${params.perPage ? params.perPage : ""}&page=${parseInt(page)+1}`;
+        });
+      });
+    }
+  if(parseInt(page) > 1){
+    [...document.querySelectorAll(".leftButton")].forEach((button) => {
+      button.removeAttribute("disabled");
+      button.addEventListener("click", () => {
+        window.location.href = `/billing/staff/audit?userIDs=${params.userIDs ? params.userIDs : ""}&methods=${params.methods ? params.methods : ""}&perPage=${params.perPage ? params.perPage : ""}&page=${parseInt(page)-1}`
+      });
+    });
+  }
     const logsWrapper = document.querySelector("#logsWrapper");
     response.data.forEach(async log => {
       const div = document.createElement("div");
@@ -19,7 +34,7 @@
       div.appendChild(p);
       div.appendChild(h4);
 
-      p.innerText = new Date(log.createdIn).toDateString();
+      p.innerText = `User ID: ${log.userID}, `+new Date(log.createdIn).toDateString();
       h4.innerText = log.method.toUpperCase() + " " + log.page
       if(Object.keys(log.body).length != 0){
         a.innerText = "View Body";
@@ -39,7 +54,7 @@
               });
           })
           }else{
-              a.addEventListener("click", () =>{
+            a.addEventListener("click", () =>{
               Swal.fire({
                   title: "Log Body",
                   html: `<pre class="left-align">${JSON.stringify(log.body, undefined, 4)}</pre>`
@@ -52,6 +67,13 @@
     });
   }catch(e){
     console.log(e);
+    let page = params.page || 1;
+    [...document.querySelectorAll(".leftButton")].forEach((button) => {
+      button.removeAttribute("disabled");
+      button.addEventListener("click", () => {
+        window.location.href = `/billing/staff/audit?userIDs=${params.userIDs ? params.userIDs : ""}&methods=${params.methods ? params.methods : ""}&perPage=${params.perPage ? params.perPage : ""}&page=${parseInt(page)-1}`
+      });
+    });
   }
   const el1 = document.querySelector("#searchbar1");
   const el2 = document.querySelector("#searchbar2");
