@@ -17,7 +17,7 @@
         </li>
 
         <li class="nav-item">
-            <a tabindex=0 aria-label="Order" id="order" class="nav-link">
+            <a href="/billing/order" tabindex=0 aria-label="Order" id="order" class="nav-link">
                 <i class="fa fa-shopping-cart"></i>
                 <span aria-hidden="true" class="link-text">Order</span>
             </a>

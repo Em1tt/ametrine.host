@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Ametrine.host | Billing</title>
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <!-- Meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description"
+        content="Powerful server hosting starting at €0.75/GB. We're a transparent hosting provider with a 100% uptime and reliable support.">
+    <!-- APPLE -->
+    <!-- Apple Touch Icon (at least 200x200px) -->
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png">
+    <!-- To run web application in full-screen -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Status Bar Style-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!-- END OF APPLE -->
+    <!-- Microsoft Tiles -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <!--STYLESHEETS-->
+    <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" data-auto-add-css="false"></script>
+    <link href="https://use.fontawesome.com/releases/v5.15.4/css/svg-with-js.css" rel="stylesheet" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
+    <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
+    <link href="/billing/public/stylesheets/order.css" rel="stylesheet">
+    <script src="/billing/public/javascripts/theme.js" async defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6.2.5/dist/tippy.css">
+</head>
+<body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
+    <%~ E.includeFile('../public/templates/navbar.eta', {icon: it._locals.userData.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
+    <main>
+        <div class="content">
+            <h1 class="header1 center">Choose a location</h1>
+            <div id="map-buttons-wrapper">
+                <div>
+                    <button class="button1" id="finland-button"><div><h2>Finland</h2><p>Helsinki</p></div></button>
+                </div>
+            </div>
+            <div class="worldMap">
+                <div class="poi FL">
+                    <i class="fa fa-map-marker-alt FL"></i><div class="tooltip"></div>
+                </div>
+                <img src="/billing/public/images/world map.svg" alt="World Map">
+            </div>
+        </div>
+    </main>
+    <%~ E.includeFile('../public/templates/authentication.eta')%>
+    <%~ E.includeFile('../public/templates/support.eta')%>
+    <%~ E.includeFile('../public/templates/announcements.eta') %>
+    <%~ E.includeFile('../public/javascripts/announcements.eta', {userData: it._locals.userData, nonce: it._locals.nonce}) %>
+    <%~ E.includeFile('../public/javascripts/retheme.eta', {userData: it._locals.userData}) %>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy.umd.min.js"></script>
+    <script src="/billing/public/javascripts/tooltips.js" async defer></script>
+    <script src="/billing/public/javascripts/authentication.js" async defer></script>
+    <script src="/billing/public/javascripts/popups.js" async defer></script>
+    <script nonce=<%=it._locals.nonce%> >
+        document?.getElementById("toggleEditMode")?.addEventListener("click", () => {toggleEditMode()});
+        document?.getElementById("multiButton")?.addEventListener("click", (e) => {
+        if(e.srcElement.innerText == "Sign Out"){
+            logOut()
+        }
+        });
+        document.getElementById("change-pass-button")?.addEventListener("click", () => {editPassword()});
+        document.getElementById("2fa-button")?.addEventListener("click", () => {twofa()});
+        document.getElementById("delete-button")?.addEventListener("click", () => {deleteAccount()});
+    </script>
+</body>
