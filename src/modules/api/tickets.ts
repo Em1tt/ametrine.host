@@ -125,7 +125,7 @@ export const prop = {
             return msg;
         }
         async function newTicket(ticket: Ticket) {
-            const name = await client.db.hget(`user:${ticket.user_id}`, 'name');
+            const name = await client.db.hget(`user:${ticket.user_id}`, 'name') as string;
             if (name && name.length) {
                 const newTicketProps = { ...ticket};
                 newTicketProps["ticket_id"] = parseInt(ticket.ticket_id.toString());

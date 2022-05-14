@@ -3,7 +3,6 @@
 */
 import express                 from 'express';
 import { auth }                from './auth';
-import { otp }                 from '../otp';
 import { utils }               from '../utils';
 import { permissions }         from '../permissions'
 import { UserData }            from "../../types/billing/user";

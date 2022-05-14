@@ -49,7 +49,7 @@ export const auth = {
         if (permission_id == 0) return 0;
         const data = await client.db.hget(`user:${userID}`, 'permission_id');
         if (data < 2 || !data) return 0;
-        return parseInt(data);
+        return parseInt(data as string);
     },
     startDeletion: async (userID: string | number): Promise<boolean> => {
         return new Promise((resolve, reject) => {
@@ -75,7 +75,7 @@ export const auth = {
             })
         })
     },
-    logoutAll: (userID: string | number, sessions: Record<string, any>, sessionsReal?: Record<string, any>): Promise<boolean> => {
+    logoutAll: (userID: string | number, sessions: Array<string>, sessionsReal?: Array<string>): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             return (async function() {
                 await sessions.map(async session => {

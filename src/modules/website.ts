@@ -126,13 +126,32 @@ const endpoints: Map<string, Endpoint> = new Map();
 const files: Array<string> = fs.readdirSync(`./modules/api`)
   .filter((f) => f.endsWith(".js"));
 
+
+// Create Parse for application/x-www-form-urlencoded
+app.use(express.urlencoded({ limit: config.website.uploadLimit.urlencoded, extended: false })) // Required for req.body
+app.use('/api/order/webhook', express.raw({ type: 'application/json' }));
+
 for (const f of files) {
   const ep: Endpoint = require(`./api/${f.replace(".js", "")}`);
   endpoints.set(ep.prop.name, ep);
   if (ep.prop["rateLimit"]) {
+    const isWhitelisted = async (req, res) => {
+      if (req.headers['user-agent'].startsWith("Stripe/1.0")) {
+        if (ep.prop["testStripe"] && ep.prop["testStripe"](req)) return true;
+        return false;
+      } else {
+        return false;
+      }
+      
+    }
+    const limiter = rateLimit({
+      // ...
+      skip: (request, response) => false,
+    })
     app.use("/api/" + ep.prop.name + "*", rateLimit({
       windowMs: ep.prop["rateLimit"].time,
       max: ep.prop["rateLimit"].max,
+      skip: isWhitelisted,
       message: "You are sending too many API requests! Please try again later.",
     }));
     // There could be another solution for doing this.
@@ -157,9 +176,7 @@ app.use(morgan("[express]\t:method :url :status :res[content-length] - :response
 // serve static files
 app.use(express.static(path.join(__dirname, "views")));
 
-// Create Parse for application/x-www-form-urlencoded
-app.use(express.urlencoded({ limit: config.website.uploadLimit.urlencoded, extended: false })) // Required for req.body
-app.use('/api/order/webhook', express.raw({ type: 'application/json' }));
+//app.use('/api/order/webhook', express.raw({ type: 'application/json' }));
 // Create Parse for application/json
 app.use(express.json({ limit: config.website.uploadLimit.json }));
 

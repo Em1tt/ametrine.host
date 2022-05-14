@@ -13,7 +13,7 @@ export const prop = {
         max: 5,
         time: 10 * 1000
     },
-    run: async (req: express.Request, res: express.Response): Promise<any> => {
+    run: async (req: express.Request, res: express.Response): Promise<void | boolean> => {
         let permission;
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't a POST request, then respond with Method not Allowed.

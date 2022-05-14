@@ -49,6 +49,9 @@ function paginate(array: Array<unknown>, page_size: number, page_number: number)
 }
 
 let client: Redis;
+
+export type FilesType = Array<{name: string, data: string}>
+
 export const prop = {
     name: "knowledgebase",
     desc: "Support Knowledgebase System",
@@ -57,8 +60,8 @@ export const prop = {
         time: 3 * 1000
     },
     setClient: function(newClient: Redis): void { client = newClient; },
-    run: async (req: express.Request, res: express.Response): Promise<any> => {
-        async function fileURIs(articleID: string | number, files: Array<any>) {
+    run: async (req: express.Request, res: express.Response): Promise<void | boolean> => {
+        async function fileURIs(articleID: string | number, files: FilesType) {
             let URIS = []
             if (files && files.length) {
                 URIS = (await Promise.all(files.map(async file => {
@@ -80,7 +83,7 @@ export const prop = {
                         console.error(e)
                         return null;
                     }
-                })) as Array<any>).filter(x => x != null);
+                })) as Array<unknown>).filter(x => x != null);
             }
             return { URIS }
         }
@@ -149,10 +152,10 @@ export const prop = {
                     // subject=Hello World&content=Lorem ipsum dolor sit amet, consectetur...&categories=0,1,2
                     if (header?.length > settings.maxTitle) return res.status(403).send(`Header is too long. Max Length is ${settings.maxTitle}`);
                     if (content?.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
-                    const category_ids = (categories) ? categories.split(",").map((category: any) => {
-                        const findCategory = knowledgebase_categories.find(cate => cate.id == parseInt(category));
+                    const category_ids = (categories) ? categories.split(",").map((category: number) => {
+                        const findCategory = knowledgebase_categories.find(cate => cate.id == parseInt(category.toString()));
                         if (findCategory) {
-                            category = parseInt(category); // Converting it to Int in case of any strings at the end.
+                            category = parseInt(category.toString()); // Converting it to Int in case of any strings at the end.
                             return category;
                         }
                     }) : []
@@ -344,7 +347,7 @@ export const prop = {
                                     console.error(err);
                                     return res.status(500).send("Error occured while retrieving keys for messages. Please report this.")
                                 }
-                                let article: Array<any> = await Promise.all(result.map(async articles => {
+                                let article: Array<unknown> = await Promise.all(result.map(async articles => {
                                     const ratings = await client.db.hgetall(articles);
                                     try {
                                         ratings["likes"] = JSON.parse(articles["likes"]).length;

@@ -3,21 +3,40 @@
  */
 import express                 from 'express';
 import { auth }                from './auth';
-const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST); // This looks bad but its required.
+import { Redis }                from '../../types/redis';
+
+const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST, {
+    maxNetworkRetries: 1,
+
+}); // This looks bad but its required.
 
 // stripe listen --forward-to localhost:3000/api/order/webhook
 
-let client;
+let client: Redis;
 
 export const prop = {
     name: "order",
     desc: "API for ordering a service",
     rateLimit: {
-      max: 1,
+      max: 10,
       time: 30 * 1000
     },
-    setClient: function(newClient) { client = newClient; },
-    run: async (req: express.Request, res: express.Response): Promise<any> => {
+    testStripe: (req): boolean => {
+        const endpointSecret = process.env.WEBHOOK_SECRET
+        
+        const sig = req.headers['stripe-signature'];
+        const payload = req.body;
+        try {
+            const event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+            if (event.type) return true;
+            return false;
+        } catch (err) {
+            //console.error(err)
+            return false;
+        }
+    },
+    setClient: function(newClient: Redis) { client = newClient; },
+    run: async (req: express.Request, res: express.Response): Promise<void | boolean> => {
         const allowedMethods = ["GET", "POST"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405);
@@ -32,24 +51,24 @@ export const prop = {
         if (typeof userData != "object" && paramName != "webhook") return res.sendStatus(userData);
         switch (paramName) {
             case "checkout": {
-                res.set("Allow", "POST");
-                if (req.method != "POST") return res.sendStatus(405);
+                res.set("Allow", "GET"); // Changing to POST later on
+                if (req.method != "GET") return res.sendStatus(405);
                 const session = await stripe.checkout.sessions.create({
                     customer_email: userData['email'],
                     success_url: `http://${req.get('host')}/billing/success`,
                     cancel_url: `http://${req.get('host')}/billing/cancel`,
                     payment_method_types: ['card'],
                     line_items: [
-                      {price: '', quantity: 1},
+                      {price: '[REDACTED]', quantity: 1},
                     ],
                     mode: 'subscription',
+                    client_reference_id: `id:${userData['user_id']}:ametrine.host`
                 });
                 return res.redirect(303, session.url)
             }
             case "webhook": { // May switch to /api/stripe/webhook instead.
                 const endpointSecret = process.env.WEBHOOK_SECRET
                 const payload = req.body;
-                
                 const sig = req.headers['stripe-signature'];
                 let event;
                 try {
@@ -59,8 +78,25 @@ export const prop = {
                     return res.status(400).send(`Webhook Error: ${err.message}`);
                 }
                 switch (event.type) {
+                    case 'customer.created': {
+                        /*
+user_id - ID of the user from ametrine (Taken from user:{ID})
+stripe_id - Basically the Customer ID
+email - Email of the customer (Taken from Stripe, this is in case they want to provide another email for billing notifications)
+
+                        */
+                        const session = event.data.object;
+                        const userID = session["metadata"]["user_id"]
+                        console.log([`customer:${userID}:${session["id"]}`, "user_id", userID, "customer_id", session["id"], "email", session["email"]])
+                        console.log(session)
+                        break;
+                        /*const customerExists = await client.db.exists(`customer:${userID}:${session["id"]}`);
+                        if (!customerExists) client.db.hset([`customer:${userID}:${session["id"]}`, "user_id", userID, "customer_id", session["id"], "email", session["email"]]);
+                        break;*/
+                    }
                     case 'checkout.session.completed': {
                         const session = event.data.object;
+                        //console.log(session)
                         console.log("create order");
                         if (session.payment_status === 'paid') {
                             console.log("fulfill order (create VPS)");
@@ -68,19 +104,35 @@ export const prop = {
                         break;
                     }
                 
-                    case 'checkout.session.async_payment_succeeded': {
+                    case 'invoice.paid': {
                         const session = event.data.object;
-                        console.log("fulfill order (create VPS)");
+                        //console.log(session)
+                        console.log("fulfill order (reset status on db)");
                         break;
                     }
                 
-                    case 'checkout.session.async_payment_failed': {
+                    case 'checkout.session.async_payment_failed':
+                    case 'invoice.payment_failed': {
                         const session = event.data.object;
                         console.log("email customer saying to retry order");
                         break;
                     }
+                    case 'customer.subscription.deleted': {
+                        const session = event.data.object;
+                        // handle when the subscription ends
+                        console.log('subscription ended')
+                        break;
+                    }
+                    case 'customer.deleted': {
+                        const session = event.data.object;
+                        // handle when the subscription ends
+                        console.log(session)
+                        console.log('customer was deleted')
+                        break;
+                    }
                   }
-                return res.sendStatus(200);
+
+                return res.json({received: true});
             }
             case "coupon": {
                 // Assuming you do these commands to create coupons
