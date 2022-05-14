@@ -53,16 +53,33 @@ export const prop = {
             case "checkout": {
                 res.set("Allow", "GET"); // Changing to POST later on
                 if (req.method != "GET") return res.sendStatus(405);
+                let customer;
+                //? Dont know a better way to handle this.
+                const customerID = await client.db.hget(`user:${userData["user_id"]}`, "customerID")
+                if(!customerID || customerID == ""){
+                    //create customer
+                    customer = await stripe.customers.create({
+                        email: userData.email,
+                        name: userData.name,
+                        metadata: {
+                            "userID": userData["user_id"]
+                        }
+                      });
+                    await client.db.hset([`user:${userData["user_id"]}`, "customerID", customer.id]);
+                }/*else{
+                    //?UNCOMMENT IF YOU NEED MORE PROPERTIES THAN JUST ID.
+                    customer = await stripe.customers.retrieve(customerID);
+                }*/
                 const session = await stripe.checkout.sessions.create({
-                    customer_email: userData['email'],
                     success_url: `http://${req.get('host')}/billing/success`,
                     cancel_url: `http://${req.get('host')}/billing/cancel`,
                     payment_method_types: ['card'],
                     line_items: [
-                      {price: '[REDACTED]', quantity: 1},
+                      {price: "price_1JKsCPKd9qFVOCW4JzQ87S7H", quantity: 1},
                     ],
                     mode: 'subscription',
-                    client_reference_id: `id:${userData['user_id']}:ametrine.host`
+                    client_reference_id: `id:${userData['user_id']}:ametrine.host`,
+                    customer: customerID || customer.id //?remove customerID if uncommented first change
                 });
                 return res.redirect(303, session.url)
             }
@@ -73,6 +90,7 @@ export const prop = {
                 let event;
                 try {
                     event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+                    console.log(event);
                 } catch (err) {
                     console.log(err.message)
                     return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -86,16 +104,19 @@ email - Email of the customer (Taken from Stripe, this is in case they want to p
 
                         */
                         const session = event.data.object;
+                        console.log(session);
                         const userID = session["metadata"]["user_id"]
                         console.log([`customer:${userID}:${session["id"]}`, "user_id", userID, "customer_id", session["id"], "email", session["email"]])
                         console.log(session)
                         break;
+                    
                         /*const customerExists = await client.db.exists(`customer:${userID}:${session["id"]}`);
                         if (!customerExists) client.db.hset([`customer:${userID}:${session["id"]}`, "user_id", userID, "customer_id", session["id"], "email", session["email"]]);
                         break;*/
                     }
                     case 'checkout.session.completed': {
                         const session = event.data.object;
+                        console.log(session);
                         //console.log(session)
                         console.log("create order");
                         if (session.payment_status === 'paid') {
