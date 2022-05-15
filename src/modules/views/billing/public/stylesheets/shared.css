@@ -23,7 +23,7 @@ body > aside{
     position: fixed;
     height: 100%;
     width: 340px;
-    right: -360px;
+    right: -340px;
     top: 0;
     background-color: #1e1f26;
     box-shadow: 0px 0px 20px rgba(0,0,0,0.4);

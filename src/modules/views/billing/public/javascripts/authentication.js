@@ -349,15 +349,13 @@ window.onload = () => {
     }).then(res => {
       console.log(res);
       if(!res) return;
-      console.log(window.location);
+      window.location.href = window.location.href.split("?")[0];
     }).catch(e =>{
-      setTimeout(() => {
         Swal.fire({
           title: "Discord Authentication failed",
           text: "There was an error processing your request. Is your account linked with your Discord account?",
           icon: "error",
         })
-      }, 5000)
     });
   }
 

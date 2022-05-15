@@ -351,7 +351,10 @@ export const prop = {
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
         const params = req.params[0].split("/").slice(1);
-        const paramName = params[0];
+        let paramName = params[0];
+        if (!paramName) {
+            paramName = ""
+        }
         switch(paramName){
             case "discord": {
                 //No need for 2FA with this log-in Method as Discord handles this for us.

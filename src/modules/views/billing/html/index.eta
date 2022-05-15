@@ -85,7 +85,11 @@
                                         <% }else{ %>
                                             <button class="button1" id="2fa-button"><i class="fas fa-key"></i> Enable 2FA</button>
                                         <% } %>
-                                        <button class="button1" id="discord-button"><i class="fab fa-discord"></i> Link With Discord (Coming Soon)</button>
+                                        <% if(it.userData['discord_user_id']){ %>
+                                            <a href="/api/user/discord" class="button1" id="discord-button"><i class="fab fa-discord"></i> Link With Discord (Coming Soon)</a>
+                                        <% }else{ %>
+                                            <button class="button1" id="discord-button"><i class="fab fa-discord"></i> Link With Discord (Coming Soonn)</button>
+                                        <% } %>
                                         <button class="button1" id="delete-button"><i class="fas fa-trash"></i> Delete Account</button>
                                     </div>
                             </div>
