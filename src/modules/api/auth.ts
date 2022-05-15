@@ -9,6 +9,7 @@ import ms                           from 'ms';
 import { otp }                      from '../otp';
 import { UserData }                 from "../../types/billing/user";
 import { Redis }                    from "../../types/redis";
+import axios                        from "axios";
 
 let client: Redis;
 
@@ -110,11 +111,13 @@ export const auth = {
      * const loginToken = await <auth>.login(req, res, account, rememberMe);
      * if (loginToken == 403) return res.sendStatus(403);
      */
-    login: async (req: express.Request, res: express.Response, data: UserData, rememberMe: boolean): Promise<number | AuthLoginStruct | Record<string, unknown>> => { // Logging in via amethyst.hosti
+    login: async (req: express.Request, res: express.Response, data: UserData, rememberMe: boolean, discordLogin: boolean): Promise<number | AuthLoginStruct | Record<string, unknown>> => { // Logging in via amethyst.hosti
         const createdIn = parseInt(Date.now().toString().slice(0, -3)) // because for some reason node js decides to use an expanded timestamp
         const ipAddr = req.socket.remoteAddress;
-        const verifiedHash = await auth.verifyPassword(req.body.password, data)
-        if (!verifiedHash) return 403;
+        if(!discordLogin){
+            const verifiedHash = await auth.verifyPassword(req.body.password, data)
+            if (!verifiedHash) return 403;
+        }
         const userData = { email: data.email, name: data.name, id: parseInt(data.user_id as string), permission_id: parseInt(data.permission_id as string) }
 
         // --2FA--
@@ -344,37 +347,102 @@ export const prop = {
     },
     setClient: function(newClient: Redis): void { client = newClient; },
     run: async (req: express.Request, res: express.Response): Promise<express.Response | void> => {
-        res.set("Allow", "POST"); // To give the method of whats allowed
+        const allowedMethods = ["POST"];
+        res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't POST then respond with Method not Allowed.
-        const { email, password, rememberMe } = req.body;
-        if ([email, password].includes(undefined)) return res.status(406)
-                                                             .send("Please enter in an Email, and Password.");
-        const userID = await client.db.hget('users.email', email); // Checks if the user exists.
-        if (!userID) return res.status(404).send("Couldn't find email.");
-        const account = await client.db.hgetall(`user:${userID}`);
-        if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.
-
-        // [support] being replaced with <a href... for the front end
-        switch (parseInt(account["state"])) {
-            case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.
-                break;
-            case 2: // Process of being deleted
-                return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
-            case 3: // Disabled
-                return res.status(403).send("This account is disabled. Please contact [support] if you wish to enable your account.");
-            case 4: // Terminated
-                return res.status(403).send("This account is terminated. Please read your email for more information.")
+        const params = req.params[0].split("/").slice(1);
+        const paramName = params[0];
+        switch(paramName){
+            case "discord": {
+                //No need for 2FA with this log-in Method as Discord handles this for us.
+                const { code } = req.body;
+                if(!code) return res.sendStatus(406);
+                const body = new URLSearchParams({
+                    client_id: process.env.OAUTH_CLIENT_ID,
+                    client_secret: process.env.OAUTH_SECRET,
+                    code: code,
+                    grant_type: 'authorization_code',
+                    redirect_uri: `http://localhost:3000/billing`,
+                    scope: 'identify',
+                });
+                await axios.post('https://discord.com/api/oauth2/token', body).then(async response => {
+                    const { access_token } = response.data;
+                    const user = await axios.get('https://discord.com/api/users/@me', {
+                        headers: {
+                            authorization: `Bearer ${access_token}`,
+                        },
+                    });
+                    const { id } = user.data;
+                    if(!id) return res.sendStatus(403); //User failed during Discord authentication
+                    return client.keys("user:*", async function (err, result) {
+                        if (err) {
+                            console.error(err);
+                            return res.status(500).send("Error occured while retrieving keys for users. Please report this.")
+                        }
+                        if(!result.length) return res.sendStatus(404);
+                        const users: Array<UserData> = await Promise.all(result.map(async userID => {
+                            const user = await client.db.hgetall(userID);
+                            return user;
+                        }));
+                        if(!users.length) return res.sendStatus(404);
+                        //Not sure if changing UserData's type would mess something up, so I used type casting.
+                        const matchedUser = users.find(user => (user as any)?.discord_user_id == id);
+                        if(!matchedUser) return res.sendStatus(404);
+                        switch (parseInt((matchedUser as any)["state"])) {
+                            case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.
+                                break;
+                            case 2: // Process of being deleted
+                                return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
+                            case 3: // Disabled
+                                return res.status(403).send("This account is disabled. Please contact [support] if you wish to enable your account.");
+                            case 4: // Terminated
+                                return res.status(403).send("This account is terminated. Please read your email for more information.")
+                        }
+                        if (req.cookies.jwt) {
+                            //return res.status(403).send("Already authenticated.")
+                            await res.clearCookie('jwt');
+                            await res.clearCookie('access_token')
+                        }
+                        const loginToken = await auth.login(req, res, matchedUser, true, true);
+                        if (loginToken == 403) return res.status(403).send("Email or password incorrect");
+                        auth.setCookie(res, "jwt", loginToken["refreshToken"], loginToken["expiresIn"]);
+                        auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
+                        return res.json(loginToken);
+                    });
+                });
+            } break;
+            case "": {
+                const { email, password, rememberMe } = req.body;
+                if ([email, password].includes(undefined)) return res.status(406)
+                                                                     .send("Please enter in an Email, and Password.");
+                const userID = await client.db.hget('users.email', email); // Checks if the user exists.
+                if (!userID) return res.status(404).send("Couldn't find email.");
+                const account = await client.db.hgetall(`user:${userID}`);
+                if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.
+        
+                // [support] being replaced with <a href... for the front end
+                switch (parseInt(account["state"])) {
+                    case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.
+                        break;
+                    case 2: // Process of being deleted
+                        return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
+                    case 3: // Disabled
+                        return res.status(403).send("This account is disabled. Please contact [support] if you wish to enable your account.");
+                    case 4: // Terminated
+                        return res.status(403).send("This account is terminated. Please read your email for more information.")
+                }
+                if (req.cookies.jwt) {
+                    //return res.status(403).send("Already authenticated.")
+                    await res.clearCookie('jwt');
+                    await res.clearCookie('access_token')
+                }
+                const loginToken = await auth.login(req, res, account, rememberMe, false);
+                if (loginToken == 403) return res.status(403).send("Email or password incorrect");
+                if (loginToken["2fa"]) return;
+                auth.setCookie(res, "jwt", loginToken["refreshToken"], loginToken["expiresIn"]);
+                auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
+                return res.json(loginToken);
+            }
         }
-        if (req.cookies.jwt) {
-            //return res.status(403).send("Already authenticated.")
-            await res.clearCookie('jwt');
-            await res.clearCookie('access_token')
-        }
-        const loginToken = await auth.login(req, res, account, rememberMe);
-        if (loginToken == 403) return res.status(403).send("Email or password incorrect");
-        if (loginToken["2fa"]) return;
-        auth.setCookie(res, "jwt", loginToken["refreshToken"], loginToken["expiresIn"]);
-        auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
-        return res.json(loginToken);
     }
 }

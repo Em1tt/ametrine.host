@@ -3,6 +3,10 @@
 const exclamationCircle = `<i class="fa fa-exclamation-circle"></i>`;
 const checkmark = `<i class="fas fa-check"></i>`;
 
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
+
 const twofa = () => {
   Swal.fire({
     title: "2-Factor authentication",
@@ -337,7 +341,15 @@ const deleteAccount = () => {
   });
 };
 
+axios.post("/api/auth/discord", {
+  code: params.code
+}).then(res => {
+  if(!res) return;
+  location.reload();
+});
+
 window.onload = () => {
+
   if(!document.body.classList.contains("loggedIn") && (window.location.pathname == "/billing" || window.location.pathname == "/billing/")) document.querySelector("#authentication").classList.add("shown");
   switcher();
   loginForm.addEventListener("submit", (event) => {

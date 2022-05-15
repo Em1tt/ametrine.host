@@ -9,12 +9,13 @@ import { permissions }         from '../permissions'
 import { UserData }            from "../../types/billing/user";
 import { Redis }               from "../../types/redis";
 import ms                      from "ms"
+import axios                   from "axios";
 let client: Redis;
 export const prop = {
     name: "user",
     desc: "API for users.",
     rateLimit: {
-        max: 2,
+        max: 4,
         time: 10 * 1000
     },
     setClient: function(newClient: Redis): void { client = newClient; },
@@ -26,17 +27,17 @@ export const prop = {
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405) // If the request isn't included from allowed methods, then respond with Method not Allowed.
         //let userData = await auth.verifyToken(req, res, false, "access");
         let userData = await auth.verifyToken(req, res, false, "access");
+        let paramName = params[0]
+        if (!paramName) {
+            paramName = ""
+        }
         if (userData == 101) {
             const newAccessToken = await auth.regenAccessToken(req, res);
             if (typeof newAccessToken != "string") return false;
             userData = await auth.verifyToken(req, res, false, "both")
         }
-        if (typeof userData != "object") return res.sendStatus(userData);
-        if (!userData["accessToken"]) return res.sendStatus(403); // Forbidden due to having the incorrect response. Probably will never happen unless the users JWT is REALLY weird
-        let paramName = params[0]
-        if (!paramName) {
-            paramName = ""
-        }
+        if (typeof userData != "object" && paramName !== "discord" && req.method != "GET") return res.sendStatus(userData);
+        if (!userData["accessToken"] && paramName !== "discord" && req.method != "GET") return res.sendStatus(403); // Forbidden due to having the incorrect response. Probably will never happen unless the users JWT is REALLY weird    
 
         function showUserData(userObj: UserData) {
             return {
@@ -48,7 +49,6 @@ export const prop = {
                 "state": userObj.state
             };
         }
-
         switch (paramName) {
             case "logout": { // Logs out a user.
                 if (utils.allowedMethod(req, res, ["POST"])) {
@@ -135,6 +135,48 @@ export const prop = {
                 }
                 break; // TS errors without this.
             }
+            case "discord": {
+                if (utils.allowedMethod(req, res, ["GET", "POST", "DELETE"])){
+                    switch(req.method){
+                        case "GET": {
+                            res.redirect(303, "https://discord.com/api/oauth2/authorize?client_id=848304819734839296&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fbilling&response_type=code&scope=identify");
+                        } break;
+                        case "POST": {
+                            //This should probably require 2FA, but I'm not sure of how to implement this.
+                            const { code } = req.body;
+                            if(!code) return res.sendStatus(406);
+                            //Since DiscordID is not sent inside of userData and I have no idea how to change.
+                            const discordID = await client.db.hget(`user:${userData["user_id"]}`, "discord_user_id");
+                            if(discordID) return res.sendStatus(406);
+                            const body = new URLSearchParams({
+                                client_id: process.env.OAUTH_CLIENT_ID,
+                                client_secret: process.env.OAUTH_SECRET,
+                                code: code,
+                                grant_type: 'authorization_code',
+                                redirect_uri: `http://localhost:3000/billing`,
+                                scope: 'identify',
+                            });
+                            await axios.post('https://discord.com/api/oauth2/token', body).then(async response => {
+                                const { access_token } = response.data;
+                                const user = await axios.get('https://discord.com/api/users/@me', {
+                                    headers: {
+                                        authorization: `Bearer ${access_token}`,
+                                    },
+                                });
+                                const { id } = user.data;
+                                if(!id) return res.sendStatus(403); //User failed during Discord authentication
+                                await client.db.hset([`user:${userData["user_id"]}`, "discord_user_id", id]);
+                                res.sendStatus(201);
+                            }).catch(async error => {
+                                console.log(error);
+                            });
+                        } break;
+                        case "DELETE": {
+                            //
+                        }
+                    }
+                }
+            } break;
             case "": {
                 if (utils.allowedMethod(req, res, ["DELETE", "PUT", "GET"])) {
                     switch (req.method) {

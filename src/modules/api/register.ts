@@ -61,7 +61,7 @@ export const prop = {
             const account = await client.db.hgetall(`user:${userID}`)
             if (!account) return res.status(500).send("Error occured while trying to find user account. Please report this.");
             await client.db.hset([`users.email`, email, userID]);
-            const loginToken = await auth.login(req, res, account, false);
+            const loginToken = await auth.login(req, res, account, false, false);
             if (loginToken == 403) return res.sendStatus(403);
             auth.setCookie(res, "jwt", loginToken["refreshToken"], loginToken["expiresIn"]);
             auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
