@@ -8,6 +8,7 @@ export interface UserData {
     readonly permission_id  : string | number;
     readonly "2fa"          : number;
     readonly state          : number;
+    readonly discord_user_id: string | number;
 }
 
 // User State IDs //
