@@ -59,6 +59,28 @@ body > aside > div{
 #authentication #login fieldset div:nth-of-type(3){
     flex-flow: row nowrap;
 }
+#authentication #login fieldset div:last-of-type{
+    flex-flow: column nowrap;
+}
+#authentication #login fieldset div:last-of-type a{
+    border-radius: 10px;
+    width: 100%;
+    padding: 10px 5% 10px 0;
+    color: white !important;
+    height: 36px;
+    background-color: #5865F2;
+    border: none;
+    text-align: center;
+    font-size: 0.9rem;
+    outline: none;
+    margin-top: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+#authentication #login fieldset div:last-of-type a:hover{
+    color: #dce0ff !important;
+    background-color: #5865F2;
+}
 .authIcon{
     position: relative;
     width: auto;

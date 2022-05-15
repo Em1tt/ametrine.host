@@ -409,6 +409,8 @@ export const prop = {
                         auth.setCookie(res, "access_token", loginToken["accessToken"], loginToken["expiresIn"]);
                         return res.json(loginToken);
                     });
+                }).catch(()=>{
+                    res.sendStatus(403);
                 });
             } break;
             case "": {

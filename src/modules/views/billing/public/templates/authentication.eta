@@ -20,6 +20,7 @@
                     </div>
                     <div>
                         <input class="submit" type="submit">
+                        <a href="/api/user/discord"><i class="fab fa-discord"></i> Log-In with Discord</a>
                     </div>
                 </fieldset>
             </form>

@@ -341,14 +341,25 @@ const deleteAccount = () => {
   });
 };
 
-axios.post("/api/auth/discord", {
-  code: params.code
-}).then(res => {
-  if(!res) return;
-  location.reload();
-});
-
 window.onload = () => {
+  document.querySelector("#accountCard #multiButton")?.setAttribute("onclick", "logOut()");
+  if(params.code && !document.body.classList.contains("loggedIn")){
+    axios.post("/api/auth/discord", {
+      code: params.code
+    }).then(res => {
+      console.log(res);
+      if(!res) return;
+      console.log(window.location);
+    }).catch(e =>{
+      setTimeout(() => {
+        Swal.fire({
+          title: "Discord Authentication failed",
+          text: "There was an error processing your request. Is your account linked with your Discord account?",
+          icon: "error",
+        })
+      }, 5000)
+    });
+  }
 
   if(!document.body.classList.contains("loggedIn") && (window.location.pathname == "/billing" || window.location.pathname == "/billing/")) document.querySelector("#authentication").classList.add("shown");
   switcher();
