@@ -315,9 +315,7 @@ export const auth = {
                 return (sendResponse) ? res.sendStatus(401) : 101;
             }
         }
-        if (type == "both") {
-            if (refreshTokenValid["id"] != accessTokenValid["id"]) return forbidden() // Forbidden.
-        }
+        if (type == "both" && (refreshTokenValid["id"] != accessTokenValid["id"])) return forbidden() // Forbidden.
         const userExists = await client.db.exists(`user:${user_id}`);
         if (!userExists) return (sendResponse) ? res.sendStatus(404) : 404;
         let response = {};
@@ -336,6 +334,19 @@ export const auth = {
         }
         auth.updateHashVersion(user_id);
         return (sendResponse) ? res.status(200).json(response) : response;
+    },
+    checkState: function(state: number) {
+        switch (state) {
+            default:
+            case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.\
+                return null;
+            case 2: // Process of being deleted
+                return "The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.";
+            case 3: // Disabled
+                return "This account is disabled. Please contact [support] if you wish to enable your account.";
+            case 4: // Terminated
+                return "This account is terminated. Please read your email for more information.";
+        }
     }
 }
 export const prop = {
@@ -359,7 +370,7 @@ export const prop = {
             case "discord": {
                 //No need for 2FA with this log-in Method as Discord handles this for us.
                 const { code } = req.body;
-                if(!code) return res.sendStatus(406);
+                if (!code) return res.sendStatus(406);
                 const body = new URLSearchParams({
                     client_id: process.env.OAUTH_CLIENT_ID,
                     client_secret: process.env.OAUTH_SECRET,
@@ -388,19 +399,11 @@ export const prop = {
                             return user;
                         }));
                         if(!users.length) return res.sendStatus(404);
-                        //Not sure if changing UserData's type would mess something up, so I used type casting.
-                        const matchedUser = users.find(user => (user as any)?.discord_user_id == id);
-                        if(!matchedUser) return res.sendStatus(404);
-                        switch (parseInt((matchedUser as any)["state"])) {
-                            case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.
-                                break;
-                            case 2: // Process of being deleted
-                                return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
-                            case 3: // Disabled
-                                return res.status(403).send("This account is disabled. Please contact [support] if you wish to enable your account.");
-                            case 4: // Terminated
-                                return res.status(403).send("This account is terminated. Please read your email for more information.")
-                        }
+                        //Not sure if changing UserData's type would mess something up, so I used type casting. (Shouldn't mess things up)
+                        const matchedUser = users.find(user => (user as UserData)?.discord_user_id == id) as UserData;
+                        if (!matchedUser) return res.sendStatus(404);
+                        const stateResponse = auth.checkState(parseInt(matchedUser["state"].toString()));
+                        if (stateResponse != null) return res.status(403).send(stateResponse)
                         if (req.cookies.jwt) {
                             //return res.status(403).send("Already authenticated.")
                             await res.clearCookie('jwt');
@@ -426,16 +429,8 @@ export const prop = {
                 if (!account) return res.status(404).send("User doesn't exist."); // User doesn't exist.
         
                 // [support] being replaced with <a href... for the front end
-                switch (parseInt(account["state"])) {
-                    case 0: // Still unverified, not sure if you want it to check if the user verified their email or not and prevent logging in.
-                        break;
-                    case 2: // Process of being deleted
-                        return res.status(403).send("The account you're logging into is currently in the process of deletion. Please contact [support] if you wish to stop this process.");
-                    case 3: // Disabled
-                        return res.status(403).send("This account is disabled. Please contact [support] if you wish to enable your account.");
-                    case 4: // Terminated
-                        return res.status(403).send("This account is terminated. Please read your email for more information.")
-                }
+                const stateResponse = auth.checkState(parseInt(account["state"]));
+                if (stateResponse != null) return res.status(403).send(stateResponse)
                 if (req.cookies.jwt) {
                     //return res.status(403).send("Already authenticated.")
                     await res.clearCookie('jwt');

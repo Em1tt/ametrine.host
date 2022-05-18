@@ -64,7 +64,7 @@ export const prop = {
                         metadata: {
                             "userID": userData["user_id"]
                         }
-                      });
+                    });
                     await client.db.hset([`user:${userData["user_id"]}`, "customerID", customer.id]);
                 }/*else{
                     //?UNCOMMENT IF YOU NEED MORE PROPERTIES THAN JUST ID.
@@ -78,7 +78,6 @@ export const prop = {
                       {price: "price_1JKsCPKd9qFVOCW4JzQ87S7H", quantity: 1},
                     ],
                     mode: 'subscription',
-                    client_reference_id: `id:${userData['user_id']}:ametrine.host`,
                     customer: customerID || customer.id //?remove customerID if uncommented first change
                 });
                 return res.redirect(303, session.url)
@@ -98,10 +97,9 @@ export const prop = {
                 switch (event.type) {
                     case 'customer.created': {
                         /*
-user_id - ID of the user from ametrine (Taken from user:{ID})
-stripe_id - Basically the Customer ID
-email - Email of the customer (Taken from Stripe, this is in case they want to provide another email for billing notifications)
-
+                            user_id - ID of the user from ametrine (Taken from user:{ID})
+                            stripe_id - Basically the Customer ID
+                            email - Email of the customer (Taken from Stripe, this is in case they want to provide another email for billing notifications)
                         */
                         const session = event.data.object;
                         console.log(session);
@@ -147,6 +145,7 @@ email - Email of the customer (Taken from Stripe, this is in case they want to p
                     case 'customer.deleted': {
                         const session = event.data.object;
                         // handle when the subscription ends
+                        await client.hdel(`user:${userData["user_id"]}`, "customerID");
                         console.log(session)
                         console.log('customer was deleted')
                         break;

@@ -9,6 +9,7 @@ export interface UserData {
     readonly "2fa"          : number;
     readonly state          : number;
     readonly discord_user_id: string | number;
+    readonly customerID     : string;
 }
 
 // User State IDs //

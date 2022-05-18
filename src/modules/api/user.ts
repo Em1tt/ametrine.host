@@ -8,7 +8,9 @@ import { utils }               from '../utils';
 import { permissions }         from '../permissions'
 import { UserData }            from "../../types/billing/user";
 import { Redis }               from "../../types/redis";
-import ms                      from "ms"
+const stripe                   = require('stripe')(process.env.STRIPE_SK_TEST, {
+    maxNetworkRetries: 1,
+}); // Will most likely move everything related to stripe in website.ts soon
 import axios                   from "axios";
 let client: Redis;
 export const prop = {
@@ -205,6 +207,12 @@ export const prop = {
                                         if (!emailRes2 || err) return console.error(err);
                                     })
                                     await client.db.hset([`users.email`, email, 1])
+                                    if (userData["customerID"] && userData["customerID"].length) { // Test later on
+                                        await stripe.customers.update(userData["customerID"], {
+                                            email: userData.email
+                                        });
+                                    }
+
                                     updated = true;
                                 }
                                 if (!updated) return res.sendStatus(202);
