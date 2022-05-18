@@ -208,9 +208,7 @@ export const prop = {
                                     })
                                     await client.db.hset([`users.email`, email, 1])
                                     if (userData["customerID"] && userData["customerID"].length) { // Test later on
-                                        await stripe.customers.update(userData["customerID"], {
-                                            email: userData.email
-                                        });
+                                        await stripe.customers.update(userData["customerID"], { email });
                                     }
 
                                     updated = true;
