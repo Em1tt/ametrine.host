@@ -3,7 +3,7 @@
  */
 import express                 from 'express';
 import { auth }                from './auth';
-import fetch                   from 'node-fetch';
+import axios                   from 'axios';
 import { Redis }               from "../../types/redis"
 let client: Redis;
 
@@ -25,11 +25,16 @@ export const prop = {
             const key = process.env.RECAPTCHA_SECRET;
             return new Promise((resolve, reject) => { // Promises are great.
                 const response = req.body["g-recaptcha-response"];
-                fetch(`https://hcaptcha.com/siteverify?secret=${key}&response=${response}`, {
+                return axios({
+                    /*url: `https://hcaptcha.com/siteverify?secret=${key}&response=${response}`,*/
+                    url: `https://hcaptcha.com/siteverify`,
                     method: 'POST',
-                }).then(resp => resp.json())
-                  .then(json => resolve(json))
-                  .catch(e => reject(e));
+                    responseType: 'json',
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    data: `secret=${key}&response=${response}`
+                }).then(res => resolve(res.data)).catch(reject);
             })
         }
         /*
