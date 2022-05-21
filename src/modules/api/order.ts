@@ -89,33 +89,20 @@ export const prop = {
                 let event;
                 try {
                     event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-                    console.log(event);
+                    //console.log(event);
                 } catch (err) {
                     console.log(err.message)
                     return res.status(400).send(`Webhook Error: ${err.message}`);
                 }
                 switch (event.type) {
-                    case 'customer.created': {
-                        /*
-                            user_id - ID of the user from ametrine (Taken from user:{ID})
-                            stripe_id - Basically the Customer ID
-                            email - Email of the customer (Taken from Stripe, this is in case they want to provide another email for billing notifications)
-                        */
-                        const session = event.data.object;
-                        console.log(session);
-                        const userID = session["metadata"]["user_id"]
-                        console.log([`customer:${userID}:${session["id"]}`, "user_id", userID, "customer_id", session["id"], "email", session["email"]])
-                        console.log(session)
+                    case 'customer.subscription.trial_will_end': {
+                        // event here which notifies the user via email that their trial will end (if we allow trials)
                         break;
-                    
-                        /*const customerExists = await client.db.exists(`customer:${userID}:${session["id"]}`);
-                        if (!customerExists) client.db.hset([`customer:${userID}:${session["id"]}`, "user_id", userID, "customer_id", session["id"], "email", session["email"]]);
-                        break;*/
                     }
+                    
                     case 'checkout.session.completed': {
-                        const session = event.data.object;
-                        console.log(session);
-                        //console.log(session)
+                        const session = event.data.object;     
+                        console.log(session)
                         console.log("create order");
                         if (session.payment_status === 'paid') {
                             console.log("fulfill order (create VPS)");
@@ -125,8 +112,7 @@ export const prop = {
                 
                     case 'invoice.paid': {
                         const session = event.data.object;
-                        //console.log(session)
-                        console.log("fulfill order (reset status on db)");
+                        console.log("fulfill order (email customer about the invoice being paid)");
                         break;
                     }
                 
@@ -136,6 +122,51 @@ export const prop = {
                         console.log("email customer saying to retry order");
                         break;
                     }
+                    case 'customer.subscription.updated': {
+
+                        const session = event.data.object;
+                        switch (session.status) {
+                            case "active": {
+                                const customerData = await stripe.customers.retrieve(session["customer"]); // Since stripe doesn't give the full info of the customer for this session
+                                /*
+                                package_id - Package ID (from Ametrine I pressume)
+                                product_id - Product ID (Taken from stripe)
+                                subscription_id - Taken from stripe
+                                customer_id - Customer ID taken from stripe
+                                user_id - The user who bought the service (Taken from Ametrine)
+                                managers - People who can access/manage the VPS (Unless you don't want this, this is for if the user wants to invite others to access or manage the VPS
+                                state - State of the Service (0 = Inactive | 1 = Active | 2 = Terminated)
+                                period - Period of the Service (0 = Monthly | 1 = Bi-Monthly | 2 = Quarterly | 3 = Semi-Annually | 4 = Annually
+                                */
+
+                                const plan = session.plan;
+                                const getPeriod = (interval: string) => {
+                                    switch (interval) {
+                                        default: return -1; // Shouldn't happen unless an invalid interval is made.
+                                        case "month": return 0;
+                                    }
+                                }
+                                const serviceExists = await client.db.exists(`service:${session["id"]}`);
+                                if (!serviceExists) {
+                                    client.db.hset([`service:${session["id"]}`,
+                                        "package_id", 0, // For now until we implement Packages in the backend
+                                        "product_id", plan.id,
+                                        "subscription_id", session["id"],
+                                        "customer_id", session["customer"],
+                                        "user_id", ((customerData && customerData.metadata && customerData.metadata["userID"]) ? customerData.metadata["userID"] : -1),
+                                        "managers", '[]',
+                                        "state", 'active',
+                                        "period", getPeriod(plan.interval)]);
+                                    // Handle creating the VPS (First check if VPS is active already, if not then create one for the customer)
+                                }
+                                break;
+                            }
+                        }
+                        console.log(`Subscription status is ${session.status}.`);
+                        // Then define and call a method to handle the subscription update.
+                        // handleSubscriptionUpdated(subscription);
+                        break;
+                      }
                     case 'customer.subscription.deleted': {
                         const session = event.data.object;
                         // handle when the subscription ends
@@ -143,11 +174,13 @@ export const prop = {
                         break;
                     }
                     case 'customer.deleted': {
+                        // Not sure if it should handle the subscription being ended
                         const session = event.data.object;
-                        // handle when the subscription ends
-                        await client.hdel(`user:${userData["user_id"]}`, "customerID");
-                        console.log(session)
-                        console.log('customer was deleted')
+                        if (session.metadata && session.metadata["userID"]) {
+                            await client.hdel(`user:${userData["user_id"]}`, "customerID");
+                        } else {
+                            console.log("Customer was deleted but couldn't find userID from metadata")
+                        }
                         break;
                     }
                   }
