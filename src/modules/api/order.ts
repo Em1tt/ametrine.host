@@ -177,7 +177,7 @@ export const prop = {
                         // Not sure if it should handle the subscription being ended
                         const session = event.data.object;
                         if (session.metadata && session.metadata["userID"]) {
-                            await client.hdel(`user:${userData["user_id"]}`, "customerID");
+                            await client.hdel(`user:${session.metadata["userID"]}`, "customerID");
                         } else {
                             console.log("Customer was deleted but couldn't find userID from metadata")
                         }
