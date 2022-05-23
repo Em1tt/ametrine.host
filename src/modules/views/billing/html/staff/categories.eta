@@ -45,21 +45,31 @@
             <hr class="semanticLine">
         </div>
         <div>
-            <div>
-                <div>
+            <div class="no-flex">
+                <div class="formWrapper">
                     <h3 class="header2"><i class="fa fa-plus-circle"></i> Create a new category</h3>   
-                    <form>
+                    <form id="categoryForm">
+                    <%console.log(Object.keys(it.permissions))%>
                         <label class="text1" for="name">Name:</label><br>
                         <input class="text1" id="name" name="name" type="text"><br>
                         <label class="text1" for="description">Description:</label><br>
                         <input class="text1" id="description" name="description" type="text"><br>
                         <label class="text1" for="color">Color:</label><br>
                         <input id="inp" value="#e6b530" type="color"><br>
+                        <label class="text1" for="minimal-permission">Minimum Permission:</label><br>
+                        <select class="select1" id="minimal-permission" name="minimal-permission">
+                            <% Object.keys(it.permissions).forEach(permissionID => { %>
+                                <option id=<%= permissionID %> > <%= permissionID %> </option>
+                            <%})%>
+                        </select><br>
+                        <input class="submit" type="submit">
                     </form> 
                 </div>
             </div>
             <div>
-            
+                <div class="categories">
+                    <h3 class="header2"><i class="fa fa-list"></i> Categories</h3>
+                </div>
             </div>
         </div>
     </main>

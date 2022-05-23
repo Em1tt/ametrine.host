@@ -2,11 +2,41 @@ main {
     margin: 3rem 0 0 7rem;
     display: -ms-grid;
     display: grid;
-    height: 100%;
   }
-  main > div {
-    width: 95%;
-  }
+main > div:last-of-type{
+  width: 90%;
+  display: inherit;
+  grid-template-columns: 280px auto;
+}
+.no-flex{
+  align-items: flex-start;
+}
+.formWrapper{
+  position: sticky;
+  top: 30px;
+  height: fit-content;
+}
+.categories{
+  height: 10000px;
+}
+main > div:last-of-type div div{
+  background-color: #1e1f26;
+  border-radius: 10px;
+}
+main > div:last-of-type div div :is(h1,h2,h3){
+  background-color: #141419;
+  padding: 5px 10px;
+  margin-top: 0;
+  width: 100%;
+  margin-bottom: 0;
+  border-radius: 10px 10px 0 0;
+}
+main > div:last-of-type div div form{
+  padding: 10px;
+}
+main > div:last-of-type div div form *{
+  margin: 5px 0 0 0;
+}
   main > div > div {
     display: flex;
     flex-flow: row wrap;
@@ -20,12 +50,15 @@ main {
   main h1 {
     margin-right: 50px;
   }
+  input{
+    width: 100%;
+  }
   input[type=color]{
-	width: 90%;
-	height: 40px;
-	border: none;
-	border-radius: 10px;
-	background: none;
+    width: 100%;
+	  height: 36px;
+	  border: none;
+	  border-radius: 10px;
+	  background: none;
     padding: 0;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
@@ -34,4 +67,20 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 input[type="color"]::-webkit-color-swatch {
 	border: none; /*change color of the swatch border here*/
 	border-radius: 10px;
+}
+
+form select {
+  background-color: #141419;
+  color: #dce0ff;
+  outline: none;
+  border: none;
+  margin: 0 0 5px 0;
+  padding: 5px 10px 5px 5px;
+  border-radius: 10px;
+  height: 36px;
+  min-width: 230px;
+  margin-right: 10px;
+}
+.categories{
+  width: 100%;
 }
