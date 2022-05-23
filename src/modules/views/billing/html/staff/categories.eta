@@ -30,7 +30,7 @@
     <link href="/billing/public/stylesheets/shared.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/themes.css" rel="stylesheet">
     <link href="/billing/public/stylesheets/navbar.css" rel="stylesheet">
-    <link href="/billing/public/stylesheets/knowledgebase.css" rel="stylesheet">
+    <link href="/billing/html/staff/css/categories.css" rel="stylesheet">
     <script src="/billing/public/javascripts/theme.js" async defer></script>
     <link rel="stylesheet" href="/billing/public/stylesheets/pillbox.css">
     <script src="/billing/public/javascripts/pillbox.js"></script>
@@ -40,23 +40,27 @@
     <main>
         <div>
             <div>
-                <h1 class="header1">Manage the knowledgebase</h1>
+                <h1 class="header1">Knowledgebase categories</h1>
             </div>
             <hr class="semanticLine">
         </div>
-        <div class="cardWrapper">
-            <button>
-                <i class="fas fa-clipboard-list"></i>
-                <h3>Manage Categories</h3>
-            </button>
-            <button>
-                <i class="fas fa-newspaper"></i>
-                <h3>Manage Articles</h3>
-            </button>
-            <button id="article-new">
-                <i class="fas fa-plus-circle"></i>
-                <h3>Create a new article</h3>
-            </button>
+        <div>
+            <div>
+                <div>
+                    <h3 class="header2"><i class="fa fa-plus-circle"></i> Create a new category</h3>   
+                    <form>
+                        <label class="text1" for="name">Name:</label><br>
+                        <input class="text1" id="name" name="name" type="text"><br>
+                        <label class="text1" for="description">Description:</label><br>
+                        <input class="text1" id="description" name="description" type="text"><br>
+                        <label class="text1" for="color">Color:</label><br>
+                        <input id="inp" value="#e6b530" type="color"><br>
+                    </form> 
+                </div>
+            </div>
+            <div>
+            
+            </div>
         </div>
     </main>
     <script src="/billing/html/staff/javascripts/knowledgebase.js" async defer></script>

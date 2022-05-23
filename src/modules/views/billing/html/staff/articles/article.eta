@@ -69,8 +69,8 @@
         </div>
         <footer>
             <p>Article's ratings:</p>
-            <button disabled><i class="fa fa-thumbs-up"></i> <%=article.likes%></button>
-            <button disabled><i class="fa fa-thumbs-down"></i> <%=article.dislikes%></button>
+            <button disabled><i class="fa fa-thumbs-up"></i> <%=JSON.parse(article.likes).length%></button>
+            <button disabled><i class="fa fa-thumbs-down"></i> <%=JSON.parse(article.dislikes).length%></button>
         </footer>
     </main>
     <%~ E.includeFile('../../../public/templates/authentication.eta')%>

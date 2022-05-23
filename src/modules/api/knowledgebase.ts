@@ -12,6 +12,7 @@ import { Redis }                from '../../types/redis';
 import { utils }                from '../utils'
 import { cdn }                  from '../cdn'
 import crypto                   from 'crypto'
+import { knowledgebase_category } from 'src/types/billing/knowledgebase-category';
 const settings = {
     maxTitle: 100, // Maximum Length for the title of the knowledgebase article.
     maxBody: 2000, // Maximum Length for knowledgebasse article.
@@ -165,7 +166,7 @@ export const prop = {
                             const buffer = Buffer.from(file.data.split(",")[1]);
                             return Math.floor((buffer.length / 1024) / 1024) > settings.maxUploadLimit
                         })
-                        if (maxUploadFiles.length) return res.status(403).send(`Files: ${files.map(file => file.name).join(", ")} are too large! Max file limit is ${settings.maxUploadLimit}MB.`)
+                        if (maxUploadFiles.length) return res.status(413).send(`Files: ${files.map(file => file.name).join(", ")} are too large! Max file limit is ${settings.maxUploadLimit}MB.`)
                     }
                     return client.incr("article_id", async function(err, articleID: number) {
                         if (err) {
@@ -219,10 +220,86 @@ export const prop = {
                 break;
             }
             case "categories": { // Categories
-                res.set("Allow", "GET");
-                if (req.method != "GET") return res.sendStatus(405);
-                return res.status(200).json(knowledgebase_categories);
-            }
+                if (allowedMethod(req, res, ["GET", "POST", "PATCH", "DELETE"], paramName, userData)) {
+                    switch(req.method){
+                        case "GET": {
+                            client.keys("knowledgebase_category:*", async (err, result) => {
+                                if(err) return res.sendStatus(500);
+                                const categories: Array<any> = await Promise.all(result.map(async categoryID => {
+                                    return { ...await client.db.hgetall(categoryID) }
+                                }));
+                                return res.status(200).json(categories);
+                            });
+                        } break;
+                        case "POST": {
+                            if(userData["permission_id"] < 5) return res.sendStatus(403);
+                            const { name, color, description, minPermission } = req.body;
+                            if(!name  || !description || isNaN(parseInt(minPermission))) return res.sendStatus(406);
+                            await client.keys("knowledgebase_category:*", async (err, result) => {
+                                if(err) return res.sendStatus(500);
+                                const categories: Array<knowledgebase_category> = await Promise.all(result.map(async categoryID => {
+                                    return { ...await client.db.hgetall(categoryID) }
+                                }));
+                                const category = categories.find(i => i.name == utils.encode_base64(name));
+                                if(category) return res.status(409).send("Category already exists!");
+                            });
+                            if(parseInt(minPermission) > userData["permission_id"]) return res.status(403).send("Cannot set minimal permission to a permission higher than your own.");
+                            client.incr("knowledgebase_category_id", async (err: Error, id) => {
+                                if (err) {
+                                    console.error(err);
+                                    return res.status(500).send("Error occured while incrementing knowledgebase category ID. Please report this.")
+                                }
+                                await client.db.hset([`knowledgebase_category:${id}`, "id", id, "name", utils.encode_base64(name), "description", utils.encode_base64(description), "minimum_permission", minPermission, "color", color]);
+                                return res.status(201).json({id, name, description, minPermission, color});
+                            });
+                        } break;
+                        case "PATCH": {
+                            if(userData["permission_id"] < 5) return res.sendStatus(403);
+                            const { id, name, color, description, minPermission } = req.body;
+                            if(isNaN(parseInt(id))) return res.sendStatus(406);
+                            await client.keys("knowledgebase_category:*", async (err, result) => {
+                                if(err) return res.sendStatus(500);
+                                const categories: Array<knowledgebase_category> = await Promise.all(result.map(async categoryID => {
+                                    return { ...await client.db.hgetall(categoryID) }
+                                }));
+                                const category = categories.find(i => i.id == id);
+                                if(!category) return res.sendStatus(404);
+                                if(parseInt(category.minimum_permission as string) > parseInt(userData["permission_id"])) return res.status(403).send("Cannot set minimal permission to a permission higher than your own.");
+                                let changed = false;
+                                if(name){
+                                    client.db.hset([`knowledgebase_category:${id}`, "name", utils.encode_base64(name)]);
+                                    changed = true;
+                                }
+                                if(color){
+                                    client.db.hset([`knowledgebase_category:${id}`, "color", color]);
+                                    changed = true;
+                                }
+                                if(description){
+                                    client.db.hset([`knowledgebase_category:${id}`, "description", utils.encode_base64(description)]);
+                                    changed = true;
+                                }
+                                if(minPermission){
+                                    client.db.hset([`knowledgebase_category:${id}`, "color", minPermission]);
+                                    changed = true;
+                                }
+                                changed ? res.status(200).json({id, name: !name ? category.name : utils.encode_base64(name), description: !description ? category.description : utils.encode_base64(description), color: color ? color : category.color, minPermission: String(minPermission) ? minPermission : category.minimum_permission }) : res.sendStatus(204);
+                            });
+                        } break;
+                        case "DELETE": {
+                            if(userData["permission_id"] < 5) return res.sendStatus(403);
+                            const { id } = req.body;
+                            if(isNaN(parseInt(id))) return res.sendStatus(406);
+                            await client.keys(`knowledgebase_category:${id}`, async (err, result) => {
+                                if(!result.length) return res.sendStatus(404);
+                                client.del(`knowledgebase_category:${id}`, (err, result) => {
+                                    if(err) return res.sendStatus(500);
+                                    res.sendStatus(200);
+                                });
+                            });
+                        }
+                    }
+                }
+            } break;
             case "tags": { // All available tags
                 res.set("Allow", "GET");
                 if (req.method != "GET") return res.sendStatus(405);

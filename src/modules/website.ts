@@ -24,6 +24,8 @@ import nonce from 'nonce-express';
 import { Article } from "src/types/billing/knowledgebase";
 
 import audit from "../audit.json";
+import { knowledgebase_category } from "src/types/billing/knowledgebase-category";
+import { utils } from "./utils";
 
 dotenv.config({ path: __dirname + "/../../.env" });
 
@@ -339,7 +341,7 @@ app.get("/:dir/:subdir1/:subdir2/:file", async (r: express.Request, s: express.R
                 await handleArticles(r, s, true, parseInt(r.params.file));
               } else if(r.params.file.toLowerCase() == "articles"){
                 file = `${billing}/staff/articles/${r.params.file.toLowerCase()}.eta`;
-              }else{
+              }else {
                 file = `${billing}/staff/${r.params.file.toLowerCase()}.eta`;
               }
               break;
@@ -466,7 +468,21 @@ async function handleArticles(r: express.Request, s: express.Response, staff: bo
     if(getArticle.state != 1) return throw403(s);
   }
   s.locals.article = JSON.stringify(getArticle);
-  s.locals.article_categories = JSON.stringify(article_categories);
+  return new Promise((resolve, reject) => {
+    redisClient.keys("knowledgebase_category:*", async function (err, result) {
+      if (err) {
+        console.error(err);
+        s.status(500).send("An error occurred while retrieving the categories. Please report this.")
+        return reject(err);
+      }
+      s.locals.article_categories = JSON.stringify(await Promise.all(result.map(async categoryID => {
+        const category: knowledgebase_category = await redisClient.db.hgetall(categoryID);
+        return { id: category.id, name: utils.decode_base64(category.name), description: utils.decode_base64(category.description), color: category.color, minimum_permission: category.minimum_permission };
+      })));
+      if(!s.locals.article_categories) s.locals.article_categories = JSON.stringify([]);
+      resolve(true);
+    });
+  })
 }
 async function handleStaff(r: express.Request, s: express.Response) { //TODO: USE API ENDPOINT INSTEAD OF THIS.
   return new Promise((resolve, reject) => {

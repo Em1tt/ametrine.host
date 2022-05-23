@@ -58,6 +58,7 @@
                     <div id="accountCard" class="account">
                         <span>
                             <div>
+                            <%console.log(it.userData)%>
                             <h3><i class="fa fa-user-circle"></i> Client #<%=it.userData.user_id%></h3>
                             <h4 class="user-details"><%=it.userData.name%></h4>
                             <p class="user-details"><%=it.userData.email%></p>

@@ -13,7 +13,7 @@
     <a href="/billing/staff/knowledgebase">
         <div>
             <i class="fas fa-book"></i>
-            <p>Browse the knowledgebase</p>
+            <p>Manage the knowledgebase</p>
         </div>
     </a>
     <% } %>

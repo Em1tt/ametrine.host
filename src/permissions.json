@@ -36,7 +36,7 @@
         "isStaff": true
     },
     "6": {
-        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit", "/api/audit/view", "/mail/any"],
+        "accessAPI": ["/users", "/users/:userid/permission", "/tickets", "/tickets/create", "/tickets/list", "/tickets/:ticketid", "/tickets/:ticketid/delete", "/knowledgebase/create", "/knowledgebase/categories", "/mail", "/announcements", "/staff/", "/staff/announcements", "/staff/tickets", "/staff/tickets/", "/staff/tickets/list", "/staff/knowledgebase/:articleid", "/staff/knowledgebase/all", "/api/audit", "/api/audit/view", "/mail/any"],
         "accessPages": ["all"],
         "name": "Administrator",
         "isStaff": true,

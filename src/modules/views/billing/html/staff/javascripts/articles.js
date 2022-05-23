@@ -84,10 +84,10 @@ try{
         anchor.style = `border-color: ${category.color}`;
         anchor.href = `/billing/knowledgebase/articles?page=${params.page}&category=${category.id}&tags=${encodeURIComponent(JSON.stringify(tags))}`;
         const header = document.createElement("h2");
-        header.innerText = category.name;
+        header.innerText = decodeURIComponent(window.atob(category.name));
         header.classList.add("header2");
         const description = document.createElement("p");
-        description.innerText = category.description;
+        description.innerText = decodeURIComponent(window.atob(category.description));
         anchor.appendChild(header);
         anchor.appendChild(description);
         document.getElementById("knowledgebase-categories").appendChild(anchor);

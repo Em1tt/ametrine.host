@@ -134,3 +134,23 @@ main div form button:hover {
 #checkboxWrapper > *{
   margin-right: 20px;
 }
+.cardWrapper{
+  display: flex;
+  flex-flow: row wrap;
+}
+.cardWrapper button{
+  border-radius: 10px;
+  padding: 40px;
+  font-size: 0.8rem;
+  background-color: #141419;
+  border: none;
+  color: #dce0ff;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.cardWrapper button:hover{
+  background-color: #1e1f26;
+}
+.cardWrapper button svg{
+  font-size: 2rem;
+}
