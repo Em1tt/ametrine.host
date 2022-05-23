@@ -267,7 +267,7 @@ export const auth = {
      * if (typeof userData != "object") return res.sendStatus(userData); // If its not an object. (Could be either undefined or number.)
      */
     verifyToken: async (req: express.Request, res: express.Response, sendResponse: boolean, type: "access" | "refresh" | "both"): Promise<express.Response | number | Record<string, unknown>> => { // Probably not a good idea to do this, as most people use next()
-        const forbidden = () => (sendResponse) ? res.sendStatus(403) : 403;
+        const forbidden = () => (sendResponse) ? res.sendStatus(401) : 401;
         const currentDate = parseInt(Date.now().toString().slice(0, -3))
         if (!req.cookies) return forbidden();
         const accessToken = req.cookies["access_token"];
