@@ -4,7 +4,6 @@
 import express                  from 'express';
 import { auth }                 from './auth';
 import { permissions }          from '../permissions'
-import knowledgebase_categories from '../../knowledgebase_categories.json';
 import { Article }              from '../../types/billing/knowledgebase';
 import { UserData }             from '../../types/billing/user';
 import { Redis }                from '../../types/redis';
@@ -47,6 +46,12 @@ function editContent(content: string, timestamp: string | number | Date, article
 function paginate(array: Array<unknown>, page_size: number, page_number: number): Array<unknown> { // https://stackoverflow.com/a/42761393
     // human-readable page numbers usually start with 1, so we reduce 1 in the first argument
     return array.slice((page_number - 1) * page_size, page_number * page_size);
+}
+
+async function getCategory(id){
+    const data = await client.db.hgetall(`knowledgebase_category:${id}`);
+        if (!data) return false;
+        return data;
 }
 
 let client: Redis;
@@ -154,7 +159,7 @@ export const prop = {
                     if (header?.length > settings.maxTitle) return res.status(403).send(`Header is too long. Max Length is ${settings.maxTitle}`);
                     if (content?.length > settings.maxBody) return res.status(403).send(`Content is too long. Max Length is ${settings.maxBody}`);
                     const category_ids = (categories) ? categories.split(",").map((category: number) => {
-                        const findCategory = knowledgebase_categories.find(cate => cate.id == parseInt(category.toString()));
+                        const findCategory = getCategory(parseInt(category.toString()));
                         if (findCategory) {
                             category = parseInt(category.toString()); // Converting it to Int in case of any strings at the end.
                             return category;
@@ -506,7 +511,7 @@ export const prop = {
                                     let category_ids = []
                                     if (typeof categories == "string") {
                                         category_ids = (categories) ? categories.split(",").map(category => { // TS is telling me that number cant be converted to string when parseInt on this, but it works on the else statement
-                                            const findCategory = knowledgebase_categories.find(cate => cate.id == parseInt(category));
+                                            const findCategory = getCategory(parseInt(category));
                                             if (findCategory) {
                                                 //category = parseInt(category); // Converting it to Int in case of any strings at the end.
                                                 return category;
@@ -514,7 +519,7 @@ export const prop = {
                                         }) : []
                                     } else {
                                         category_ids = categories.map(category => {
-                                            const findCategory = knowledgebase_categories.find(cate => cate.id == parseInt(category));
+                                            const findCategory = getCategory(parseInt(category));
                                             if (findCategory) {
                                                 category = parseInt(category); // Converting it to Int in case of any strings at the end.
                                                 return category;

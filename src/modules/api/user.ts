@@ -151,6 +151,7 @@ export const prop = {
                             //This should probably require 2FA, but I'm not sure of how to implement this.
                             const { code } = req.body;
                             if(!code) return res.sendStatus(406);
+                            if(!userData) return res.sendStatus(403);
                             if(userData["discord_user_id"]) return res.sendStatus(409);
                             const body = new URLSearchParams({
                                 client_id: process.env.OAUTH_CLIENT_ID,

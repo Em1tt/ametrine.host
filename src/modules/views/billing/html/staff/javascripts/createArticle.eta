@@ -45,6 +45,7 @@
   document.querySelector("#save-icon").addEventListener("click", async () => {
     document.querySelector("#save-icon").setAttribute("active", true);
     const category = document.getElementById("category");
+    console.log([category.value]);
     let tags = document.getElementById("searchbar").getSelectedOptions();
     tags = tags.map(i => i.value).join(",");
     const response = await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
@@ -84,7 +85,7 @@
     await axios.put(`/api/knowledgebase/<%=it.article.article_id%>`, {
         state: 1
     }).then(response => {
-      window.location.href = `/billing/staff/knowledgebase/article/<%=it.article.article_id%>`
+      window.location.href = `/billing/staff/knowledgebase/<%=it.article.article_id%>`
     }).catch(e => {
       console.log(e.response.data);
     });

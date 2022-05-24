@@ -63,8 +63,8 @@
         
         <footer>
             <p>Was this article helpful?</p>
-            <button <%= JSON.parse(article.likes).some(i => i == it.userData.user_id) ? "selected" : ""%> id="like"><i class="fa fa-thumbs-up"></i> <%=article.likes%></button>
-            <button <%= JSON.parse(article.dislikes).some(i => i == it.userData.user_id) ? "selected" : ""%> id="dislike"><i class="fa fa-thumbs-down"></i> <%=article.dislikes%></button>
+            <button <%= JSON.parse(article.likes).some(i => i == it.userData.user_id) ? "selected" : ""%> id="like"><i class="fa fa-thumbs-up"></i> <%=JSON.parse(article.likes).length%></button>
+            <button <%= JSON.parse(article.dislikes).some(i => i == it.userData.user_id) ? "selected" : ""%> id="dislike"><i class="fa fa-thumbs-down"></i> <%=JSON.parse(article.dislikes).length%></button>
         </footer>
     </main>
     <%~ E.includeFile('../../public/templates/authentication.eta')%>
