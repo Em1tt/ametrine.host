@@ -141,15 +141,17 @@ export const prop = {
                 if (utils.allowedMethod(req, res, ["GET", "POST", "DELETE"])){
                     switch(req.method){
                         case "GET": {
-                            res.redirect(303, "https://discord.com/api/oauth2/authorize?client_id=848304819734839296&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fbilling&response_type=code&scope=identify");
+                            if(req.query.auth == "true"){
+                                res.redirect(303, "https://discord.com/api/oauth2/authorize?client_id=848304819734839296&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fbilling%3Fauth%3Dtrue&response_type=code&scope=identify");
+                            }else{
+                                res.redirect(303, "https://discord.com/api/oauth2/authorize?client_id=848304819734839296&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fbilling&response_type=code&scope=identify");
+                            }
                         } break;
                         case "POST": {
                             //This should probably require 2FA, but I'm not sure of how to implement this.
                             const { code } = req.body;
                             if(!code) return res.sendStatus(406);
-                            //Since DiscordID is not sent inside of userData and I have no idea how to change.
-                            const discordID = await client.db.hget(`user:${userData["user_id"]}`, "discord_user_id");
-                            if(discordID) return res.sendStatus(406);
+                            if(userData["discord_user_id"]) return res.sendStatus(409);
                             const body = new URLSearchParams({
                                 client_id: process.env.OAUTH_CLIENT_ID,
                                 client_secret: process.env.OAUTH_SECRET,
@@ -174,7 +176,9 @@ export const prop = {
                             });
                         } break;
                         case "DELETE": {
-                            //
+                            if(!userData["discord_user_id"]) return res.sendStatus(406);
+                            await client.hdel(`user:${userData["user_id"]}`, "discord_user_id");
+                            res.sendStatus(201);
                         }
                     }
                 }

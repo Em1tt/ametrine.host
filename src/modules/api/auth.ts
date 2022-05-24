@@ -45,6 +45,11 @@ export const auth = {
         if (!data) return false;
         return (data == 1);
     },
+    getDiscordID: async (userID: string | number): Promise<boolean> => {
+        const data = await client.db.hget(`user:${userID}`, 'discord_user_id');
+        if (!data) return false;
+        return data;
+    },
     // Fix for the potential security vulnerability. \/\/
     getPermissionID: async (userID: string | number, permission_id: number): Promise<number> => {
         if (permission_id == 0) return 0;
@@ -320,16 +325,17 @@ export const auth = {
         if (!userExists) return (sendResponse) ? res.sendStatus(404) : 404;
         let response = {};
         const OTPEnabled = await auth.has2FA(user_id)
+        const discordUserID = await auth.getDiscordID(user_id);
         const getPermissionID = (["both","access"].includes(type)) && await auth.getPermissionID(user_id, parseInt(accessTokenValid.permission_id as string))
         switch (type) {
             case "both":
-                response = { refreshToken, accessToken, user_id: tokenInDB[0], name: accessTokenValid.name, email: accessTokenValid.email, permission_id: getPermissionID, "2fa": OTPEnabled }
+                response = { refreshToken, accessToken, user_id: tokenInDB[0], name: accessTokenValid.name, email: accessTokenValid.email, permission_id: getPermissionID, "2fa": OTPEnabled, discord_user_id: discordUserID }
                 break;
             case "refresh":
                 response = { refreshToken, user_id: tokenInDB[0] }
                 break;
             case "access":
-                response = { accessToken, user_id: user_id, name: accessTokenValid.name, email: accessTokenValid.email, permission_id: getPermissionID, "2fa": OTPEnabled }
+                response = { accessToken, user_id: user_id, name: accessTokenValid.name, email: accessTokenValid.email, permission_id: getPermissionID, "2fa": OTPEnabled, discord_user_id: discordUserID }
                 break;
         }
         auth.updateHashVersion(user_id);
@@ -376,7 +382,7 @@ export const prop = {
                     client_secret: process.env.OAUTH_SECRET,
                     code: code,
                     grant_type: 'authorization_code',
-                    redirect_uri: `http://localhost:3000/billing`,
+                    redirect_uri: `http://localhost:3000/billing?auth=true`,
                     scope: 'identify',
                 });
                 await axios.post('https://discord.com/api/oauth2/token', body).then(async response => {

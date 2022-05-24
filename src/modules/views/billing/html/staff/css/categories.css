@@ -16,12 +16,48 @@ main > div:last-of-type{
   top: 30px;
   height: fit-content;
 }
-.categories{
-  height: 10000px;
-}
-main > div:last-of-type div div{
+main > div:last-of-type > div > div{
   background-color: #1e1f26;
   border-radius: 10px;
+}
+.categories div{
+    padding: 10px;
+}
+.categories > div > div{
+    background-color: #141419;
+    margin: 5px 0 10px 0;
+    border-radius: 0 10px 10px 0;
+    border-left: 2px solid;
+    transition: 0.5s ease;
+    color: #dce0ff;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+.categories > div > div:hover{
+    transition: 0.5s ease;
+    border-left: 4px solid;
+}
+.categories > div > div :is(h4){
+    margin: 5px 0 5px 0;
+}
+.categories > div > div :is(p){
+    color: gray;
+    margin: 0 0 3px 0;
+}
+.categories > div > div :is(button){
+    width: 70px;
+    font-size: 1.2rem;
+    height: 100%;
+    background-color: #1e1f26;
+    color: gray;
+    border: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+.categories > div > div :is(button):hover{
+    color: #cc37c0;
 }
 main > div:last-of-type div div :is(h1,h2,h3){
   background-color: #141419;
@@ -80,6 +116,9 @@ form select {
   height: 36px;
   min-width: 230px;
   margin-right: 10px;
+}
+form button{
+    width: 100% !important;
 }
 .categories{
   width: 100%;

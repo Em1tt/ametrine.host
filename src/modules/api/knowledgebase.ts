@@ -225,9 +225,11 @@ export const prop = {
                         case "GET": {
                             client.keys("knowledgebase_category:*", async (err, result) => {
                                 if(err) return res.sendStatus(500);
-                                const categories: Array<any> = await Promise.all(result.map(async categoryID => {
+                                let categories: Array<any> = await Promise.all(result.map(async categoryID => {
                                     return { ...await client.db.hgetall(categoryID) }
                                 }));
+                                categories = categories.filter(i => parseInt(i.minimum_permission) <= parseInt(userData["permission_id"]));
+                                if(!categories.length) return res.sendStatus(404);
                                 return res.status(200).json(categories);
                             });
                         } break;
@@ -235,6 +237,7 @@ export const prop = {
                             if(userData["permission_id"] < 5) return res.sendStatus(403);
                             const { name, color, description, minPermission } = req.body;
                             if(!name  || !description || isNaN(parseInt(minPermission))) return res.sendStatus(406);
+                            if(parseInt(minPermission) > userData["permission_id"]) return res.status(403).send("Cannot set minimal permission to a permission higher than your own.");
                             await client.keys("knowledgebase_category:*", async (err, result) => {
                                 if(err) return res.sendStatus(500);
                                 const categories: Array<knowledgebase_category> = await Promise.all(result.map(async categoryID => {
@@ -242,8 +245,6 @@ export const prop = {
                                 }));
                                 const category = categories.find(i => i.name == utils.encode_base64(name));
                                 if(category) return res.status(409).send("Category already exists!");
-                            });
-                            if(parseInt(minPermission) > userData["permission_id"]) return res.status(403).send("Cannot set minimal permission to a permission higher than your own.");
                             client.incr("knowledgebase_category_id", async (err: Error, id) => {
                                 if (err) {
                                     console.error(err);
@@ -252,17 +253,19 @@ export const prop = {
                                 await client.db.hset([`knowledgebase_category:${id}`, "id", id, "name", utils.encode_base64(name), "description", utils.encode_base64(description), "minimum_permission", minPermission, "color", color]);
                                 return res.status(201).json({id, name, description, minPermission, color});
                             });
+                            });
                         } break;
                         case "PATCH": {
                             if(userData["permission_id"] < 5) return res.sendStatus(403);
                             const { id, name, color, description, minPermission } = req.body;
+                            console.log(id,name,color,description,minPermission);
                             if(isNaN(parseInt(id))) return res.sendStatus(406);
                             await client.keys("knowledgebase_category:*", async (err, result) => {
                                 if(err) return res.sendStatus(500);
                                 const categories: Array<knowledgebase_category> = await Promise.all(result.map(async categoryID => {
                                     return { ...await client.db.hgetall(categoryID) }
                                 }));
-                                const category = categories.find(i => i.id == id);
+                                const category = categories.find(i => parseInt(i.id as string) == parseInt(id));
                                 if(!category) return res.sendStatus(404);
                                 if(parseInt(category.minimum_permission as string) > parseInt(userData["permission_id"])) return res.status(403).send("Cannot set minimal permission to a permission higher than your own.");
                                 let changed = false;
@@ -279,7 +282,7 @@ export const prop = {
                                     changed = true;
                                 }
                                 if(minPermission){
-                                    client.db.hset([`knowledgebase_category:${id}`, "color", minPermission]);
+                                    client.db.hset([`knowledgebase_category:${id}`, "minimum_permission", minPermission]);
                                     changed = true;
                                 }
                                 changed ? res.status(200).json({id, name: !name ? category.name : utils.encode_base64(name), description: !description ? category.description : utils.encode_base64(description), color: color ? color : category.color, minPermission: String(minPermission) ? minPermission : category.minimum_permission }) : res.sendStatus(204);
@@ -290,7 +293,12 @@ export const prop = {
                             const { id } = req.body;
                             if(isNaN(parseInt(id))) return res.sendStatus(406);
                             await client.keys(`knowledgebase_category:${id}`, async (err, result) => {
-                                if(!result.length) return res.sendStatus(404);
+                                const categories: Array<knowledgebase_category> = await Promise.all(result.map(async categoryID => {
+                                    return { ...await client.db.hgetall(categoryID) }
+                                }));
+                                const category = categories.find(i => parseInt(i.id as string) == parseInt(id));
+                                if(!category) res.sendStatus(404);
+                                if(parseInt(category.minimum_permission as string) > parseInt(userData["permission_id"])) return res.sendStatus(403);
                                 client.del(`knowledgebase_category:${id}`, (err, result) => {
                                     if(err) return res.sendStatus(500);
                                     res.sendStatus(200);

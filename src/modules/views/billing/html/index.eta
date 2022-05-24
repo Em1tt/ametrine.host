@@ -38,6 +38,7 @@
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../public/templates/navbar.eta', {icon: it._locals.userData.email ? "user-cog" : "users", text: it._locals.userData.email ? "My Account" : "Sign-In", permission_id: it._locals.userData.permission_id, config: it._locals.config}) %>
     <main>
+    <%console.log(it.userData)%>
         <div class="content">
             <h1 class="header1"><%= (it._locals.userData.name) ? `Welcome back, ${it._locals.userData.name.split(" ")[0]}` : "Welcome, user!"%></h1>
             <hr class="semanticLine">
@@ -87,9 +88,9 @@
                                             <button class="button1" id="2fa-button"><i class="fas fa-key"></i> Enable 2FA</button>
                                         <% } %>
                                         <% if(it.userData['discord_user_id']){ %>
-                                            <a href="/api/user/discord" class="button1" id="discord-button"><i class="fab fa-discord"></i> Link With Discord (Coming Soon)</a>
+                                            <a id="discord-unlink" class="button1"><i class="fab fa-discord"></i> Unlink Discord Account</a>
                                         <% }else{ %>
-                                            <button class="button1" id="discord-button"><i class="fab fa-discord"></i> Link With Discord (Coming Soonn)</button>
+                                            <a id="discord-link" href="/api/user/discord" class="button1"><i class="fab fa-discord"></i> Link Discord Account</a>
                                         <% } %>
                                         <button class="button1" id="delete-button"><i class="fas fa-trash"></i> Delete Account</button>
                                     </div>

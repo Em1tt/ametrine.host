@@ -209,6 +209,22 @@ main > aside div:hover {
   color: #dce0ff;
 }
 
+#discord-link, #discord-unlink{
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px 5% 10px 0;
+  color: white !important;
+  height: 36px;
+  background-color: #5865F2;
+  border: none;
+  text-align: center;
+  font-size: 0.9rem;
+  outline: none;
+  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 1000px) {
   main {
     grid-template-areas: "main";

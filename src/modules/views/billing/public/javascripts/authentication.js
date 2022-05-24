@@ -1,5 +1,4 @@
 // No bloat allowed! No JQuery allowed! //
-
 const exclamationCircle = `<i class="fa fa-exclamation-circle"></i>`;
 const checkmark = `<i class="fas fa-check"></i>`;
 
@@ -342,21 +341,64 @@ const deleteAccount = () => {
 };
 
 window.onload = () => {
-  document.querySelector("#accountCard #multiButton")?.setAttribute("onclick", "logOut()");
-  if(params.code && !document.body.classList.contains("loggedIn")){
-    axios.post("/api/auth/discord", {
-      code: params.code
-    }).then(res => {
+  document.querySelector("#discord-unlink")?.addEventListener("click", async () => {
+    console.log("hi");
+    await axios.delete("/api/user/discord").then(res => {
       console.log(res);
-      if(!res) return;
-      window.location.href = window.location.href.split("?")[0];
-    }).catch(e =>{
+      Swal.fire({
+        title: "Discord Link Removed",
+        text: "You can no longer authenticate with your Discord account and some bot features have been locked for you.",
+        icon: "success",
+        preConfirm: () => {
+          window.location.reload();
+        }
+      });
+    })
+  });
+  document.querySelector("#accountCard #multiButton")?.setAttribute("onclick", "logOut()");
+  if(params.code){
+    if(params.auth == "true"){
+      axios.post("/api/auth/discord", {
+        code: params.code
+      }).then(res => {
+        console.log(res);
+        if(!res) return;
+        window.location.href = window.location.href.split("?")[0];
+      }).catch(e =>{
+          Swal.fire({
+            title: "Discord Authentication failed",
+            text: "There was an error processing your request. Is your account linked with your Discord account?",
+            icon: "error",
+            preConfirm: () => {
+              window.location.href = window.location.href.split("?")[0];
+            }
+          })
+      });
+    }else{
+      axios.post("/api/user/discord", {
+        code: params.code
+      }).then(res => {
+        console.log(res);
+        if(!res) return;
         Swal.fire({
-          title: "Discord Authentication failed",
-          text: "There was an error processing your request. Is your account linked with your Discord account?",
-          icon: "error",
-        })
-    });
+          title: "Discord Link Added",
+          text: "You can now log-in to the panel via your Discord account and use additional features in our Discord bot.",
+          icon: "success",
+          preConfirm: () => {
+            window.location.href = window.location.href.split("?")[0];
+          }
+        });
+      }).catch(e =>{
+          Swal.fire({
+            title: "Discord Setup failed",
+            text: "There was an error processing your request.",
+            icon: "error",
+            preConfirm: () => {
+              window.location.href = window.location.href.split("?")[0];
+            }
+          });
+      });
+    }
   }
 
   if(!document.body.classList.contains("loggedIn") && (window.location.pathname == "/billing" || window.location.pathname == "/billing/")) document.querySelector("#authentication").classList.add("shown");

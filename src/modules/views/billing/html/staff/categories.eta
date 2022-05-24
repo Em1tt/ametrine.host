@@ -34,6 +34,8 @@
     <script src="/billing/public/javascripts/theme.js" async defer></script>
     <link rel="stylesheet" href="/billing/public/stylesheets/pillbox.css">
     <script src="/billing/public/javascripts/pillbox.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.3.4/sweetalert2.min.js" integrity="sha512-GDiDlK2vvO6nYcNorLUit0DSRvcfd7Vc0VRg7e3PuZcsTwQrJQKp5hf8bCaad+BNoBq7YMH6QwWLPQO3Xln0og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="/billing/public/stylesheets/swal.css" rel="stylesheet">
 </head>
 <body class=<%=(it.userData.email) ? "loggedIn" : ""%>>
     <%~ E.includeFile('../../html/staff/templates/navbarStaff.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
@@ -49,31 +51,31 @@
                 <div class="formWrapper">
                     <h3 class="header2"><i class="fa fa-plus-circle"></i> Create a new category</h3>   
                     <form id="categoryForm">
-                    <%console.log(Object.keys(it.permissions))%>
                         <label class="text1" for="name">Name:</label><br>
                         <input class="text1" id="name" name="name" type="text"><br>
                         <label class="text1" for="description">Description:</label><br>
                         <input class="text1" id="description" name="description" type="text"><br>
                         <label class="text1" for="color">Color:</label><br>
-                        <input id="inp" value="#e6b530" type="color"><br>
+                        <input id="color" value="#e6b530" type="color"><br>
                         <label class="text1" for="minimal-permission">Minimum Permission:</label><br>
                         <select class="select1" id="minimal-permission" name="minimal-permission">
                             <% Object.keys(it.permissions).forEach(permissionID => { %>
-                                <option id=<%= permissionID %> > <%= permissionID %> </option>
+                                <option value=<%= permissionID %> id=<%= permissionID %> > <%= permissionID %> </option>
                             <%})%>
                         </select><br>
                         <input class="submit" type="submit">
                     </form> 
                 </div>
             </div>
-            <div>
+            <div class="no-flex">
                 <div class="categories">
                     <h3 class="header2"><i class="fa fa-list"></i> Categories</h3>
+                    <div id="categoryWrapper"></div>
                 </div>
             </div>
         </div>
     </main>
-    <script src="/billing/html/staff/javascripts/knowledgebase.js" async defer></script>
+    <script src="/billing/html/staff/javascripts/categories.js" async defer></script>
     <script src="/billing/html/staff/javascripts/popups.js" async defer></script>
     <%~ E.includeFile('../../html/staff/templates/support.eta', {permissions: Object.entries(it._locals.permissions).filter((i) => i[0] == it._locals.userData.permission_id)}) %>
 </body>
