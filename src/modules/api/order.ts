@@ -71,7 +71,7 @@ export const prop = {
                     customer = await stripe.customers.retrieve(customerID);
                 }*/
                 const session = await stripe.checkout.sessions.create({
-                    success_url: `http://${req.get('host')}/billing/success`,
+                    success_url: `http://${req.get('host')}/billing/success`, // Probably change these links to something different
                     cancel_url: `http://${req.get('host')}/billing/cancel`,
                     payment_method_types: ['card'],
                     line_items: [
@@ -135,7 +135,7 @@ export const prop = {
                                 customer_id - Customer ID taken from stripe
                                 user_id - The user who bought the service (Taken from Ametrine)
                                 managers - People who can access/manage the VPS (Unless you don't want this, this is for if the user wants to invite others to access or manage the VPS
-                                state - State of the Service (0 = Inactive | 1 = Active | 2 = Terminated)
+                                state - State of the Service (0 = Active | 1 = Suspended | 3 = Terminated)
                                 period - Period of the Service (0 = Monthly | 1 = Bi-Monthly | 2 = Quarterly | 3 = Semi-Annually | 4 = Annually
                                 */
 
@@ -155,7 +155,7 @@ export const prop = {
                                         "customer_id", session["customer"],
                                         "user_id", ((customerData && customerData.metadata && customerData.metadata["userID"]) ? customerData.metadata["userID"] : -1),
                                         "managers", '[]',
-                                        "state", 'active',
+                                        "state", 0,
                                         "period", getPeriod(plan.interval)]);
                                     // Handle creating the VPS (First check if VPS is active already, if not then create one for the customer)
                                 }
@@ -170,6 +170,11 @@ export const prop = {
                     case 'customer.subscription.deleted': {
                         const session = event.data.object;
                         // handle when the subscription ends
+                        const serviceExists = await client.db.exists(`service:${session["id"]}`);
+                        if (serviceExists) {
+                            client.db.hset([`service:${session["id"]}`, "state", 1]);
+                            // Do handling for shutting down the VPS
+                        }
                         console.log('subscription ended')
                         break;
                     }
