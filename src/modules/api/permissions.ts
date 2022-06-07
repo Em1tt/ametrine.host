@@ -17,15 +17,10 @@ export const prop = {
         let permission;
         res.set("Allow", "POST"); // To give the method of whats allowed
         if (req.method != "POST") return res.sendStatus(405) // If the request isn't a POST request, then respond with Method not Allowed.
-        let userData = await auth.verifyToken(req, res, false, "both");
-        if (userData == 101) {
-            const newAccessToken = await auth.regenAccessToken(req, res);
-            if (typeof newAccessToken != "string") return false;
-            userData = await auth.verifyToken(req, res, false, "both")
-        }
+        const userData = res.locals.userData;
         if (typeof userData != "object") {
             permission = 0;
-        }else{
+        } else {
             permission = userData.permission_id
         }
         const {path} = req.body;

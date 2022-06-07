@@ -23,18 +23,13 @@
      },
      setClient: function(newClient: Redis): void { client = newClient; },
      run: async (req: express.Request, res: express.Response): Promise<unknown> => {
-         if (!client) return res.status(500).send("Redis Client not available.");
-         const allowedMethods = ["GET"];
-         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
-         if (!allowedMethods.includes(req.method)) return res.sendStatus(405);
-         //const params = req.params[0].split("/").slice(1);
-         let userData = await auth.verifyToken(req, res, false, "both");
-         if (userData == 101) {
-             const newAccessToken = await auth.regenAccessToken(req, res);
-             if (typeof newAccessToken != "string") return false;
-             userData = await auth.verifyToken(req, res, false, "both")
-         }
-         if (typeof userData != "object" && req.method != "GET") return res.sendStatus(userData);
+        if (!client) return res.status(500).send("Redis Client not available.");
+        const allowedMethods = ["GET"];
+        res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
+        if (!allowedMethods.includes(req.method)) return res.sendStatus(405);
+        //const params = req.params[0].split("/").slice(1);
+        const userData = res.locals.userData;
+        if (typeof userData != "object") return res.sendStatus(res.locals.userDataErr);
         if (!permissions.hasPermission(userData['permission_id'], `/api/audit/view`)) return res.sendStatus(403);
             let methods: string[] | string = req.query.methods ? decodeURIComponent(req.query.methods).split(",") : "";
             let userIDs: string[] | string = req.query.userIDs ? decodeURIComponent(req.query.userIDs).split(",") : ""; // Announcement Type

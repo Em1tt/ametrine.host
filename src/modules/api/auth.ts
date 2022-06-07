@@ -313,7 +313,7 @@ export const auth = {
         if (["access", "both"].includes(type)) {
             try {
                 accessTokenValid = jwt.verify(accessToken, process.env.ACCESS_TOKEN, client.JWToptions.ATOptions)
-                if (!accessTokenValid) return (sendResponse) ? res.sendStatus(403) : 101; // Forbidden, 101 for allowing me to know if it needs to generate an Access Token.
+                if (!accessTokenValid) return (sendResponse) ? res.sendStatus(401) : 101; // Unauthorized, 101 for allowing me to know if it needs to generate an Access Token.
                 user_id = accessTokenValid["id"];
             } catch (e) {
                 console.error(e)
@@ -409,7 +409,7 @@ export const prop = {
                         const matchedUser = users.find(user => (user as UserData)?.discord_user_id == id) as UserData;
                         if (!matchedUser) return res.sendStatus(404);
                         const stateResponse = auth.checkState(parseInt(matchedUser["state"].toString()));
-                        if (stateResponse != null) return res.status(403).send(stateResponse)
+                        if (stateResponse != null) return res.status(401).send(stateResponse)
                         if (req.cookies.jwt) {
                             //return res.status(403).send("Already authenticated.")
                             await res.clearCookie('jwt');

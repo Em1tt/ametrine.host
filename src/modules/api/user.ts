@@ -38,8 +38,8 @@ export const prop = {
             if (typeof newAccessToken != "string") return false;
             userData = await auth.verifyToken(req, res, false, "both")
         }
-        if (typeof userData != "object" && paramName !== "discord" && req.method != "GET") return res.sendStatus(userData);
-        if (!userData["accessToken"] && paramName !== "discord" && req.method != "GET") return res.sendStatus(403); // Forbidden due to having the incorrect response. Probably will never happen unless the users JWT is REALLY weird    
+        if (typeof userData != "object" && paramName != "discord" && req.method != "GET") return res.sendStatus(userData);
+        if (!userData["accessToken"] && paramName != "discord" && req.method != "GET") return res.sendStatus(403); // Forbidden due to having the incorrect response. Probably will never happen unless the users JWT is REALLY weird    
 
         function showUserData(userObj: UserData) {
             return {

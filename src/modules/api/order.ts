@@ -41,14 +41,9 @@ export const prop = {
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405);
         const params = req.params[0].split("/").slice(1);
-        let userData = await auth.verifyToken(req, res, false, "both");
-        if (userData == 101) {
-            const newAccessToken = await auth.regenAccessToken(req, res);
-            if (typeof newAccessToken != "string") return false;
-            userData = await auth.verifyToken(req, res, false, "both")
-        }
+        const userData = res.locals.userData;
         const paramName = params[0]
-        if (typeof userData != "object" && paramName != "webhook") return res.sendStatus(userData);
+        if (typeof userData != "object" && paramName != "webhook") res.sendStatus(res.locals.userDataErr);
         switch (paramName) {
             case "checkout": {
                 res.set("Allow", "GET"); // Changing to POST later on

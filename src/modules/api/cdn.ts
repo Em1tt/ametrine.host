@@ -18,13 +18,8 @@ export const prop = {
         const allowedMethods = ["PATCH", "POST", "DELETE"];
         res.set("Allow", allowedMethods.join(", ")); // To give the method of whats allowed
         if (!allowedMethods.includes(req.method)) return res.sendStatus(405);
-        let userData = await auth.verifyToken(req, res, false, "both");
-        if (userData == 101) {
-            const newAccessToken = await auth.regenAccessToken(req, res);
-            if (typeof newAccessToken != "string") return false;
-            userData = await auth.verifyToken(req, res, false, "both")
-        }
-        if (typeof userData != "object") return res.sendStatus(userData);
+        const userData = res.locals.userData;
+        if (typeof userData != "object") return res.sendStatus(res.locals.userDataErr);
         if (!permissions.hasPermission(userData['permission_id'], `/cdn`)) return res.sendStatus(403);
         switch (req.method) {
             case "POST": {

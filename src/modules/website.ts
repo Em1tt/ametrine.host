@@ -146,10 +146,6 @@ for (const f of files) {
       }
       
     }
-    const limiter = rateLimit({
-      // ...
-      skip: (request, response) => false,
-    })
     app.use("/api/" + ep.prop.name + "*", rateLimit({
       windowMs: ep.prop["rateLimit"].time,
       max: ep.prop["rateLimit"].max,
@@ -194,6 +190,7 @@ app.use(async (r: express.Request, s: express.Response, next: express.NextFuncti
   const path = r.url.slice(1).split("?")[0].split("/");
   path.shift();
   path.length ? s.locals.userData = userData : 0;
+  if (typeof userData != "object") s.locals.userDataErr = (userData == false) ? 401 : userData;
   if (!isNaN(parseInt(path.at(-1)))) {
     path.pop();
     path.push(":id");
