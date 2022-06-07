@@ -43,7 +43,7 @@ export const prop = {
         const params = req.params[0].split("/").slice(1);
         const userData = res.locals.userData;
         const paramName = params[0]
-        if (typeof userData != "object" && paramName != "webhook") res.sendStatus(res.locals.userDataErr);
+        if (typeof userData != "object" && paramName != "webhook") return res.sendStatus(res.locals.userDataErr);
         switch (paramName) {
             case "checkout": {
                 res.set("Allow", "GET"); // Changing to POST later on
