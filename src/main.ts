@@ -23,7 +23,7 @@ for (const file of moduleList) {
   modules.set(file.name,
     cp.spawn(
       // this is really dirty
-      (isBin  ? "command"    : "node"),
+      (isBin  ? "eval"       : "node"),
       [(isBin ? `./${mpath}` : mpath)],
       {
         stdio: ["ignore", "pipe", "pipe", "ipc"]
