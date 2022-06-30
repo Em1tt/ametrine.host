@@ -48,7 +48,7 @@
     "nodemailer": "^6.7.5",
     "nonce-express": "^1.0.2",
     "qrcode": "^1.5.0",
-    "redis": "^3.1.2",
+    "redis": "^4.1.1",
     "sharp": "^0.30.6",
     "smtp-server": "^3.11.0",
     "stripe": "^9.6.0"
